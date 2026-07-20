@@ -237,15 +237,55 @@ function fldRatingRealismCap(tier, leverKey) {
 function _fldBadgeActive() {
   return (typeof __FIELD !== "undefined" && __FIELD && __FIELD.badges) ? true : false;
 }
-/* is this badge's trigger satisfied by the unit's current state? Unrecognized triggers default
-   to TRUE (an always-on effect); the fine-grained situational triggers are an R-4 refinement. */
+/* R-7 (D481): is the ground at (x,z) fortified — inside a fort circle OR within assault
+   reach (~45yd) of a terrain wall segment? The shipped works are modeled BOTH ways:
+   fort circles (terrain.forts) where a scenario declares them, and wall segments
+   (terrain.walls — the Fredericksburg stone wall / Vicksburg works idiom). Absent or
+   unreadable terrain -> false (no fortification observed). Pure read, deterministic. */
+function _fldNearWallSeg(x, z, r) {
+  var W = (typeof fldWalls === "function") ? fldWalls() : null; if (!W || !W.length) return false;
+  for (var i = 0; i < W.length; i++) {
+    var w = W[i]; if (!w) continue;
+    var dx = w.x2 - w.x1, dz = w.z2 - w.z1, L2 = dx * dx + dz * dz;
+    var t = L2 > 0 ? ((x - w.x1) * dx + (z - w.z1) * dz) / L2 : 0;
+    if (t < 0) t = 0; else if (t > 1) t = 1;
+    var px = w.x1 + t * dx - x, pz = w.z1 + t * dz - z;
+    if (px * px + pz * pz <= r * r) return true;
+  }
+  return false;
+}
+function _fldTargetFortified(x, z) {
+  if (typeof x !== "number" || typeof z !== "number" || !isFinite(x) || !isFinite(z)) return false;
+  var f = false;
+  try { f = (typeof fldInFort === "function") ? !!fldInFort(x, z) : false; } catch (eF) { f = false; }
+  return f || _fldNearWallSeg(x, z, 45);
+}
+/* is this badge's trigger satisfied by the unit's current state?
+
+   R-7 (D481, the D104 deferred-log refinement): the situational R-3 static triggers are
+   now GATED on engine-observable state (order / men-fraction / sim clock / fortified
+   ground) instead of defaulting always-on. THE ABSENT-STATE LAW: each predicate gates
+   only on OBSERVED disqualifying state — a unit with no live order/men/clock (deploy
+   phase, synthetic fixtures, Custom Battle inline badges) keeps the historical
+   always-on TRUE, so every pre-R-7 pure-function baseline is unchanged. In battle,
+   units always carry orders, so the gating is real. Caps are untouched (downstream).
+   Triggers the static path can never consume (their defs carry fldLever "none":
+   nearby_routing / enemy_nearby / river / flanking / mass_assault) keep default TRUE. */
 function _fldBadgeTrig(u, def) {
   var t = def && def.trigger;
   if (!t || t === "always" || t === "march") return true;
   if (t === "in_woods") return (typeof fldInWoods === "function") ? !!fldInWoods(u.x, u.z) : true;
   if (t === "arm_cav") return u.arm === "cav";
   if (t === "arm_art") return u.arm === "art";
-  return true;   // defend_objective / first_fire / surprised / his_attack / ... -> on (R-4 sharpens these)
+  var o = u.order, committed = !!(o && (o.type === "charge" || o.type === "move"));
+  if (t === "defend_objective") return !committed;                                                   // stonewall: the defend posture (the D104 cs_colston_div lesson codified)
+  if (t === "last_stand_defend") return true;                                                        // THE D481 ADJUDICATION-9 EXCEPTION, logged: gating rock_of_chickamauga's static rally on !committed flickered under the AI's mid-hold reposition orders and broke probe-chickamauga's sourced P2 tooth (Thomas holds >=7/8 fell to 6/8); the STATIC path stays always-on (pre-D481), and the situational last-stand drama lives in the R-4 X-Factor surge (_fldXFactorInZone), which is unchanged
+  if (t === "first_fire") return !(u.maxMen > 0) || (u.men >= 0.92 * u.maxMen);                     // green_levies: brittle at first contact, settles once blooded
+  if (t === "surprised") return !(typeof __FIELD !== "undefined" && __FIELD && typeof __FIELD.t === "number") || __FIELD.t < 300;   // powder_shy: starts shaky, steadies after the opening minutes
+  if (t === "his_attack" || t === "his_offensive" || t === "usct_assault" || t === "march_vigor") return !o || committed;           // piecemeal / the_slows / earned_in_blood / foot_cavalry: bite on the committed advance
+  if (t === "ammo_low_defend") return !(typeof u.ammo === "number") || (u.ammo < 12 && !(o && o.type === "charge"));                // bayonet: out of cartridges, holding the line
+  if (t === "attack_fortified") return !o || (committed && _fldTargetFortified(o.tx, o.tz));        // rigid_plan: pressing the assault onto fortified ground
+  return true;
 }
 function fldBadgeFactor(u, lever) {
   if (!u || !lever || !_fldBadgeActive()) return 1;
@@ -379,9 +419,30 @@ function _fldBadgeProvText(def) {
   return String(def.prov || "Inferred") + " — " + src + (def.note ? ". " + String(def.note) : "");
 }
 
+/* R-7/D481: the ROW-level provenance record for one (scenario, unit, badge) assignment —
+   the coverage-sweep citation law made data (rosterBadgeProv, a sibling of rosterBadges;
+   the original 9 D104-workflow battles are documented in _rosterNote and carry no rows).
+   Returns {prov, sources[], note?} or null. Pure read; absent record -> null -> the card
+   renders byte-identically to its pre-D481 form. */
+function fldRosterBadgeProv(scenarioId, unitId, key) {
+  if (!scenarioId || !unitId || !key) return null;
+  var d = _ratData(), P = d && d.rosterBadgeProv;
+  var s = P && P[scenarioId], u = s && s[unitId];
+  if (!u || !u.length) return null;
+  for (var i = 0; i < u.length; i++) { if (u[i] && u[i].key === key) return u[i]; }
+  return null;
+}
+function _fldRowProvText(rp) {
+  if (!rp) return "";
+  var src = (rp.sources && rp.sources.length) ? rp.sources.join("; ") : "no named source";
+  return "This assignment: " + String(rp.prov || "Inferred") + " — " + src + (rp.note ? ". " + String(rp.note) : "");
+}
+
 /* one Madden-style badge CARD. Keyboard-operable (tabindex 0) with the full
-   provenance in BOTH the aria-label/title (hover + SR) and visible card text (tap). */
-function fldBadgeCardHtml(def) {
+   provenance in BOTH the aria-label/title (hover + SR) and visible card text (tap).
+   rowProv (optional, R-7/D481): the per-assignment provenance record — appended to
+   the visible text + aria/title when present; absent -> byte-identical card. */
+function fldBadgeCardHtml(def, rowProv) {
   if (!def) return "";
   var neg = def.polarity === "neg";
   var sign = neg ? "−" : "+";
@@ -392,6 +453,8 @@ function fldBadgeCardHtml(def) {
   var label = fldBadgeLabel(def);
   var rungWord = def.rung === "xfactor" ? "X-Factor" : (def.rung === "superstar" ? "Superstar" : "Star");
   var prov = _fldBadgeProvText(def);
+  var rowLine = _fldRowProvText(rowProv);
+  if (rowLine) prov += " " + rowLine;
   var aria = label + ", " + rungWord + " " + (neg ? "flaw" : "strength") + ". " + prov;
   return '<div role="listitem" tabindex="0" data-badge-card="' + _fldRatEsc(def.key) + '"'
     + ' aria-label="' + _fldRatEsc(aria) + '" title="' + _fldRatEsc(aria) + '"'
@@ -413,11 +476,12 @@ function fldBadgeGalleryHtml(u) {
   var html = "", i, def;
   if (u) {
     if (!u.badges || !u.badges.length) return "";
+    var scn = (typeof __FIELD !== "undefined" && __FIELD) ? __FIELD.scenario : null;   // R-7/D481: row-prov lookup key
     var cards = "";
     for (i = 0; i < u.badges.length; i++) {
       def = fldBadgeDef(u.badges[i]);
       if (!def) continue;   // an unresolved id renders NOTHING (defs-integrity, fail-closed)
-      cards += fldBadgeCardHtml(def);
+      cards += fldBadgeCardHtml(def, fldRosterBadgeProv(scn, u.id, def.key));
     }
     if (!cards) return "";
     return '<div role="list" aria-label="This brigade&#39;s badges" style="display:flex;flex-wrap:wrap">' + cards + '</div>';
@@ -554,13 +618,14 @@ if (typeof fldRenderHud === "function") {
 
    BYTE-IDENTICAL WHEN OFF: gated on __FIELD.badges; a unit carrying NO X-Factor badge is left wholly
    untouched (_xfActive/_spdMul/_xfGlow stay undefined -> the fldMoveFactor (u._spdMul) read and the
-   fldXFactorApplyCmd guard are exact no-ops). No shipped scenario assigns X-Factors yet (the R-6 sweep),
-   so every battle is byte-for-byte identical whether badges are on or off. NO RNG -> seed-replayable.
+   fldXFactorApplyCmd guard are exact no-ops). (The R-6 sweep then assigned X-Factors to the shipped
+   rosters — the byte-identity guarantee holds per-unit: only badge carriers move.) NO RNG -> seed-replayable.
 
    TWO-LAYER MODEL (kept deliberately distinct from R-3): the R-3 static fldBadgeFactor remains the
-   always-on BASELINE (an X-Factor badge with an fldLever still contributes its capped static factor);
-   R-4 adds the situational SURGE on top. The situational sharpening lives in _fldXFactorInZone (the
-   activation), NOT in _fldBadgeTrig — so the R-3 static path (and its probe) is untouched.
+   BASELINE (an X-Factor badge with an fldLever still contributes its capped static factor);
+   R-4 adds the situational SURGE on top. _fldXFactorInZone owns the strict ACTIVATION zone (alive,
+   not routing, live morale/ammo reads); since R-7 (D481) _fldBadgeTrig gates the static path too,
+   on absent-state-tolerant predicates — two consumers, one situation vocabulary, different strictness.
    =========================================================================== */
 
 /* the unit's X-Factor (rung:"xfactor") badge defs, in catalog order. Empty for any unit that carries

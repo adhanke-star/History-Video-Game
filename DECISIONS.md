@@ -4,6 +4,101 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D481 — LANE-017 SLICES 4 (EASTERN COVERAGE SWEEP) + R-7 SHIPPED: rosterBadges 9→19 SCENARIOS WITH THE PER-ROW CITATION LAW MADE DATA, AND THE R-3 SITUATIONAL TRIGGERS GATED ON ENGINE-OBSERVABLE STATE — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE; THE INTERRUPTED MEGA-LADDER RESUMED] (2026-07-20)
+
+**SHIPPED (the charter's slices-4 clause §4d.2 eastern batch + the R-7 rider per adjudication 9):**
+
+**R-7 (the D104 deferred-log refinement):** `_fldBadgeTrig` (T14) now gates the situational
+static triggers on engine-observable, deterministic state — defend_objective ⇒ not committed
+to an attack; first_fire ⇒ unbloodied (men ≥ .92·maxMen); surprised ⇒ __FIELD.t < 300;
+his_attack/his_offensive/usct_assault/march_vigor ⇒ the committed advance; ammo_low_defend ⇒
+ammo < 12 and not charging; attack_fortified ⇒ committed AND `_fldTargetFortified` (a fort
+circle OR within 45yd of a terrain wall segment — the Fredericksburg stone-wall/Vicksburg
+works idiom; both battles model works as walls, not forts). THE ABSENT-STATE LAW: predicates
+gate only on OBSERVED disqualifying state; absent live order/men/clock keeps the historical
+always-on TRUE, so every pre-R-7 pure-function baseline (incl. probe-ratings' shipped R-3
+fixtures) is unchanged, while in battle — where units always carry orders — the gating is
+real. Caps untouched; gated triggers get NO cap exemption. **THE ADJUDICATION-9 EXCEPTION,
+logged:** `last_stand_defend`'s STATIC path stays always-on — gating it flickered under the
+AI's mid-hold reposition orders and broke probe-chickamauga's sourced P2 tooth (Thomas holds
+≥7/8 fell to 6/8; restored green with the exception); the situational last-stand layer
+remains the R-4 X-Factor surge, unchanged. Law: RATING-SYSTEM-DESIGN §16.
+
+**THE EASTERN COVERAGE SWEEP:** rosterBadges grows 9 → 19 scenarios (+26 assignments, 24
+Verified / 2 Inferred): crossKeysPortRepublic (Ewell stonewall · Taylor woods_fighter) ·
+newMarketHeights (38th USCT earned_in_blood — Ratcliff/Harris/Barnes MoH) · gainesMill (Hood
+reckless_valor display-dual · Porter massed_battery) · wilderness (Getty stonewall · Carroll
+rally · Gregg reckless_valor · Heth piecemeal · Mahone flank_march) · spotsylvania (Gordon
+rally · Harris stonewall) · coldHarbor (Breckinridge-reserve rally, display-only — see the
+empirical drops) · petersburgAssaults (Hinks earned_in_blood · 1st Maine rigid_plan · militia
+green_levies · Hoke hardy_marcher) · crater (Weisiger flank_march · Wright cannoneer · Ledlie
+green_levies) · cedarCreek (Gordon flank_march · Kershaw hardy_marcher · Thoburn powder_shy ·
+Custer horseman) · fiveForks (V-Corps flank_march · Sheridan-cavalry disciplined). **THE
+PER-ROW CITATION LAW MADE DATA:** the new sibling `rosterBadgeProv` block carries {key, prov,
+sources[], note} per assignment — Verified ≥2 named repo-registered sources, Inferred ≥1,
+displayed via the new card "This assignment:" line (fldRosterBadgeProv, threaded by the
+gallery for the live scenario; absent record ⇒ byte-identical card). The original 9 D104
+battles carry NO rows (probe-pinned exemption; their sourcing is the _rosterNote record).
+
+**RESEARCH (adjudication 10):** one 20-agent workflow per theater batch (10 Sonnet-medium
+gatherers → 10 Opus-high default-refute verifiers; the eastern run `wf_cebd1419-539`), 41
+proposals → 9 refute-drops (flip-risk + trigger-mismatch classes: grand_charge on Barlow at
+Spotsylvania and on Hood at Gaines' Mill [display reckless_valor substituted on the same 3
+sources], earned_in_blood on Sigfried at the Crater, the NMH phase-scoping trio, the Five
+Forks the_slows/piecemeal pair, Fremont rigid_plan at Cross Keys, Walker powder_shy, Ramseur
+reckless_valor, Kershaw blooded) → top-loop adjudication with 2 refuter-suggested adoptions
+verified against the spec registers (Harris's Mississippians at the Angle; Mahone's Sorrel
+flank grouping). **EMPIRICAL POST-BISECT DROPS (the D391 instrument-one-seed practice; the
+touched battles' own probes are the direction authority):** Cold Harbor's near-run balance
+rejects ANY mechanical badge in either direction (full set 3/8 CS-holds, stonewall alone 4/8,
+rigid_plan alone 4/8 vs the ≥5/8 floor — all three mechanical rows dropped, display rally
+ships); the Crater's disciplined-on-Elliott alone broke the massacre-family floor (3/8 →
+green without it). All drops logged in the _rosterNote D481 addendum.
+
+**TEETH (owner probe-ratings 27→31; suite stays 140):** D481 R-7 SITUATIONAL GATING (every
+gated trigger both ways · the absent-state law · THE GATED STACK STILL CLAMPS at 1+cap) ·
+D481 COVERAGE FLOOR (every registry id has a roster row; the 10 western ids ride a pinned
+PENDING list that slice 5 EMPTIES — the documented chain is in the step) · D481 PER-ROW
+SOURCE FLOOR (record presence · prov vocabulary · Verified ≥2/Inferred ≥1 · no orphans ·
+majority-Verified) · D481 ROW PROVENANCE DISPLAY. Re-pins with documented chains: the D104
+roster step's live stonewall read is pinned to its R-7 situation (evans holds for the read,
+order restored); probe-shiloh's C11 alias tooth reshaped to its D235 intent (the D480
+disclosure's always-in-DOM catalog legitimately documents grand_charge's Chickamauga note —
+a D480 LATENT caught here because probe-shiloh first ran post-D480 now; the anachronism scan
+is scoped to the chip row with the encyclopedia panels stripped and STRENGTHENED with an
+own-card alias conjunct; 32/32). **THE A/B INSTRUMENT** `tools/ab-badge-direction.mjs` (the
+D104 sweep modernized; slice-gate tool, not a suite row): per battle 8 seeds × badges off/on
+with completion + R-7 ACTIVATION asserts (every non-extremis gated carrier must fire at its
+home battle — all 19 battles FIRED, zero silent deactivations) and off/on distributions
+RECORDED; its first-run OFF-majority-as-history flip heuristic was refuted by its own
+evidence (the Wilderness OFF majority is CS 5/3 while the D392/D393 law is US-holds — the
+per-battle probes are the direction authority) and the lesson is in the tool header.
+**AUTHORITATIVE DIRECTION GATES at the final tree:** probe-shiloh 32/32 · wilderness ·
+cold-harbor 15 · crater 20 · petersburg-initial-assaults · chickamauga (post-exception) ·
+gettysburg (its own guard tolerates the pre-existing seed-303 P0 marginal — P0 carries only
+the unchanged always-on blooded, so the slice provably cannot have caused it) — all green,
+artifacts read, 0 pageerrors; the 12 movement-free battles carry the A/B record and re-run in
+the day-end battery. probe-ratings 31/31 ×3 (post-data, post-exception, post-restore), 0
+pageerrors. node --check ×6 · build GATE OK every cycle (no-fudge + citations walls green).
+
+**BINDS (md5-proven byte-identical restores — data 76f6a311 · T14 0492809f · game
+59f2f617):** A (the contract's single-source row) in TWO layers: A1 Verified-with-1-source →
+**build gate 4e refuses at exit 5** naming the exact record ("data/ratings.json :: stonewall
+(Verified, 1 source)") — defense-in-depth ABOVE the probe; A2 the prov record removed
+entirely (invisible to 4e) → EXACTLY the D481 source-floor tooth red ("crossKeysPortRepublic/
+cs_ckpr_center/stonewall has NO rosterBadgeProv record"), 1 failed step. B (the contract's
+gated-trigger-past-the-cap) — fldBadgeFactor tampered to exempt gated triggers from the
+clamp → EXACTLY the D481 gated-stack conjunct red ("must clamp to exactly 1+cap (1.1), got
+1.25"), 1 failed step; restores re-run 31/31. **AD-7 re-pins in this commit:** game f7bb9cce
+→ 59f2f617 · dataTree b3b323fa → 462b0df9 · srcTree 7c23e51d → 9ee5bf37 at all four
+plan-probe sites with the D481 chain; the pre-commit scope-guard reds are the working-tree
+allowlist doing its job and both plan probes re-run green post-commit. **Riders:** `.gitignore`
+gains `*.code-workspace` (Aaron's new VSCode workspace file stays untracked; the public-repo
+root stays clean). Counts hold 29/62/1,710/140; `_SAVE_VER=1`; frozen base `c9db83fa`
+untouched. Exact next: LANE-017 SLICE 5 — the western/trans-Mississippi batch per the
+committed contract (the research workflow `wf_8f5ed36c-1a6` is COMPLETE and banked; its
+adjudication opens the slice; the coverage-floor PENDING list empties in that commit).
+
 ## D480 — LANE-017 SLICE 3 SHIPPED: THE BADGE PRESENTATION LAYER — MADDEN-STYLE BADGE CARDS/GALLERY, THE LIVE X-FACTOR SHOWCASE, HOVER/TAP PROVENANCE, GENERAL-CARD DEV-TRAIT CHIPS — ALL PURE READS INSIDE THE D74 WALL — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE; MEGA-LADDER LEG 2 P2] (2026-07-20)
 
 **SHIPPED (the charter's slice-3 clause §4d.1; presentation only — zero data edits, zero

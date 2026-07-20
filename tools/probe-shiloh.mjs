@@ -221,8 +221,22 @@ const SETUP = `(() => {
       var pr=null; for(var i=0;i<__FIELD.units.length;i++) if(__FIELD.units[i].id==='us_prentiss') pr=__FIELD.units[i];
       if(!pr || !pr.badges || pr.badges.indexOf('rock_of_chickamauga')<0) throw new Error('us_prentiss rock_of_chickamauga assignment missing (the D104 lever must stay)');
       var html=fldRatingBadgesHtml(pr);
-      if(html.indexOf('Hold the Line')<0) throw new Error('roster chip does not show the alias');
-      if(html.indexOf('Chickamauga')>=0) throw new Error('roster chip still shows the anachronistic Sept-1863 name');
+      // D481 chain: the D480 HUD disclosure appends the unit gallery + the FULL 26-def catalog
+      // (always-in-DOM panels) inside this html; the catalog legitimately documents the archetype's
+      // September-1863 history (grand_charge's note names Chickamauga), so the D235 anachronism law
+      // is scoped to what the SHILOH-facing chip row displays with the encyclopedia panels stripped —
+      // and STRENGTHENED: every card the unit ITSELF carries must show the alias label too.
+      var host=document.createElement('div'); host.innerHTML=html;
+      var bgp=host.querySelector('#fldBgPanel'); if(bgp) bgp.parentNode.removeChild(bgp);
+      var xfp=host.querySelector('#fldXfPanel'); if(xfp) xfp.parentNode.removeChild(xfp);
+      var chipText=host.textContent||'';
+      if(chipText.indexOf('Hold the Line')<0) throw new Error('roster chip does not show the alias');
+      if(chipText.indexOf('Chickamauga')>=0) throw new Error('roster chip still shows the anachronistic Sept-1863 name');
+      var own=document.createElement('div'); own.innerHTML=fldBadgeGalleryHtml(pr);
+      var ownCard=own.querySelector('[data-badge-card="rock_of_chickamauga"]');
+      if(!ownCard) throw new Error('the unit\\'s own carried-badge card is missing from its gallery');
+      if((ownCard.textContent||'').indexOf('Hold the Line')<0) throw new Error('the unit\\'s own card does not show the alias');
+      if((ownCard.textContent||'').indexOf('Chickamauga')>=0) throw new Error('the unit\\'s own card shows the anachronistic Sept-1863 name');
       return { defLabel:def.label, shiloShows:shown }; });
 
     // ---- DETERMINISM: same seed -> same winner ----

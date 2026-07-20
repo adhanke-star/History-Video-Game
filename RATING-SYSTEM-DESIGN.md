@@ -449,3 +449,37 @@ You chose **"soften the cap for power-fantasy."** Taken literally against "no-fu
 - **Net:** you get the dramatic, dream-team power-fantasy at the default/Arcade feel; the historian still gets the honest wall; and *no outcome is ever scripted or forced* at any setting. The dramatic feel comes from a **generous input cap, not an absent output wall.** (If you want it even louder than Arcade allows, that's a one-number tuning, not an architecture change.)
 
 *If you'd rather the cap soften regardless of realism setting (a flat higher ceiling at all difficulties), say so — but I'd recommend the slider-scaled version so Historian mode stays the citation-grade teaching tool the project is built around.*
+
+### 16. R-7 + THE COVERAGE SWEEP (D481/D482 — LANE-017 slices 4-5, 2026-07-20)
+
+**R-7 — per-situation gating of the R-3 static triggers (the D104 deferred-log refinement, SHIPPED D481).**
+`_fldBadgeTrig` now gates every situational static trigger on engine-observable, deterministic,
+seed-replayable state instead of defaulting always-on:
+
+| trigger | predicate (engine-observable) |
+|---|---|
+| `defend_objective` | NOT committed to an attack (`order.type` not charge/move) |
+| `last_stand_defend` (static path) | ALWAYS-ON — the D481 adjudication-9 EXCEPTION, logged: gating it flickered under mid-hold reposition orders and broke probe-chickamauga's sourced P2 tooth (Thomas >=7/8 fell to 6/8); the situational last-stand layer is the R-4 X-Factor surge, unchanged |
+| `first_fire` | unbloodied: `men >= 0.92 × maxMen` |
+| `surprised` | the opening minutes: `__FIELD.t < 300` |
+| `his_attack` / `his_offensive` / `usct_assault` / `march_vigor` (static path) | committed to the advance (move/charge order) |
+| `ammo_low_defend` (static path) | `ammo < 12` and not charging |
+| `attack_fortified` | committed AND the order target is fortified ground — a fort circle (`fldInFort`) OR within ~45yd of a `terrain.walls` segment (the Fredericksburg stone-wall / Vicksburg works idiom) |
+
+**THE ABSENT-STATE LAW:** each predicate gates only on OBSERVED disqualifying state; a unit with no
+live order/men/clock (deploy phase, synthetic fixtures, Custom Battle inline badges) keeps the
+historical always-on TRUE — every pre-R-7 pure-function baseline is unchanged, and in battle (where
+units always carry orders) the gating is real. Caps are untouched; gated triggers get NO cap
+exemption (probe-ratings' D481 gated-stack tooth). The X-Factor ACTIVATION zone (`_fldXFactorInZone`,
+strict: alive/not-routing/live morale+ammo) is unchanged — two consumers, one situation vocabulary,
+different strictness. Evidence per adjudication 9: `tools/ab-badge-direction.mjs` (the D104 A/B sweep
+modernized — 8 seeds × badges off/on per touched battle, zero-flips-against-history + per-carrier
+activation sampling proving no gated badge is silently deactivated at its home battle).
+
+**THE COVERAGE SWEEP (§4d.2) — rosterBadges + X-Factors from the original 9 battles to all 29
+scenarios, with the per-row citation law made data.** New rows ship with a sibling
+`data/ratings.json` `rosterBadgeProv` block — per (scenario, unit, badge) `{key, prov, sources[],
+note}`: **Verified requires ≥2 named sources; Inferred/Disputed ≥1 and displayed as such** (the badge
+card's "This assignment:" line, hover + SR + visible). The original 9 D104-workflow battles remain
+documented in `_rosterNote` and carry no rows (probe-pinned exemption). Coverage floor, source floor,
+orphan-record refusal, and majority-Verified are probe-ratings teeth (D481).

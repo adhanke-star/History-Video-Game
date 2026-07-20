@@ -3068,18 +3068,29 @@ next green commit and confer through this ledger instead of permitting simultane
   politics for the election bind) · ARC 6 rail+naval packets (session-fillers,
   chartered per D455 §7's interleave rule) · Mayhem Slice B (LANE-007) · C72 Shiloh
   rewrite + GEA-01/S44 bundle (parked, Aaron reorder-only).
-- **Resume pointer:** SLICES 4+5 (the coverage sweep + R-7, §4d.2, two theater
-  batches: eastern then western/trans-Mississippi) per this contract — rosterBadges +
-  X-Factors extended from the original 9 battles to ALL 29 scenarios, every row
-  ≥2-source Verified with anti-Lost-Cause balance; R-7 situational gating per
-  adjudication 9 in the same files as a separate commit-internal step with its own
-  teeth; the 8-seed A/B direction battery re-run per touched battle proving ZERO
-  historical flips (the Stones River/Perryville/Wilson's Creek/McDowell and
-  massacre-family direction guards stand); teeth in probe-ratings + the touched
-  battles' probes; binds per the contract clause (single-source row → the source
-  tooth red EXACTLY; a gated trigger past the T14 cap → the cap tooth red EXACTLY).
-- **Last-touched commit:** the D480 slice-3 commit (this commit).
-- **Slice history:** SLICE 3 SHIPPED as D480 (2026-07-20): the badge presentation
+- **Resume pointer:** SLICE 5 (the western/trans-Mississippi batch, §4d.2) per this
+  contract — the banked research workflow `wf_8f5ed36c-1a6` (10 gather + 10 refute,
+  complete) is adjudicated by the top loop with the D481 discipline (default-refute
+  drops stand; empirical bisect against the touched battles' own probes — THE
+  direction authority per the D481 lesson; massacre-family fortPillow/olustee and
+  inverted-direction stonesRiver are zero-tolerance); rows + rosterBadgeProv records
+  land in data/ratings.json; the probe-ratings coverage-floor PENDING list (10
+  western ids) EMPTIES in the same commit; the ab-badge-direction activation
+  evidence + ≥2 binds (single-source row → the source-floor tooth red EXACTLY; a
+  gated trigger past the T14 cap → the gated-stack conjunct red EXACTLY) md5-proven;
+  AD-7 re-pins + both plan probes re-run post-commit; then slice 6+ per the ladder.
+- **Last-touched commit:** the D481 slice-4 + R-7 commit (this commit).
+- **Slice history:** SLICE 4 + R-7 SHIPPED as D481 (2026-07-20, the resumed
+  mega-ladder): the eastern coverage sweep (rosterBadges 9→19, +26 rows 24V/2I, the
+  rosterBadgeProv per-row citation law + card provenance line) and the R-7
+  situational gating (engine-observable predicates, the absent-state law, the
+  last_stand_defend adjudication-9 exception logged); teeth ratings 27→31 +
+  probe-shiloh C11 reshaped (a D480-latent catalog sweep); the touched battles'
+  own probes are the direction authority (7 movement-flagged battles probe-green at
+  the final tree; Cold Harbor ships display-only after the bisect; the Crater drops
+  disciplined); binds A (4e exit-5 + source-floor) and B (gated-cap) md5-proven;
+  AD-7 game→59f2f617 · dataTree→462b0df9 · srcTree→9ee5bf37.
+  SLICE 3 SHIPPED as D480 (2026-07-20): the badge presentation
   layer per §4d.1 — Madden-style badge cards (`fldBadgeCardHtml`, provenance visible
   + title + aria, keyboard-focusable), the unit gallery + 26-def catalog
   (`fldBadgeGalleryHtml`, unresolved ids refused fail-closed), the LIVE X-Factor

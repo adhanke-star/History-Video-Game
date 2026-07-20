@@ -540,7 +540,11 @@ const SETUP = `(() => {
       __FIELD.badges=false;
       if(fldBadgeFactor(evans,'rally')!==1) throw new Error('badges OFF: a stamped unit must read identity 1 (byte-identical)');
       __FIELD.badges=true;
-      if(!(fldBadgeFactor(evans,'rally')>1)) throw new Error('badges ON: stonewall should lift cs_evans rally');
+      // D481 R-7 chain: stonewall is now SITUATIONAL (defend_objective -> the defend posture), so this
+      // live-unit sample is pinned to its documented situation — evans holds for the read, order restored.
+      // Pre-D481 this line sampled whatever order the AI had issued (always-on made that safe; R-7 doesn't).
+      var _evOrder=evans.order; evans.order={type:'hold',tx:evans.x,tz:evans.z};
+      if(!(fldBadgeFactor(evans,'rally')>1)) throw new Error('badges ON: stonewall should lift cs_evans rally (holding — the R-7 defend posture)');
       // (6) the_slows on the antietam bridge assault (the marquee Union flaw; data has NO McClellan army token, D92)
       var slows=fldScenarioRosterBadges('antietam','us_sturgis');
       if(!slows||slows.indexOf('the_slows')<0) throw new Error('the_slows should sit on antietam us_sturgis');
@@ -551,6 +555,7 @@ const SETUP = `(() => {
       if(fldRatingBadgesHtml({badges:null})!=='') throw new Error('a no-badge unit -> "" (byte-identical)');
       if(fldRatingBadgesHtml(null)!=='') throw new Error('null unit -> "" (no crash)');
       var jr=Math.round(fldBadgeFactor(evans,'rally')*1000)/1000;
+      evans.order=_evOrder;   // D481: restore the AI's live order after the pinned-situation reads
       if(typeof __FIELD!=='undefined') __FIELD.badges=saveB;
       return { battles:scns.length, assignments:total, usPos:usPos, usNeg:usNeg, csPos:csPos, csNeg:csNeg, jacksonRally:jr }; });
 
@@ -731,6 +736,118 @@ const SETUP = `(() => {
         if(typeof G!=='undefined'&&G.mode!==gMode) throw new Error('slice-3 render path mutated G.mode');
         return { pure:true };
       } finally { if(typeof __FIELD!=='undefined'){ __FIELD.units=savedU; __FIELD.badges=savedB; } }
+    });
+
+    step('D481 R-7 SITUATIONAL GATING: every gated static trigger binds to its engine-observable situation BOTH ways; absent live state keeps the historical always-on; the gated stack still clamps at the T14 cap', function(){
+      var savedB=__FIELD.badges, savedT=__FIELD.realismTier, savedTime=__FIELD.t, savedTerr=__FIELD.terrain;
+      try {
+        __FIELD.badges=true; __FIELD.realismTier='balanced';
+        var cap=fldRatingRealismCap('balanced','badgeLever');
+        // stonewall (defend_objective): the defend posture -> active; the committed attack -> inert (the D104 cs_colston_div lesson as law)
+        if(!(fldBadgeFactor({badges:['stonewall'],order:{type:'hold',tx:0,tz:0}},'rally')>1)) throw new Error('stonewall must steady a HOLDING unit');
+        if(fldBadgeFactor({badges:['stonewall'],order:{type:'charge',tx:0,tz:0}},'rally')!==1) throw new Error('stonewall must be INERT on a charging unit (R-7)');
+        // green_levies (first_fire): unbloodied -> damper; blooded -> settles
+        if(!(fldBadgeFactor({badges:['green_levies'],men:1000,maxMen:1000},'rally')<1)) throw new Error('green_levies must damp an unbloodied unit');
+        if(fldBadgeFactor({badges:['green_levies'],men:800,maxMen:1000},'rally')!==1) throw new Error('green_levies must settle once blooded (R-7)');
+        // THE ABSENT-STATE LAW: no live men/order/clock -> the historical always-on (pre-R-7 baselines unchanged)
+        if(!(fldBadgeFactor({badges:['green_levies']},'rally')<1)) throw new Error('absent live state must keep the historical always-on (green_levies)');
+        if(!(fldBadgeFactor({badges:['the_slows']},'speed')<1)) throw new Error('absent live state must keep the historical always-on (the_slows)');
+        // powder_shy (surprised): shaky in the opening minutes; steadies after
+        __FIELD.t=10;  if(!(fldBadgeFactor({badges:['powder_shy']},'rally')<1)) throw new Error('powder_shy must damp in the opening minutes');
+        __FIELD.t=900; if(fldBadgeFactor({badges:['powder_shy']},'rally')!==1) throw new Error('powder_shy must steady after the opening (R-7)');
+        __FIELD.t=savedTime;
+        // piecemeal (his_attack) + the_slows (his_offensive): bite on the committed advance, inert holding
+        if(!(fldBadgeFactor({badges:['piecemeal'],order:{type:'move',tx:0,tz:0}},'rally')<1)) throw new Error('piecemeal must drag the committed advance');
+        if(fldBadgeFactor({badges:['piecemeal'],order:{type:'hold',tx:0,tz:0}},'rally')!==1) throw new Error('piecemeal must be inert on a holding unit (R-7)');
+        if(!(fldBadgeFactor({badges:['the_slows'],order:{type:'move',tx:0,tz:0}},'speed')<1)) throw new Error('the_slows must drag the committed offensive');
+        if(fldBadgeFactor({badges:['the_slows'],order:{type:'hold',tx:0,tz:0}},'speed')!==1) throw new Error('the_slows must be inert on a holding unit (R-7)');
+        // rigid_plan (attack_fortified): the assault ONTO fortified ground (fort circle OR wall reach) -> damper; open ground -> inert
+        __FIELD.terrain=Object.assign({}, savedTerr||{}, { walls:[{x1:500,z1:0,x2:500,z2:400}] });
+        if(!(fldBadgeFactor({badges:['rigid_plan'],order:{type:'charge',tx:500,tz:200}},'fire')<1)) throw new Error('rigid_plan must dampen the assault on fortified ground');
+        if(fldBadgeFactor({badges:['rigid_plan'],order:{type:'charge',tx:2400,tz:2400}},'fire')!==1) throw new Error('rigid_plan must be inert on open ground (R-7)');
+        __FIELD.terrain=savedTerr;
+        // THE GATED STACK STILL CLAMPS: a holding unit stacking gated + always rally positives
+        // (.08+.06+.05+.06=.25) must clamp to EXACTLY 1+cap — gated triggers get no cap exemption.
+        var gs=fldBadgeFactor({badges:['stonewall','disciplined','blooded','beloved'],order:{type:'hold',tx:0,tz:0}},'rally');
+        if(Math.abs(gs-(1+cap))>1e-9) throw new Error('the gated stack must clamp to exactly 1+cap ('+(1+cap)+'), got '+gs);
+        return { cap:cap, gatedStack:Math.round(gs*1000)/1000 };
+      } finally { __FIELD.badges=savedB; __FIELD.realismTier=savedT; __FIELD.t=savedTime; __FIELD.terrain=savedTerr; }
+    });
+
+    step('D481 COVERAGE FLOOR: every registered scenario carries a rosterBadges entry (the slice-4 eastern batch; the pinned western/trans-Mississippi remainder lands in slice 5)', function(){
+      // D481 chain: slice 4 covers the 10 eastern scenarios; slice 5 (the western/trans-Mississippi
+      // batch) EMPTIES this pending list and flips the floor to the clean full registry. A battle
+      // shipped after this sweep must add its roster row (or join a documented pending list) in the
+      // same commit — this tooth is the coverage law, and it is EXPECTED to move with the registry.
+      var PENDING=['elkhornTavern','stonesRiver','chattanooga','olustee','fortPillow','kennesaw','atlanta','franklin','nashville','fortDonelson'];
+      var reg=(typeof fldScenarioRegistry==='function')?fldScenarioRegistry():{};
+      var ids=Object.keys(reg); if(ids.length<29) throw new Error('registry readback too small: '+ids.length);
+      var RB=D&&D.rosterBadges; if(!RB) throw new Error('rosterBadges missing');
+      var missing=[], stray=[];
+      for(var i=0;i<ids.length;i++){ var id=ids[i];
+        if(RB[id]){ if(PENDING.indexOf(id)>=0) stray.push(id); continue; }
+        if(PENDING.indexOf(id)<0) missing.push(id); }
+      if(missing.length) throw new Error('registered scenario(s) missing their rosterBadges row (coverage floor): '+missing.join(', '));
+      if(stray.length) throw new Error('scenario(s) covered but still on the pending list (stale pin — empty the list): '+stray.join(', '));
+      for(var s in RB){ if(RB.hasOwnProperty(s) && !reg[s]) throw new Error('rosterBadges names an unregistered scenario: '+s); }
+      return { registry:ids.length, covered:Object.keys(RB).length, pendingWestern:PENDING.length };
+    });
+
+    step('D481 PER-ROW SOURCE FLOOR: every coverage-sweep assignment carries a rosterBadgeProv record — Verified >=2 named sources, Inferred/Disputed >=1, no orphan records (the original 9 D104-workflow battles are documented in _rosterNote)', function(){
+      var ORIG9=['bullrun1','fredericksburg','antietam','gettysburg','shiloh','vicksburg','chancellorsville','malvernHill','chickamauga'];
+      var RB=D&&D.rosterBadges, PV=D&&D.rosterBadgeProv;
+      if(!RB) throw new Error('rosterBadges missing');
+      var swept=Object.keys(RB).filter(function(s){ return ORIG9.indexOf(s)<0; });
+      if(!swept.length) throw new Error('no coverage-sweep scenarios found (the slice-4 batch must be present)');
+      if(!PV) throw new Error('rosterBadgeProv missing (the D481 per-row citation law)');
+      var rows=0, verified=0;
+      for(var si=0;si<swept.length;si++){ var s=swept[si], units=RB[s];
+        for(var uid in units){ if(!units.hasOwnProperty(uid)) continue;
+          var keys=units[uid];
+          for(var ki=0;ki<keys.length;ki++){ rows++;
+            var rec=(PV[s]&&PV[s][uid])?PV[s][uid].filter(function(r){return r&&r.key===keys[ki];})[0]:null;
+            if(!rec) throw new Error('coverage-sweep row '+s+'/'+uid+'/'+keys[ki]+' has NO rosterBadgeProv record (the per-row source floor)');
+            if(['Verified','Inferred','Disputed'].indexOf(rec.prov)<0) throw new Error(s+'/'+uid+'/'+keys[ki]+' invalid prov word: '+rec.prov);
+            var srcs=(rec.sources||[]).filter(function(x){ return typeof x==='string' && x.length>2; });
+            if(rec.prov==='Verified'){ if(srcs.length<2) throw new Error(s+'/'+uid+'/'+keys[ki]+' is Verified with fewer than 2 named sources ('+srcs.length+')'); verified++; }
+            else if(srcs.length<1) throw new Error(s+'/'+uid+'/'+keys[ki]+' is '+rec.prov+' with no named source'); } } }
+      // no orphan prov records: every record maps back to a live rosterBadges row
+      for(var ps in PV){ if(!PV.hasOwnProperty(ps)) continue;
+        for(var pu in PV[ps]){ if(!PV[ps].hasOwnProperty(pu)) continue;
+          var list=PV[ps][pu];
+          for(var pi=0;pi<list.length;pi++){ var pk=list[pi]&&list[pi].key;
+            if(!RB[ps]||!RB[ps][pu]||RB[ps][pu].indexOf(pk)<0) throw new Error('orphan rosterBadgeProv record '+ps+'/'+pu+'/'+pk+' (no matching rosterBadges row)'); } } }
+      if(!(verified*2>=rows)) throw new Error('the sweep should be majority-Verified: '+verified+' of '+rows);
+      return { sweptScenarios:swept.length, rows:rows, verified:verified };
+    });
+
+    step('D481 ROW PROVENANCE DISPLAY: a coverage-sweep badge card carries its per-assignment provenance line (visible + hover + SR); absent record -> the card is byte-identical', function(){
+      if(typeof fldRosterBadgeProv!=='function') throw new Error('fldRosterBadgeProv missing');
+      var ORIG9=['bullrun1','fredericksburg','antietam','gettysburg','shiloh','vicksburg','chancellorsville','malvernHill','chickamauga'];
+      var RB=D.rosterBadges, PV=D.rosterBadgeProv;
+      var scn=null, uid=null, key=null;
+      for(var s in PV){ if(!PV.hasOwnProperty(s)||ORIG9.indexOf(s)>=0) continue;
+        for(var u in PV[s]){ if(!PV[s].hasOwnProperty(u)||!PV[s][u].length) continue; scn=s; uid=u; key=PV[s][u][0].key; break; }
+        if(scn) break; }
+      if(!scn) throw new Error('no sweep prov record to render');
+      var rec=fldRosterBadgeProv(scn,uid,key);
+      if(!rec||rec.key!==key) throw new Error('fldRosterBadgeProv did not resolve '+scn+'/'+uid+'/'+key);
+      var def=fldBadgeDef(key);
+      var withRow=fldBadgeCardHtml(def,rec), plain=fldBadgeCardHtml(def);
+      if(withRow.indexOf('This assignment:')<0) throw new Error('card missing its per-assignment provenance line');
+      var firstSrc=(rec.sources&&rec.sources[0])?rec.sources[0]:null;
+      if(firstSrc){ var dv=document.createElement('div'); dv.innerHTML=withRow;
+        var c=dv.querySelector('[data-badge-card]');
+        if((c.getAttribute('aria-label')||'').indexOf(firstSrc)<0) throw new Error('card aria lacks the row source '+firstSrc);
+        if((c.textContent||'').indexOf(firstSrc)<0) throw new Error('card visible text lacks the row source '+firstSrc); }
+      if(plain.indexOf('This assignment:')>=0) throw new Error('a card with NO row record must render byte-identically to its pre-D481 form');
+      if(fldRosterBadgeProv('bullrun1','cs_jackson','stonewall')!==null) throw new Error('the original-9 battles carry no row records (documented in _rosterNote) — expected null');
+      // the live gallery path passes the record through for the running scenario
+      var savedScn=__FIELD.scenario; __FIELD.scenario=scn;
+      var gal=fldBadgeGalleryHtml({ id:uid, badges:[key] });
+      __FIELD.scenario=savedScn;
+      if(gal.indexOf('This assignment:')<0) throw new Error('the gallery did not thread the row provenance for the live scenario');
+      return { scn:scn, uid:uid, key:key, prov:rec.prov };
     });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);

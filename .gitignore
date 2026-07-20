@@ -35,3 +35,4 @@ tools/shots/session-video/
 .codex/
 # local-only settings/doc snapshots (contain user-level ~/.claude files — never ship)
 backups/
+*.code-workspace
