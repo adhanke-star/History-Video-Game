@@ -69,6 +69,50 @@
     "drawBonus": 1,
     "lossBonus": 0
   },
+  "sets": [
+    {
+      "id": "winter_camp",
+      "name": "Winter Camp Kit",
+      "items": ["wool_blankets", "gum_blanket", "shelter_half"],
+      "bonus": { "exposure": -4, "fatigueRelief": 1 },
+      "blurb": "Blankets, ground cloth, and canvas together turn hard weather."
+    },
+    {
+      "id": "field_mess",
+      "name": "Field Mess",
+      "items": ["camp_cookset", "hardtack_crate", "coffee_ration"],
+      "bonus": { "supply": 1, "morale": 1 },
+      "blurb": "A working company kitchen steadies the march."
+    },
+    {
+      "id": "field_hospital",
+      "name": "Field Hospital",
+      "items": ["surgeon_kit", "quinine_chest", "hospital_stores"],
+      "bonus": { "disease": -4, "morale": 1 },
+      "blurb": "Surgeon, quinine, and relief stores together blunt camp sickness."
+    },
+    {
+      "id": "skirmisher_arms",
+      "name": "Skirmisher's Arms",
+      "items": ["captured_enfield_crate", "captured_springfield_crate", "field_glass"],
+      "bonus": { "firepower": 1, "supply": 1 },
+      "blurb": "Sound rifles and good glass sharpen the picket line."
+    }
+  ],
+  "_setsNote": "D486 (LANE-017 slice 8): SET COLLECTIONS. A set is complete when every member id is present in the campaign inventory (possession, not equip). Completion bonuses are PURE-DERIVED - nothing stored on the save - and use ONLY the existing equip-effect vocabulary at magnitudes never exceeding the item-effect walls (the probe's set-cap tooth enforces both against this file on disk). They enter play only via _lootEquippedEffect, so the survival-bridge facet cap clamps them exactly like item effects. No complete set means zero bonus and byte-identical behavior.",
+  "salvage": {
+    "fatigueCost": 5,
+    "exposureCost": 2,
+    "categories": ["Arms", "Supply", "Medicine"],
+    "csArmsWeightMult": 3,
+    "note": "D486: BATTLEFIELD SALVAGE - one gleaning per strategic turn while survival is active, drawn deterministically from these categories at rarity weights (never unique or named items). For a Confederate campaign, Arms items weigh csArmsWeightMult heavier: captured arms as the CS supply channel, the ordnance practice that armed whole Confederate brigades from won fields. Salvage costs fatigue and exposure and writes only loot state."
+  },
+  "economyHooks": {
+    "dearAt": 1.5,
+    "ruinousAt": 3.0,
+    "requisitionCooldown": 3,
+    "note": "D486: READ-ONLY economy hooks. The sutler price line displays the campaign's existing finance price level (C.economy.inflation, cumulative vs the 1861 dollar) and the quartermaster requisition reads the same number: fair prices fill the requisition from commissary stock, dear or ruinous prices thin the shelves to forage. The loot layer NEVER writes economy state."
+  },
   "items": [
     {
       "id": "commissary_rations",
@@ -186,6 +230,122 @@
         "overall": 1
       },
       "blurb": "A hard-won relic. It belongs to memory more than logistics.",
+      "provenance": "Inferred"
+    },
+    {
+      "id": "hardtack_crate",
+      "name": "Hardtack Crate",
+      "rarity": "common",
+      "category": "Supply",
+      "stack": 12,
+      "use": {
+        "rations": 18
+      },
+      "blurb": "Army bread in fifty-pound boxes - the ration's unloved backbone on every march.",
+      "provenance": "Inferred"
+    },
+    {
+      "id": "desiccated_vegetables",
+      "name": "Desiccated Vegetables",
+      "rarity": "common",
+      "category": "Supply",
+      "stack": 8,
+      "use": {
+        "rations": 10,
+        "disease": -4
+      },
+      "blurb": "Pressed cakes of dried mixed vegetables, issued against scurvy. The men called them desecrated vegetables.",
+      "provenance": "Inferred"
+    },
+    {
+      "id": "coffee_ration",
+      "name": "Coffee Ration",
+      "rarity": "common",
+      "category": "Supply",
+      "stack": 10,
+      "use": {
+        "rations": 6,
+        "fatigue": -4,
+        "morale": 1
+      },
+      "blurb": "Green coffee from the commissary issue, roasted in a half-canteen over the fire.",
+      "provenance": "Inferred"
+    },
+    {
+      "id": "gum_blanket",
+      "name": "Gum Blanket",
+      "rarity": "common",
+      "category": "Kit",
+      "slot": "kit",
+      "effect": {
+        "exposure": -4,
+        "fatigueRelief": 1
+      },
+      "blurb": "A rubberized ground cloth and poncho in one - the wet-weather issue that kept a bedroll dry.",
+      "provenance": "Inferred"
+    },
+    {
+      "id": "shelter_half",
+      "name": "Shelter Half",
+      "rarity": "uncommon",
+      "category": "Kit",
+      "slot": "kit",
+      "effect": {
+        "exposure": -6,
+        "fatigueRelief": 2
+      },
+      "blurb": "Half a dog tent from the quartermaster's shelter-tent issue; two men button their halves into a roof.",
+      "provenance": "Inferred"
+    },
+    {
+      "id": "camp_cookset",
+      "name": "Camp Kettles & Mess Pans",
+      "rarity": "uncommon",
+      "category": "Kit",
+      "slot": "kit",
+      "effect": {
+        "supply": 1,
+        "morale": 1
+      },
+      "blurb": "Company cooking gear from the quartermaster's camp-equipage table.",
+      "provenance": "Inferred"
+    },
+    {
+      "id": "hospital_stores",
+      "name": "Hospital Stores",
+      "rarity": "rare",
+      "category": "Medicine",
+      "stack": 4,
+      "use": {
+        "disease": -12,
+        "morale": 1
+      },
+      "blurb": "Relief-commission crates - concentrated food, dressings, and stimulants for the regimental hospital.",
+      "provenance": "Inferred"
+    },
+    {
+      "id": "captured_springfield_crate",
+      "name": "Captured Springfield Crate",
+      "rarity": "uncommon",
+      "category": "Arms",
+      "slot": "weapon",
+      "effect": {
+        "firepower": 2,
+        "supply": 1
+      },
+      "blurb": "Rifle-muskets gleaned from a won field, reissued as fast as they could be crated.",
+      "provenance": "Inferred"
+    },
+    {
+      "id": "writing_kit",
+      "name": "Writing Kit",
+      "rarity": "rare",
+      "category": "Story",
+      "slot": "keepsake",
+      "effect": {
+        "morale": 1
+      },
+      "blurb": "Paper, pens, and postage from the sutler's stock - the thread home.",
       "provenance": "Inferred"
     },
     {

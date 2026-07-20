@@ -3068,19 +3068,39 @@ next green commit and confer through this ledger instead of permitting simultane
   politics for the election bind) · ARC 6 rail+naval packets (session-fillers,
   chartered per D455 §7's interleave rule) · Mayhem Slice B (LANE-007) · C72 Shiloh
   rewrite + GEA-01/S44 bundle (parked, Aaron reorder-only).
-- **Resume pointer:** SLICE 8 (set collections + item variety §4c.2+§4c.5; may split at
-  drive time) per this contract's clause IN FULL: themed kits with completion effects
-  through the existing condition/supply levers; item variety from real quartermaster/
-  ordnance records; salvage flow; captured arms as the CS supply channel; economy hooks;
-  survival-mode as a campaign-setup choice (default unchanged). Scope confirmed against
-  room at drive time — shed from the back, never thin. Owner probe-loot-survival.
-  §4c.1 + §4d are COMPLETE (D478 language · D479 feel · D480 presentation · D481
-  eastern+R-7 · D482 western · D484 soldier tier · D485 named artifacts); the P-END
-  battery for slices 4-5 ran at `7e399a6` (D482-BATTERY); after slice 8, SLICE 9 is
-  the ARC 4 release battery (suite 140, ALONE, serialized, every artifact read) that
-  alone flips this lane SHIPPED.
-- **Last-touched commit:** the D485 slice-7 commit (this commit).
-- **Slice history:** SLICE 7 SHIPPED as D485 (2026-07-20): named legendary artifacts +
+- **Resume pointer:** SLICE 9 — the ARC 4 RELEASE BATTERY (suite 140; TMPDIR set;
+  `npm run vet:noreg` ALONE on the machine, serialized; war-career 900s;
+  probe-visual-fidelity 600s documented slow row; read EVERY artifact JSON — ok +
+  0 pageerrors; reds root-fixed at their exact labels, slow-Mac timeouts/CDN blips
+  re-run ALONE first per the D454/D471/D477/D482 precedent; never weaken a tooth).
+  On full green flip this lane SHIPPED with the battery SHA. §4c + §4d are COMPLETE
+  (D478 language · D479 feel · D480 presentation · D481 eastern+R-7 · D482 western ·
+  D484 soldier tier · D485 named artifacts · D486 sets/variety/salvage/economy/setup);
+  the P-END battery for slices 4-5 ran at `7e399a6` (D482-BATTERY). Behind the
+  battery: the Aaron-ratified 2026-07-20 [IF-ROOM] tail in order (T1 stale-docs
+  sweep incl. THIS lane's standing-queue rows · T2 the ARC 6 politics research
+  packet · T3 GEA-01/S44 · T4 brigade flag markers), shed from the back.
+- **Last-touched commit:** the D486 slice-8 commit (this commit).
+- **Slice history:** SLICE 8 SHIPPED as D486 (2026-07-20, UNSPLIT — the P0 recon
+  sized every sub-feature onto an existing seam): 4 possession-derived sets entering
+  ONLY via _lootEquippedEffect under the same bridge ±cap (pure, reversible,
+  absent-set byte-identical; the node set-cap wall enforces vocabulary + magnitudes
+  on disk); 9 Inferred quartermaster/ordnance variety items (22 total, the honest-
+  provenance floor + card stamp); lootSalvage once-per-turn costed from
+  Arms/Supply/Medicine with CS Arms ×3; the CS captured-arms VICTORY channel in
+  lootOnResolve (the Union path replay-proven byte-identical); read-only economy
+  hooks (sutler price line + lootRequisition reading C.economy.inflation only,
+  JSON-snapshot equality probed, absent ⇒ fair fail-closed); the picker Campaign
+  Kit setup checkbox threading a normalized token (absent ⇒ off, probed).
+  Teeth loot-survival 28→35; adjacents save-slots 16/16 + ratings 31/31 + economy
+  8/8 + mayhem-mode 24/24 + accessibility 27/27. Binds A (set bonus past the wall →
+  the set-cap tooth EXACTLY) + B (the setup default flipped at the wrapper
+  normalization — the first candidate did not red because the normalization
+  fail-closes it, logged) md5-proven (data 2822a8fe · src/107 6582a0ff · game
+  67fbe534). The weights tooth held 2/1/0 UNMOVED; RESOLVE REWARD/D485 anchor
+  values moved as evidence-only fields. AD-7 game→67fbe534 · dataTree→5de65a85 ·
+  srcTree→8174d79d · journey→214fb6e5 (focused holds e2acf99a).
+  SLICE 7 SHIPPED as D485 (2026-07-20): named legendary artifacts +
   mode-split drops (§4c.1) — the `artifact` tier ADOPTED (glyph ❖, reserved hex,
   contrast-proven, the one-language wall auto-extends) + FOUR Verified named objects
   (28th Virginia battle flag/gettysburg · 4th USCT national colors/newMarketHeights ·

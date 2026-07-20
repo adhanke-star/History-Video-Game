@@ -561,13 +561,13 @@ function _mhInstallEscape() {
   document.addEventListener("keydown", _mhKeyHandler, true);
 }
 
-function _mhArmTerms(side, id) {
+function _mhArmTerms(side, id, surv) {
   side = _mhSide(side);
   id = _mhValidId(id) ? id : "historical";
   var arm = function (btn) {
     if (!btn) return;
     btn.addEventListener("click", function () {
-      _mhStartToken = { side:side, id:id };
+      _mhStartToken = { side:side, id:id, survival: surv === true };
     }, true);
   };
   arm(document.getElementById("msMuster"));
@@ -580,14 +580,14 @@ function _mhArmTerms(side, id) {
     }, 0);
   }, true);
 }
-function _mhOpenTerms(side, id) {
+function _mhOpenTerms(side, id, surv) {
   if (typeof _MH_BASE_MUSTER !== "function") return;
   side = _mhSide(side);
   id = _mhValidId(id) ? id : "historical";
-  _mhPendingStart = { side:side, id:id };
+  _mhPendingStart = { side:side, id:id, survival: surv === true };
   _mhStartToken = null;
   _MH_BASE_MUSTER(side);
-  _mhArmTerms(side, id);
+  _mhArmTerms(side, id, surv === true);
   _mhInstallEscape();
   try { var first = document.getElementById("msMuster"); if (first) first.focus(); } catch (e) {}
 }
@@ -614,7 +614,11 @@ function _mhPickerHTML(side) {
     + '<span class="mh-mode-name">Historical Campaign</span><span class="mh-mode-deck" id="mhHistoricalDesc">Fight the documented war. Historical forces, timing, choices, and teaching context remain in force, while your battlefield performance determines the result.</span></button>'
     + '<button type="button" class="mh-mode" id="mhMayhem" role="radio" tabindex="-1" aria-checked="false" aria-describedby="mhMayhemDesc" data-mh-mode="mayhem">'
     + '<span class="mh-mode-name">Mayhem Campaign — Break the Timeline</span><span class="mh-mode-deck" id="mhMayhemDesc">Mix eras, people, weapons, policies, rewards, and outcomes. The game tracks what happens; it does not grade your morality or historical plausibility.</span></button>'
-    + '</div><div class="mh-picker-actions">'
+    + '</div>'
+    + '<label style="display:flex;gap:8px;align-items:flex-start;margin:10px 0 14px;font-size:13px;line-height:1.5;color:#e9dcc0;cursor:pointer">'
+    + '<input type="checkbox" id="mhSurvivalOpt" style="margin-top:3px">'
+    + '<span><b style="color:#fff4d4">Campaign Kit survival march</b> &mdash; begin with rations, exposure, disease, and fatigue in play from the first turn. You can toggle this later from the Campaign Kit tab.</span></label>'
+    + '<div class="mh-picker-actions">'
     + '<button type="button" class="bigbtn" id="mhStart" disabled aria-disabled="true">Choose a ruleset</button>'
     + '<button type="button" class="ghostbtn" id="mhBack">Back</button>'
     + '</div></div>';
@@ -663,7 +667,8 @@ function _mhOpenRulesetPicker(side) {
   if (start) start.addEventListener("click", function () {
     if (!selected) return;
     _mhClearKeyHandler();
-    _mhOpenTerms(side, selected);
+    var survOpt = document.getElementById("mhSurvivalOpt");
+    _mhOpenTerms(side, selected, !!(survOpt && survOpt.checked));
   });
   var back = document.getElementById("mhBack");
   if (back) back.addEventListener("click", _mhBackToMenu);
@@ -686,7 +691,7 @@ function _mhOpenRulesetPicker(side) {
     side = _mhSide(side);
     var token = _mhStartToken;
     var requested = token && token.side === side && _mhValidId(token.id) ? token.id : "historical";
-    _mhPendingStart = { side:side, id:requested };
+    _mhPendingStart = { side:side, id:requested, survival: !!(token && token.side === side && token.survival === true) };
     try {
       return _MH_BASE_START.apply(this, arguments);
     } finally {
@@ -698,6 +703,13 @@ function _mhOpenRulesetPicker(side) {
     var pending = _mhPendingStart;
     var requested = pending && _mhValidId(pending.id) ? pending.id : "historical";
     mayhemInit(C, requested, "new"); // MAYHEM_BIND_B:ATTACH_BEFORE_INIT
-    return _MH_BASE_INIT.apply(this, arguments);
+    var out = _MH_BASE_INIT.apply(this, arguments);
+    /* D486: the campaign-setup Campaign Kit choice - applied ONLY on an explicit
+       opt-in carried by the start token; absent or false leaves the shipped
+       default untouched (survival stays off exactly as before this seam). */
+    if (pending && pending.survival === true && C && typeof lootSetSurvival === "function") {
+      try { lootSetSurvival(C, true); } catch (e) {}
+    }
+    return out;
   };
 })();

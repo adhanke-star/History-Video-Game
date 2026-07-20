@@ -70,7 +70,7 @@ const SETUP = `(() => {
   }
   function setCtl(el,val,type){ el.value=val; fire(el,type||'change'); }
   try {
-    var fns=['lootInit','lootAddItem','lootUseItem','lootEquipItem','lootSetSurvival','lootForage','lootSurvivalTick','lootOnResolve','lootSurvivalBridgeBonus','lootRenderTab','lootWireTab','ssPersonRegistry','ssFindPerson','ssStartJourney','ssJourneyOnResolve','ssPersonDetailHTML','ssJourneyReportHTML','ssValidateSoldierReplacementPack','aarRenderReport','bridgeArmy','_t1InitAll','_t1Resolve','cwCareerBadges','cwSoldierBadgeRows','_ssSoldierBadgesHTML','_ssJourneyActiveHTML','fldSoldierBadgeDef','fldSoldierBadges','fldSoldierBadgeFactor','_lootItemEligible','_lootWeightedPick','mayhemInit','mayhemIsActive','fldScenarioRegistry'];
+    var fns=['lootInit','lootAddItem','lootUseItem','lootEquipItem','lootSetSurvival','lootForage','lootSurvivalTick','lootOnResolve','lootSurvivalBridgeBonus','lootRenderTab','lootWireTab','ssPersonRegistry','ssFindPerson','ssStartJourney','ssJourneyOnResolve','ssPersonDetailHTML','ssJourneyReportHTML','ssValidateSoldierReplacementPack','aarRenderReport','bridgeArmy','_t1InitAll','_t1Resolve','cwCareerBadges','cwSoldierBadgeRows','_ssSoldierBadgesHTML','_ssJourneyActiveHTML','fldSoldierBadgeDef','fldSoldierBadges','fldSoldierBadgeFactor','_lootItemEligible','_lootWeightedPick','mayhemInit','mayhemIsActive','fldScenarioRegistry','lootSetsStatus','_lootSetBonus','_lootEquippedEffect','lootRemoveItem','lootSalvage','_lootSalvagePool','_lootSalvagePick','lootRequisition','_lootPriceWord','_lootPriceLevel','_lootItem','_lootHasItem','startCampaign','_mhPickerHTML'];
     for(var i=0;i<fns.length;i++) if(typeof window[fns[i]]!=='function') return JSON.stringify({ok:false, fatal:'missing fn '+fns[i]});
     if(!GAME_DATA || !GAME_DATA['loot-survival']) return JSON.stringify({ok:false, fatal:'missing loot-survival data'});
 
@@ -1472,6 +1472,172 @@ const SETUP = `(() => {
       for(i=0;i<keys.length;i++) if(Math.abs(bonus[keys[i]])>8) throw new Error('the bridge clamp broke with artifacts equipped: '+JSON.stringify(bonus));
       return { roster:arts.length, weapon:weaponArt.id, keepsake:keepsakeArt.id, bonus:bonus };
     });
+
+    step('D486 sets: completion is possession-derived, reversible, and byte-identical when no set is complete — bonuses ride the equipped-effect path under the same bridge clamp', function(){
+      var d=gameData('loot-survival'), sets=d.sets;
+      if(!sets||sets.length<4) throw new Error('expected >=4 sets, got '+(sets?sets.length:0));
+      var C=mkC('US'); _t1InitAll(C); C.loot.inventory=[];
+      var winter=null, i; for(i=0;i<sets.length;i++) if(sets[i].id==='winter_camp') winter=sets[i];
+      if(!winter) throw new Error('the winter_camp fixture set is missing');
+      var keys=['exposure','fatigueRelief','disease','supply','morale','firepower','overall'];
+      for(i=0;i<keys.length;i++) if(_lootSetBonus(C,keys[i])!==0) throw new Error('an empty inventory yields a set bonus for '+keys[i]);
+      lootAddItem(C,winter.items[0],1,'probe'); lootAddItem(C,winter.items[1],1,'probe');
+      var st=lootSetsStatus(C), row=null; for(i=0;i<st.length;i++) if(st[i].set.id==='winter_camp') row=st[i];
+      if(!row||row.complete||row.have!==2) throw new Error('two of three members must read incomplete 2/3: '+JSON.stringify(row&&{have:row.have,complete:row.complete}));
+      var base=_lootEquippedEffect(C,'exposure');
+      lootAddItem(C,winter.items[2],1,'probe');
+      st=lootSetsStatus(C); for(i=0;i<st.length;i++) if(st[i].set.id==='winter_camp') row=st[i];
+      if(!row||!row.complete) throw new Error('all three members must complete the set');
+      var withSet=_lootEquippedEffect(C,'exposure');
+      if(withSet!==base+winter.bonus.exposure) throw new Error('completion must add exactly the documented bonus: '+base+' -> '+withSet);
+      lootRemoveItem(C,winter.items[2],1);
+      if(_lootEquippedEffect(C,'exposure')!==base) throw new Error('removing a member must revert the bonus exactly');
+      lootAddItem(C,winter.items[2],1,'probe'); lootSetSurvival(C,true);
+      C.loot.survival.rations=100; C.loot.survival.morale=100; C.loot.survival.fatigue=0; C.loot.survival.exposure=0; C.loot.survival.disease=0;
+      var b=lootSurvivalBridgeBonus(C), bk=['supply','morale','fatigue','firepower','overall'];
+      for(i=0;i<bk.length;i++) if(Math.abs(b[bk[i]])>8) throw new Error('the bridge clamp broke with a completed set: '+JSON.stringify(b));
+      var div=document.createElement('div'); div.innerHTML=lootRenderTab(C);
+      var card=div.querySelector('[data-loot-set="winter_camp"]');
+      if(!card||card.getAttribute('data-set-complete')!=='1') throw new Error('the sets panel must show winter_camp complete');
+      if(!div.querySelectorAll('[data-loot-set][data-set-complete="0"]').length) throw new Error('incomplete sets must render as open collections');
+      return { sets:sets.length, base:base, withSet:withSet };
+    });
+
+    step('D486 item variety: every inventory card displays its honest provenance stamp (Inferred calibration vs the Verified named rows)', function(){
+      var C=mkC('US'); _t1InitAll(C); C.loot.inventory=[];
+      lootAddItem(C,'shelter_half',1,'probe');
+      lootAddItem(C,'artifact_flag_28va',1,'probe');
+      var div=document.createElement('div'); div.innerHTML=lootRenderTab(C);
+      var cards=div.querySelectorAll('[data-loot-card]');
+      if(cards.length<2) throw new Error('expected both fixture cards, got '+cards.length);
+      var seen={};
+      for(var i=0;i<cards.length;i++){
+        var id=cards[i].getAttribute('data-loot-id');
+        var stamp=cards[i].querySelector('[data-item-prov]');
+        if(!stamp) throw new Error(id+': the provenance stamp is missing from the card');
+        seen[id]=stamp.getAttribute('data-item-prov');
+      }
+      if(seen['shelter_half']!=='Inferred') throw new Error('a calibration item must display Inferred, got '+seen['shelter_half']);
+      if(seen['artifact_flag_28va']!=='Verified') throw new Error('a named artifact must display Verified, got '+seen['artifact_flag_28va']);
+      return seen;
+    });
+
+    step('D486 salvage: once per strategic turn while active, category-bounded and costed — and Confederate salvage weighs Arms heavier (the captured-arms channel)', function(){
+      var d=gameData('loot-survival'), cfg=d.salvage;
+      var C=mkC('US'); _t1InitAll(C); C.loot.inventory=[];
+      C.president={turn:9,log:[]};
+      var refIn=lootSalvage(C);
+      if(refIn.ok||refIn.reason!=='inactive') throw new Error('inactive salvage must refuse: '+JSON.stringify(refIn));
+      lootSetSurvival(C,true);
+      var f0=C.loot.survival.fatigue, e0=C.loot.survival.exposure;
+      var one=lootSalvage(C);
+      if(!one.ok) throw new Error('active salvage should glean: '+JSON.stringify(one));
+      if(C.loot.survival.fatigue!==Math.min(100,f0+cfg.fatigueCost)||C.loot.survival.exposure!==Math.min(100,e0+cfg.exposureCost)) throw new Error('salvage costs did not apply');
+      var again=lootSalvage(C);
+      if(again.ok||again.reason!=='already-salvaged') throw new Error('same-turn salvage must refuse');
+      C.president.turn=10;
+      if(!lootSalvage(C).ok) throw new Error('next-turn salvage should glean again');
+      var CU=mkC('US'), CScs=mkC('CS');
+      var pu=_lootSalvagePool(CU), pc=_lootSalvagePool(CScs);
+      var wa=0, ua=0, i;
+      for(i=0;i<pu.pool.length;i++){
+        var it=pu.pool[i].item;
+        if(cfg.categories.indexOf(it.category)<0) throw new Error(it.id+': the salvage pool leaked outside the configured categories');
+        if(it.unique||it.artifact) throw new Error(it.id+': unique or named items must never salvage');
+        if(it.category==='Arms') ua+=pu.pool[i].weight;
+      }
+      for(i=0;i<pc.pool.length;i++) if(pc.pool[i].item.category==='Arms') wa+=pc.pool[i].weight;
+      if(wa!==ua*cfg.csArmsWeightMult) throw new Error('CS Arms weight must be x'+cfg.csArmsWeightMult+': US '+ua+' vs CS '+wa);
+      var csArms=0, usArms=0, n=400;
+      for(i=0;i<n;i++){
+        var pC=_lootSalvagePick('sweep:'+i, CScs); if(pC&&pC.category==='Arms') csArms++;
+        var pU=_lootSalvagePick('sweep:'+i, CU); if(pU&&pU.category==='Arms') usArms++;
+      }
+      if(!(csArms>usArms)||!usArms) throw new Error('the capture channel must tilt CS salvage toward Arms: CS '+csArms+' vs US '+usArms);
+      return { usArmsWeight:ua, csArmsWeight:wa, csArmsPicks:csArms, usArmsPicks:usArms };
+    });
+
+    step("D486 captured-arms resolve channel: a Confederate victory's last recovery draws from the capture pool and the Union path is byte-identical to the plain weighted pick", function(){
+      var B={id:'bullrun1',name:'First Bull Run'};
+      var CU=mkC('US'); _t1InitAll(CU); CU.loot.inventory=[]; CU.president={turn:4,log:[]};
+      var CT=mkC('US'); _t1InitAll(CT); CT.loot.inventory=[]; CT.president={turn:4,log:[]};
+      var i, it;
+      for(i=0;i<3;i++){
+        it=_lootWeightedPick('bullrun1:4:'+i+':W', CT, B);
+        if(it){ if(it.unique&&_lootHasItem(CT,it.id)) it=_lootItem('commissary_rations'); lootAddItem(CT,it.id,1,'First Bull Run'); }
+      }
+      lootOnResolve('US','win',B,CU,true);
+      if(JSON.stringify(CU.loot.inventory)!==JSON.stringify(CT.loot.inventory)) throw new Error('the Union resolve path must stay byte-identical to the plain weighted pick: '+JSON.stringify(CU.loot.inventory)+' vs '+JSON.stringify(CT.loot.inventory));
+      var CC=mkC('CS'); _t1InitAll(CC); CC.loot.inventory=[]; CC.president={turn:4,log:[]};
+      var CX=mkC('CS'); _t1InitAll(CX); CX.loot.inventory=[]; CX.president={turn:4,log:[]};
+      var lastPick=null;
+      for(i=0;i<3;i++){
+        it=(i===2)?_lootSalvagePick('bullrun1:4:2:W', CX):_lootWeightedPick('bullrun1:4:'+i+':W', CX, B);
+        if(i===2) lastPick=it;
+        if(it){ if(it.unique&&_lootHasItem(CX,it.id)) it=_lootItem('commissary_rations'); lootAddItem(CX,it.id,1,'First Bull Run'); }
+      }
+      lootOnResolve('CS','win',B,CC,true);
+      if(JSON.stringify(CC.loot.inventory)!==JSON.stringify(CX.loot.inventory)) throw new Error('the CS resolve path must route its last recovery through the capture pool: '+JSON.stringify(CC.loot.inventory)+' vs '+JSON.stringify(CX.loot.inventory));
+      var d=gameData('loot-survival');
+      if(!lastPick||d.salvage.categories.indexOf(lastPick.category)<0) throw new Error('the channel pick must stay category-bounded: '+JSON.stringify(lastPick));
+      var CL=mkC('CS'); _t1InitAll(CL); CL.loot.inventory=[]; CL.president={turn:7,log:[]};
+      var CM2=mkC('CS'); _t1InitAll(CM2); CM2.loot.inventory=[]; CM2.president={turn:7,log:[]};
+      it=_lootWeightedPick('bullrun1:7:0:L', CM2, B);
+      if(it){ if(it.unique&&_lootHasItem(CM2,it.id)) it=_lootItem('commissary_rations'); lootAddItem(CM2,it.id,1,'First Bull Run'); }
+      lootOnResolve('US','loss',B,CL,false);
+      if(JSON.stringify(CL.loot.inventory)!==JSON.stringify(CM2.loot.inventory)) throw new Error('a CS loss must take no capture channel');
+      return { usRows:CU.loot.inventory.length, csRows:CC.loot.inventory.length, channelPick:lastPick?lastPick.id:null };
+    });
+
+    step('D486 economy hooks are READ-ONLY: sutler prices and the quartermaster requisition read the existing finance state and never write it', function(){
+      var C=mkC('US'); _t1InitAll(C); C.loot.inventory=[]; C.president={turn:3,log:[]};
+      var refIn=lootRequisition(C);
+      if(refIn.ok||refIn.reason!=='inactive') throw new Error('an inactive requisition must refuse');
+      lootSetSurvival(C,true);
+      C.economy={inflation:1.1,mix:{bonds:1,taxes:1,printing:1},debt:0,hiPrintTurns:0,delegated:true,lastTurn:null,log:[]};
+      var snap=JSON.stringify(C.economy);
+      if(_lootPriceWord(C)!=='fair') throw new Error('inflation 1.1 must read fair');
+      var r1=lootRequisition(C);
+      if(!r1.ok||r1.prices!=='fair') throw new Error('a fair requisition should fill: '+JSON.stringify(r1));
+      if((r1.item.category||'')!=='Supply') throw new Error('a fair requisition must draw commissary stock, got '+r1.item.id);
+      if(JSON.stringify(C.economy)!==snap) throw new Error('the requisition wrote economy state');
+      var r2=lootRequisition(C);
+      if(r2.ok||r2.reason!=='pending') throw new Error('the cooldown must hold: '+JSON.stringify(r2));
+      C.president.turn=6;
+      C.economy.inflation=3.2; snap=JSON.stringify(C.economy);
+      if(_lootPriceWord(C)!=='ruinous') throw new Error('inflation 3.2 must read ruinous');
+      var r3=lootRequisition(C);
+      if(!r3.ok||r3.item.id!=='forage_bundle') throw new Error('ruinous prices must thin the shelves to forage: '+JSON.stringify(r3));
+      if(JSON.stringify(C.economy)!==snap) throw new Error('the loot layer wrote economy state');
+      var C2=mkC('US'); _t1InitAll(C2); delete C2.economy;
+      if(_lootPriceWord(C2)!=='fair') throw new Error('an absent finance state must read fair, fail-closed');
+      var div=document.createElement('div'); div.innerHTML=lootRenderTab(C);
+      var line=div.querySelector('#lootSutlerLine');
+      if(!line||line.textContent.indexOf('ruinous')<0||line.textContent.indexOf('3.20')<0) throw new Error('the sutler line must price from the finance read: '+(line?line.textContent:'missing'));
+      return { fairGrant:r1.item.id, ruinousGrant:r3.item.id };
+    });
+
+    step('D486 setup choice: the campaign-setup Campaign Kit opt-in flows through the picker token and the absent default stays byte-identical off', function(){
+      var div=document.createElement('div'); div.innerHTML=_mhPickerHTML('US');
+      var box=div.querySelector('#mhSurvivalOpt');
+      if(!box||box.type!=='checkbox'||box.checked) throw new Error('the picker must carry an unchecked Campaign Kit checkbox');
+      _mhStartToken={side:'US',id:'historical'};
+      startCampaign('US',false);
+      var C0=G.campaign;
+      if(lootSurvivalActive(C0)) throw new Error('the absent opt-in flipped survival on (the shipped default moved)');
+      if(C0.loot&&C0.loot.survival&&C0.loot.survival.enabled!==false) throw new Error('survival.enabled must stay false by default');
+      _mhStartToken={side:'US',id:'historical',survival:true};
+      startCampaign('US',false);
+      var C1=G.campaign;
+      if(!lootSurvivalActive(C1)||C1.loot.survival.enabled!==true) throw new Error('the opt-in token must begin the campaign with survival on');
+      if(C1.loot.journey&&C1.loot.journey.enabled) throw new Error('the setup choice must touch survival only, never the journey');
+      _mhStartToken={side:'US',id:'mayhem',survival:true};
+      startCampaign('US',false);
+      var C2=G.campaign;
+      if(!mayhemIsActive(C2)||!lootSurvivalActive(C2)) throw new Error('the opt-in must ride a Mayhem start too');
+      _mhStartToken=null;
+      return { defaultOff:lootSurvivalActive(C0)===false, mayhemOptIn:true };
+    });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;
@@ -1550,6 +1716,54 @@ const SETUP = `(() => {
       if (!floorOk) result.ok = false;
     } catch (eFloor) {
       result.steps.push({ name: 'D485 named-artifact source floor: every named item Verified on >=2 distinct sources with provenance text and a complete battle/unit lock (disk-read; the gate-4e sibling)', ok: false, err: String(eFloor && eFloor.message || eFloor) });
+      result.ok = false;
+    }
+
+    // D486 (LANE-017 slice 8) node-side disk scan — the SET-CAP WALL + the VARIETY HONESTY
+    // FLOOR: set-completion bonuses use only the item-effect vocabulary at magnitudes never
+    // exceeding the item-effect walls (adjudication 3 — no new lever class), every set member
+    // resolves to a catalog item, and every catalog item is either Verified on >=2 distinct
+    // sources or a displayed-grade Inferred/Disputed calibration row (adjudication 4).
+    try {
+      const lootData2 = JSON.parse(readFileSync(join(ROOT, 'data', 'loot-survival.json'), 'utf8'));
+      const setsBad = [];
+      const itemsById = new Map();
+      const maxByKey = {};
+      for (const it of lootData2.items) {
+        itemsById.set(it.id, it);
+        if (it.artifact || it.rarity === 'artifact') continue;
+        if (it.effect) for (const [k, v] of Object.entries(it.effect)) {
+          if (typeof v !== 'number') continue;
+          const m = Math.abs(v);
+          if (!(k in maxByKey) || m > maxByKey[k]) maxByKey[k] = m;
+        }
+      }
+      const sets = Array.isArray(lootData2.sets) ? lootData2.sets : [];
+      if (sets.length < 4) setsBad.push('expected >=4 sets, got ' + sets.length);
+      for (const s of sets) {
+        if (!s || !s.id || !Array.isArray(s.items) || s.items.length < 2) { setsBad.push(String(s && s.id) + ': malformed set'); continue; }
+        for (const m of s.items) if (!itemsById.has(m)) setsBad.push(s.id + ': member ' + m + ' is not a catalog item');
+        for (const [k, v] of Object.entries(s.bonus || {})) {
+          if (typeof v !== 'number') { setsBad.push(s.id + ': non-numeric bonus ' + k); continue; }
+          if (!(k in maxByKey)) setsBad.push(s.id + ': bonus key ' + k + ' is outside the item-effect vocabulary (a new lever class)');
+          else if (Math.abs(v) > maxByKey[k]) setsBad.push(s.id + ': bonus ' + k + '=' + v + ' exceeds the item-effect wall ' + maxByKey[k]);
+        }
+      }
+      if (lootData2.items.length < 22) setsBad.push('catalog thinner than the D486 variety floor: ' + lootData2.items.length + ' < 22');
+      for (const it of lootData2.items) {
+        const prov = String(it.provenance || '');
+        if (prov === 'Verified') {
+          const srcs = new Set((Array.isArray(it.sources) ? it.sources : []).map(s => String(s).replace(/\s+/g, ' ').trim().toLowerCase()).filter(Boolean));
+          if (srcs.size < 2) setsBad.push(it.id + ': ' + srcs.size + ' distinct source(s) under a Verified stamp');
+        } else if (prov !== 'Inferred' && prov !== 'Disputed') {
+          setsBad.push(it.id + ': provenance must be Verified, Inferred, or Disputed - got "' + prov + '"');
+        }
+      }
+      const setsOk = setsBad.length === 0;
+      result.steps.push({ name: 'D486 set-cap wall + variety honesty floor: set bonuses stay inside the item-effect walls on existing keys, members resolve, and every catalog item is Verified-with-sources or displayed-grade Inferred (disk-read)', ok: setsOk, v: setsOk ? { sets: sets.length, items: lootData2.items.length } : null, err: setsOk ? undefined : setsBad.join('; ') });
+      if (!setsOk) result.ok = false;
+    } catch (eSets) {
+      result.steps.push({ name: 'D486 set-cap wall + variety honesty floor: set bonuses stay inside the item-effect walls on existing keys, members resolve, and every catalog item is Verified-with-sources or displayed-grade Inferred (disk-read)', ok: false, err: String(eSets && eSets.message || eSets) });
       result.ok = false;
     }
     const shotPath = join(OUT, 'probe-loot-survival.png');

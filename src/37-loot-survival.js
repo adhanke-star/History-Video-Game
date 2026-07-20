@@ -21,6 +21,9 @@ function _lootData() { return (typeof gameData === "function") ? gameData("loot-
 function _lootItems() { var d = _lootData(); return (d && d.items && d.items.length) ? d.items : []; }
 function _lootSurvCfg() { var d = _lootData(); return (d && d.survival) ? d.survival : {}; }
 function _lootDropsCfg() { var d = _lootData(); return (d && d.drops) ? d.drops : {}; }
+function _lootSets() { var d = _lootData(); return (d && d.sets && d.sets.length) ? d.sets : []; }
+function _lootSalvCfg() { var d = _lootData(); return (d && d.salvage) ? d.salvage : {}; }
+function _lootEconCfg() { var d = _lootData(); return (d && d.economyHooks) ? d.economyHooks : {}; }
 function _lootEsc(s) { return (typeof htmlEsc === "function") ? htmlEsc(s) : String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 function _lootAttr(s) { return _lootEsc(s).replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
 function _lootOwn(o, k) { return !!o && Object.prototype.hasOwnProperty.call(o, k); }
@@ -858,6 +861,8 @@ function lootInit(C) {
   S._touched = true;
   S.lastTurn = _lootCleanTurn(S.lastTurn);
   S.forageTurn = _lootCleanTurn(S.forageTurn);
+  S.salvageTurn = _lootCleanTurn(S.salvageTurn);
+  S.reqTurn = _lootCleanTurn(S.reqTurn);
 
   var clean = [], seen = {};
   for (var i = 0; i < L.inventory.length; i++) {
@@ -980,6 +985,33 @@ function lootUseItem(C, id) {
   return { ok: true, item: it, survival: S };
 }
 
+/* D486 (LANE-017 slice 8) - SET COLLECTIONS. Completion is possession: every member id
+   present in the campaign inventory. Status and bonus are pure functions of the
+   inventory - nothing is stored, so completion is fully reversible and a campaign with
+   no complete set behaves byte-identically to pre-slice. Bonuses enter play ONLY
+   through _lootEquippedEffect below, the same capped condition/supply levers item
+   effects ride (the bridge facet clamp applies unchanged). */
+function lootSetsStatus(C) {
+  var sets = _lootSets(), out = [];
+  for (var i = 0; i < sets.length; i++) {
+    var s = sets[i];
+    if (!s || !s.id || !Array.isArray(s.items) || !s.items.length) continue;
+    var have = 0;
+    for (var j = 0; j < s.items.length; j++) if (_lootHasItem(C, s.items[j])) have++;
+    out.push({ set: s, have: have, need: s.items.length, complete: have === s.items.length });
+  }
+  return out;
+}
+function _lootSetBonus(C, key) {
+  var st = lootSetsStatus(C), sum = 0;
+  for (var i = 0; i < st.length; i++) {
+    if (!st[i].complete) continue;
+    var b = st[i].set.bonus;
+    if (b && typeof b[key] === "number") sum += b[key];
+  }
+  return sum;
+}
+
 function _lootEquippedEffect(C, key) {
   var L = C && C.loot;
   if (!L || !L.equipped) return 0;
@@ -989,7 +1021,7 @@ function _lootEquippedEffect(C, key) {
     var it = _lootItem(L.equipped[slot]);
     if (it && it.effect && typeof it.effect[key] === "number") sum += it.effect[key];
   }
-  return sum;
+  return sum + _lootSetBonus(C, key);
 }
 
 function lootForage(C) {
@@ -1006,6 +1038,105 @@ function lootForage(C) {
   S.exposure = _lootClamp(S.exposure + 2, 0, 100);
   if (typeof _pdLog === "function") _pdLog(C, "Foragers bring in food for the next march.");
   return { ok: true, rations: S.rations };
+}
+
+/* D486 - BATTLEFIELD SALVAGE + the captured-arms channel. One gleaning per strategic
+   turn while survival is active, drawn deterministically from the configured salvage
+   categories at rarity weights (never unique or named items). A Confederate campaign
+   weighs Arms items heavier (config csArmsWeightMult): battlefield capture as the CS
+   supply channel. Salvage costs fatigue and exposure and writes ONLY loot state. */
+function _lootRollPool(pool, total, seed) {
+  if (!pool.length || total <= 0) return null;
+  var roll = _lootHash(seed) % total, acc = 0;
+  for (var j = 0; j < pool.length; j++) { acc += pool[j].weight; if (roll < acc) return pool[j].item; }
+  return pool[pool.length - 1].item;
+}
+function _lootSalvagePool(C) {
+  var cfg = _lootSalvCfg(), cats = Array.isArray(cfg.categories) ? cfg.categories : ["Arms", "Supply", "Medicine"];
+  var items = _lootItems(), d = _lootData(), rar = (d && d.rarities) ? d.rarities : {};
+  var mult = (C && C.side === "CS") ? Math.max(1, Math.round(_lootNum(cfg.csArmsWeightMult, 3))) : 1;
+  var pool = [], total = 0;
+  for (var i = 0; i < items.length; i++) {
+    var it = items[i];
+    if (!it || !it.id || it.unique || it.artifact) continue;
+    if (cats.indexOf(it.category || "") < 0) continue;
+    var w = _lootNum(rar[it.rarity] && rar[it.rarity].weight, 1);
+    if (w <= 0) continue;
+    if ((it.category || "") === "Arms") w *= mult;
+    pool.push({ item: it, weight: w });
+    total += w;
+  }
+  return { pool: pool, total: total };
+}
+function _lootSalvagePick(seed, C) {
+  var p = _lootSalvagePool(C);
+  return _lootRollPool(p.pool, p.total, seed);
+}
+function lootSalvage(C) {
+  var L = lootInit(C); if (!L) return { ok: false };
+  if (!lootSurvivalActive(C)) return { ok: false, reason: "inactive" };
+  var turn = _lootTurn(C), S = L.survival, cfg = _lootSalvCfg();
+  if (S.salvageTurn > turn) S.salvageTurn = turn - 1;
+  if (S.salvageTurn === turn) return { ok: false, reason: "already-salvaged" };
+  var it = _lootSalvagePick("salvage:" + (C.side === "CS" ? "CS" : "US") + ":" + turn, C);
+  if (!it) return { ok: false, reason: "no-pool" };
+  S.salvageTurn = turn;
+  S.fatigue = _lootClamp(S.fatigue + _lootNum(cfg.fatigueCost, 5), 0, 100);
+  S.exposure = _lootClamp(S.exposure + _lootNum(cfg.exposureCost, 2), 0, 100);
+  var res = lootAddItem(C, it.id, 1, "Salvaged from the field");
+  if (typeof _pdLog === "function") {
+    if (res.ok) _pdLog(C, (C.side === "CS" && (it.category || "") === "Arms" ? "Captured arms feed the army: " : "The field is gleaned: ") + it.name + ".");
+    else _pdLog(C, "The salvage detail finds nothing it can carry.");
+  }
+  return { ok: true, item: it, added: !!res.ok };
+}
+
+/* D486 - ECONOMY HOOKS (READ-ONLY). The sutler line and the quartermaster requisition
+   READ the campaign's existing finance state (C.economy.inflation, the cumulative
+   price level vs the 1861 dollar) and NEVER write it: fair prices fill a requisition
+   from commissary stock; dear or ruinous prices thin the shelves to forage. Grants
+   write only loot state. */
+function _lootPriceLevel(C) {
+  var E = C && C.economy;
+  return (E && typeof E.inflation === "number" && isFinite(E.inflation) && E.inflation > 0) ? E.inflation : 1.0;
+}
+function _lootPriceWord(C) {
+  var cfg = _lootEconCfg(), infl = _lootPriceLevel(C);
+  if (infl >= _lootNum(cfg.ruinousAt, 3.0)) return "ruinous";
+  if (infl >= _lootNum(cfg.dearAt, 1.5)) return "dear";
+  return "fair";
+}
+function lootRequisition(C) {
+  var L = lootInit(C); if (!L) return { ok: false };
+  if (!lootSurvivalActive(C)) return { ok: false, reason: "inactive" };
+  var turn = _lootTurn(C), S = L.survival;
+  var cool = Math.max(1, Math.round(_lootNum(_lootEconCfg().requisitionCooldown, 3)));
+  if (S.reqTurn > turn) S.reqTurn = turn - cool;
+  if (S.reqTurn >= 0 && turn - S.reqTurn < cool) return { ok: false, reason: "pending", nextTurn: S.reqTurn + cool };
+  var word = _lootPriceWord(C), it = null;
+  if (word === "fair") {
+    var items = _lootItems(), d = _lootData(), rar = (d && d.rarities) ? d.rarities : {};
+    var pool = [], total = 0;
+    for (var i = 0; i < items.length; i++) {
+      var cand = items[i];
+      if (!cand || !cand.id || cand.unique || cand.artifact || (cand.category || "") !== "Supply") continue;
+      var w = _lootNum(rar[cand.rarity] && rar[cand.rarity].weight, 1);
+      if (w <= 0) continue;
+      pool.push({ item: cand, weight: w });
+      total += w;
+    }
+    it = _lootRollPool(pool, total, "req:" + turn);
+  } else {
+    it = _lootItem("forage_bundle");
+  }
+  if (!it) return { ok: false, reason: "no-stock" };
+  S.reqTurn = turn;
+  var res = lootAddItem(C, it.id, 1, "Quartermaster requisition");
+  if (typeof _pdLog === "function") {
+    if (res.ok) _pdLog(C, word === "fair" ? ("The requisition is filled: " + it.name + ".") : ("Prices are " + word + "; the quartermaster can offer only " + it.name + "."));
+    else _pdLog(C, "The requisition wagon returns with nothing the train can hold.");
+  }
+  return { ok: true, item: it, prices: word, added: !!res.ok };
 }
 
 function _lootWinter(C) {
@@ -1079,7 +1210,11 @@ function lootOnResolve(winnerSide, type, B, C, win) {
   var n = 1 + (win ? _lootNum(dc.winBonus, 2) : (type === "draw" ? _lootNum(dc.drawBonus, 1) : _lootNum(dc.lossBonus, 0)));
   var got = [], drops = [], base = (B && (B.id || B.name)) || "battle";
   for (var i = 0; i < n; i++) {
-    var it = _lootWeightedPick(base + ":" + _lootTurn(C) + ":" + i + ":" + (win ? "W" : "L"), C, B);
+    var seed = base + ":" + _lootTurn(C) + ":" + i + ":" + (win ? "W" : "L");
+    /* D486: the captured-arms channel - a Confederate victory's LAST recovery draws
+       from the salvage pool, where Arms items carry the configured capture weight.
+       The Union path and every non-win path use the plain weighted pick unchanged. */
+    var it = (win && i === n - 1 && C && C.side === "CS") ? _lootSalvagePick(seed, C) : _lootWeightedPick(seed, C, B);
     if (!it) continue;
     if (it.unique && _lootHasItem(C, it.id)) it = _lootItem("commissary_rations");
     var res = lootAddItem(C, it.id, 1, _lootBattleLabel(B));
@@ -2135,7 +2270,7 @@ function _lootInventoryHTML(C) {
     }
     html += '<div data-loot-card="1" data-loot-id="' + _lootAttr(it.id) + '" data-loot-tier="' + _lootAttr(tier.id) + '"' + glow + ' style="--cw-tier-glow:' + col + ';border:1px solid ' + col + ';border-left:4px solid ' + col + ';border-radius:6px;padding:9px;background:rgba(0,0,0,.14)">'
       + '<div style="display:flex;justify-content:space-between;gap:8px"><b>' + _lootEsc(it.name) + '</b><span data-tier="' + _lootAttr(tier.id) + '" style="color:' + col + ';font-size:12px"><span aria-hidden="true">' + _lootEsc(tier.glyph) + '</span> ' + _lootEsc(rar.label) + '</span></div>'
-      + '<div style="font-size:11px;opacity:.74">' + _lootEsc(it.category || "Item") + ' x' + row.qty + equipped + '</div>'
+      + '<div style="font-size:11px;opacity:.74">' + _lootEsc(it.category || "Item") + ' x' + row.qty + equipped + ' &middot; <span data-item-prov="' + _lootAttr(it.provenance || "Inferred") + '">' + _lootEsc(it.provenance || "Inferred") + '</span></div>'
       + '<div style="font-size:11px;margin-top:5px;min-height:28px">' + _lootEsc(it.blurb || "") + '</div>' + provLine
       + '<div class="btn-row" style="margin-top:7px;justify-content:flex-start;gap:6px">'
       + (it.use ? '<button type="button" class="upg" data-loot-use="' + _lootAttr(it.id) + '">Use</button>' : '')
@@ -2157,7 +2292,33 @@ function _lootSurvivalHTML(C) {
     + '<div class="btn-row" style="justify-content:flex-start;gap:8px;margin:8px 0">'
     + '<button id="lootSurvToggle" type="button" class="bigbtn" aria-pressed="' + (active ? "true" : "false") + '">' + (active ? "Survival On" : "Survival Off") + '</button>'
     + '<button id="lootForage" type="button" class="upg"' + (active ? "" : " disabled") + '>Forage</button>'
-    + '</div>';
+    + '<button id="lootSalvage" type="button" class="upg"' + (active ? "" : " disabled") + '>Salvage the Field</button>'
+    + '<button id="lootReq" type="button" class="upg"' + (active ? "" : " disabled") + '>Requisition</button>'
+    + '</div>'
+    + '<div id="lootSutlerLine" style="font-size:11px;opacity:.78;margin:2px 0 8px">Sutler prices: x' + _lootPriceLevel(C).toFixed(2) + ' the 1861 dollar &mdash; ' + _lootEsc(_lootPriceWord(C)) + '.</div>';
+}
+
+function _lootSetsHTML(C) {
+  var st = lootSetsStatus(C);
+  if (!st.length) return "";
+  var html = '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:10px 0 5px">Set Collections</div>'
+    + '<div id="lootSetsBlock" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px">';
+  for (var i = 0; i < st.length; i++) {
+    var s = st[i].set, comp = st[i].complete, parts = [], bparts = [], j, k;
+    for (j = 0; j < s.items.length; j++) {
+      var mit = _lootItem(s.items[j]), haveIt = _lootHasItem(C, s.items[j]);
+      parts.push('<span style="font-size:10.5px;padding:1px 6px;border-radius:8px;border:1px solid ' + (haveIt ? "#6f9e5a" : "#8a7350") + ';opacity:' + (haveIt ? "1" : ".62") + '">'
+        + _lootEsc(mit ? mit.name : s.items[j]) + (haveIt ? ' <span aria-hidden="true">&#10003;</span><span class="sr-only"> held</span>' : '') + '</span>');
+    }
+    if (s.bonus) for (k in s.bonus) { if (_lootOwn(s.bonus, k) && typeof s.bonus[k] === "number") bparts.push(k + " " + (s.bonus[k] > 0 ? "+" : "") + s.bonus[k]); }
+    html += '<div data-loot-set="' + _lootAttr(s.id) + '" data-set-complete="' + (comp ? "1" : "0") + '" style="border:1px solid ' + (comp ? "#6f9e5a" : "#8a7350") + ';border-radius:6px;padding:9px;background:rgba(0,0,0,.12)">'
+      + '<div style="display:flex;justify-content:space-between;gap:8px"><b>' + _lootEsc(s.name) + '</b><span style="font-size:11px;color:' + (comp ? "#6f9e5a" : "#d7c392") + '">' + st[i].have + "/" + st[i].need + (comp ? " &middot; Complete" : "") + '</span></div>'
+      + '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px">' + parts.join("") + '</div>'
+      + (bparts.length ? '<div style="font-size:10.5px;margin-top:6px;opacity:.8">Completion: ' + _lootEsc(bparts.join(" · ")) + (comp ? "" : " (locked)") + '</div>' : '')
+      + '<div style="font-size:11px;margin-top:5px;opacity:.8">' + _lootEsc(s.blurb || "") + '</div>'
+      + '</div>';
+  }
+  return html + '</div>';
 }
 
 function _ssPeopleHTML(C) {
@@ -2275,6 +2436,7 @@ function lootRenderTab(C) {
     + _lootRecentHTML(C)
     + _lootInventoryControlsHTML(C)
     + '<div id="lootInvBlock">' + _lootInventoryHTML(C) + '</div>'
+    + _lootSetsHTML(C)
     + '<hr class="rule">'
     + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:5px">Survival</div>'
     + _lootSurvivalHTML(C)
@@ -2315,6 +2477,10 @@ function lootWireTab(C) {
   if (tog) tog.addEventListener("click", function () { lootSetSurvival(C, !lootSurvivalActive(C)); refresh(); });
   var forage = document.getElementById("lootForage");
   if (forage) forage.addEventListener("click", function () { lootForage(C); refresh(); });
+  var salv = document.getElementById("lootSalvage");
+  if (salv) salv.addEventListener("click", function () { lootSalvage(C); refresh(); });
+  var req = document.getElementById("lootReq");
+  if (req) req.addEventListener("click", function () { lootRequisition(C); refresh(); });
   var pick = document.getElementById("ssPersonSelect");
   var begin = document.getElementById("ssBeginSelected");
   if (pick && begin) begin.addEventListener("click", function () { if (pick.value) ssStartJourney(C, pick.value); refresh(); });

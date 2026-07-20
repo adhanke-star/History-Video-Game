@@ -951,7 +951,14 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // tier) · journey 9655bfff -> 73a817a8 (src/37). Historical pools away from the four provenance
     // battles are byte-identical (the shipped deterministic-drop teeth held unmoved); effects ride
     // the existing capped equip path; both binds md5-proven; runtime/command/focused hold.
-srcTree:"b7648a677bb3fcf0626bcc1e8fdaedf1",
+    // D486 re-pin (LANE-017 slice 8, sets + variety + salvage + economy hooks + setup choice
+    // SS4c.2+SS4c.5): srcTree b7648a67 -> 8174d79d (src/37 possession-derived set collections
+    // through _lootEquippedEffect, the salvage/requisition actions, the CS captured-arms
+    // resolve channel, the sutler read-only price line, the card provenance stamp; src/107
+    // threads the picker Campaign Kit opt-in token — absent stays byte-identical off) ·
+    // journey 214fb6e5 (src/37). The journey/war-career logic surfaces are untouched, proven
+    // by this probe's own runtime steps; both binds md5-proven; runtime/command/focused hold.
+srcTree:"8174d79dd88de5f66415716f1c014c54",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
@@ -959,7 +966,9 @@ srcTree:"b7648a677bb3fcf0626bcc1e8fdaedf1",
     // D479 re-pin: journey a527600d -> 1689c4a2 (LANE-017 slice 2 drop feel in src/37 — the
     // recentDrops presentation record + announcement/flip/glow renderers + view-side sort/filter;
     // the journey/war-career logic surfaces are untouched, proven by this probe's own runtime steps).
-    journey:"73a817a8ea652ab917e8824d0716cd1f",
+    // D486 re-pin: journey 73a817a8 -> 214fb6e5 (LANE-017 slice 8 in src/37 — sets/salvage/
+    // requisition/captured-arms/economy-read + their UI; the journey logic surfaces held).
+    journey:"214fb6e596dec27acdd58c99a0c6b621",
     // D480 re-pin (the AD-7 idiom — the FIRST move of the command pin since it was set; the
     // D466/D474 documented-chain class): command 8f12c49f -> f3ad1450. LANE-017 slice 3 adds
     // the _cmdDevChipHTML pool-row dev-trait chip to src/35 — a pure-display read of the
@@ -1305,7 +1314,8 @@ step("BASELINES + LANE", () => {
     // T14 + src/35 + rebuild; presentation-only). base/dataTree/manifest/suite hold.
     // D484 re-pin (LANE-017 slice 6, soldier-tier badges SS4d.3): game e7ff100e -> e99e6ac5 · dataTree 00f8c1fe -> c3c28fd6 (soldierBadgeDefs/soldierBadges/_soldierBadgeNote in data/ratings.json + the T14/src/37 badge layer in the build; the full chain is documented at this file's srcTree pin sites). base/manifest/suite hold.
     // D485 re-pin (LANE-017 slice 7, named legendary artifacts SS4c.1): game e99e6ac5 -> 27e73f38 · dataTree c3c28fd6 -> dcf6da5b (data/loot-survival.json gains the artifact tier + four Verified named artifacts + _artifactNote; src/37 mode-split drops in the build — the full chain is documented at this file's srcTree pin sites). base/manifest/suite hold.
-    game:"27e73f38038d3113a6821efb8bfb2d48",
+    // D486 re-pin (LANE-017 slice 8): game 27e73f38 -> 67fbe534 · dataTree dcf6da5b -> 5de65a85 (data/loot-survival.json gains 4 sets + 9 Inferred variety items + the salvage/economyHooks blocks; src/37 + src/107 in the build — the full chain is documented at this file's srcTree pin sites). base/manifest/suite hold.
+    game:"67fbe534977551cab623294626158412",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     // D478 re-pin: dataTree 4bbdebe5 -> b3b323fa (LANE-017 slice 1: rarity glyphs + reserved tier
     // hexes + rungTiers in data/loot-survival.json — presentation data only, no war-career data).
@@ -1754,17 +1764,29 @@ step("REACHABILITY BASELINES", () => {
     // (src/37 mode-split eligibility through the D418 kernel read + the artifact card provenance
     // line + the widened glow class). Historical pools away from the four provenance battles are
     // byte-identical; both binds md5-proven; base/runtime/focused hold.
-    game:"27e73f38038d3113a6821efb8bfb2d48",
-    dataTree:"dcf6da5bf3d8fdedc2e470bb00882b41",
+    // D486 re-pin (LANE-017 slice 8, sets + variety + salvage + economy hooks + setup choice
+    // SS4c.2+SS4c.5): game 27e73f38 -> 67fbe534 · dataTree dcf6da5b -> 5de65a85 (data/
+    // loot-survival.json gains 4 sets + 9 Inferred quartermaster/ordnance variety items +
+    // the salvage and economyHooks blocks + _setsNote) · srcTree b7648a67 -> 8174d79d ·
+    // journey 73a817a8 -> 214fb6e5 (src/37 set bonuses through _lootEquippedEffect under the
+    // same bridge clamp, salvage/requisition, the CS captured-arms channel — the Union resolve
+    // path probed byte-identical; src/107 the picker opt-in token, absent = off). Both binds
+    // md5-proven; base/runtime/focused hold.
+    game:"67fbe534977551cab623294626158412",
+    dataTree:"5de65a85d15c5c22a749c65ec401084c",
         // D484 re-pin (LANE-017 slice 6, soldier-tier badges SS4d.3): game e7ff100e -> e99e6ac5 · dataTree 00f8c1fe -> c3c28fd6 (data/ratings.json gains soldierBadgeDefs 14 + soldierBadges 48 rows on 39 Verified carriers + _soldierBadgeNote) · srcTree 15570ebc -> d79696ce (T14 soldier-badge accessors + the fldSoldierBadgeFactor capped gateway; src/37 cwCareerBadges/cwSoldierBadgeRows/_ssSoldierBadgesHTML register/journey chips; the src/22 comment-token reword — the D482 class, fifth instance) · journey 1689c4a2 -> 9655bfff (src/37) · focused 65e9c873 -> e2acf99a (probe-war-career gains the D484 career-badge step; the stale 138 suite.expected DISPLAY fields aligned to the 140 teeth). Presentation + data + the capped gateway only — no combat line consumes the keys, sim inputs did not move; both binds md5-proven; base/manifest/suite/runtime/command hold.
-srcTree:"b7648a677bb3fcf0626bcc1e8fdaedf1",
+    // D486 re-pin (LANE-017 slice 8): srcTree b7648a67 -> 8174d79d (src/37 sets/salvage/
+    // requisition/captured-arms/economy-read + UI; src/107 the picker opt-in token thread).
+srcTree:"8174d79dd88de5f66415716f1c014c54",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
     // the journey/war-career logic surfaces are untouched, proven by this probe's own runtime steps).
     // D479 re-pin: journey a527600d -> 1689c4a2 (LANE-017 slice 2 drop feel in src/37; the
     // journey/war-career logic surfaces are untouched, proven by this probe's own runtime steps).
-    journey:"73a817a8ea652ab917e8824d0716cd1f",
+    // D486 re-pin: journey 73a817a8 -> 214fb6e5 (LANE-017 slice 8 in src/37; the journey
+    // logic surfaces held, proven by this probe's own runtime steps).
+    journey:"214fb6e596dec27acdd58c99a0c6b621",
     // D460 re-pin: focused a29a5351 -> 2816a82c (Elkhorn Cherokee, 1614 -> 1617). D463
     // re-pin: focused 2816a82c -> 664ca996 (the D463 register chain 1617 -> 1632 + the
     // suite-138 pins; the war-career runtime surface untouched).

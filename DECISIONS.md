@@ -4,6 +4,86 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D486 — LANE-017 SLICE 8 SHIPPED: SET COLLECTIONS + ITEM VARIETY + SALVAGE + THE CS CAPTURED-ARMS CHANNEL + READ-ONLY ECONOMY HOOKS + THE CAMPAIGN-SETUP KIT CHOICE (§4c.2+§4c.5, UNSPLIT) — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE] (2026-07-20)
+
+**SHIPPED (the charter's slice-8 clause verbatim, NOT split — the P0 recon sized every
+sub-feature onto an existing seam):** themed kits with completion effects through the existing
+condition/supply levers; item variety from real quartermaster/ordnance records; battlefield
+salvage; captured arms as the CS supply channel; economy hooks (sutlers/requisitions) as READS
+of existing economy state; survival-mode as a campaign-setup choice with the default unchanged.
+
+- **Data (`data/loot-survival.json`):** FOUR `sets` (winter_camp · field_mess · field_hospital ·
+  skirmisher_arms), each 3 member ids + a `bonus` using ONLY the existing equip-effect
+  vocabulary at magnitudes ≤ the item-effect walls (adjudication 3 — no new lever class;
+  `_setsNote` carries the law). NINE new items (22 total), all `Inferred` calibration rows in
+  the D148 class (adjudication 4 — plain calibration items ship Inferred, displayed as such;
+  no Verified stamp is claimed, so no source rows are owed): hardtack_crate ·
+  desiccated_vegetables · coffee_ration (commissary issue), gum_blanket · shelter_half ·
+  camp_cookset (quartermaster camp equipage), hospital_stores (relief-commission class),
+  captured_springfield_crate (ordnance gleaning), writing_kit (sutler stock). `salvage`
+  config (fatigue 5 / exposure 2 costs · categories Arms/Supply/Medicine ·
+  `csArmsWeightMult` 3) + `economyHooks` config (dearAt 1.5 · ruinousAt 3.0 · requisition
+  cooldown 3), each with its law note.
+- **Runtime (src/37):** `lootSetsStatus`/`_lootSetBonus` — completion is POSSESSION of every
+  member (pure-derived, nothing stored, fully reversible); bonuses enter play ONLY through
+  `_lootEquippedEffect`, so the same bridge ±cap clamps them (no complete set ⇒ zero ⇒
+  byte-identical). `lootSalvage` — once per strategic turn while survival is active, a
+  deterministic pick from the configured categories (never unique/named), costed
+  fatigue/exposure; the pool weighs Arms ×3 for a CS campaign. `lootRequisition` +
+  `_lootPriceLevel`/`_lootPriceWord` — READ `C.economy.inflation` only (absent ⇒ fair,
+  fail-closed): fair prices fill from Supply stock, dear/ruinous thin to forage; cooldown 3
+  turns; the survival panel gains the sutler price line + Salvage/Requisition buttons.
+  `lootOnResolve` — a CS VICTORY's LAST pick routes through the salvage pool (captured arms
+  as the CS supply channel); the Union path and every non-win path are probed BYTE-IDENTICAL
+  to the plain weighted pick. Cards gain the honest provenance stamp (`data-item-prov`).
+  `salvageTurn`/`reqTurn` ride the D149 sanitizer (`_lootCleanTurn`); `_SAVE_VER=1`.
+- **Setup choice (src/107):** the ruleset picker gains the "Campaign Kit survival march"
+  checkbox (default UNCHECKED); the choice threads `_mhStartToken`/`_mhPendingStart`
+  (normalized `survival === true` at every hop — absent fails closed to false) and applies
+  AFTER base init via the existing wrapper. The kernel's mode authority is untouched
+  (probe-mayhem-mode 24/24); an absent opt-in is probed byte-identical off.
+- **Deterministic-pin movement (the slice-7 CAUTION honored):** general-pool growth moved the
+  RESOLVE REWARD evidence ids (quinine_chest/wool_blankets → camp_cookset/
+  captured_enfield_crate/commissary_rations at bullrun1) and the D485 anchor evidence
+  (eligibleSeed 74→104 · landedTurn 36→32) — all evidence-only fields, no assertion re-pin
+  owed (grep-proven: no external tool pins the drop ids). The weights tooth held UNMOVED at
+  2/1/0; the D479 sort/filter fixture order held; the 4000-seed/400-resolve horizons held.
+
+**TEETH (probe-loot-survival 28→35, all browser + 1 node):** D486 sets (possession math
+2/3→3/3 · exact bonus delta + exact revert · bridge clamp at extremes · the panel's
+complete/open states) · D486 variety (every card displays its provenance stamp; Inferred
+calibration vs the Verified named rows) · D486 salvage (inactive refused · once-per-turn ·
+costs applied · pool category-bounded never-unique/named · CS Arms weight exactly ×3
+structural AND a 400-seed pick sweep tilted CS) · D486 captured-arms resolve channel (US win
+inventory BYTE-IDENTICAL to the hand-replayed plain picks · CS win last-pick from the salvage
+pool, replay-proven · CS loss takes no channel) · D486 economy hooks (READ-ONLY via JSON
+snapshot equality before/after · fair→Supply grant · ruinous→forage_bundle exactly · cooldown ·
+absent-economy fail-closed fair · the sutler line prices from the read) · D486 setup choice
+(the picker checkbox present + unchecked · absent token ⇒ survival off — THE default tooth ·
+opt-in ⇒ on · journey untouched · rides a Mayhem start too) · D486 set-cap wall + variety
+honesty floor (node disk-read: bonus keys inside the item-effect vocabulary AND ≤ the walls ·
+members resolve · catalog ≥22 · every item Verified-with-≥2-sources or Inferred/Disputed).
+35/35, artifact JSON read, 0 pageerrors. Adjacents: probe-save-slots 16/16 · probe-ratings
+31/31 · probe-economy 8/8 · probe-mayhem-mode 24/24 · probe-accessibility 27/27. Build GATE
+OK · schema 62/62 · node --check on every touched file (the cooked SETUP proved by its
+in-browser 35/35 execution).
+
+**BINDS (md5-proven byte-identical restores — data `2822a8fe` · src/107 `6582a0ff` · game
+`67fbe534`):** A winter_camp's exposure bonus inflated −4→−12 past the wall (8) → EXACTLY the
+set-cap tooth red ("winter_camp: bonus exposure=-12 exceeds the item-effect wall 8"), 34/35.
+B the setup default flipped — the FIRST candidate (the init-apply conjunct `=== true` →
+`!== false`) did NOT red because the startCampaign wrapper NORMALIZES an absent token field
+to boolean false (defense-in-depth, logged honestly); the bind RETARGETED at the real default
+seam (the wrapper normalization `=== true` → `!== false`) → EXACTLY the setup-choice tooth
+red ("the absent opt-in flipped survival on (the shipped default moved)"), 34/35. Both
+restored; final re-run 35/35.
+
+**AD-7 re-pins (documented chains at all four plan-probe sites; both plan probes re-run
+post-commit):** game 27e73f38→67fbe534 · dataTree dcf6da5b→5de65a85 · srcTree
+b7648a67→8174d79d · journey 73a817a8→214fb6e5; base/manifest/suite/runtime/command/focused
+hold (probe-war-career untouched — focused holds e2acf99a). Counts hold 29/62/1,710/140;
+`_SAVE_VER=1`; frozen base `c9db83fa` untouched.
+
 ## D485 — LANE-017 SLICE 7 SHIPPED: NAMED LEGENDARY ARTIFACTS + MODE-SPLIT DROPS (§4c.1) — FOUR VERIFIED NAMED OBJECTS, THE ARTIFACT TIER ADOPTED, THE HISTORICAL PROVENANCE LOCK PROBED BOTH WAYS — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE] (2026-07-20)
 
 **SHIPPED (the charter's slice-7 clause verbatim):** citation-grade NAMED items with sourced
