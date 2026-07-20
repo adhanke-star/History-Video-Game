@@ -3,7 +3,7 @@
     "decision": "D148",
     "scope": "Phase I loot/survival MVP plus Soldier's Story registry spine",
     "provenance": "Inferred",
-    "note": "Gameplay calibration data. Item classes are historically plausible but not citation-grade claims about a specific battle capture."
+    "note": "Gameplay calibration data. Item classes are historically plausible but not citation-grade claims about a specific battle capture. EXCEPTION (D485): items carrying an artifact record are citation-grade NAMED objects — each is Verified on >=2 distinct sources, carries sourced provenance text, and is battle-locked per _artifactNote."
   },
   "rarities": {
     "common": {
@@ -29,6 +29,12 @@
       "color": "#b8863c",
       "weight": 2,
       "glyph": "★"
+    },
+    "artifact": {
+      "label": "Artifact",
+      "color": "#e0c98f",
+      "weight": 1,
+      "glyph": "❖"
     }
   },
   "rungTiers": {
@@ -181,6 +187,106 @@
       },
       "blurb": "A hard-won relic. It belongs to memory more than logistics.",
       "provenance": "Inferred"
+    },
+    {
+      "id": "artifact_flag_28va",
+      "name": "Battle Flag of the 28th Virginia",
+      "rarity": "artifact",
+      "category": "Colors",
+      "slot": "keepsake",
+      "unique": true,
+      "effect": {
+        "morale": 2,
+        "overall": 1
+      },
+      "blurb": "Captured on July 3, 1863, during Pickett's Charge by Pvt. Marshall Sherman, Company C, 1st Minnesota Infantry, who received the Medal of Honor for the capture. The flag is held by the Minnesota Historical Society to this day.",
+      "provenance": "Verified",
+      "artifact": {
+        "battleId": "gettysburg",
+        "battle": "Gettysburg",
+        "side": "CS",
+        "unit": "28th Virginia Infantry"
+      },
+      "sources": [
+        "Minnesota Historical Society, MNopedia — Twenty-eighth Virginia Infantry Regimental Battle Flag, https://www.mnhs.org/mnopedia/search/index/thing/twenty-eighth-virginia-infantry-regimental-battle-flag",
+        "Military Times Hall of Valor — Marshall Sherman, Medal of Honor citation (action July 3, 1863, Gettysburg; capture of flag of 28th Virginia Infantry), https://valor.militarytimes.com/recipient/recipient-2301/",
+        "Minnesota Historical Society — 28th Virginia Battle Flag, education resources (mnhs.org)"
+      ]
+    },
+    {
+      "id": "artifact_colors_4usct",
+      "name": "National Colors of the 4th U.S. Colored Infantry",
+      "rarity": "artifact",
+      "category": "Colors",
+      "slot": "keepsake",
+      "unique": true,
+      "effect": {
+        "morale": 2,
+        "overall": 1
+      },
+      "blurb": "At New Market Heights on September 29, 1864, two color bearers fell; Sgt. Maj. Christian A. Fleetwood seized the colors and, in the words of his Medal of Honor citation, 'bore them nobly through the fight.' The medal was issued April 6, 1865.",
+      "provenance": "Verified",
+      "artifact": {
+        "battleId": "newMarketHeights",
+        "battle": "New Market Heights",
+        "side": "US",
+        "unit": "4th U.S. Colored Infantry"
+      },
+      "sources": [
+        "National Park Service, Richmond National Battlefield Park — Christian A. Fleetwood, https://www.nps.gov/rich/learn/historyculture/fleetwood.htm",
+        "American Battlefield Trust — Christian Fleetwood's Medal of Honor, https://www.battlefields.org/learn/primary-sources/christian-fleetwoods-medal-honor",
+        "Congressional Medal of Honor Society — Christian A. Fleetwood recipient record, https://www.cmohs.org/recipients/christian-a-fleetwood"
+      ]
+    },
+    {
+      "id": "artifact_cleburne_kepi",
+      "name": "Cleburne's Kepi",
+      "rarity": "artifact",
+      "category": "Relic",
+      "slot": "keepsake",
+      "unique": true,
+      "effect": {
+        "morale": 1,
+        "overall": 1
+      },
+      "blurb": "Maj. Gen. Patrick R. Cleburne was wearing this kepi when he was killed leading his division at Franklin on November 30, 1864. Conserved through the Tennessee Historical Society, it is displayed at the Tennessee State Museum.",
+      "provenance": "Verified",
+      "artifact": {
+        "battleId": "franklin",
+        "battle": "Franklin",
+        "side": "CS",
+        "unit": "Cleburne's Division"
+      },
+      "sources": [
+        "Tennessee State Museum — Officer's Kepi, Patrick R. Cleburne (TN225 collection item 047), https://tnmuseum.org/TN225/artifacts/047",
+        "Emerging Civil War — ECW Weekender: Tennessee State Museum (Cleburne kepi on display), https://emergingcivilwar.com/2023/07/28/ecw-weekender-tennessee-state-museum/",
+        "John Banks' Civil War Blog — At new museum, view Strahl frock coat, Cleburne 'death kepi', http://john-banks.blogspot.com/2018/10/at-new-museum-view-cleburne-death-kepi.html"
+      ]
+    },
+    {
+      "id": "artifact_grant_sword",
+      "name": "Jo Daviess County Presentation Sword",
+      "rarity": "artifact",
+      "category": "Sword",
+      "slot": "weapon",
+      "unique": true,
+      "effect": {
+        "morale": 2,
+        "overall": 1
+      },
+      "blurb": "An Ames Manufacturing Co. presentation sword inscribed 'Jo Daviess County, Illinois, to Major General Ulysses S. Grant, U.S.A., the Hero of the Mississippi.' Presented by Grant's home county at Nashville in March 1864 to honor the Mississippi campaign that closed at Vicksburg; held by the Smithsonian.",
+      "provenance": "Verified",
+      "artifact": {
+        "battleId": "vicksburg",
+        "battle": "Vicksburg",
+        "side": "US",
+        "unit": "Presented to Maj. Gen. U.S. Grant"
+      },
+      "sources": [
+        "Smithsonian National Museum of American History — Ames Manufacturing Co. presentation sword and scabbard (object nmah_420452), https://americanhistory.si.edu/collections/object/nmah_420452",
+        "Galena Daily Gazette (March 1864) — presentation of the Jo Daviess County sword to Grant at Nashville, ILGenWeb transcription"
+      ]
     }
-  ]
+  ],
+  "_artifactNote": "D485 (LANE-017 slice 7): NAMED ARTIFACTS. An item carrying an artifact:{battleId,battle,side,unit} record is a citation-grade named object: provenance Verified on >=2 distinct sources (gate 4e enforces the floor structurally; the probe's source-floor tooth reads this file on disk), sourced provenance text in the blurb, and MODE-SPLIT drops — under Historical the item is pool-eligible ONLY at its provenance battleId (the lock is probed both ways); under an exact Mayhem ruleset installed by the D418 kernel (the ONLY mode authority) it joins the general weighted pool anywhere. Effects ride the existing capped equip path (_lootEquippedEffect + the bridge clamp) using only the existing effect vocabulary at existing magnitudes; every named item is unique. The Grant sword's battle lock is the campaign its inscription honors ('the Hero of the Mississippi' -> Vicksburg); its blurb states the March 1864 presentation date plainly. Research drops logged in DECISIONS D485: the Atlanta History Center Cleburne presentation sword (single source family) was RESHAPED to the Tennessee State Museum death kepi; the Hilton/Veal color-bearer vignette (single family) stays out of the Fleetwood blurb; the packet's Henry-rifle example was DROPPED entirely — the Franklin combat claim rests on the single Jacobson family (the trust and encyclopedia relays both cite it), the 1897/1908 narrative monographs are silent on repeaters, and the one independent find (an auction-house ownership provenance) is not citation-grade."
 }

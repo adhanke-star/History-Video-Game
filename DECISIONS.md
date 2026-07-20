@@ -4,6 +4,89 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D485 — LANE-017 SLICE 7 SHIPPED: NAMED LEGENDARY ARTIFACTS + MODE-SPLIT DROPS (§4c.1) — FOUR VERIFIED NAMED OBJECTS, THE ARTIFACT TIER ADOPTED, THE HISTORICAL PROVENANCE LOCK PROBED BOTH WAYS — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE] (2026-07-20)
+
+**SHIPPED (the charter's slice-7 clause verbatim):** citation-grade NAMED items with sourced
+provenance text (≥2 sources each); Historical provenance-locked to the correct battle/unit;
+Mayhem general pool through the shipped D418 kernel; effects ONLY via the existing capped
+equip path; the `artifact` tier ADOPTED into the canonical map.
+
+- **Research (adjudication 10 — helpers GATHER, the top loop default-refute verifies):** two
+  workflows (`wf_103690b9-eee` 5 Sonnet gathers → 5 Opus default-refuters; `wf_1d687bd8-996`
+  the Henry second-family hunt), the top loop re-verifying the two anchor rows directly
+  (MNHS MNopedia · Tennessee State Museum object page). FOUR items survived; the honest
+  drops/reshapes, logged: **the packet's Henry-rifle example DROPPED** — the Franklin combat
+  claim ("Casement's men fired 16-shot Henrys") rests on the SINGLE Jacobson & Rupp family
+  (battlefields.org and the encyclopedia relays both cite it — the D387 single-scholar-collapse
+  class); Cox 1897 and Shellenberger are silent on repeaters AND are one family (verbatim-shared
+  text); the one independent find (a Rock Island Auction ownership provenance for a 65th Indiana
+  officer's Henry) is ownership-association from a non-citation-grade holder, so no Verified
+  stamp is possible. **The Cleburne presentation sword RESHAPED to the death kepi** (the Atlanta
+  History Center sword is single-family; the Tennessee State Museum kepi is museum-page +
+  two independent published accounts). **The Hilton/Veal color-bearer vignette stays OUT of
+  the Fleetwood blurb** (single family). The Grant sword ships ONLY the counterguard
+  inscription + the documented Galena-committee presentation (the scabbard/Chattanooga-sword
+  details were flagged as possible object-conflation and excluded).
+- **Data (`data/loot-survival.json`):** `rarities.artifact` appended (label Artifact ·
+  glyph ❖ · weight 1 · a reserved hex one step off the app accents, contrast ≥4.5:1 —
+  the D478 idiom; the one-language wall + contrast teeth auto-extend to it). FOUR named
+  items, each rarity `artifact` + `unique` + `provenance:"Verified"` + ≥2 distinct sources +
+  sourced blurb + `artifact:{battleId,battle,side,unit}`: **Battle Flag of the 28th Virginia**
+  (gettysburg — Marshall Sherman, 1st Minnesota, MoH; MNHS holds the flag; 3 sources),
+  **National Colors of the 4th U.S. Colored Infantry** (newMarketHeights — Fleetwood's MoH
+  citation text; NPS + ABT + CMOHS), **Cleburne's Kepi** (franklin — worn when killed,
+  Tennessee State Museum; 3 sources), **Jo Daviess County Presentation Sword** (vicksburg —
+  the "Hero of the Mississippi" counterguard inscription is the battle tie; the blurb states
+  the March 1864 Nashville presentation plainly; Smithsonian NMAH + Galena Daily Gazette;
+  slot `weapon` so both equip-slot classes stay probed). `_artifactNote` carries the law.
+- **Runtime (src/37):** `_lootItemEligible` + the C/B-aware `_lootWeightedPick(seed, C, B)` —
+  a named item is pool-eligible under Historical ONLY at its own `artifact.battleId`
+  (malformed ruleset flags fail closed to the lock: the D418 kernel's exact-shape law is the
+  ONLY mode authority); under an exact Mayhem ruleset it joins the general pool anywhere
+  (the D416 no-guardrails law). Historical pools away from the four provenance battles are
+  BYTE-IDENTICAL to pre-slice — the shipped deterministic-drop teeth (RESOLVE REWARD
+  quinine_chest/wool_blankets) held UNMOVED and the weights tooth held at 2/1/0. The
+  inventory card gains the artifact provenance line (battle · unit · stamp, sources in
+  hover/SR title); the flip/glow class widens to the artifact tier (the D479 tooth reshaped
+  legendary→{legendary,artifact} with its chain — legendary was the top tier when pinned).
+  Effects ride `_lootEquippedEffect` + the bridge clamp unchanged, using ONLY the existing
+  equip-effect vocabulary at existing magnitudes (probed structurally). Nothing new stored;
+  `_SAVE_VER=1`; the D149 sanitizer shape untouched (named items are ordinary unique
+  inventory rows).
+- **MAYHEM_PUBLIC_READY note (adjudication 5 honesty):** the packet's "stays false" phrasing
+  is a stale D418-era carry — the flag has been `true` since the LANE-007 public A-C bundle
+  (D420). The operative clause is "this lane never flips it": this slice does not touch it.
+
+**TEETH (probe-loot-survival 24→28):** D485 provenance lock (structural roster shape +
+registry membership · a 2×500-seed wrong-battle sweep yields NO artifact · 5 malformed-ruleset
+shapes stay locked · anchor eligibility at its own battle + a 400-resolve end-to-end landing) ·
+D485 Mayhem general pool (the SAME battle+seeds that never yield an artifact under Historical
+yield ALL FOUR under a kernel-installed Mayhem owner, end-to-end at a wrong battle + the
+artifact chip glows by default and is rm-inert) · D485 equip-lever caps (existing-vocabulary/
+existing-magnitude walls · equip-only relics · per-key `_lootEquippedEffect` carry · the
+±cap bridge clamp at survival extremes · one weapon-slot + one keepsake-slot artifact) ·
+D485 named-artifact source floor (node-side disk read — Verified + ≥2 distinct sources +
+provenance text + complete lock record + unique, roster ≥4; the gate-4e sibling). 28/28,
+artifact JSON read, 0 pageerrors. Adjacents: probe-mayhem-mode 24/24 · probe-ratings 31/31 ·
+probe-save-slots 16/16. Build GATE OK (citations 4e over the four Verified rows) · schema
+62/62 · both cooked-SETUP preparses (S-03 item 8) · node --check on every touched file. The
+first focused run hit the cold-start fonts-stall screenshot timeout (the kennesaw class);
+the warm re-run was green with the screenshot landing — no probe reshape needed.
+
+**BINDS (md5-proven byte-identical restores — src/37 `73a817a8` · data `347c2d0c` · game
+`27e73f38`):** A the Historical battle conjunct killed in `_lootItemEligible` → EXACTLY the
+lock tooth red ("a named artifact drops at a non-provenance battle under Historical:
+artifact_grant_sword at bullrun1"), with the Mayhem step's Historical-twin conjunct catching
+the same class at its own label (the D479 sibling precedent), 26/28. B the Grant sword's
+second source dropped → TWO layers: build gate 4e exit-5 refusal naming the record AND
+EXACTLY the source-floor tooth red ("artifact_grant_sword: 1 distinct source(s) under a
+Verified stamp"), 27/28 (the D481 two-layer precedent). Both restored; final re-run 28/28.
+
+**AD-7 re-pins (documented chains at all four plan-probe sites; both plan probes re-run
+post-commit):** game e99e6ac5→27e73f38 · dataTree c3c28fd6→dcf6da5b · srcTree
+d79696ce→b7648a67 · journey 9655bfff→73a817a8; base/manifest/suite/runtime/command/focused
+hold. Counts hold 29/62/1,710/140; `_SAVE_VER=1`; frozen base `c9db83fa` untouched.
+
 ## D484 — LANE-017 SLICE 6 SHIPPED: SOLDIER-TIER BADGES (§4d.3) — TWO BADGE SOURCES, VISUALLY DISTINCT, ONE CAPPED LEVER WALL — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE] (2026-07-20)
 
 **SHIPPED (the charter's slice-6 clause verbatim):** historical-record badges for the Verified

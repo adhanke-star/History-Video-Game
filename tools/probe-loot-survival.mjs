@@ -70,7 +70,7 @@ const SETUP = `(() => {
   }
   function setCtl(el,val,type){ el.value=val; fire(el,type||'change'); }
   try {
-    var fns=['lootInit','lootAddItem','lootUseItem','lootEquipItem','lootSetSurvival','lootForage','lootSurvivalTick','lootOnResolve','lootSurvivalBridgeBonus','lootRenderTab','lootWireTab','ssPersonRegistry','ssFindPerson','ssStartJourney','ssJourneyOnResolve','ssPersonDetailHTML','ssJourneyReportHTML','ssValidateSoldierReplacementPack','aarRenderReport','bridgeArmy','_t1InitAll','_t1Resolve','cwCareerBadges','cwSoldierBadgeRows','_ssSoldierBadgesHTML','_ssJourneyActiveHTML','fldSoldierBadgeDef','fldSoldierBadges','fldSoldierBadgeFactor'];
+    var fns=['lootInit','lootAddItem','lootUseItem','lootEquipItem','lootSetSurvival','lootForage','lootSurvivalTick','lootOnResolve','lootSurvivalBridgeBonus','lootRenderTab','lootWireTab','ssPersonRegistry','ssFindPerson','ssStartJourney','ssJourneyOnResolve','ssPersonDetailHTML','ssJourneyReportHTML','ssValidateSoldierReplacementPack','aarRenderReport','bridgeArmy','_t1InitAll','_t1Resolve','cwCareerBadges','cwSoldierBadgeRows','_ssSoldierBadgesHTML','_ssJourneyActiveHTML','fldSoldierBadgeDef','fldSoldierBadges','fldSoldierBadgeFactor','_lootItemEligible','_lootWeightedPick','mayhemInit','mayhemIsActive','fldScenarioRegistry'];
     for(var i=0;i<fns.length;i++) if(typeof window[fns[i]]!=='function') return JSON.stringify({ok:false, fatal:'missing fn '+fns[i]});
     if(!GAME_DATA || !GAME_DATA['loot-survival']) return JSON.stringify({ok:false, fatal:'missing loot-survival data'});
 
@@ -1115,7 +1115,7 @@ const SETUP = `(() => {
       if(!glows.length) throw new Error('no legendary glow by default');
       for(var gi=0;gi<glows.length;gi++){
         var t=glows[gi].getAttribute('data-drop-tier')||glows[gi].getAttribute('data-loot-tier')||'';
-        if(t!=='legendary') throw new Error('glow applied to a non-legendary tier: '+(t||'(none)'));
+        if(t!=='legendary'&&t!=='artifact') throw new Error('glow applied outside the legendary/artifact tiers: '+(t||'(none)'));   // D485 chain: the D479 pin said legendary-only while legendary was the TOP tier; the artifact tier now sits above it and joins the glow class (the positive artifact-glow proof lives in the D485 Mayhem step)
       }
       if(!document.getElementById('cwLootFeelCss')) throw new Error('runtime animation style layer missing');
       for(var ri=0;ri<C.loot.recentDrops.length;ri++) C.loot.recentDrops[ri].seen=false;
@@ -1339,6 +1339,139 @@ const SETUP = `(() => {
       if(JSON.stringify(C2.loot)!==b2) throw new Error('rendering a detail card created journey state on a legacy save');
       return { earned:keys, saveStable:true };
     });
+
+    function artifactRoster(){
+      var d=gameData('loot-survival'), arts=[], ids={}, byBattle={};
+      for(var i=0;i<d.items.length;i++){
+        var it=d.items[i];
+        if(it && (it.artifact || it.rarity==='artifact')){ arts.push(it); ids[it.id]=1; if(it.artifact&&it.artifact.battleId){ (byBattle[it.artifact.battleId]=byBattle[it.artifact.battleId]||[]).push(it.id); } }
+      }
+      return { arts:arts, ids:ids, byBattle:byBattle };
+    }
+    step('D485 provenance lock: under Historical a named artifact is eligible ONLY at its own battle — wrong battles never yield one across the seed sweep, malformed ruleset flags stay locked, and the anchor artifact lands end-to-end at its own battle', function(){
+      var ro=artifactRoster(), arts=ro.arts;
+      if(arts.length<4) throw new Error('expected >=4 named artifacts, got '+arts.length);
+      var reg=fldScenarioRegistry();
+      for(var a=0;a<arts.length;a++){
+        var it=arts[a];
+        if(it.rarity!=='artifact' || !it.artifact) throw new Error(it.id+': the artifact tier and the artifact provenance record must travel together');
+        if(it.unique!==true) throw new Error(it.id+': named items must be unique');
+        if(!it.artifact.battleId || !reg[it.artifact.battleId]) throw new Error(it.id+': provenance battle not in the scenario registry: '+it.artifact.battleId);
+        if(!it.artifact.unit || !it.artifact.battle || !it.artifact.side) throw new Error(it.id+': battle/unit/side provenance labels incomplete');
+      }
+      var C=mkC('US'); _t1InitAll(C);
+      var wrong=[]; for(var k in reg){ if(!ro.byBattle[k]) wrong.push(k); if(wrong.length>=2) break; }
+      if(wrong.length<2) throw new Error('no artifact-free battles available for the lock sweep');
+      for(var w=0;w<wrong.length;w++){
+        for(var s=0;s<500;s++){
+          var pick=_lootWeightedPick('lock:'+wrong[w]+':'+s, C, {id:wrong[w]});
+          if(pick && ro.ids[pick.id]) throw new Error('a named artifact drops at a non-provenance battle under Historical: '+pick.id+' at '+wrong[w]);
+        }
+      }
+      var shapes=[{id:'mayhem'},{id:'MAYHEM',version:1},{id:'mayhem',version:2},'mayhem',{id:'mayhem',version:1,extra:true}];
+      for(var m=0;m<shapes.length;m++){
+        var Cm=mkC('US'); Cm.ruleset=shapes[m];
+        for(var ms=0;ms<200;ms++){
+          var mp=_lootWeightedPick('malformed:'+m+':'+ms, Cm, {id:wrong[0]});
+          if(mp && ro.ids[mp.id]) throw new Error('a malformed ruleset flag unlocked the artifact pool (must fail closed to the Historical lock): shape '+m);
+        }
+      }
+      var anchor=arts[0], hit=-1;
+      for(var e=0;e<4000;e++){
+        var ep=_lootWeightedPick('eligible:'+e, C, {id:anchor.artifact.battleId});
+        if(ep && ep.id===anchor.id){ hit=e; break; }
+      }
+      if(hit<0) throw new Error('the anchor artifact is not reachable in its own battle pool (vacuous lock)');
+      var CE=mkC('US'); _t1InitAll(CE); var landed=-1;
+      for(var t=0;t<400;t++){
+        CE.president={turn:t,log:[]};
+        lootOnResolve('US','win',{id:anchor.artifact.battleId,name:anchor.artifact.battle},CE,true);
+        if(_lootHasItem(CE,anchor.id)){ landed=t; break; }
+      }
+      if(landed<0) throw new Error('the anchor artifact never landed end-to-end at its own battle in 400 resolves');
+      return { artifacts:arts.length, battles:Object.keys(ro.byBattle).length, anchor:anchor.id, eligibleSeed:hit, landedTurn:landed };
+    });
+
+    step('D485 Mayhem general pool: the SAME battle and seeds that never yield a named artifact under Historical yield EVERY artifact under an exact Mayhem ruleset installed by the D418 kernel — and the artifact drop chip glows by default, inert under reduceMotion', function(){
+      var ro=artifactRoster(), arts=ro.arts;
+      var CH=mkC('US'); _t1InitAll(CH);
+      var CM=mkC('US'); mayhemInit(CM,'mayhem','new'); _t1InitAll(CM);
+      if(!mayhemIsActive(CM)) throw new Error('kernel did not install the Mayhem owner');
+      if(mayhemIsActive(CH)) throw new Error('the Historical twin reads as Mayhem');
+      var reg=fldScenarioRegistry(), wrongId=null;
+      for(var k in reg){ if(!ro.byBattle[k]){ wrongId=k; break; } }
+      if(!wrongId) throw new Error('no artifact-free battle available');
+      var found={}, n=0;
+      for(var s=0;s<6000 && n<arts.length;s++){
+        var pH=_lootWeightedPick('split:'+s, CH, {id:wrongId});
+        if(pH && ro.ids[pH.id]) throw new Error('the Historical twin yielded '+pH.id+' at '+wrongId);
+        var pM=_lootWeightedPick('split:'+s, CM, {id:wrongId});
+        if(pM && ro.ids[pM.id] && !found[pM.id]){ found[pM.id]=1; n++; }
+      }
+      if(n!==arts.length) throw new Error('the Mayhem general pool is missing artifacts: found '+n+' of '+arts.length+' ('+Object.keys(found).join(',')+')');
+      var landedId=null;
+      for(var t=0;t<400 && !landedId;t++){
+        CM.president={turn:t,log:[]};
+        lootOnResolve('US','win',{id:wrongId,name:'Split Field'},CM,true);
+        for(var a=0;a<arts.length;a++) if(_lootHasItem(CM,arts[a].id)){ landedId=arts[a].id; break; }
+      }
+      if(!landedId) throw new Error('no artifact landed end-to-end at a non-provenance battle under Mayhem in 400 resolves');
+      G.campaign=CM;
+      var s0=!!(G.settings&&G.settings.reduceMotion);
+      if(!G.settings) G.settings={};
+      G.settings.reduceMotion=false;
+      CM.loot.recentDrops=[{id:landedId,battle:'Split Field',seen:false}];
+      var div=document.createElement('div'); div.innerHTML=lootRenderTab(CM);
+      var chip=div.querySelector('[data-drop-tier="artifact"]');
+      if(!chip) throw new Error('the artifact announcement chip is missing');
+      if((chip.className||'').indexOf('cw-loot-glow')<0) throw new Error('an unseen artifact drop must glow by default');
+      CM.loot.recentDrops[0].seen=false;
+      G.settings.reduceMotion=true;
+      var div2=document.createElement('div'); div2.innerHTML=lootRenderTab(CM);
+      var chip2=div2.querySelector('[data-drop-tier="artifact"]');
+      G.settings.reduceMotion=s0;
+      if(!chip2) throw new Error('reduceMotion must still render the artifact chip');
+      if((chip2.className||'').indexOf('cw-loot-glow')>=0 || (chip2.className||'').indexOf('cw-loot-flip')>=0) throw new Error('reduceMotion still animates the artifact chip');
+      return { pooled:n, landed:landedId, at:wrongId };
+    });
+
+    step('D485 equip-lever caps: artifact effects use ONLY the existing equip-effect vocabulary at existing magnitudes, carry no consumable path, and land through the same clamped bridge', function(){
+      var d=gameData('loot-survival'), maxByKey={}, arts=[], i, k;
+      for(i=0;i<d.items.length;i++){
+        var it=d.items[i]; if(!it) continue;
+        if(it.artifact || it.rarity==='artifact'){ arts.push(it); continue; }
+        if(it.effect) for(k in it.effect){ if(typeof it.effect[k]!=='number') continue; var m=Math.abs(it.effect[k]); if(!(k in maxByKey)||m>maxByKey[k]) maxByKey[k]=m; }
+      }
+      if(!arts.length) throw new Error('no named artifacts in data');
+      var weaponArt=null, keepsakeArt=null;
+      for(i=0;i<arts.length;i++){
+        var art=arts[i];
+        if(art.use) throw new Error(art.id+': named artifacts are equip-only relics — no consumable path');
+        if(!art.slot || !art.effect) throw new Error(art.id+': named artifacts must be equippable with a bounded effect');
+        for(k in art.effect){
+          if(typeof art.effect[k]!=='number') continue;
+          if(!(k in maxByKey)) throw new Error(art.id+': effect key '+k+' is outside the existing equip-effect vocabulary (a new lever class)');
+          if(Math.abs(art.effect[k])>maxByKey[k]) throw new Error(art.id+': effect '+k+'='+art.effect[k]+' exceeds the existing magnitude wall '+maxByKey[k]);
+        }
+        if(art.slot==='weapon'&&!weaponArt) weaponArt=art;
+        if(art.slot==='keepsake'&&!keepsakeArt) keepsakeArt=art;
+      }
+      if(!weaponArt||!keepsakeArt) throw new Error('roster must carry at least one weapon-slot and one keepsake-slot artifact');
+      var C=mkC('US'); _t1InitAll(C); lootSetSurvival(C,true);
+      C.loot.inventory=[];
+      lootAddItem(C,weaponArt.id,1,'probe'); lootAddItem(C,keepsakeArt.id,1,'probe');
+      var eqW=lootEquipItem(C,weaponArt.id), eqK=lootEquipItem(C,keepsakeArt.id);
+      if(!eqW.ok||!eqK.ok||C.loot.equipped.weapon!==weaponArt.id||C.loot.equipped.keepsake!==keepsakeArt.id) throw new Error('artifact equip failed through the standard path');
+      var allKeys={}; for(k in weaponArt.effect) allKeys[k]=1; if(keepsakeArt.effect) for(k in keepsakeArt.effect) allKeys[k]=1;
+      for(k in allKeys){
+        var expect=((weaponArt.effect&&weaponArt.effect[k])||0)+((keepsakeArt.effect&&keepsakeArt.effect[k])||0);
+        if(_lootEquippedEffect(C,k)!==expect) throw new Error('_lootEquippedEffect does not carry the equipped artifacts for '+k+': got '+_lootEquippedEffect(C,k)+', expected '+expect);
+      }
+      C.loot.survival.rations=100; C.loot.survival.morale=100; C.loot.survival.fatigue=0; C.loot.survival.exposure=0; C.loot.survival.disease=0;
+      var bonus=lootSurvivalBridgeBonus(C), keys=['supply','morale','fatigue','firepower','overall'];
+      for(i=0;i<keys.length;i++) if(Math.abs(bonus[keys[i]])>8) throw new Error('the bridge clamp broke with artifacts equipped: '+JSON.stringify(bonus));
+      return { roster:arts.length, weapon:weaponArt.id, keepsake:keepsakeArt.id, bonus:bonus };
+    });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;
@@ -1386,6 +1519,37 @@ const SETUP = `(() => {
       if (!scanOk) result.ok = false;
     } catch (eScan) {
       result.steps.push({ name: 'D478 one-language wall: no src consumer hardcodes a canonical tier hex (data + the src/37 default are the only literals)', ok: false, err: String(eScan && eScan.message || eScan) });
+      result.ok = false;
+    }
+
+    // D485 (LANE-017 slice 7) node-side scan — THE NAMED-ARTIFACT SOURCE FLOOR: every
+    // named item in data/loot-survival.json is Verified on >=2 DISTINCT sources, carries
+    // real provenance text and a complete battle/unit/side lock record, and the roster
+    // never silently shrinks. This reads the DATA on disk (not the build), so a tampered
+    // second source reds this tooth even when gate 4e has already refused the rebuild.
+    try {
+      const lootData2 = JSON.parse(readFileSync(join(ROOT, 'data', 'loot-survival.json'), 'utf8'));
+      const namedArts = (lootData2.items || []).filter(it => it && (it.artifact || it.rarity === 'artifact'));
+      const floorBad = [];
+      if (namedArts.length < 4) floorBad.push('roster shrank: ' + namedArts.length + ' < 4 named artifacts');   // D485 roster: 2 colors + 1 sword + 1 relic (the Henry example DROPPED at research — single source family; see _artifactNote)
+      for (const it of namedArts) {
+        if (!it.artifact || it.rarity !== 'artifact') floorBad.push(it.id + ': the artifact tier and the artifact provenance record must travel together');
+        if ((it.provenance || '') !== 'Verified') floorBad.push(it.id + ': named artifact not stamped Verified');
+        const seenSrc = new Set();
+        for (const s of (Array.isArray(it.sources) ? it.sources : [])) {
+          const key = String(s).replace(/\s+/g, ' ').trim().toLowerCase();
+          if (key) seenSrc.add(key);
+        }
+        if (seenSrc.size < 2) floorBad.push(it.id + ': ' + seenSrc.size + ' distinct source(s) under a Verified stamp (the >=2 floor)');
+        if (!it.blurb || it.blurb.length < 60) floorBad.push(it.id + ': provenance text missing or too thin');
+        if (!it.artifact || !it.artifact.battleId || !it.artifact.battle || !it.artifact.unit || !it.artifact.side) floorBad.push(it.id + ': battle/unit/side lock record incomplete');
+        if (it.unique !== true) floorBad.push(it.id + ': named artifacts must be unique');
+      }
+      const floorOk = floorBad.length === 0;
+      result.steps.push({ name: 'D485 named-artifact source floor: every named item Verified on >=2 distinct sources with provenance text and a complete battle/unit lock (disk-read; the gate-4e sibling)', ok: floorOk, v: floorOk ? { artifacts: namedArts.length } : null, err: floorOk ? undefined : floorBad.join('; ') });
+      if (!floorOk) result.ok = false;
+    } catch (eFloor) {
+      result.steps.push({ name: 'D485 named-artifact source floor: every named item Verified on >=2 distinct sources with provenance text and a complete battle/unit lock (disk-read; the gate-4e sibling)', ok: false, err: String(eFloor && eFloor.message || eFloor) });
       result.ok = false;
     }
     const shotPath = join(OUT, 'probe-loot-survival.png');

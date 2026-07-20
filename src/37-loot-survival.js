@@ -1039,11 +1039,29 @@ function lootSurvivalTick(C, B, win) {
   return { ok: true, survival: S };
 }
 
-function _lootWeightedPick(seed) {
+/* D485 (LANE-017 slice 7) — NAMED ARTIFACTS: MODE-SPLIT DROP ELIGIBILITY. A named item
+   carries artifact:{battleId,battle,side,unit} plus its own Verified source list in data.
+   The shipped D418 ruleset kernel is the ONLY mode authority here: under an exact Mayhem
+   ruleset the named items join the general weighted pool at any battle (the D416
+   no-guardrails law); under Historical — and whenever the kernel reads anything but an
+   exact Mayhem ruleset (malformed flags fail closed to Historical) — a named item is
+   eligible ONLY at its own provenance battle. Effects ride the existing capped equip
+   path unchanged; nothing new is stored on the save. */
+function _lootMayhemDrops(C) {
+  return typeof mayhemIsActive === "function" && mayhemIsActive(C) === true;
+}
+function _lootItemEligible(it, C, B) {
+  if (!it || !it.artifact) return true;
+  if (_lootMayhemDrops(C)) return true;
+  var lock = it.artifact.battleId, bid = B && B.id;
+  return !!lock && !!bid && bid === lock;
+}
+function _lootWeightedPick(seed, C, B) {
   var items = _lootItems(), d = _lootData(), rar = (d && d.rarities) ? d.rarities : {};
   var total = 0, pool = [];
   for (var i = 0; i < items.length; i++) {
     var it = items[i]; if (!it || !it.id) continue;
+    if (!_lootItemEligible(it, C, B)) continue;
     var w = _lootNum(rar[it.rarity] && rar[it.rarity].weight, 1);
     if (w <= 0) continue;
     pool.push({ item: it, weight: w });
@@ -1061,7 +1079,7 @@ function lootOnResolve(winnerSide, type, B, C, win) {
   var n = 1 + (win ? _lootNum(dc.winBonus, 2) : (type === "draw" ? _lootNum(dc.drawBonus, 1) : _lootNum(dc.lossBonus, 0)));
   var got = [], drops = [], base = (B && (B.id || B.name)) || "battle";
   for (var i = 0; i < n; i++) {
-    var it = _lootWeightedPick(base + ":" + _lootTurn(C) + ":" + i + ":" + (win ? "W" : "L"));
+    var it = _lootWeightedPick(base + ":" + _lootTurn(C) + ":" + i + ":" + (win ? "W" : "L"), C, B);
     if (!it) continue;
     if (it.unique && _lootHasItem(C, it.id)) it = _lootItem("commissary_rations");
     var res = lootAddItem(C, it.id, 1, _lootBattleLabel(B));
@@ -2018,7 +2036,7 @@ function _lootRecentHTML(C) {
   for (var i = 0; i < rd.length; i++) {
     var it = _lootItem(rd[i].id); if (!it) continue;
     var tier = cwTierInfo(it.rarity);
-    var anim = (!rd[i].seen && !rm) ? ' cw-loot-flip' + (tier.id === "legendary" ? ' cw-loot-glow' : '') : '';
+    var anim = (!rd[i].seen && !rm) ? ' cw-loot-flip' + (tier.id === "legendary" || tier.id === "artifact" ? ' cw-loot-glow' : '') : '';
     html += '<span class="cw-drop-chip' + anim + '" data-drop-tier="' + _lootAttr(tier.id) + '" style="--cw-tier-glow:' + tier.color + ';display:inline-flex;align-items:center;gap:6px;border:1px solid ' + tier.color + ';border-left:4px solid ' + tier.color + ';border-radius:5px;padding:4px 8px;font-size:12px;background:rgba(0,0,0,.16)">'
       + '<span style="color:' + tier.color + '"><span aria-hidden="true">' + _lootEsc(tier.glyph) + '</span> ' + _lootEsc(tier.label) + '</span>'
       + '<b>' + _lootEsc(it.name) + '</b></span>';
@@ -2103,12 +2121,22 @@ function _lootInventoryHTML(C) {
     var row = view[i].row, it = view[i].it;
     var col = _lootRarityColor(it), rar = _lootRarity(it.rarity), equipped = "";
     var tier = cwTierInfo(it.rarity);
-    var glow = (tier.id === "legendary" && !rm) ? ' class="cw-loot-glow"' : '';
+    var glow = ((tier.id === "legendary" || tier.id === "artifact") && !rm) ? ' class="cw-loot-glow"' : '';
     if (it.slot && L.equipped[it.slot] === it.id) equipped = ' &middot; Equipped';
+    /* D485: a named item's card carries its own provenance line — battle, unit, and the
+       stamped grade — with the source list in the hover/SR title. Non-named items render
+       byte-identically (provLine stays ""). */
+    var provLine = "";
+    if (it.artifact) {
+      var srcTitle = (it.sources && it.sources.length) ? ' title="' + _lootAttr("Sources: " + it.sources.join(" · ")) + '"' : '';
+      provLine = '<div data-artifact-prov="' + _lootAttr(it.artifact.battleId || "") + '"' + srcTitle
+        + ' style="font-size:10.5px;margin-top:4px;border-left:3px solid ' + col + ';padding-left:6px;opacity:.85">Provenance: '
+        + _lootEsc(it.artifact.battle || it.artifact.battleId || "") + ' &middot; ' + _lootEsc(it.artifact.unit || "") + ' &middot; ' + _lootEsc(it.provenance || "") + '</div>';
+    }
     html += '<div data-loot-card="1" data-loot-id="' + _lootAttr(it.id) + '" data-loot-tier="' + _lootAttr(tier.id) + '"' + glow + ' style="--cw-tier-glow:' + col + ';border:1px solid ' + col + ';border-left:4px solid ' + col + ';border-radius:6px;padding:9px;background:rgba(0,0,0,.14)">'
       + '<div style="display:flex;justify-content:space-between;gap:8px"><b>' + _lootEsc(it.name) + '</b><span data-tier="' + _lootAttr(tier.id) + '" style="color:' + col + ';font-size:12px"><span aria-hidden="true">' + _lootEsc(tier.glyph) + '</span> ' + _lootEsc(rar.label) + '</span></div>'
       + '<div style="font-size:11px;opacity:.74">' + _lootEsc(it.category || "Item") + ' x' + row.qty + equipped + '</div>'
-      + '<div style="font-size:11px;margin-top:5px;min-height:28px">' + _lootEsc(it.blurb || "") + '</div>'
+      + '<div style="font-size:11px;margin-top:5px;min-height:28px">' + _lootEsc(it.blurb || "") + '</div>' + provLine
       + '<div class="btn-row" style="margin-top:7px;justify-content:flex-start;gap:6px">'
       + (it.use ? '<button type="button" class="upg" data-loot-use="' + _lootAttr(it.id) + '">Use</button>' : '')
       + (it.slot ? '<button type="button" class="upg" data-loot-equip="' + _lootAttr(it.id) + '">' + (L.equipped[it.slot] === it.id ? "Stow" : "Equip") + '</button>' : '')

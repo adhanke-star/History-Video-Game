@@ -3068,19 +3068,37 @@ next green commit and confer through this ledger instead of permitting simultane
   politics for the election bind) · ARC 6 rail+naval packets (session-fillers,
   chartered per D455 §7's interleave rule) · Mayhem Slice B (LANE-007) · C72 Shiloh
   rewrite + GEA-01/S44 bundle (parked, Aaron reorder-only).
-- **Resume pointer:** SLICE 7 (named legendary artifacts + mode-split drops §4c.1) per
-  this contract's clause IN FULL: citation-grade named items with sourced provenance
-  text (≥2 sources each); Historical provenance-locked to the correct battle/unit,
-  Mayhem general pool; effects ONLY via the existing capped equip path; the `artifact`
-  tier enters the canonical map here if adopted; owner probe-loot-survival, adjacent
-  probe-open-history-mayhem; binds per the contract clause (wrong-battle drop under
-  Historical → the lock tooth red EXACTLY; second source dropped → the source tooth
-  red EXACTLY). §4d is COMPLETE (D480 presentation · D481 eastern · D482 western ·
-  D484 soldier tier); the P-END battery for slices 4-5 ran at `7e399a6`
-  (D482-BATTERY); the direction authority for any future badge row is the battle's
-  own probe (the D481 lesson, recorded in ab-badge-direction.mjs's header).
-- **Last-touched commit:** the D484 slice-6 commit (this commit).
-- **Slice history:** SLICE 6 SHIPPED as D484 (2026-07-20): soldier-tier badges
+- **Resume pointer:** SLICE 8 (set collections + item variety §4c.2+§4c.5; may split at
+  drive time) per this contract's clause IN FULL: themed kits with completion effects
+  through the existing condition/supply levers; item variety from real quartermaster/
+  ordnance records; salvage flow; captured arms as the CS supply channel; economy hooks;
+  survival-mode as a campaign-setup choice (default unchanged). Scope confirmed against
+  room at drive time — shed from the back, never thin. Owner probe-loot-survival.
+  §4c.1 + §4d are COMPLETE (D478 language · D479 feel · D480 presentation · D481
+  eastern+R-7 · D482 western · D484 soldier tier · D485 named artifacts); the P-END
+  battery for slices 4-5 ran at `7e399a6` (D482-BATTERY); after slice 8, SLICE 9 is
+  the ARC 4 release battery (suite 140, ALONE, serialized, every artifact read) that
+  alone flips this lane SHIPPED.
+- **Last-touched commit:** the D485 slice-7 commit (this commit).
+- **Slice history:** SLICE 7 SHIPPED as D485 (2026-07-20): named legendary artifacts +
+  mode-split drops (§4c.1) — the `artifact` tier ADOPTED (glyph ❖, reserved hex,
+  contrast-proven, the one-language wall auto-extends) + FOUR Verified named objects
+  (28th Virginia battle flag/gettysburg · 4th USCT national colors/newMarketHeights ·
+  Cleburne's kepi/franklin · the Jo Daviess Grant sword/vicksburg, slot weapon), every
+  row ≥2 distinct sources with the research drops logged honestly (the Henry example
+  DROPPED at the single-Jacobson-family wall; the Cleburne sword RESHAPED to the kepi;
+  the Hilton/Veal vignette excluded); src/37 `_lootItemEligible` + the C/B-aware pick —
+  Historical pool-eligible ONLY at the provenance battle (malformed flags fail closed;
+  the D418 kernel is the ONLY mode authority), Mayhem general pool; wrong-battle
+  Historical pools BYTE-IDENTICAL (the deterministic-drop teeth held unmoved, weights
+  2/1/0 held); effects through the existing capped equip path (existing vocabulary +
+  magnitudes, probed structurally). Teeth loot-survival 24→28; adjacents mayhem-mode
+  24/24 + ratings 31/31 + save-slots 16/16; binds A (lock conjunct killed → the lock
+  tooth EXACTLY + the Mayhem twin-conjunct sibling) + B (second source dropped → gate
+  4e exit-5 AND the source-floor tooth EXACTLY) md5-proven (src/37 73a817a8 · game
+  27e73f38). AD-7 game→27e73f38 · dataTree→dcf6da5b · srcTree→b7648a67 ·
+  journey→73a817a8 (focused holds e2acf99a).
+  SLICE 6 SHIPPED as D484 (2026-07-20): soldier-tier badges
   (§4d.3) — soldierBadgeDefs 14 (8 historical + 6 career) + soldierBadges 48 rows
   on 39 of 42 Verified carriers (every row ≥2 in-record sources; drops logged:
   Sherman/Howard/Griffin, Webb's MoH → command_at_the_crisis, Beaty's
