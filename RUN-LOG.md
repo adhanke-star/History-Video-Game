@@ -2,7 +2,28 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
-## 2026-07-20 — D474/D475 the DAY-END BATTERY COMPLETES: 140-row green, slices 3-4 VERIFIED, LANE-014 lock released
+## 2026-07-20 — D476-D478 the MEGA-LADDER: ARC 3 SHIPPED AND CLOSED (slice 5 + the release battery) · ARC 4 CHARTERED · slice 1 SHIPPED
+
+The post-D475 continuation (Fable 5, Aaron's 24-hour mega-ladder authorization): **D476**
+LANE-014 slice 5 — T24 distance-LOD (the near set in its own `ffNearLayer` scene group, 7
+richer instanced meshes + knapsack/bedroll, NEAR_CAP 66 vs far 42 unchanged, hysteresis
+430/490, fldLow() always far — the low tier byte-current; E19/E20/fldExit extended; +7
+high-tier draws only) + the T23 runtime license wall (fixture-proven; canonical pack
+untouched, 0 slots enabled); ff teeth 19→23 · tripo 14→17; binds near-at-low/
+license-pending bit EXACTLY; AD-7 game→a234c52a · srcTree→7cc295df. **D477** the ARC 3
+release battery: 140/140 at SHA `7ac44aa` across THREE legs (two environment flakes —
+tactical-roster screenshot 30s + antietam 360s budget — both re-run green ALONE, zero tree
+changes); 139 artifact JSONs swept all-ok/zero-pageerrors; **LANE-014 SHIPPED in full, ARC 3
+CLOSED**. Then **LANE-017 loot-and-badges chartered at DRIVE** (`023ec91`: ten
+adjudications incl. the R-7 rider resolved-bundled; nine slices with owners+binds) and
+**D478** slice 1 shipped — the ONE rarity language: canonical tier map (glyphs •▲◆★ +
+RESERVED hexes one step off the app accents after the wall's first run caught the
+collision) + cwTierInfo/cwRungTierInfo + the glyph+label-redundant loot chip + the T14
+tier-tinted rung glyph; the tree-wide one-language wall enforces data+src/37-default as the
+only tier-hex literals; loot 16/16 · ratings 23/23 · a11y + roster adjacents green; binds
+hardcode/glyph-strip bit EXACTLY; AD-7 game→9dd15ca2 · dataTree→b3b323fa ·
+srcTree→ce48e9ae (+ the follow-up journey/dataTree baseline re-pins, both plan probes
+24/24 · 13/13). Counts hold 29/62/1,710/140. Exact next: LANE-017 slice 2 (drop feel).
 
 The post-D471 ladder P4 (Claude Code / Fable 5): the mandatory battery ran
 serialized/ALONE — rows 1-72 green in the first leg; ONE red at row 73 `field
