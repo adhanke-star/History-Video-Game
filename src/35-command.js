@@ -1930,6 +1930,26 @@ function _cmdActiveCard(C) {
 }
 
 /* The available-generals pool — appoint / promote (relieve the incumbent). */
+/* D480 (LANE-017 slice 3): the Madden-style dev-trait CHIP for a general card.
+   Pure display over the EXISTING devTraits assignment (_cmdDevTrait — no new data
+   fields); "" for an unassigned general (byte-identical). Meaning rides glyph +
+   polarity sign + label word (never colour alone); hover/tap + SR provenance via
+   title/aria-label (trait desc + prov + named sources — the slice-3 provenance law). */
+function _cmdDevChipHTML(C, g) {
+  var dt = g ? _cmdDevTrait(C, g) : null;
+  if (!dt) return "";
+  var sign = (dt.polarity === "+") ? "+" : (dt.polarity === "−" || dt.polarity === "-") ? "−" : (dt.polarity === "~") ? "±" : "=";
+  var src = (dt.src && dt.src.length) ? dt.src.join("; ") : "no named source";
+  var prov = dt.prov + " — " + src + (dt.desc ? ". " + dt.desc : "");
+  var aria = dt.label + ", development trait. " + prov;
+  return '<span tabindex="0" data-dev-chip="' + _cmdEsc(dt.key) + '" aria-label="' + _cmdEsc(aria) + '" title="' + _cmdEsc(aria) + '"'
+    + ' style="display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:1px 7px;margin-top:2px;border:1px solid #745e3f;border-left:3px solid #b3925e;border-radius:9px;background:rgba(0,0,0,.18)">'
+    + '<span aria-hidden="true" style="font-size:9px;opacity:.95">' + _cmdEsc(dt.glyph || "•") + '</span>'
+    + '<b aria-hidden="true">' + _cmdEsc(sign) + '</b>'
+    + '<span aria-hidden="true">' + _cmdEsc(dt.label) + '</span>'
+    + '</span>';
+}
+
 function _cmdPoolHTML(C) {
   var side = (C.side === "CS") ? "CS" : "US", P = C.president;
   var roster = _cmdRosterPlusCommissioned(C, side);   // Q11 (D109): commissioned political generals appear in the appoint pool
@@ -1969,6 +1989,7 @@ function _cmdPoolHTML(C) {
       +   '<div style="font-weight:bold;font-size:13px">' + _cmdEsc(_cmdName(g)) + (g.epithet ? ' <span style="font-weight:normal;opacity:.6;font-size:11px">&ldquo;' + _cmdEsc(g.epithet) + '&rdquo;</span>' : '') + '</div>'
       +   '<div style="font-size:11px;opacity:.75">' + _cmdEsc(g.rank || "") + ' &middot; <span aria-hidden="true" style="display:inline-block;width:7px;height:7px;border-radius:50%;background:' + gr.color + ';margin-right:3px"></span><b>' + _cmdEsc(gr.letter) + '</b> ' + _cmdEsc(gr.word) + ' (' + rating + ' OVR)</div>'
       +   '<div style="font-size:10px;opacity:.6">ATK ' + dual.attack + ' &middot; DEF ' + dual.defend + '</div>'
+      +   _cmdDevChipHTML(C, g)
       +   (g.strength ? '<div style="font-size:11px;opacity:.6">' + _cmdEsc(g.strength) + '</div>' : '')
       + '</div>'
       + '<div style="flex:0 0 auto;text-align:right">' + note + '</div>'

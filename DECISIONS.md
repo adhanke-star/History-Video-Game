@@ -4,6 +4,52 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D480 — LANE-017 SLICE 3 SHIPPED: THE BADGE PRESENTATION LAYER — MADDEN-STYLE BADGE CARDS/GALLERY, THE LIVE X-FACTOR SHOWCASE, HOVER/TAP PROVENANCE, GENERAL-CARD DEV-TRAIT CHIPS — ALL PURE READS INSIDE THE D74 WALL — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE; MEGA-LADDER LEG 2 P2] (2026-07-20)
+
+**SHIPPED (the charter's slice-3 clause §4d.1; presentation only — zero data edits, zero
+sim writes):** T14 gains (1) `fldBadgeCardHtml` — the Madden-style badge CARD (rung glyph
+tinted via `cwRungTierInfo`, polarity sign, aliased label, rung word, and the provenance
+line prov + named sources + note VISIBLE on the card, in the hover title, and in the SR
+aria-label; tabindex 0 = keyboard-operable); (2) `fldBadgeGalleryHtml` — the unit's
+carried badges as cards (an unresolved id renders NOTHING — the defs-integrity law,
+fail-closed) and, with null, the full 26-def catalog grouped by tinted rung sections;
+(3) `fldXfShowcaseHtml` — every field unit carrying an X-Factor def with LIVE state
+MIRRORED from the runtime latch (`_xfOn`/`_xfGlow`, reads only, never writes): armed →
+IN THE ZONE (⚡ while glowing) → re-armed, with the state spoken in the row aria;
+(4) `fldBadgeDeskHudHtml` — the T29-idiom disclosure (two native buttons,
+aria-expanded/controls, panels always in the DOM, document-delegated toggles, S22
+focus preservation across the HUD re-render) appended INSIDE the existing
+`fldRatingBadgesHtml` block — zero T0 edits. src/35 gains `_cmdDevChipHTML` — the
+pool-row Madden dev-trait chip from the EXISTING devTraits assignment (no new data
+fields; "" for an unassigned general = byte-identical; glyph+sign+label with
+provenance in title/aria); the active general's card already carries the D105 Career
+Arc. No animation anywhere ⇒ reduceMotion needs no gate (the T29 precedent).
+
+**TEETH (owner probe-ratings per the charter; suite stays 140):** 23→27 — gallery
+cards from resolved badgeDefs ONLY (ghost id → zero cards, no text leak) + hover/tap/
+SR provenance incl. a named source + the canonical X-Factor tint + the 26-def catalog ·
+the showcase mirrors runtime truth BOTH ways (armed → probe fires `march_vigor` via
+`fldXFactorStep` → IN THE ZONE → out-of-zone → armed; render-path write scan) · HUD
+disclosure aria wiring + the dev-trait chip (keyboard/SR + provenance) + unbadged-unit
+empty render · the zero-sim-writes purity sweep over the WHOLE new render path (unit +
+`__FIELD` + `G` byte-identical — the D74 output-wall scan extended) — 27/27, artifact
+read, 0 pageerrors. Adjacents: probe-command 94/94 + probe-accessibility 27/27,
+artifacts read, 0 pageerrors. node --check ×3 · build GATE OK (no-fudge wall green
+over the new path).
+
+**BINDS (both md5-proven byte-identical restores to T14 `8bb999f4` + game `58bee730`,
+re-verified at the D480-label head T14 `f2ca3e85` + game `f7bb9cce`):** A — the
+showcase's live read replaced with unconditional active → EXACTLY the state-mirror
+tooth red ("showcase shows active with no trigger fired"; every other step green).
+B — the gallery's unresolved-id refusal replaced with a raw-key fallback card →
+EXACTLY the defs-integrity tooth red ("gallery rendered a badge id absent from
+badgeDefs: expected 2 cards, got 3"; every other step green). **AD-7 re-pins in this
+commit:** game b74053aa → f7bb9cce · srcTree 4eed52e8 → 7c23e51d at all four
+plan-probe sites (base/dataTree/journey/manifest/suite/focused hold — src/37 and
+data/ untouched this slice); both plan probes re-run post-commit. Counts hold
+29/62/1,710/140; `_SAVE_VER=1`; frozen base `c9db83fa` untouched. Exact next:
+LANE-017 slices 4+5 (the coverage sweep + R-7, §4d.2) per the committed contract.
+
 ## D479 — LANE-017 SLICE 2 SHIPPED: DROP FEEL — RARITY-COLOURED ANNOUNCEMENTS, ONE-TIME FLIP REVEAL, VIEW-SIDE SORT/FILTER, LEGENDARY GLOW — ALL THROUGH THE D478 CANONICAL MAP, ALL INERT UNDER reduceMotion — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE; MEGA-LADDER LEG 2 P1] (2026-07-20)
 
 **SHIPPED (the charter's slice-2 clause §4c.3; presentation only — the reward path is

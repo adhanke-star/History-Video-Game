@@ -624,6 +624,114 @@ const SETUP = `(() => {
       if(tinted<1) throw new Error('no chip glyph carries the canonical tier tint');
       if(html.toLowerCase().indexOf(want)<0) throw new Error('chip html does not use the canonical tier colour '+want);
       return { chips:chips.length, tinted:tinted, tier:want }; });
+
+    step('D480 badge gallery: Madden-style cards render ONLY from resolved badgeDefs (unknown ids refused fail-closed) with hover/tap provenance present and keyboard focus', function(){
+      if(typeof fldBadgeGalleryHtml!=='function'||typeof fldBadgeCardHtml!=='function') throw new Error('gallery helpers missing');
+      var u={ badges:['marksman','foot_cavalry','__ghost_badge__'] };
+      var div=document.createElement('div'); div.innerHTML=fldBadgeGalleryHtml(u);
+      var cards=div.querySelectorAll('[data-badge-card]');
+      if(cards.length!==2) throw new Error('gallery rendered a badge id absent from badgeDefs: expected 2 cards, got '+cards.length);
+      if((div.textContent||'').indexOf('__ghost_badge__')>=0) throw new Error('gallery rendered a badge id absent from badgeDefs: ghost key leaked into text');
+      for(var i=0;i<cards.length;i++){
+        var c=cards[i];
+        if(c.getAttribute('tabindex')!=='0') throw new Error('card not keyboard-focusable');
+        var title=c.getAttribute('title')||'', aria=c.getAttribute('aria-label')||'';
+        if(!title||!aria) throw new Error('card missing hover title / SR aria provenance');
+        if(!/Verified|Inferred|Disputed/.test(aria)) throw new Error('card aria lacks a provenance word: '+aria);
+        if(!/Verified|Inferred|Disputed/.test(c.textContent||'')) throw new Error('card visible text lacks the tap provenance line');
+      }
+      var fcCard=div.querySelector('[data-badge-card="foot_cavalry"]');
+      if(!fcCard || (fcCard.getAttribute('aria-label')||'').indexOf('Robertson 1997')<0) throw new Error('foot_cavalry card provenance lacks its named source');
+      var xfTint=cwRungTierInfo('xfactor').color.toLowerCase();
+      if((fcCard.innerHTML||'').toLowerCase().indexOf(xfTint)<0) throw new Error('the X-Factor card glyph does not carry the canonical tier tint');
+      var cat=document.createElement('div'); cat.innerHTML=fldBadgeGalleryHtml(null);
+      var catCards=cat.querySelectorAll('[data-badge-card]');
+      if(catCards.length!==D.badgeDefs.length) throw new Error('catalog gallery should render all '+D.badgeDefs.length+' defs, got '+catCards.length);
+      if(!/Stars/.test(cat.textContent)||!/Superstars/.test(cat.textContent)||!/X-Factors/.test(cat.textContent)) throw new Error('catalog missing its rung sections');
+      return { unitCards:cards.length, catalog:catCards.length };
+    });
+
+    step('D480 X-Factor showcase: LIVE activation state mirrors runtime truth (a fired trigger flips the showcase both ways); the render path never writes', function(){
+      if(typeof fldXfShowcaseHtml!=='function') throw new Error('fldXfShowcaseHtml missing');
+      var savedU=(typeof __FIELD!=='undefined')?__FIELD.units:undefined, savedB=(typeof __FIELD!=='undefined')?__FIELD.badges:undefined, savedT=(typeof __FIELD!=='undefined')?__FIELD.realismTier:undefined;
+      try {
+        fldLaunchSandbox({renderer:'none', autoBoth:true, seed:7});
+        __FIELD.realismTier='balanced'; __FIELD.badges=true;
+        var u={ id:'XFS', side:'CS', name:'Showcase Bde', arm:'inf', alive:true, state:'steady', x:800, z:200, morale:78, maxMor:78, ammo:100, cmdBonus:0, order:{type:'move',tx:800,tz:1400}, badges:['foot_cavalry'] };
+        __FIELD.units=[u];
+        var before=fldXfShowcaseHtml();
+        var dv=document.createElement('div'); dv.innerHTML=before;
+        var row=dv.querySelector('[data-xf-row="foot_cavalry"]');
+        if(!row) throw new Error('showcase missing the armed X-Factor row');
+        if(row.getAttribute('data-xf-active')!=='0'||/IN THE ZONE/.test(row.textContent)) throw new Error('showcase shows active with no trigger fired');
+        var snap=JSON.stringify(u);
+        fldXfShowcaseHtml();
+        if(JSON.stringify(u)!==snap) throw new Error('the showcase render WROTE unit state');
+        fldXFactorStep(0.05);   // the march_vigor trigger is live (the unit is moving)
+        if(u._xfOn!=='foot_cavalry') throw new Error('fixture trigger did not fire: _xfOn='+u._xfOn);
+        var dv2=document.createElement('div'); dv2.innerHTML=fldXfShowcaseHtml();
+        var row2=dv2.querySelector('[data-xf-row="foot_cavalry"]');
+        if(!row2||row2.getAttribute('data-xf-active')!=='1'||!/IN THE ZONE/.test(row2.textContent)) throw new Error('a fired trigger did not flip the showcase active');
+        u.order=null;   // leave the zone -> the latch re-arms
+        fldXFactorStep(0.05);
+        var dv3=document.createElement('div'); dv3.innerHTML=fldXfShowcaseHtml();
+        var row3=dv3.querySelector('[data-xf-row="foot_cavalry"]');
+        if(!row3||row3.getAttribute('data-xf-active')!=='0') throw new Error('leaving the zone did not flip the showcase back to armed');
+        if((row2.getAttribute('aria-label')||'').indexOf('in the zone')<0) throw new Error('showcase row aria does not speak the live state');
+        return { armed:true, flipped:true, rearmed:true };
+      } finally { if(typeof __FIELD!=='undefined'){ __FIELD.units=savedU; __FIELD.badges=savedB; __FIELD.realismTier=savedT; } }
+    });
+
+    step('D480 HUD disclosure: gallery + showcase ride native aria-correct T29-idiom buttons inside the badge read-out; the general pool carries the dev-trait chip', function(){
+      var RB=D.rosterBadges.bullrun1, uid=null;
+      for(var k in RB){ if(RB.hasOwnProperty(k)&&RB[k]&&RB[k].length){ uid=k; break; } }
+      var html=fldRatingBadgesHtml({ badges:RB[uid] });
+      var div=document.createElement('div'); div.innerHTML=html;
+      var bg=div.querySelector('#fldBgBtn'), xf=div.querySelector('#fldXfBtn');
+      if(!bg||!xf) throw new Error('disclosure buttons missing from the badge read-out');
+      if(bg.tagName!=='BUTTON'||xf.tagName!=='BUTTON') throw new Error('disclosure controls must be native buttons');
+      if(bg.getAttribute('aria-expanded')==null||bg.getAttribute('aria-controls')!=='fldBgPanel') throw new Error('gallery button aria wiring wrong');
+      if(xf.getAttribute('aria-expanded')==null||xf.getAttribute('aria-controls')!=='fldXfPanel') throw new Error('showcase button aria wiring wrong');
+      if(!div.querySelector('#fldBgPanel')||!div.querySelector('#fldXfPanel')) throw new Error('panels must be present in the DOM (hidden when closed)');
+      if(typeof _cmdDevChipHTML!=='function') throw new Error('_cmdDevChipHTML missing');
+      var cfg=D.devTraits, gid=null;
+      for(var a in cfg.assign){ if(cfg.assign.hasOwnProperty(a)){ gid=a; break; } }
+      if(!gid) throw new Error('no devTraits assignment to test');
+      var gens=(typeof gameData==='function')?gameData('generals'):null;
+      var gen=null, sides=['US','CS'];
+      for(var s=0;s<sides.length&&!gen;s++){ var list=gens&&gens.sides&&gens.sides[sides[s]]&&gens.sides[sides[s]].generals; if(list) for(var gi=0;gi<list.length;gi++) if(list[gi].id===gid){ gen=list[gi]; break; } }
+      if(!gen) throw new Error('assigned general '+gid+' not found in generals data');
+      var chipHtml=_cmdDevChipHTML({ side:'US', president:{ command:{ reputation:{} } } }, gen);
+      if(!chipHtml) throw new Error('dev-trait chip empty for an assigned general');
+      var cd=document.createElement('div'); cd.innerHTML=chipHtml;
+      var chip=cd.querySelector('[data-dev-chip]');
+      if(!chip) throw new Error('dev-trait chip missing its data hook');
+      if(chip.getAttribute('tabindex')!=='0'||!(chip.getAttribute('aria-label')||'').length) throw new Error('dev-trait chip not keyboard/SR operable');
+      if(!/Verified|Inferred|Disputed/.test(chip.getAttribute('aria-label'))) throw new Error('dev-trait chip aria lacks provenance');
+      var un={ badges:[] };
+      if(fldBadgeGalleryHtml(un)!=='') throw new Error('an unbadged unit must render no gallery');
+      return { buttons:2, devChipFor:gid };
+    });
+
+    step('D480 zero sim writes: the whole slice-3 render path (chips, gallery, catalog, showcase, disclosure) leaves the unit, __FIELD, and G byte-identical', function(){
+      var savedU=(typeof __FIELD!=='undefined')?__FIELD.units:undefined, savedB=(typeof __FIELD!=='undefined')?__FIELD.badges:undefined;
+      try {
+        fldLaunchSandbox({renderer:'none', autoBoth:true, seed:9});
+        __FIELD.badges=true;
+        var u={ id:'PURE', side:'US', name:'Purity Bde', arm:'inf', alive:true, state:'steady', x:400, z:300, morale:60, maxMor:78, ammo:80, cmdBonus:0.2, order:{type:'move',tx:900,tz:900}, badges:['marksman','foot_cavalry'] };
+        __FIELD.units=[u];
+        fldXFactorStep(0.05);   // give the surge fields real values so the render reads live state
+        var uSnap=JSON.stringify(u);
+        var gMode=(typeof G!=='undefined')?G.mode:null;
+        var fLen=__FIELD.units.length, fBadges=__FIELD.badges;
+        fldRatingBadgesHtml(u); fldBadgeGalleryHtml(u); fldBadgeGalleryHtml(null); fldXfShowcaseHtml();
+        if(typeof fldBadgeDeskHudHtml==='function') fldBadgeDeskHudHtml(u);
+        if(JSON.stringify(u)!==uSnap) throw new Error('slice-3 render path mutated the unit');
+        if(__FIELD.units.length!==fLen||__FIELD.badges!==fBadges) throw new Error('slice-3 render path mutated __FIELD');
+        if(typeof G!=='undefined'&&G.mode!==gMode) throw new Error('slice-3 render path mutated G.mode');
+        return { pure:true };
+      } finally { if(typeof __FIELD!=='undefined'){ __FIELD.units=savedU; __FIELD.badges=savedB; } }
+    });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;

@@ -353,7 +353,183 @@ function fldRatingBadgesHtml(u) {
   return '<div style="margin-top:5px;border-top:1px solid #795c3e;padding-top:4px">'
     + '<div style="font-size:9px;opacity:.72;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1px">Traits &amp; Abilities</div>'
     + '<div role="list" aria-label="Brigade traits and abilities" style="display:flex;flex-wrap:wrap">' + chips + '</div>'
+    + (typeof fldBadgeDeskHudHtml === "function" ? fldBadgeDeskHudHtml(u) : "")
     + '</div>';
+}
+
+/* ===========================================================================
+   D480 (LANE-017 slice 3) · THE BADGE PRESENTATION LAYER — Madden-style badge
+   CARDS (gallery) + the X-Factor SHOWCASE with LIVE activation state.
+
+   PURE DISPLAY inside the D74 output wall: every function below only READS
+   badgeDefs/rosterBadges-stamped unit state and the live _xf* surge fields —
+   it never writes a unit, __FIELD, or G. Unknown badge ids are REFUSED
+   fail-closed (a chip/card renders ONLY from a resolved fldBadgeDef — the
+   defs-integrity law). Rung tints ride cwRungTierInfo (the ONE rarity
+   language); no tier hex appears here. Disclosure buttons follow the T29
+   muster-roll idiom (native <button>, aria-expanded/controls, panel always in
+   the DOM, document-level delegated click, focus survives the HUD re-render).
+   No animation anywhere in these panels, so reduceMotion needs no gate.
+   =========================================================================== */
+
+/* the provenance line for a def: prov + named sources + the def's note. */
+function _fldBadgeProvText(def) {
+  if (!def) return "";
+  var src = (def.sources && def.sources.length) ? def.sources.join("; ") : "no named source";
+  return String(def.prov || "Inferred") + " — " + src + (def.note ? ". " + String(def.note) : "");
+}
+
+/* one Madden-style badge CARD. Keyboard-operable (tabindex 0) with the full
+   provenance in BOTH the aria-label/title (hover + SR) and visible card text (tap). */
+function fldBadgeCardHtml(def) {
+  if (!def) return "";
+  var neg = def.polarity === "neg";
+  var sign = neg ? "−" : "+";
+  var glyph = _FLD_RUNG_GLYPH[def.rung] || "•";
+  var col = neg ? "#c98a5e" : "#86b06a";
+  var tierTint = "";
+  try { if (typeof cwRungTierInfo === "function") tierTint = String(cwRungTierInfo(def.rung).color || ""); } catch (eTier) {}
+  var label = fldBadgeLabel(def);
+  var rungWord = def.rung === "xfactor" ? "X-Factor" : (def.rung === "superstar" ? "Superstar" : "Star");
+  var prov = _fldBadgeProvText(def);
+  var aria = label + ", " + rungWord + " " + (neg ? "flaw" : "strength") + ". " + prov;
+  return '<div role="listitem" tabindex="0" data-badge-card="' + _fldRatEsc(def.key) + '"'
+    + ' aria-label="' + _fldRatEsc(aria) + '" title="' + _fldRatEsc(aria) + '"'
+    + ' style="border:1px solid ' + col + ';border-left:4px solid ' + col + ';border-radius:6px;padding:6px 8px;margin:4px 4px 0 0;background:rgba(0,0,0,.2);max-width:250px">'
+    + '<div style="display:flex;align-items:center;gap:4px;font-size:11px">'
+    + '<span aria-hidden="true" style="font-size:12px' + (tierTint ? ';color:' + tierTint : '') + '">' + glyph + '</span>'
+    + '<b aria-hidden="true">' + sign + '</b>'
+    + '<b aria-hidden="true">' + _fldRatEsc(label) + '</b>'
+    + '<span aria-hidden="true" style="margin-left:auto;font-size:9px;opacity:.7;text-transform:uppercase;letter-spacing:.05em">' + rungWord + '</span>'
+    + '</div>'
+    + '<div aria-hidden="true" style="font-size:9px;opacity:.78;margin-top:3px">' + _fldRatEsc(prov) + '</div>'
+    + '</div>';
+}
+
+/* the badge GALLERY. With a unit: its carried badges as full cards (unknown ids
+   refused). With null: the complete badgeDefs catalog grouped by rung. */
+function fldBadgeGalleryHtml(u) {
+  var d = _ratData(); if (!d || !d.badgeDefs) return "";
+  var html = "", i, def;
+  if (u) {
+    if (!u.badges || !u.badges.length) return "";
+    var cards = "";
+    for (i = 0; i < u.badges.length; i++) {
+      def = fldBadgeDef(u.badges[i]);
+      if (!def) continue;   // an unresolved id renders NOTHING (defs-integrity, fail-closed)
+      cards += fldBadgeCardHtml(def);
+    }
+    if (!cards) return "";
+    return '<div role="list" aria-label="This brigade&#39;s badges" style="display:flex;flex-wrap:wrap">' + cards + '</div>';
+  }
+  var rungs = ["star", "superstar", "xfactor"];
+  for (var r = 0; r < rungs.length; r++) {
+    var rungWord = rungs[r] === "xfactor" ? "X-Factors" : (rungs[r] === "superstar" ? "Superstars" : "Stars");
+    var tint = "";
+    try { if (typeof cwRungTierInfo === "function") tint = String(cwRungTierInfo(rungs[r]).color || ""); } catch (eT) {}
+    var section = "";
+    for (i = 0; i < d.badgeDefs.length; i++) {
+      def = d.badgeDefs[i];
+      if (!def || def.rung !== rungs[r]) continue;
+      section += fldBadgeCardHtml(def);
+    }
+    if (!section) continue;
+    html += '<div style="margin-top:6px">'
+      + '<div style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;opacity:.85"><span aria-hidden="true"' + (tint ? ' style="color:' + tint + '"' : '') + '>' + (_FLD_RUNG_GLYPH[rungs[r]] || "•") + '</span> ' + rungWord + '</div>'
+      + '<div role="list" aria-label="' + rungWord + ' badge catalog" style="display:flex;flex-wrap:wrap">' + section + '</div>'
+      + '</div>';
+  }
+  return html;
+}
+
+/* the X-Factor SHOWCASE: every field unit carrying an X-Factor def, with the
+   LIVE activation state MIRRORED from the runtime surge fields (_xfOn is the
+   rising-edge latch fldXFactorStep maintains; _xfGlow the marker pulse). READS
+   ONLY — this function never sets a surge field, an order, or any sim state. */
+function fldXfShowcaseHtml() {
+  var U = (typeof __FIELD !== "undefined" && __FIELD) ? __FIELD.units : null;
+  if (!U || !U.length || !_ratData()) return "";
+  var rows = "";
+  for (var i = 0; i < U.length; i++) {
+    var u = U[i];
+    var defs = _fldUnitXFactors(u);
+    for (var j = 0; j < defs.length; j++) {
+      var def = defs[j];
+      var neg = def.polarity === "neg";
+      var live = (u._xfOn === def.key);
+      var glow = live && typeof u._xfGlow === "number" && u._xfGlow > 0;
+      var state = live ? (neg ? "DRAGGING" : "IN THE ZONE") : "armed";
+      var tint = "";
+      try { if (typeof cwRungTierInfo === "function") tint = String(cwRungTierInfo("xfactor").color || ""); } catch (eT) {}
+      var label = fldBadgeLabel(def);
+      var aria = (u.name || "A brigade") + ": " + label + ", " + (live ? (neg ? "dragging now" : "in the zone now") : "armed, waiting on its trigger") + ". " + _fldBadgeProvText(def);
+      rows += '<div role="listitem" tabindex="0" data-xf-row="' + _fldRatEsc(def.key) + '" data-xf-active="' + (live ? "1" : "0") + '"'
+        + ' aria-label="' + _fldRatEsc(aria) + '" title="' + _fldRatEsc(aria) + '"'
+        + ' style="display:flex;align-items:center;gap:5px;font-size:10px;padding:3px 6px;margin-top:3px;border:1px solid #745e3f;border-left:3px solid ' + (live ? "#c9a85f" : "#745e3f") + ';border-radius:4px;background:rgba(0,0,0,.18)">'
+        + '<span aria-hidden="true"' + (tint ? ' style="color:' + tint + '"' : '') + '>' + (_FLD_RUNG_GLYPH.xfactor || "⬥") + '</span>'
+        + '<b aria-hidden="true">' + _fldRatEsc(u.name || "A brigade") + '</b>'
+        + '<span aria-hidden="true">' + _fldRatEsc(label) + '</span>'
+        + '<span aria-hidden="true" style="margin-left:auto;font-weight:bold;letter-spacing:.04em' + (live ? "" : ";opacity:.55") + '">' + (glow ? "⚡ " : "") + state + '</span>'
+        + '</div>';
+    }
+  }
+  if (!rows) return "";
+  return '<div role="list" aria-label="X-Factor showcase — live activation state">' + rows + '</div>';
+}
+
+/* the HUD disclosure block (appended inside the badge-chip read-out): the badge
+   gallery + the X-Factor showcase behind two T29-idiom native buttons. */
+function fldBadgeDeskHudHtml(u) {
+  if (!u || !u.badges || !u.badges.length || !_ratData()) return "";
+  var bgOpen = !!(typeof __FIELD !== "undefined" && __FIELD && __FIELD._bgOpen);
+  var xfOpen = !!(typeof __FIELD !== "undefined" && __FIELD && __FIELD._xfShowOpen);
+  var gallery = fldBadgeGalleryHtml(u);
+  var catalog = fldBadgeGalleryHtml(null);
+  var showcase = fldXfShowcaseHtml();
+  var btn = 'font:inherit;font-size:11px;padding:5px 9px;border:1px solid #745e3f;border-radius:4px;background:#1a1510;color:#d8c9a3;cursor:pointer;margin-right:5px';
+  return '<div style="margin-top:4px">'
+    + '<button id="fldBgBtn" type="button" aria-expanded="' + (bgOpen ? "true" : "false") + '" aria-controls="fldBgPanel" style="' + btn + '">'
+    + (bgOpen ? "Hide badge gallery" : "Badge gallery&hellip;") + '</button>'
+    + '<button id="fldXfBtn" type="button" aria-expanded="' + (xfOpen ? "true" : "false") + '" aria-controls="fldXfPanel" style="' + btn + '">'
+    + (xfOpen ? "Hide X-Factors" : "X-Factors&hellip;") + '</button>'
+    + '<div id="fldBgPanel" role="region" aria-label="Badge gallery"' + (bgOpen ? '' : ' hidden') + '>'
+    + gallery
+    + '<div style="font-size:9px;opacity:.72;letter-spacing:.06em;text-transform:uppercase;margin-top:6px">The badge catalog</div>'
+    + catalog
+    + '</div>'
+    + '<div id="fldXfPanel" role="region" aria-label="X-Factor showcase"' + (xfOpen ? '' : ' hidden') + '>'
+    + (showcase || '<div style="font-size:10px;opacity:.7;margin-top:3px">No brigade on this field carries an X-Factor.</div>')
+    + '</div>'
+    + '</div>';
+}
+
+/* T29-idiom delegated toggles (registered once at module eval; survive every
+   #fldHud innerHTML rebuild; native keyboard activation included). */
+document.addEventListener("click", function (e) {
+  var t = e.target && e.target.closest ? e.target.closest("#fldBgBtn, #fldXfBtn") : null;
+  if (!t) return;
+  if (typeof __FIELD === "undefined" || !__FIELD) return;
+  if (t.id === "fldBgBtn") __FIELD._bgOpen = !__FIELD._bgOpen;
+  else __FIELD._xfShowOpen = !__FIELD._xfShowOpen;
+  if (typeof fldRenderHud === "function") fldRenderHud();
+});
+
+/* S22-class focus preservation for the two disclosure buttons (the T29 wrapper idiom). */
+if (typeof fldRenderHud === "function") {
+  fldRenderHud = (function (orig) {
+    return function () {
+      var focusId = "";
+      try {
+        var a = document.activeElement;
+        if (a && (a.id === "fldBgBtn" || a.id === "fldXfBtn")) focusId = a.id;
+      } catch (e) {}
+      var r = orig.apply(this, arguments);
+      if (focusId) {
+        try { var b = document.getElementById(focusId); if (b) b.focus(); } catch (e2) {}
+      }
+      return r;
+    };
+  })(fldRenderHud);
 }
 
 /* ===========================================================================

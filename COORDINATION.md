@@ -3068,13 +3068,29 @@ next green commit and confer through this ledger instead of permitting simultane
   politics for the election bind) · ARC 6 rail+naval packets (session-fillers,
   chartered per D455 §7's interleave rule) · Mayhem Slice B (LANE-007) · C72 Shiloh
   rewrite + GEA-01/S44 bundle (parked, Aaron reorder-only).
-- **Resume pointer:** SLICE 3 (badge presentation layer, §4d.1) per this contract —
-  Madden-style badge chips on general + brigade cards, a badge gallery, X-Factor
-  showcase reading (never writing) the live `_xfActive`/`_xfGlow` state, hover/tap
-  provenance; keyboard-operable + screen-reader-labelled; teeth in probe-ratings,
-  adjacents probe-command + probe-accessibility; binds per the contract clause.
-- **Last-touched commit:** the D479 slice-2 commit (this commit).
-- **Slice history:** SLICE 2 SHIPPED as D479 (2026-07-20): drop feel per §4c.3 — the
+- **Resume pointer:** SLICES 4+5 (the coverage sweep + R-7, §4d.2, two theater
+  batches: eastern then western/trans-Mississippi) per this contract — rosterBadges +
+  X-Factors extended from the original 9 battles to ALL 29 scenarios, every row
+  ≥2-source Verified with anti-Lost-Cause balance; R-7 situational gating per
+  adjudication 9 in the same files as a separate commit-internal step with its own
+  teeth; the 8-seed A/B direction battery re-run per touched battle proving ZERO
+  historical flips (the Stones River/Perryville/Wilson's Creek/McDowell and
+  massacre-family direction guards stand); teeth in probe-ratings + the touched
+  battles' probes; binds per the contract clause (single-source row → the source
+  tooth red EXACTLY; a gated trigger past the T14 cap → the cap tooth red EXACTLY).
+- **Last-touched commit:** the D480 slice-3 commit (this commit).
+- **Slice history:** SLICE 3 SHIPPED as D480 (2026-07-20): the badge presentation
+  layer per §4d.1 — Madden-style badge cards (`fldBadgeCardHtml`, provenance visible
+  + title + aria, keyboard-focusable), the unit gallery + 26-def catalog
+  (`fldBadgeGalleryHtml`, unresolved ids refused fail-closed), the LIVE X-Factor
+  showcase (`fldXfShowcaseHtml`, mirrors `_xfOn`/`_xfGlow` reads-only both ways),
+  the T29-idiom HUD disclosure inside `fldRatingBadgesHtml` (zero T0 edits), and the
+  src/35 pool-row dev-trait chip from existing devTraits. Teeth: ratings 23→27;
+  adjacents command 94/94 + accessibility 27/27. Binds A (showcase unconditionally
+  active → the state-mirror tooth red EXACTLY) and B (ghost-id fallback card → the
+  defs-integrity tooth red EXACTLY) md5-proven; AD-7 game→f7bb9cce ·
+  srcTree→7c23e51d (dataTree/journey held — no data or src/37 edit).
+  SLICE 2 SHIPPED as D479 (2026-07-20): drop feel per §4c.3 — the
   additive-sanitized `recentDrops` record + the Latest Recovery announcement panel
   (canonical-map chips, glyph+label redundant), the one-time flip reveal + legendary
   glow (runtime CSS, zero new hexes, fully withheld under reduceMotion — instant

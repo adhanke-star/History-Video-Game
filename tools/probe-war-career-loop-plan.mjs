@@ -937,7 +937,10 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // D479 re-pin (LANE-017 slice 2): srcTree ce48e9ae -> 4eed52e8 (drop feel in src/37 —
     // announcement panel + flip/glow + view-side sort/filter + the additive recentDrops
     // sanitizer; presentation-only, no war-career surface).
-    srcTree:"4eed52e8afc6cf2b5b836607e5757455",
+    // D480 re-pin (LANE-017 slice 3): srcTree 4eed52e8 -> 7c23e51d (the badge presentation
+    // layer — T14 gallery/showcase/disclosure + the src/35 pool-row dev-trait chip;
+    // presentation-only, no war-career surface).
+    srcTree:"7c23e51d9f15efa0f3f4533a1a22f25c",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
@@ -1272,7 +1275,9 @@ step("BASELINES + LANE", () => {
     // data/loot-survival.json + the src/37 helpers + T14 tint + rebuild). base/manifest/suite hold.
     // D479 re-pin (LANE-017 slice 2): game 9dd15ca2 -> b74053aa (drop feel in src/37 + rebuild;
     // presentation-only). base/dataTree/manifest/suite hold.
-    game:"b74053aadec893d499dd5e96198fb542",
+    // D480 re-pin (LANE-017 slice 3): game b74053aa -> f7bb9cce (badge presentation layer in
+    // T14 + src/35 + rebuild; presentation-only). base/dataTree/manifest/suite hold.
+    game:"f7bb9cce2f96f63e8d8301b2e4957ef0",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     // D478 re-pin: dataTree 4bbdebe5 -> b3b323fa (LANE-017 slice 1: rarity glyphs + reserved tier
     // hexes + rungTiers in data/loot-survival.json — presentation data only, no war-career data).
@@ -1708,9 +1713,12 @@ step("REACHABILITY BASELINES", () => {
     // D479 re-pin: game 9dd15ca2 -> b74053aa, srcTree ce48e9ae -> 4eed52e8 (LANE-017 slice 2:
     // drop feel in src/37 — announcement/flip/glow + view-side sort/filter + the additive
     // recentDrops sanitizer + rebuild); dataTree/runtime did NOT move.
-    game:"b74053aadec893d499dd5e96198fb542",
+    // D480 re-pin: game b74053aa -> f7bb9cce, srcTree 4eed52e8 -> 7c23e51d (LANE-017 slice 3:
+    // the badge presentation layer — T14 gallery/showcase/disclosure + the src/35 pool-row
+    // dev-trait chip + rebuild); dataTree/runtime/journey did NOT move.
+    game:"f7bb9cce2f96f63e8d8301b2e4957ef0",
     dataTree:"b3b323faa7e2e92137504d94bd568044",
-    srcTree:"4eed52e8afc6cf2b5b836607e5757455",
+    srcTree:"7c23e51d9f15efa0f3f4533a1a22f25c",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
