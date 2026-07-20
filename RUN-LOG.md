@@ -2,6 +2,31 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-20 — D484: LANE-017 SLICE 6 — SOLDIER-TIER BADGES (§4d.3) SHIPPED — §4d COMPLETE
+
+A fresh Fable 5 session continued the held DRIVE from the clean pushed 850d533 (D483)
+boundary. **D484** (4f2eec4 + the 9099a3a follow-up): the soldier-tier badge layer — 14
+soldierBadgeDefs (8 historical + 6 career) + 48 soldierBadges rows on 39 of the 42 Verified
+replacement records, every row ≥2 named sources verified against the record's OWN in-repo
+source trail (the research substrate was the D152/D421 register itself — read and
+adjudicated directly by the top loop; drops logged: Sherman/Howard/Griffin single-source,
+Webb's MoH → command_at_the_crisis, Beaty's same-institution CMOHS caveat; the MoH cluster
+is US-only = the record's asymmetry; memorial rows both sides; no soldier-tier flaw row —
+none sourced). Runtime: the fldSoldierBadgeFactor capped gateway at the SAME badgeLever
+wall as fldBadgeFactor (exact-clamp probed at 1.10; NO combat line consumes the keys — sim
+inputs did not move); cwCareerBadges PURE-derived from the journey career log (nothing
+stored, _SAVE_VER=1, D149 shape untouched); the §10 solid/hatched distinction in the
+register detail + journey panel (SOLID requires row AND carrier Verified). Teeth:
+loot-survival 20→24 · war-career 45→46 (suite 140/140) · adjacents ratings 31/31 +
+save-slots 16/16; binds A/B bit EXACTLY their teeth, restores md5-proven (src/37 9655bfff ·
+game e99e6ac5). TWO rides: the D478 one-language wall caught the D483 src/22 COMMENT
+carrying all four reserved tier hexes (the comment-token class, FIFTH instance — reworded,
+scan untouched), and the plan probe's focused step-count structural tooth re-pinned 44→45
+with its chain after biting exactly at the post-commit re-run. AD-7 game→e99e6ac5 ·
+dataTree→c3c28fd6 · srcTree→d79696ce · journey→9655bfff · focused→e2acf99a; both plan
+probes green post-commit. Counts hold 29/62/1,710/140. LANE-017 stays DRIVE mid-ladder;
+slice 7 (named legendary artifacts §4c.1) is exact next; slices 8-9 remain.
+
 ## 2026-07-20 — D481-D483: THE INTERRUPTED MEGA-LADDER RESUMED — §4d.2 COMPLETE (all 29 battles badged, citation-grade) · R-7 SHIPPED · THE P-END BATTERY GREEN · the Aaron-directed flag-card portrait default
 
 A fresh Fable 5 session resumed the cut-off leg-2 ladder from the clean pushed 6518764
