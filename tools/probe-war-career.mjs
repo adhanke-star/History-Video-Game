@@ -2563,6 +2563,46 @@ const SETUP = `(() => {
       G.campaign = null;
       return { wrapped:true, capped:20 };
     });
+
+    step('D484 CAREER BADGES: derived from play state PURE (matrix exact), rendered HATCHED-never-solid in the journey panel, and ZERO new save shape', function () {
+      if (typeof cwCareerBadges !== 'function' || typeof _ssJourneyActiveHTML !== 'function' || typeof _ssSoldierBadgesHTML !== 'function') throw new Error('D484 badge layer missing');
+      function fx(over) {
+        var j = { enabled: true, personId: 'p1', battles: 0, promotionCount: 0, status: 'alive', career: [] };
+        for (var k in over) if (Object.prototype.hasOwnProperty.call(over, k)) j[k] = over[k];
+        return j;
+      }
+      function keysOf(j) { return cwCareerBadges(j).join(','); }
+      if (keysOf(fx({})) !== '') throw new Error('a zero-battle journey earned badges: ' + keysOf(fx({})));
+      if (keysOf(fx({ battles: 1 })) !== 'battle_tested') throw new Error('one battle should earn exactly battle_tested, got: ' + keysOf(fx({ battles: 1 })));
+      var j3 = fx({ battles: 3, promotionCount: 1 });
+      if (keysOf(j3) !== 'battle_tested,campaign_veteran,field_promoted') throw new Error('3 battles + promotion matrix wrong: ' + keysOf(j3));
+      if (keysOf(fx({ battles: 2, career: [{ battleId: 'x', battleName: 'X', outcome: 'defeat', status: 'alive' }] })).indexOf('steadfast_in_defeat') < 0) throw new Error('defeat-survived not earned');
+      if (keysOf(fx({ battles: 2, career: [{ battleId: 'x', battleName: 'X', outcome: 'victory', status: 'wounded' }] })).indexOf('bloodied') < 0) throw new Error('wounded entry not earned');
+      if (keysOf(fx({ battles: 4, status: 'war-ended' })).indexOf('mustered_through') < 0) throw new Error('war-ended not earned');
+      var snap = bytes(j3); cwCareerBadges(j3);
+      if (bytes(j3) !== snap) throw new Error('derivation mutated the journey (must be a pure read)');
+      var live = d407LiveCase('US', 'decisive', 'd484');
+      var C = live.C; G.campaign = C;
+      lootInit(C);
+      var before = bytes(C.loot);
+      var earned = cwCareerBadges(C.loot.journey);
+      if (earned.indexOf('battle_tested') < 0) throw new Error('a live war-career journey with a committed result earned nothing');
+      var div = document.createElement('div'); div.innerHTML = _ssJourneyActiveHTML(C);
+      var chips = div.querySelectorAll('[data-sb-chip][data-sb-class="career"]');
+      if (!chips.length) throw new Error('journey panel missing career chips on a live war career');
+      for (var ci = 0; ci < chips.length; ci++) {
+        var acc = chips[ci].querySelector('[data-sb-accent]');
+        var fill = String(acc && acc.getAttribute('style') || '');
+        if (fill.indexOf('repeating-linear-gradient') < 0) throw new Error('a career chip rendered SOLID in the war-career journey panel: ' + chips[ci].getAttribute('data-sb-chip'));
+        if ((chips[ci].getAttribute('title') || '').indexOf('Earned in play') < 0) throw new Error('a career chip does not declare itself earned in play');
+        if ((chips[ci].getAttribute('title') || '').indexOf('Verified') >= 0) throw new Error('a career chip claims Verified');
+      }
+      if (bytes(C.loot) !== before) throw new Error('the badge render wrote war-career journey state');
+      lootInit(C);
+      if (bytes(C.loot) !== before) throw new Error('the D149 sanitizer shape moved after badge derivation (a new field is riding the save)');
+      G.campaign = null;
+      return { matrix: 6, earned: earned, hatchedChips: chips.length };
+    });
   } catch (fatal) {
     R.ok = false;
     R.fatal = String(fatal && fatal.message || fatal);
@@ -2580,7 +2620,7 @@ async function main() {
     schema: "cw_probe_war_career_v1",
     generatedAt: new Date().toISOString(),
     ok: false,
-    suite: { expected: 138, actual: 0, index: 38 },   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links) D447: 136 -> 137 (memory-chain). D463: 137 -> 138 (fort-pillow, LANE-013 P4, at the END; row 38 holds). D469/D470: 138 -> 140 — the crater and olustee rows appended at the END (LANE-015/LANE-016); the D469/D470 sweeps moved this probe's 1671/1710 register pins and missed this count tooth (recorded honestly, the D443 AD-6 precedent).
+    suite: { expected: 140, actual: 0, index: 38 },   // D484: the stale DISPLAY fields left at 138 by the 38451fb tooth fix now match the 140 teeth (display-only; the real conjuncts at lines ~69/~2670 were already 140). // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links) D447: 136 -> 137 (memory-chain). D463: 137 -> 138 (fort-pillow, LANE-013 P4, at the END; row 38 holds). D469/D470: 138 -> 140 — the crater and olustee rows appended at the END (LANE-015/LANE-016); the D469/D470 sweeps moved this probe's 1671/1710 register pins and missed this count tooth (recorded honestly, the D443 AD-6 precedent).
     static: staticResult,
     steps: [],
     pageerrors: [],
@@ -2659,7 +2699,7 @@ async function main() {
     result = Object.assign(result, runtime, {
       schema: "cw_probe_war_career_v1",
       generatedAt: new Date().toISOString(),
-      suite: { expected: 138, actual: list.length, index: 38 },   // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links) D447: 136 -> 137 (memory-chain). D463: 137 -> 138 (fort-pillow, LANE-013 P4, at the END; row 38 holds). D469/D470: 138 -> 140 — the crater and olustee rows appended at the END (LANE-015/LANE-016); the D469/D470 sweeps moved this probe's 1671/1710 register pins and missed this count tooth (recorded honestly, the D443 AD-6 precedent).
+      suite: { expected: 140, actual: list.length, index: 38 },   // D484: display field aligned to the 140 teeth (see header note). // D425: 130 -> 131 (D418 Mayhem row). D443: 131 -> 133 (D436 atlanta + D442 cold harbor rows at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links) D447: 136 -> 137 (memory-chain). D463: 137 -> 138 (fort-pillow, LANE-013 P4, at the END; row 38 holds). D469/D470: 138 -> 140 — the crater and olustee rows appended at the END (LANE-015/LANE-016); the D469/D470 sweeps moved this probe's 1671/1710 register pins and missed this count tooth (recorded honestly, the D443 AD-6 precedent).
       static: staticResult,
       pageerrors,
       realErrors,

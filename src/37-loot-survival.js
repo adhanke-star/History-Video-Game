@@ -1781,6 +1781,7 @@ function _ssJourneyActiveHTML(C) {
     + _lootPill("Promotions", J.promotionCount || 0, "#6f9e5a")
     + '</div>'
     + _ssTrajectoryHTML(J)
+    + _ssSoldierBadgesHTML(C, p)
     + '<div class="gn-col-head" style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:9px 0 2px">Career Log</div>'
     + _ssCareerHTML(J, 5)
     + (J.careerVersion === 1 && typeof warCareerSummaryHTML === "function" ? warCareerSummaryHTML(C) : "")
@@ -1863,6 +1864,131 @@ function _ssOptionHTML(values, allLabel) {
   for (var i = 0; i < values.length; i++) h += '<option value="' + _lootAttr(values[i]) + '">' + _lootEsc(values[i]) + '</option>';
   return h;
 }
+/* ===========================================================================
+   D484 (LANE-017 slice 6) · SOLDIER-TIER BADGES — the register/journey surface.
+   Design law: RATING-SYSTEM-DESIGN.md §17 + the data/ratings.json _soldierBadgeNote.
+
+   TWO badge sources, visually DISTINCT (the §10 provenance idiom, reused verbatim):
+     - HISTORICAL-RECORD badges (soldierBadges[pid] rows on Verified register
+       records): SOLID accent bar — but ONLY when BOTH the row AND the carrying
+       person are Verified (the Verified-only law). A row on a non-Verified
+       carrier, or an Inferred/Disputed row, renders HATCHED/dashed and says so.
+     - CAREER badges (earned through play): DERIVED on read from the journey
+       career log — nothing is ever stored (a legacy save is byte-identical and
+       the D149 sanitizer shape is untouched). ALWAYS hatched, labeled
+       "earned in play", NEVER solid, NEVER a Verified stamp.
+   Effects: every def's fldLever rides the EXISTING badge-lever vocabulary through
+   fldSoldierBadgeFactor (T14), clamped at the SAME realismCaps badgeLever wall as
+   fldBadgeFactor — no new lever class (D74). No combat line reads these in D484.
+   =========================================================================== */
+/* the career-badge keys EARNED by the journey state — a pure function of J (career
+   log + battles/promotions/status); derives, never writes. Unknown/misclassed def
+   keys are refused fail-closed (only catalog 'career' defs can be earned). */
+function cwCareerBadges(J) {
+  var out = [];
+  if (!_lootPlain(J)) return out;
+  var d = (typeof gameData === "function") ? gameData("ratings") : null;
+  var defs = d && d.soldierBadgeDefs;
+  if (!defs || !defs.length) return out;
+  var battles = _lootNum(J.battles, 0), promos = _lootNum(J.promotionCount, 0);
+  var career = Array.isArray(J.career) ? J.career : [];
+  var defeatSurvived = false, wounded = false, promotedEntry = false;
+  var ended = _ssStatus(J.status) === "war-ended";
+  for (var i = 0; i < career.length; i++) {
+    var e = career[i]; if (!_lootPlain(e)) continue;
+    var st = _ssStatus(e.status);
+    if (_ssOutcome(e.outcome) === "defeat" && (st === "alive" || st === "wounded")) defeatSurvived = true;
+    if (st === "wounded") wounded = true;
+    if (st === "war-ended") ended = true;
+    if (e.promoted === true) promotedEntry = true;
+  }
+  var earned = {
+    battle_tested: battles >= 1,
+    campaign_veteran: battles >= 3,
+    field_promoted: promos >= 1 || promotedEntry,
+    steadfast_in_defeat: defeatSurvived,
+    bloodied: wounded,
+    mustered_through: ended
+  };
+  for (var di = 0; di < defs.length; di++) {
+    var def = defs[di];
+    if (!def || def["class"] !== "career" || !def.key) continue;
+    if (earned[def.key] === true) out.push(String(def.key));
+  }
+  return out;
+}
+/* the historical-record rows for a register person, each resolved against the
+   catalog with the Verified-only SOLID gate decided per row: solid REQUIRES the
+   carrying person Verified (a sourced record, never generated) AND the row itself
+   Verified (>= 2 named sources, build-gate-enforced). Anything less is hatched. */
+function cwSoldierBadgeRows(p) {
+  var out = [];
+  if (!p || typeof fldSoldierBadges !== "function" || typeof fldSoldierBadgeDef !== "function") return out;
+  var rows = fldSoldierBadges(p.pid);
+  if (!rows && p.replaces) rows = fldSoldierBadges(p.replaces);
+  if (!rows) return out;
+  var personVerified = _ssProvLabel(p) === "Verified" && !p.generated;
+  for (var i = 0; i < rows.length; i++) {
+    var def = fldSoldierBadgeDef(rows[i].key);
+    if (!def || def["class"] !== "historical") continue;   // unresolved or misclassed ids render NOTHING (fail-closed)
+    out.push({ def: def, row: rows[i], solid: personVerified && rows[i].prov === "Verified" });
+  }
+  return out;
+}
+/* one soldier-badge chip. The accent bar IS the distinction: fldProvenanceStyle's
+   solid fill for a doubly-Verified historical row; its hatched/dashed fills for
+   everything else. Rung glyph tint rides cwRungTierInfo (the ONE rarity language). */
+function _ssSoldierBadgeChipHTML(def, ps, provWord, detail, cls) {
+  var tint = "";
+  try { if (typeof cwRungTierInfo === "function") tint = String(cwRungTierInfo(def.rung).color || ""); } catch (e) {}
+  var glyph = (typeof _FLD_RUNG_GLYPH !== "undefined" && _FLD_RUNG_GLYPH[def.rung]) || "•";
+  var aria = def.label + ", " + provWord + (detail ? ". " + detail : "");
+  return '<span role="listitem" tabindex="0" data-sb-chip="' + _lootAttr(def.key) + '" data-sb-class="' + _lootAttr(cls) + '"'
+    + ' aria-label="' + _lootAttr(aria) + '" title="' + _lootAttr(aria) + '"'
+    + ' style="display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:3px 8px;margin:3px 4px 0 0;border:1px solid var(--rule);border-radius:9px;background:rgba(0,0,0,.16)">'
+    + '<span aria-hidden="true" data-sb-accent="1" title="' + _lootAttr(ps.title) + '" style="flex:none;display:inline-block;width:5px;height:18px;border-radius:2px;' + ps.fill + '"></span>'
+    + '<span aria-hidden="true"' + (tint ? ' style="color:' + tint + '"' : '') + '>' + glyph + '</span>'
+    + '<b aria-hidden="true">' + _lootEsc(def.label) + '</b>'
+    + '<span aria-hidden="true" style="font-size:9px;opacity:.72;letter-spacing:.04em;text-transform:uppercase">' + _lootEsc(provWord) + '</span>'
+    + '</span>';
+}
+/* the Badges & Honors section for the register detail card + the journey panel.
+   Historical rows render for ANY register person carrying them; career chips
+   render ONLY for the ACTIVE journey person (career state belongs to the played
+   journey, not the record). "" when there is nothing to show (byte-identical). */
+function _ssSoldierBadgesHTML(C, p) {
+  if (!p) return "";
+  var histRows = cwSoldierBadgeRows(p);
+  var L = C && _lootPlain(C.loot) ? C.loot : null;
+  var J = L && _lootPlain(L.journey) && L.journey.enabled && L.journey.personId === p.pid ? L.journey : null;
+  var careerKeys = J ? cwCareerBadges(J) : [];
+  if (!histRows.length && !careerKeys.length) return "";
+  var chips = "", i;
+  for (i = 0; i < histRows.length; i++) {
+    var hr = histRows[i];
+    var provWord = hr.solid ? "Documented — Verified" : (hr.row.prov === "Disputed" ? "Disputed — displayed as such" : "Inferred — displayed as such");
+    var ps = (typeof fldProvenanceStyle === "function")
+      ? fldProvenanceStyle(hr.solid ? "Verified" : (hr.row.prov === "Disputed" ? "Disputed" : "Inferred"))
+      : { fill: "background:#8a7350", glyph: "", label: provWord, title: provWord };
+    var detail = (hr.row.sources && hr.row.sources.length ? "Sources: " + hr.row.sources.join("; ") : "") + (hr.row.note ? " " + hr.row.note : "");
+    chips += _ssSoldierBadgeChipHTML(hr.def, ps, provWord, detail, "historical");
+  }
+  for (i = 0; i < careerKeys.length; i++) {
+    var cdef = (typeof fldSoldierBadgeDef === "function") ? fldSoldierBadgeDef(careerKeys[i]) : null;
+    if (!cdef) continue;
+    var cps = (typeof fldProvenanceStyle === "function")
+      ? fldProvenanceStyle("Inferred")
+      : { fill: "background:repeating-linear-gradient(45deg,#8a7350,#8a7350 2px,transparent 2px,transparent 5px)", glyph: "~", label: "earned", title: "Earned in play" };
+    chips += _ssSoldierBadgeChipHTML(cdef, cps, "Earned in play", cdef.note || "", "career");
+  }
+  if (!chips) return "";
+  return '<div data-sb-block="1" style="margin-top:9px">'
+    + '<div class="gn-col-head" style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:0 0 2px">Badges &amp; Honors</div>'
+    + '<div role="list" aria-label="Soldier badges and honors" style="display:flex;flex-wrap:wrap">' + chips + '</div>'
+    + '<div style="font-size:9.5px;opacity:.65;margin-top:4px;line-height:1.4">A solid bar marks a documented record (Verified, 2+ sources). A hatched bar marks a play-earned or inferred badge — never a historical claim. Effects ride the standard capped badge levers.</div>'
+    + '</div>';
+}
+
 function _ssRegisterText(p) {
   return [
     p && p.name, _ssRankLabel(p), p && p.side, p && p.role, _ssProvLabel(p), _ssSourceLabel(p), _ssPrimaryUnit(p), _ssTeamLabel(p)
@@ -2061,6 +2187,7 @@ function ssPersonDetailHTML(C, pid) {
     + _lootPill("Source", _ssSourceLabel(p), p.generated ? "#6f9e5a" : "#9a86f0")
     + _lootPill("Provenance", _ssProvLabel(p), grade.color || "#b8863b")
     + '</div>'
+    + _ssSoldierBadgesHTML(C, p)
     + '<div class="gn-col-head" style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin:10px 0 3px">Team Hierarchy</div>'
     + _ssTeamHierarchyHTML(p)
     + '<div style="font-size:11px;opacity:.72;margin-top:7px">Latent command ' + _lootEsc(p.latentCommand != null ? p.latentCommand : "-") + ' &middot; Sources ' + _lootEsc(p.sources && p.sources.length ? p.sources.length : 0) + ' &middot; ' + _lootEsc(ps.glyph + " " + ps.label) + '</div>'

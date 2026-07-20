@@ -440,6 +440,65 @@ function _fldRowProvText(rp) {
   return "This assignment: " + String(rp.prov || "Inferred") + " — " + src + (rp.note ? ". " + String(rp.note) : "");
 }
 
+/* ===========================================================================
+   D484 (LANE-017 slice 6) · THE SOLDIER-TIER BADGE ACCESSORS + THE ONE CAPPED
+   LEVER GATEWAY (design law: RATING-SYSTEM-DESIGN.md §17; data law: the
+   data/ratings.json _soldierBadgeNote).
+
+   soldierBadgeDefs is the INDIVIDUAL-tier catalog — a SEPARATE catalog from the
+   unit badgeDefs (fldBadgeDef never resolves these keys and fldBadgeFactor never
+   consumes them; no unit is stamped with them in D484). Two classes:
+   'historical' (a documented-record badge assigned by a soldierBadges[pid] row,
+   Verified >= 2 named sources) and 'career' (earned through play, derived — never
+   stored, never Verified). PURE READS ONLY: every function here returns fresh
+   values and writes no unit, no __FIELD, no G (the 4d wall scans this module).
+   Any consumer of a soldier badge's lever MUST route through
+   fldSoldierBadgeFactor, which clamps the summed per-lever delta at the SAME
+   fldRatingRealismCap 'badgeLever' wall as fldBadgeFactor — no new lever class
+   (D74). Data absent -> null/identity -> byte-identical.
+   =========================================================================== */
+function fldSoldierBadgeDef(key) {
+  var d = _ratData(); if (!key || !d || !d.soldierBadgeDefs) return null;
+  for (var i = 0; i < d.soldierBadgeDefs.length; i++) if (d.soldierBadgeDefs[i] && d.soldierBadgeDefs[i].key === key) return d.soldierBadgeDefs[i];
+  return null;
+}
+/* the historical-record assignment rows for a register pid — FRESH shallow row copies
+   (combat/UI reads can never alias canonical GAME_DATA; the fldScenarioRosterBadges
+   idiom). null when the pid carries no rows or the data is absent. */
+function fldSoldierBadges(pid) {
+  var d = _ratData(), B = d && d.soldierBadges;
+  var rows = pid && B ? B[pid] : null;
+  if (!rows || !rows.length) return null;
+  var out = [];
+  for (var i = 0; i < rows.length; i++) {
+    var r = rows[i]; if (!r || !r.key) continue;
+    out.push({ key: String(r.key), prov: String(r.prov || "Inferred"), sources: (r.sources && r.sources.slice) ? r.sources.slice() : [], note: r.note ? String(r.note) : "" });
+  }
+  return out.length ? out : null;
+}
+/* the ONE capped lever gateway for soldier-tier badges: sums the resolved defs'
+   signed mags for `lever` over `keys`, then clamps the summed delta at the SAME
+   realism-scaled per-lever wall fldBadgeFactor uses (fldRatingRealismCap
+   'badgeLever' — Arcade generous / Historian tight). Unknown keys are skipped
+   fail-closed; no keys / no data / no matching lever -> identity 1 (byte-identical,
+   the (u.cmdBonus||0) no-op pattern). NOT read by any combat line in D484. */
+function fldSoldierBadgeFactor(keys, lever) {
+  if (!keys || !keys.length || !lever) return 1;
+  var sum = 0, i, def;
+  for (i = 0; i < keys.length; i++) {
+    def = fldSoldierBadgeDef(keys[i]);
+    if (!def || def.fldLever !== lever) continue;
+    if (typeof def.mag !== "number" || !isFinite(def.mag)) continue;
+    sum += def.mag;
+  }
+  if (sum === 0) return 1;
+  var tier = (typeof __FIELD !== "undefined" && __FIELD && __FIELD.realismTier) ? __FIELD.realismTier : "balanced";
+  var cap = fldRatingRealismCap(tier, "badgeLever");
+  if (!(cap > 0)) cap = 0.10;
+  if (sum > cap) sum = cap; else if (sum < -cap) sum = -cap;
+  return 1 + sum;
+}
+
 /* one Madden-style badge CARD. Keyboard-operable (tabindex 0) with the full
    provenance in BOTH the aria-label/title (hover + SR) and visible card text (tap).
    rowProv (optional, R-7/D481): the per-assignment provenance record — appended to

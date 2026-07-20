@@ -3068,18 +3068,35 @@ next green commit and confer through this ledger instead of permitting simultane
   politics for the election bind) · ARC 6 rail+naval packets (session-fillers,
   chartered per D455 §7's interleave rule) · Mayhem Slice B (LANE-007) · C72 Shiloh
   rewrite + GEA-01/S44 bundle (parked, Aaron reorder-only).
-- **Resume pointer:** the P-END day-end battery FIRST (suite 140, serialized, ALONE,
-  every artifact JSON read — the session-boundary law), then SLICE 6 (soldier-tier
-  badges §4d.3) per this contract: historical-record badges for Verified register
-  soldiers (SOLID styling) vs earned-through-play career badges (HATCHED/Inferred),
-  both through the same capped levers; teeth in probe-loot-survival +
-  probe-war-career; binds per the contract clause (a play-earned badge rendered
-  solid → the distinction tooth red EXACTLY; a solid badge on a non-Verified record
-  → the Verified tooth red EXACTLY). §4d.2 is COMPLETE (D481 eastern + D482
-  western); the direction authority for any future badge row is the battle's own
-  probe (the D481 lesson, recorded in ab-badge-direction.mjs's header).
-- **Last-touched commit:** the D482 slice-5 commit (this commit).
-- **Slice history:** SLICE 5 SHIPPED as D482 (2026-07-20): the western batch
+- **Resume pointer:** SLICE 7 (named legendary artifacts + mode-split drops §4c.1) per
+  this contract's clause IN FULL: citation-grade named items with sourced provenance
+  text (≥2 sources each); Historical provenance-locked to the correct battle/unit,
+  Mayhem general pool; effects ONLY via the existing capped equip path; the `artifact`
+  tier enters the canonical map here if adopted; owner probe-loot-survival, adjacent
+  probe-open-history-mayhem; binds per the contract clause (wrong-battle drop under
+  Historical → the lock tooth red EXACTLY; second source dropped → the source tooth
+  red EXACTLY). §4d is COMPLETE (D480 presentation · D481 eastern · D482 western ·
+  D484 soldier tier); the P-END battery for slices 4-5 ran at `7e399a6`
+  (D482-BATTERY); the direction authority for any future badge row is the battle's
+  own probe (the D481 lesson, recorded in ab-badge-direction.mjs's header).
+- **Last-touched commit:** the D484 slice-6 commit (this commit).
+- **Slice history:** SLICE 6 SHIPPED as D484 (2026-07-20): soldier-tier badges
+  (§4d.3) — soldierBadgeDefs 14 (8 historical + 6 career) + soldierBadges 48 rows
+  on 39 of 42 Verified carriers (every row ≥2 in-record sources; drops logged:
+  Sherman/Howard/Griffin, Webb's MoH → command_at_the_crisis, Beaty's
+  same-institution caveat); the fldSoldierBadgeFactor capped gateway (the SAME
+  badgeLever wall, exact-clamp probed); cwCareerBadges PURE-derived from the
+  journey log (nothing stored, D149 shape untouched); the §10 solid/hatched
+  distinction in the register detail + journey panel (solid REQUIRES row AND
+  carrier Verified). Teeth: loot-survival 20→24 · war-career 45→46; adjacents
+  ratings 31/31 + save-slots 16/16; binds A (career chip solid → the distinction
+  tooth EXACTLY) + B (carrier conjunct dropped → the Verified-only tooth EXACTLY)
+  md5-proven (src/37 9655bfff · game e99e6ac5). Riding root-fix: the D478
+  one-language wall caught the D483 src/22 COMMENT carrying the four reserved tier
+  hexes (the D482 comment-token class, fifth instance — comment reworded, scan
+  untouched). AD-7 game→e99e6ac5 · dataTree→c3c28fd6 · srcTree→d79696ce ·
+  journey→9655bfff · focused→e2acf99a.
+  SLICE 5 SHIPPED as D482 (2026-07-20): the western batch
   completes §4d.2 — rosterBadges 19→29 (+26 shipped rows), prov 53 records 49V/4I,
   the coverage floor at the clean full registry; Stones River display-only (the
   inverted near-parity law), Fort Donelson display-only (the Forrest horseman

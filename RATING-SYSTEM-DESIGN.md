@@ -483,3 +483,37 @@ note}`: **Verified requires ≥2 named sources; Inferred/Disputed ≥1 and displ
 card's "This assignment:" line, hover + SR + visible). The original 9 D104-workflow battles remain
 documented in `_rosterNote` and carry no rows (probe-pinned exemption). Coverage floor, source floor,
 orphan-record refusal, and majority-Verified are probe-ratings teeth (D481).
+
+### 17. SOLDIER-TIER BADGES (D484 — LANE-017 slice 6, §4d.3, 2026-07-20)
+
+**TWO badge sources, one capped lever wall, visually distinct always (the §10 provenance idiom is
+the distinction).**
+
+- **Historical-record badges** (`soldierBadgeDefs` class `historical`, assigned by
+  `soldierBadges[pid]` rows): the documented service/valor of the Verified register soldiers
+  (the D152/D421 replacement lane). Each assignment row carries the per-row citation law
+  (the rosterBadgeProv idiom): **Verified requires ≥2 named sources drawn from the register
+  record's OWN source list**, else Inferred/Disputed and displayed as such. **SOLID styling
+  requires BOTH the row AND the carrying record Verified** — a Verified row on a non-Verified
+  carrier, or an Inferred/Disputed row, renders hatched/dashed and says so (the Verified-only
+  law; probe-loot-survival teeth + bind).
+- **Career badges** (class `career`): earned through play, **DERIVED on read from the journey
+  career log** (`cwCareerBadges` — battles / promotions / defeat-survived / wounded /
+  war-ended). Nothing is ever stored: a legacy save is byte-identical, the D149 sanitizer
+  shape is untouched, and `_SAVE_VER` stays 1. **ALWAYS hatched, labeled "Earned in play",
+  never solid, never a Verified stamp** (probe-loot-survival + probe-war-career teeth + bind).
+- **The lever law (D74):** every def's `fldLever` uses the EXISTING badge-lever vocabulary
+  (fire/rally/speed/melee/none) and any consumer must route through **`fldSoldierBadgeFactor`**,
+  which clamps the summed per-lever delta at the SAME `fldRatingRealismCap` `badgeLever` wall
+  as `fldBadgeFactor` — **no new lever class**. No unit is stamped with these keys and no
+  combat line consumes them in D484 (presentation + the capped gateway only; sim inputs did
+  not move, so no A/B battery was owed).
+- **Surfaces:** the Army Register detail card and the journey panel (`_ssSoldierBadgesHTML`)
+  — chips carry the rung glyph tinted by the ONE rarity language (`cwRungTierInfo`), the
+  provenance accent bar (solid/hatched/dashed), the prov word, and hover/SR source text.
+- **Adjudicated drops (single-source floor):** Sherman's Bull Run crossing, Webb's Medal of
+  Honor (ships `command_at_the_crisis` instead), Howard, Griffin. Beaty's `medal_of_honor`
+  rests on two distinct CMOHS documents (same institution — flagged in the row note). The
+  MoH cluster is US-only because the Confederacy had no equivalent decoration — an asymmetry
+  of the record, not of authoring; CS strengths ship where sourced and the memorial rows
+  carry both sides. Full note: the `data/ratings.json` `_soldierBadgeNote`.

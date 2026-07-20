@@ -944,7 +944,8 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // D480 re-pin (LANE-017 slice 3): srcTree 4eed52e8 -> 7c23e51d (the badge presentation
     // layer — T14 gallery/showcase/disclosure + the src/35 pool-row dev-trait chip;
     // presentation-only, no war-career surface).
-    srcTree:"15570ebcfcb17a4977ea39ed86c10416",
+        // D484 re-pin (LANE-017 slice 6, soldier-tier badges SS4d.3): game e7ff100e -> e99e6ac5 · dataTree 00f8c1fe -> c3c28fd6 (data/ratings.json gains soldierBadgeDefs 14 + soldierBadges 48 rows on 39 Verified carriers + _soldierBadgeNote) · srcTree 15570ebc -> d79696ce (T14 soldier-badge accessors + the fldSoldierBadgeFactor capped gateway; src/37 cwCareerBadges/cwSoldierBadgeRows/_ssSoldierBadgesHTML register/journey chips; the src/22 comment-token reword — the D482 class, fifth instance) · journey 1689c4a2 -> 9655bfff (src/37) · focused 65e9c873 -> e2acf99a (probe-war-career gains the D484 career-badge step; the stale 138 suite.expected DISPLAY fields aligned to the 140 teeth). Presentation + data + the capped gateway only — no combat line consumes the keys, sim inputs did not move; both binds md5-proven; base/manifest/suite/runtime/command hold.
+srcTree:"d79696ce8e928481dd9e37b105f18254",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
@@ -952,7 +953,7 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // D479 re-pin: journey a527600d -> 1689c4a2 (LANE-017 slice 2 drop feel in src/37 — the
     // recentDrops presentation record + announcement/flip/glow renderers + view-side sort/filter;
     // the journey/war-career logic surfaces are untouched, proven by this probe's own runtime steps).
-    journey:"1689c4a205df5efad47d28e21962e0d5",
+    journey:"9655bfffa0b1aad6f263593f2add658a",
     // D480 re-pin (the AD-7 idiom — the FIRST move of the command pin since it was set; the
     // D466/D474 documented-chain class): command 8f12c49f -> f3ad1450. LANE-017 slice 3 adds
     // the _cmdDevChipHTML pool-row dev-trait chip to src/35 — a pure-display read of the
@@ -974,7 +975,7 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // D470 battery root-fix re-pin: focused 78633570 -> 65e9c8730dfa6cb0250feddd3adabf6f — the probe's own suite-count
     // tooth (138 -> 140) missed by the D469/D470 sweeps, fixed at its exact label (the
     // D443 AD-6 precedent); the war-career runtime surface held.
-    focused:"65e9c8730dfa6cb0250feddd3adabf6f",
+    focused:"e2acf99a9f7a1c639563030c91cf58a7",
     commandProbe:"5ffd40fd221179f2e01cad59ef43bf7d"
   };
   for (const key of Object.keys(expected)) {
@@ -1291,11 +1292,12 @@ step("BASELINES + LANE", () => {
     // D481 re-pin (LANE-017 slice 4): the eastern coverage sweep + R-7 situational gating — game f7bb9cce -> 59f2f617 (T14 R-7 gate + row-prov display + 10 new eastern rosterBadges/rosterBadgeProv blocks in the build), dataTree b3b323fa -> 462b0df9 (data/ratings.json: eastern rows + rosterBadgeProv + _rosterNote D481 addendum), srcTree 7c23e51d -> 9ee5bf37 (T14 only; the badge layer stays pure-read — the D74 walls, probe-ratings 31/31 + probe-command/accessibility unaffected, both binds md5-proven).
     // D480 re-pin (LANE-017 slice 3): game b74053aa -> f7bb9cce (badge presentation layer in
     // T14 + src/35 + rebuild; presentation-only). base/dataTree/manifest/suite hold.
-    game:"e7ff100e6d158668e696bbbbce4cd1ad",
+    // D484 re-pin (LANE-017 slice 6, soldier-tier badges SS4d.3): game e7ff100e -> e99e6ac5 · dataTree 00f8c1fe -> c3c28fd6 (soldierBadgeDefs/soldierBadges/_soldierBadgeNote in data/ratings.json + the T14/src/37 badge layer in the build; the full chain is documented at this file's srcTree pin sites). base/manifest/suite hold.
+    game:"e99e6ac55617dfa977fcfd89d536757e",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     // D478 re-pin: dataTree 4bbdebe5 -> b3b323fa (LANE-017 slice 1: rarity glyphs + reserved tier
     // hexes + rungTiers in data/loot-survival.json — presentation data only, no war-career data).
-    dataTree:"00f8c1fe8bde4cd5e527bac009b24989",
+    dataTree:"c3c28fd6be0cff0c5e6faf38b1245635",
     manifest:"9312db81216742221c3185fd0e93ad0b",
     suite:"69681d6f2216fe1dcfd594ffc4a757b7"
   };
@@ -1734,16 +1736,17 @@ step("REACHABILITY BASELINES", () => {
     // D480 re-pin: game b74053aa -> f7bb9cce, srcTree 4eed52e8 -> 7c23e51d (LANE-017 slice 3:
     // the badge presentation layer — T14 gallery/showcase/disclosure + the src/35 pool-row
     // dev-trait chip + rebuild); dataTree/runtime/journey did NOT move.
-    game:"e7ff100e6d158668e696bbbbce4cd1ad",
-    dataTree:"00f8c1fe8bde4cd5e527bac009b24989",
-    srcTree:"15570ebcfcb17a4977ea39ed86c10416",
+    game:"e99e6ac55617dfa977fcfd89d536757e",
+    dataTree:"c3c28fd6be0cff0c5e6faf38b1245635",
+        // D484 re-pin (LANE-017 slice 6, soldier-tier badges SS4d.3): game e7ff100e -> e99e6ac5 · dataTree 00f8c1fe -> c3c28fd6 (data/ratings.json gains soldierBadgeDefs 14 + soldierBadges 48 rows on 39 Verified carriers + _soldierBadgeNote) · srcTree 15570ebc -> d79696ce (T14 soldier-badge accessors + the fldSoldierBadgeFactor capped gateway; src/37 cwCareerBadges/cwSoldierBadgeRows/_ssSoldierBadgesHTML register/journey chips; the src/22 comment-token reword — the D482 class, fifth instance) · journey 1689c4a2 -> 9655bfff (src/37) · focused 65e9c873 -> e2acf99a (probe-war-career gains the D484 career-badge step; the stale 138 suite.expected DISPLAY fields aligned to the 140 teeth). Presentation + data + the capped gateway only — no combat line consumes the keys, sim inputs did not move; both binds md5-proven; base/manifest/suite/runtime/command hold.
+srcTree:"d79696ce8e928481dd9e37b105f18254",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
     // the journey/war-career logic surfaces are untouched, proven by this probe's own runtime steps).
     // D479 re-pin: journey a527600d -> 1689c4a2 (LANE-017 slice 2 drop feel in src/37; the
     // journey/war-career logic surfaces are untouched, proven by this probe's own runtime steps).
-    journey:"1689c4a205df5efad47d28e21962e0d5",
+    journey:"9655bfffa0b1aad6f263593f2add658a",
     // D460 re-pin: focused a29a5351 -> 2816a82c (Elkhorn Cherokee, 1614 -> 1617). D463
     // re-pin: focused 2816a82c -> 664ca996 (the D463 register chain 1617 -> 1632 + the
     // suite-138 pins; the war-career runtime surface untouched).
@@ -1751,7 +1754,7 @@ step("REACHABILITY BASELINES", () => {
     // D469 re-pin: focused 3da0dbc0 -> bb7a1bc9 (the 1632 -> 1671 Crater register chain).
     // D470 re-pin: focused bb7a1bc9 -> 78633570 (the 1671 -> 1710 Olustee register chain).
     // D470 battery root-fix: focused 78633570 -> 65e9c8730dfa6cb0250feddd3adabf6f (the suite-count tooth 138 -> 140 AND its silent list.length conjunct in result.ok).
-    focused:"65e9c8730dfa6cb0250feddd3adabf6f"
+    focused:"e2acf99a9f7a1c639563030c91cf58a7"
   };
   for (const key of Object.keys(expected)) {
     if (hashes[key] !== expected[key]) throw new Error("D411 shipped baseline moved: " + key + " " + hashes[key]);

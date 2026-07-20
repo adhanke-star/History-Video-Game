@@ -70,7 +70,7 @@ const SETUP = `(() => {
   }
   function setCtl(el,val,type){ el.value=val; fire(el,type||'change'); }
   try {
-    var fns=['lootInit','lootAddItem','lootUseItem','lootEquipItem','lootSetSurvival','lootForage','lootSurvivalTick','lootOnResolve','lootSurvivalBridgeBonus','lootRenderTab','lootWireTab','ssPersonRegistry','ssFindPerson','ssStartJourney','ssJourneyOnResolve','ssPersonDetailHTML','ssJourneyReportHTML','ssValidateSoldierReplacementPack','aarRenderReport','bridgeArmy','_t1InitAll','_t1Resolve'];
+    var fns=['lootInit','lootAddItem','lootUseItem','lootEquipItem','lootSetSurvival','lootForage','lootSurvivalTick','lootOnResolve','lootSurvivalBridgeBonus','lootRenderTab','lootWireTab','ssPersonRegistry','ssFindPerson','ssStartJourney','ssJourneyOnResolve','ssPersonDetailHTML','ssJourneyReportHTML','ssValidateSoldierReplacementPack','aarRenderReport','bridgeArmy','_t1InitAll','_t1Resolve','cwCareerBadges','cwSoldierBadgeRows','_ssSoldierBadgesHTML','_ssJourneyActiveHTML','fldSoldierBadgeDef','fldSoldierBadges','fldSoldierBadgeFactor'];
     for(var i=0;i<fns.length;i++) if(typeof window[fns[i]]!=='function') return JSON.stringify({ok:false, fatal:'missing fn '+fns[i]});
     if(!GAME_DATA || !GAME_DATA['loot-survival']) return JSON.stringify({ok:false, fatal:'missing loot-survival data'});
 
@@ -1208,6 +1208,136 @@ const SETUP = `(() => {
       var rd2=C2.loot.recentDrops||[];
       for(var i=0;i<rd2.length;i++) if(rd2[i].battle!=='Antietam') throw new Error('recentDrops should record the LATEST resolve, got '+rd2[i].battle);
       return { inv:C1.loot.inventory.length, latest:rd2.length };
+    });
+
+    function sbAccentFill(chip){
+      var acc=chip?chip.querySelector('[data-sb-accent]'):null;
+      if(!acc) throw new Error('soldier-badge chip missing its provenance accent bar');
+      return String(acc.getAttribute('style')||'');
+    }
+    step('D484 soldier badges: the register/journey UI renders the dual-source distinction — a doubly-Verified historical row SOLID, every career chip HATCHED (never solid)', function(){
+      var C=mkC('US'); G.campaign=C; _t1InitAll(C);
+      var reg=ssPersonRegistry(C);
+      var fleet=findPerson(reg,function(p){ return p.pid==='person_new_market_heights_us_4usct_fleetwood'; });
+      if(!fleet) throw new Error('Fleetwood register person missing');
+      var div=document.createElement('div'); div.innerHTML=ssPersonDetailHTML(C,fleet.pid);
+      var chips=div.querySelectorAll('[data-sb-chip]');
+      if(chips.length<2) throw new Error('Fleetwood should carry >=2 historical chips (medal_of_honor + colors_through_fire), got '+chips.length);
+      var hist=0;
+      for(var i=0;i<chips.length;i++){
+        if(chips[i].getAttribute('data-sb-class')!=='historical') throw new Error('career chip rendered on a non-journey detail card');
+        var fill=sbAccentFill(chips[i]);
+        if(fill.indexOf('repeating-linear-gradient')>=0) throw new Error('a doubly-Verified historical row rendered HATCHED: '+chips[i].getAttribute('data-sb-chip'));
+        if((chips[i].getAttribute('title')||'').indexOf('Verified')<0) throw new Error('a solid chip must SAY Verified in its hover/SR text');
+        hist++;
+      }
+      var gen=findPerson(reg,function(p){ return p.side==='US' && p.generated && p.rank==='Private' && p.persona; });
+      if(!gen) throw new Error('no generated US private');
+      var start=ssStartJourney(C,gen.pid,'bullrun1');
+      if(!start.ok) throw new Error('journey start failed');
+      var B={ id:'bullrun1', name:'First Bull Run', playerSide:'US', enemySide:'CS', casualties:{US:400,CS:600}, bd:{id:'bullrun1',name:'First Bull Run'} };
+      lootOnResolve('US','win',B,C,true);
+      var panel=document.createElement('div'); panel.innerHTML=_ssJourneyActiveHTML(C);
+      var cChips=panel.querySelectorAll('[data-sb-chip][data-sb-class="career"]');
+      if(!cChips.length) throw new Error('the journey panel shows no career chip after a recorded battle (battle_tested expected)');
+      for(var c=0;c<cChips.length;c++){
+        var cf=sbAccentFill(cChips[c]);
+        if(cf.indexOf('repeating-linear-gradient')<0) throw new Error('a play-earned career badge rendered SOLID (the distinction law broken): '+cChips[c].getAttribute('data-sb-chip'));
+        if((cChips[c].getAttribute('title')||'').indexOf('Earned in play')<0) throw new Error('a career chip must SAY it is earned in play');
+      }
+      if(panel.innerHTML.indexOf('data-sb-chip="battle_tested"')<0) throw new Error('battle_tested missing from the journey panel');
+      return { historicalSolid:hist, careerHatched:cChips.length };
+    });
+
+    step('D484 Verified-only law: a SOLID badge can render only on a Verified record — a Verified row on a non-Verified carrier, or an Inferred row, renders hatched and says so', function(){
+      var C=mkC('US'); _t1InitAll(C);
+      var reg=ssPersonRegistry(C);
+      var gen=findPerson(reg,function(p){ return p.generated; });
+      if(!gen) throw new Error('no generated person');
+      var SB=GAME_DATA.ratings.soldierBadges;
+      if(!SB) throw new Error('soldierBadges data missing');
+      var hadOwn=Object.prototype.hasOwnProperty.call(SB,gen.pid), saved=SB[gen.pid];
+      SB[gen.pid]=[{key:'the_chronicler',prov:'Verified',sources:['Probe fixture source A','Probe fixture source B'],note:'probe fixture — non-Verified carrier'}];
+      var err=null;
+      try{
+        var div=document.createElement('div'); div.innerHTML=ssPersonDetailHTML(C,gen.pid);
+        var chip=div.querySelector('[data-sb-chip="the_chronicler"]');
+        if(!chip) throw new Error('the fixture historical row did not render at all');
+        var fill=sbAccentFill(chip);
+        if(fill.indexOf('repeating-linear-gradient')<0) throw new Error('a Verified row on a NON-Verified carrier rendered SOLID (the Verified-only law broken)');
+        if((chip.getAttribute('title')||'').indexOf('Inferred')<0) throw new Error('the downgraded chip must SAY it is not a documented record');
+      } catch(e){ err=e; }
+      if(hadOwn) SB[gen.pid]=saved; else delete SB[gen.pid];
+      if(err) throw err;
+      var fleetPid='person_new_market_heights_us_4usct_fleetwood';
+      var rows=SB[fleetPid];
+      if(!rows||!rows.length) throw new Error('Fleetwood soldierBadges rows missing');
+      var savedProv=rows[0].prov; rows[0].prov='Inferred';
+      try{
+        var d2=document.createElement('div'); d2.innerHTML=ssPersonDetailHTML(C,fleetPid);
+        var c2=d2.querySelector('[data-sb-chip="'+rows[0].key+'"]');
+        if(!c2) throw new Error('the Inferred row did not render');
+        if(sbAccentFill(c2).indexOf('repeating-linear-gradient')<0) throw new Error('an Inferred row on a Verified carrier rendered SOLID (the row half of the Verified-only law broken)');
+      } finally { rows[0].prov=savedProv; }
+      return { carrierGate:true, rowGate:true };
+    });
+
+    step('D484 lever caps: soldier badge defs use only the existing lever vocabulary and fldSoldierBadgeFactor clamps the stacked sum at the SAME realismCaps badgeLever wall (identity when absent)', function(){
+      var D=GAME_DATA.ratings, defs=D&&D.soldierBadgeDefs;
+      if(!defs||defs.length<10) throw new Error('soldierBadgeDefs missing or short');
+      if(typeof fldSoldierBadgeFactor!=='function'||typeof fldSoldierBadgeDef!=='function'||typeof fldSoldierBadges!=='function') throw new Error('missing soldier-badge accessors');
+      var vocab={fire:1,rally:1,speed:1,melee:1,none:1}, classes={historical:1,career:1};
+      var rallyKeys=[], hist=0, career=0;
+      for(var i=0;i<defs.length;i++){
+        var b=defs[i];
+        if(!vocab[b.fldLever]) throw new Error('def '+b.key+' invents a lever class: '+b.fldLever);
+        if(!classes[b['class']]) throw new Error('def '+b.key+' carries no historical/career class');
+        if(typeof b.mag!=='number'||!isFinite(b.mag)) throw new Error('def '+b.key+' has a bad mag');
+        if(Math.abs(b.mag)>0.06) throw new Error('def '+b.key+' single mag '+b.mag+' exceeds even the historian badgeLever wall');
+        if(b['class']==='historical') hist++; else career++;
+        if(b.fldLever==='rally'&&b.mag>0) rallyKeys.push(b.key);
+      }
+      if(hist<6||career<5) throw new Error('catalog shape moved: historical '+hist+' career '+career);
+      var wall=1+D.realismCaps.balanced.badgeLever;
+      if(fldSoldierBadgeFactor([],'rally')!==1) throw new Error('empty-keys identity broken');
+      if(fldSoldierBadgeFactor(['__ghost_key__'],'rally')!==1) throw new Error('unknown-key identity broken (must skip fail-closed)');
+      if(fldSoldierBadgeFactor(rallyKeys,'melee')!==1) throw new Error('rally keys leaked into the melee lever');
+      var n0=defs.length;
+      defs.push({key:'__probe_stack_a__','class':'career',rung:'star',polarity:'pos',kind:'career',fldLever:'rally',mag:0.05,label:'Probe A'});
+      defs.push({key:'__probe_stack_b__','class':'career',rung:'star',polarity:'pos',kind:'career',fldLever:'rally',mag:0.05,label:'Probe B'});
+      var got;
+      try{ got=fldSoldierBadgeFactor(rallyKeys.concat(['__probe_stack_a__','__probe_stack_b__']),'rally'); }
+      finally{ defs.length=n0; }
+      if(Math.abs(got-wall)>1e-9) throw new Error('the stacked factor '+got+' did not clamp EXACTLY at the badgeLever wall '+wall+' (fldBadgeFactor\\'s own cap)');
+      var nat=fldSoldierBadgeFactor(rallyKeys,'rally');
+      if(nat>wall+1e-9) throw new Error('the natural catalog stack breaches the wall: '+nat);
+      return { defs:defs.length, historical:hist, career:career, wall:wall, clampedStack:got, naturalStack:nat };
+    });
+
+    step('D484 legacy-save sanitation: the badge layer stores NOTHING — career badges derive pure, renders never write, and a no-journey legacy save stays byte-identical', function(){
+      var C=mkC('US'); G.campaign=C; _t1InitAll(C);
+      var reg=ssPersonRegistry(C);
+      var gen=findPerson(reg,function(p){ return p.side==='US' && p.generated && p.rank==='Private' && p.persona; });
+      if(!gen) throw new Error('no generated US private');
+      var start=ssStartJourney(C,gen.pid,'bullrun1');
+      if(!start.ok) throw new Error('journey start failed');
+      lootOnResolve('US','win',{ id:'bullrun1', name:'First Bull Run', playerSide:'US', enemySide:'CS', casualties:{US:400,CS:600}, bd:{id:'bullrun1',name:'First Bull Run'} },C,true);
+      lootInit(C);
+      var before=JSON.stringify(C.loot);
+      var keys=cwCareerBadges(C.loot.journey);
+      if(keys.indexOf('battle_tested')<0) throw new Error('career derivation vacuous — battle_tested expected after one battle, got '+JSON.stringify(keys));
+      ssPersonDetailHTML(C,gen.pid);
+      _ssJourneyActiveHTML(C);
+      cwSoldierBadgeRows(reg.people[0]);
+      if(JSON.stringify(C.loot)!==before) throw new Error('the badge layer WROTE journey/loot state (career badges must derive, never store)');
+      lootInit(C);
+      if(JSON.stringify(C.loot)!==before) throw new Error('the D149 sanitizer shape moved after badge derivation (a new field is riding the save)');
+      var C2=mkC('US'); _t1InitAll(C2); lootInit(C2);
+      var b2=JSON.stringify(C2.loot);
+      if(cwCareerBadges(C2.loot.journey).length) throw new Error('a no-journey legacy save earned career badges');
+      ssPersonDetailHTML(C2, reg.people[0].pid);
+      if(JSON.stringify(C2.loot)!==b2) throw new Error('rendering a detail card created journey state on a legacy save');
+      return { earned:keys, saveStable:true };
     });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);

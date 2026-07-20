@@ -1010,6 +1010,681 @@
     }
   },
   "_rosterProvNote": "D481 (LANE-017 slice 4): the per-row citation law made data. Every coverage-sweep rosterBadges assignment (the battles beyond the original 9 D104 battles above) carries a record here — {key, prov, sources[], note}: Verified requires >=2 named sources recorded in the repo's spec/research registers or battle data; Inferred/Disputed >=1 and are displayed as such (the badge card's 'This assignment:' line, T14 fldRosterBadgeProv). The original 9 battles' sourcing remains the _rosterNote 15-agent-workflow record and they deliberately carry NO rows (probe-pinned exemption). Rows were authored gather(Sonnet)->default-refute(Opus)->top-loop adjudication; the refute pass dropped 9 of 41 proposals (flip-risk and trigger-mismatch classes) — the drops are logged in the _rosterNote D481 addendum and DECISIONS D481.",
+  "_soldierBadgeNote": "D484 (LANE-017 slice 6, the SS4d.3 soldier-tier badge law): TWO badge sources, one capped lever wall. soldierBadgeDefs is the INDIVIDUAL-tier catalog — class 'historical' (a documented-record badge; renders SOLID ONLY when BOTH the assignment row AND the carrying register record are Verified) vs class 'career' (earned through play from the journey career log; ALWAYS renders HATCHED with an 'Earned in play' label — never solid, never a Verified stamp). soldierBadges[pid] rows carry the per-assignment citation law (the rosterBadgeProv idiom): Verified >= 2 named sources drawn from the register record's OWN source list, else Inferred/Disputed displayed as such. Every def's fldLever uses the EXISTING badge-lever vocabulary and any consumer MUST route through fldSoldierBadgeFactor, which clamps the summed delta at the SAME fldRatingRealismCap 'badgeLever' wall as fldBadgeFactor (D74: no new lever class; nothing here is read at resolve time). NO unit is stamped with these keys and no combat line consumes them in D484 — presentation + the capped gateway only. Adjudicated drops (single-source floor, logged in DECISIONS D484): Sherman's Bull Run crossing (own report only), Webb's Medal of Honor (CMOHS only in-record; he ships command_at_the_crisis instead), Howard and Griffin (no >= 2-source individual action in their records). Beaty's medal_of_honor rests on two DISTINCT CMOHS documents (the official recipient record + the 'Gallant Commander' feature) — same institution, two documents, flagged honestly here. The Medal of Honor cluster is US-only because the Confederacy had no equivalent decoration — an asymmetry of the historical record, not of authoring; CS strengths ship where sourced (Evans/Johnson crisis command, the chronicler line) and the memorial rows carry both sides.",
+  "soldierBadgeDefs": [
+    {
+      "key": "medal_of_honor",
+      "label": "Medal of Honor",
+      "class": "historical",
+      "rung": "xfactor",
+      "polarity": "pos",
+      "kind": "valor",
+      "fldLever": "rally",
+      "mag": 0.04,
+      "note": "The United States' highest decoration for gallantry. Assignment rows carry the recipient-specific citation sources."
+    },
+    {
+      "key": "colors_through_fire",
+      "label": "Colors Through the Fire",
+      "class": "historical",
+      "rung": "superstar",
+      "polarity": "pos",
+      "kind": "valor",
+      "fldLever": "rally",
+      "mag": 0.03,
+      "note": "Carried, rescued, or captured a battle flag under fire — the color line was the regiment's rallying point."
+    },
+    {
+      "key": "led_beyond_station",
+      "label": "Led Beyond His Station",
+      "class": "historical",
+      "rung": "superstar",
+      "polarity": "pos",
+      "kind": "command",
+      "fldLever": "rally",
+      "mag": 0.03,
+      "note": "Took up a fallen leader's duty or a fighting post above his rank when the men around him fell."
+    },
+    {
+      "key": "bayonets_when_empty",
+      "label": "Bayonets, When Empty",
+      "class": "historical",
+      "rung": "xfactor",
+      "polarity": "pos",
+      "kind": "valor",
+      "fldLever": "melee",
+      "mag": 0.05,
+      "note": "The ammunition-out counterattack pressed with the bayonet."
+    },
+    {
+      "key": "command_at_the_crisis",
+      "label": "Command at the Crisis",
+      "class": "historical",
+      "rung": "superstar",
+      "polarity": "pos",
+      "kind": "command",
+      "fldLever": "rally",
+      "mag": 0.03,
+      "note": "A documented decisive command action at the crisis of the field."
+    },
+    {
+      "key": "fell_in_battle",
+      "label": "Fell in Battle",
+      "class": "historical",
+      "rung": "superstar",
+      "polarity": "pos",
+      "kind": "memorial",
+      "fldLever": "none",
+      "mag": 0,
+      "note": "Killed or mortally wounded on the field. A memorial marker, not a lever."
+    },
+    {
+      "key": "the_chronicler",
+      "label": "The Chronicler",
+      "class": "historical",
+      "rung": "star",
+      "polarity": "pos",
+      "kind": "witness",
+      "fldLever": "none",
+      "mag": 0,
+      "note": "Author of a first-person account of the service this register verifies — the accounts this game teaches from."
+    },
+    {
+      "key": "wounded_in_action",
+      "label": "Wounded in Action",
+      "class": "historical",
+      "rung": "star",
+      "polarity": "pos",
+      "kind": "service",
+      "fldLever": "none",
+      "mag": 0,
+      "note": "A documented battle wound in the verified record."
+    },
+    {
+      "key": "battle_tested",
+      "label": "Battle-Tested",
+      "class": "career",
+      "rung": "star",
+      "polarity": "pos",
+      "kind": "career",
+      "fldLever": "none",
+      "mag": 0,
+      "earn": "battles>=1",
+      "note": "Earned in play: stood in the line through a first battle."
+    },
+    {
+      "key": "campaign_veteran",
+      "label": "Campaign Veteran",
+      "class": "career",
+      "rung": "superstar",
+      "polarity": "pos",
+      "kind": "career",
+      "fldLever": "rally",
+      "mag": 0.02,
+      "earn": "battles>=3",
+      "note": "Earned in play: three or more battles in the journey career log."
+    },
+    {
+      "key": "field_promoted",
+      "label": "Promoted in the Field",
+      "class": "career",
+      "rung": "superstar",
+      "polarity": "pos",
+      "kind": "career",
+      "fldLever": "none",
+      "mag": 0,
+      "earn": "promotions>=1",
+      "note": "Earned in play: a promotion recorded in the career log."
+    },
+    {
+      "key": "steadfast_in_defeat",
+      "label": "Steadfast in Defeat",
+      "class": "career",
+      "rung": "star",
+      "polarity": "pos",
+      "kind": "career",
+      "fldLever": "none",
+      "mag": 0,
+      "earn": "defeat-survived",
+      "note": "Earned in play: came through a defeat still in the ranks."
+    },
+    {
+      "key": "bloodied",
+      "label": "Bloodied",
+      "class": "career",
+      "rung": "star",
+      "polarity": "pos",
+      "kind": "career",
+      "fldLever": "none",
+      "mag": 0,
+      "earn": "wounded-entry",
+      "note": "Earned in play: wounded in a journey battle and carried on the rolls."
+    },
+    {
+      "key": "mustered_through",
+      "label": "Mustered Through",
+      "class": "career",
+      "rung": "superstar",
+      "polarity": "pos",
+      "kind": "career",
+      "fldLever": "none",
+      "mag": 0,
+      "earn": "war-ended",
+      "note": "Earned in play: on the rolls when the war ended."
+    }
+  ],
+  "soldierBadges": {
+    "person_bullrun_us_2ri_rhodes": [
+      {
+        "key": "the_chronicler",
+        "prov": "Verified",
+        "sources": [
+          "Elisha Hunt Rhodes Papers, 1858-1904 — Rhode Island Historical Society",
+          "All for the Union: The Civil War Diary and Letters of Elisha Hunt Rhodes — Vintage Civil War Library"
+        ],
+        "note": "The RIHS finding aid and the published diary independently attest the 1861-1865 diary/letters this register reads him through."
+      }
+    ],
+    "person_fredericksburg_us_116pa_mccarter": [
+      {
+        "key": "the_chronicler",
+        "prov": "Verified",
+        "sources": [
+          "My Life in the Irish Brigade — Historical Society of Pennsylvania catalog",
+          "The Medical Treatment of Private William McCarter — National Museum of Civil War Medicine"
+        ],
+        "note": "The HSP-cataloged memoir and the NMCWM treatment article independently attest his first-person Fredericksburg account."
+      },
+      {
+        "key": "wounded_in_action",
+        "prov": "Verified",
+        "sources": [
+          "Philadelphia William McCarter documented his military service — Historical Society of Pennsylvania",
+          "The Medical Treatment of Private William McCarter — National Museum of Civil War Medicine"
+        ],
+        "note": "HSP and NMCWM both place his Fredericksburg wounding in the Irish Brigade assault."
+      }
+    ],
+    "person_gettysburg_us_20me_chamberlain": [
+      {
+        "key": "bayonets_when_empty",
+        "prov": "Verified",
+        "sources": [
+          "20th Maine Infantry Regiment Monument — Gettysburg National Military Park",
+          "Defense of Little Round Top — American Battlefield Trust"
+        ],
+        "note": "NPS monument text and ABT both carry the ammunition-out counterattack on the extreme left, July 2, 1863."
+      }
+    ],
+    "person_gettysburg_us_battery_a_cushing": [
+      {
+        "key": "medal_of_honor",
+        "prov": "Verified",
+        "sources": [
+          "First Lieutenant Alonzo H. Cushing — Army.mil Medal of Honor",
+          "Alonzo H Cushing — Congressional Medal of Honor Society"
+        ],
+        "note": "Army.mil and CMOHS independently carry the (2014, posthumous) Medal of Honor for July 3, 1863 at the Angle."
+      },
+      {
+        "key": "fell_in_battle",
+        "prov": "Verified",
+        "sources": [
+          "Alonzo Cushing at Gettysburg — Gettysburg National Military Park",
+          "First Lieutenant Alonzo H. Cushing — Army.mil Medal of Honor"
+        ],
+        "note": "Both carry his refusal of evacuation and death at his guns during Pickett's Charge."
+      }
+    ],
+    "person_gettysburg_us_vincent_bde": [
+      {
+        "key": "command_at_the_crisis",
+        "prov": "Verified",
+        "sources": [
+          "The Memory of Strong Vincent — Gettysburg National Military Park",
+          "Defense of Little Round Top — American Battlefield Trust"
+        ],
+        "note": "Both carry the brigade's hurried unbidden move onto Little Round Top just before Hood's division struck."
+      },
+      {
+        "key": "fell_in_battle",
+        "prov": "Verified",
+        "sources": [
+          "The Memory of Strong Vincent — Gettysburg National Military Park",
+          "The Army of the Potomac at Gettysburg — Gettysburg National Military Park OOB"
+        ],
+        "note": "The NPS memory page carries the July 2 mortal wound and July 7 death; the NPS OOB records him wounded in brigade command."
+      }
+    ],
+    "person_shiloh_us_61il_stillwell": [
+      {
+        "key": "the_chronicler",
+        "prov": "Verified",
+        "sources": [
+          "The Story of a Common Soldier of Army Life in the Civil War — Project Gutenberg",
+          "Leander Stillwell — KSGenWeb Archives biography"
+        ],
+        "note": "The published memoir and the independent biography attest the first-person Shiloh account and the service it records."
+      }
+    ],
+    "person_antietam_us_battery_b_cook": [
+      {
+        "key": "medal_of_honor",
+        "prov": "Verified",
+        "sources": [
+          "John Cook — Congressional Medal of Honor Society",
+          "Medal of Honor Monday: Army Bugler John Cook — U.S. DoD News"
+        ],
+        "note": "CMOHS and the DoD feature independently carry the Antietam citation."
+      },
+      {
+        "key": "led_beyond_station",
+        "prov": "Verified",
+        "sources": [
+          "John Cook — Congressional Medal of Honor Society citation",
+          "Medal of Honor Monday: Army Bugler John Cook — U.S. DoD News"
+        ],
+        "note": "Both carry the fifteen-year-old bugler serving a gun as an acting cannoneer after Capt. Campbell fell wounded."
+      }
+    ],
+    "person_vicksburg_us_55il_howe": [
+      {
+        "key": "medal_of_honor",
+        "prov": "Verified",
+        "sources": [
+          "Orion P Howe — Congressional Medal of Honor Society",
+          "Letter from General William T. Sherman concerning Orion Howe's Medal of Honor — Illinois State Archives"
+        ],
+        "note": "The CMOHS record and Sherman's own letter trail independently carry the award."
+      },
+      {
+        "key": "wounded_in_action",
+        "prov": "Verified",
+        "sources": [
+          "Orion P Howe — Congressional Medal of Honor Society",
+          "Letter from General William T. Sherman concerning Orion Howe — Illinois State Archives"
+        ],
+        "note": "Both carry the wound taken while running the cartridge message in the May 19, 1863 assault."
+      }
+    ],
+    "person_gettysburg_us_6wi_waller": [
+      {
+        "key": "medal_of_honor",
+        "prov": "Verified",
+        "sources": [
+          "Civil War (M - Z Index) Medal of Honor recipients — Army.mil",
+          "Faces of Gettysburg - Francis Ashbury Wallar - Medal of Honor Winner — Gettysburg NMP"
+        ],
+        "note": "Army.mil and NPS independently carry the citation."
+      },
+      {
+        "key": "colors_through_fire",
+        "prov": "Verified",
+        "sources": [
+          "Civil War (M - Z Index) Medal of Honor recipients — Army.mil",
+          "Faces of Gettysburg - Francis Ashbury Wallar — Gettysburg NMP"
+        ],
+        "note": "Both carry the capture of the 2nd Mississippi's flag in the Railroad Cut on July 1, 1863; NPS also records the veterans' later memory dispute."
+      }
+    ],
+    "person_antietam_us_battery_e_benjamin": [
+      {
+        "key": "medal_of_honor",
+        "prov": "Verified",
+        "sources": [
+          "Civil War (A - L Index) Medal of Honor recipients — Army.mil",
+          "Samuel Nicholl Benjamin — Congressional Medal of Honor Society"
+        ],
+        "note": "Army.mil and CMOHS independently carry the long-service citation, with CMOHS noting the brevet-rank caveat."
+      }
+    ],
+    "person_antietam_us_61ny_barlow": [
+      {
+        "key": "command_at_the_crisis",
+        "prov": "Verified",
+        "sources": [
+          "Col Francis C Barlow's Official Report — Antietam on the Web / Official Records",
+          "Francis Barlow: Rising Through the Ranks — Fredericksburg & Spotsylvania NMP"
+        ],
+        "note": "His own report and the NPS biography carry the enfilading flank fire on the Sunken Road and the prisoners it took."
+      }
+    ],
+    "person_bullrun_us_2ri_ballou": [
+      {
+        "key": "fell_in_battle",
+        "prov": "Verified",
+        "sources": [
+          "\"My Very Dear Wife\" - The Last Letter of Major Sullivan Ballou — Manassas NBP",
+          "Sullivan Ballou Papers — Rhode Island Historical Society"
+        ],
+        "note": "NPS carries his death as the Rhode Islanders advanced from Matthews Hill; RIHS documents the wound and death after First Bull Run."
+      }
+    ],
+    "person_gettysburg_us_webb_phila_bde": [
+      {
+        "key": "command_at_the_crisis",
+        "prov": "Verified",
+        "sources": [
+          "Union Commanders at Gettysburg — Gettysburg National Military Park",
+          "Alexander Stewart Webb — Congressional Medal of Honor Society"
+        ],
+        "note": "NPS ties his newly appointed brigade command to throwing back the Angle breakthrough; the CMOHS citation carries his leading the men at the critical point. His Medal of Honor itself rests on one in-record source and ships no row (the single-source floor)."
+      }
+    ],
+    "person_gettysburg_us_19ma_decastro": [
+      {
+        "key": "medal_of_honor",
+        "prov": "Verified",
+        "sources": [
+          "Hispanic-American Medal of Honor recipients — Army.mil",
+          "Joseph H. De Castro — American Battlefield Trust"
+        ],
+        "note": "Army.mil and ABT independently carry the December 1, 1864 award."
+      },
+      {
+        "key": "colors_through_fire",
+        "prov": "Verified",
+        "sources": [
+          "Official Report for the 19th Massachusetts at Gettysburg (Devereux) — Official Records",
+          "Joseph H. De Castro — American Battlefield Trust"
+        ],
+        "note": "Devereux's primary report names Corpl. De Castro among the captors of Confederate colors at the Angle; ABT carries the color-bearer capture. The 19th Virginia identity is a later secondary attribution, per the register record."
+      }
+    ],
+    "person_gettysburg_us_17me_haley": [
+      {
+        "key": "the_chronicler",
+        "prov": "Verified",
+        "sources": [
+          "The Rebel Yell and the Yankee Hurrah — University of Alabama Civil War Narratives index",
+          "John Haley's Civil War Exhibit — University of New England / Saco Museum"
+        ],
+        "note": "The journal's scholarly index and the Saco exhibit independently attest his 1862-1865 journal."
+      }
+    ],
+    "person_bullrun_us_porter_bde": [
+      {
+        "key": "command_at_the_crisis",
+        "prov": "Verified",
+        "sources": [
+          "#32 - Col. Andrew Porter official report (OR Ser. I Vol. 2) — Bull Runnings reproduction",
+          "Union Order of Battle - First Manassas — Manassas NBP"
+        ],
+        "note": "His report and the NPS order of battle both carry the succession to division command in mid-battle when Hunter fell wounded."
+      }
+    ],
+    "person_new_market_heights_us_4usct_fleetwood": [
+      {
+        "key": "medal_of_honor",
+        "prov": "Verified",
+        "sources": [
+          "Christian A. Fleetwood — Congressional Medal of Honor Society",
+          "Christian A. Fleetwood — Library of Congress, The Civil War in America"
+        ],
+        "note": "CMOHS and LOC independently carry the September 29, 1864 award."
+      },
+      {
+        "key": "colors_through_fire",
+        "prov": "Verified",
+        "sources": [
+          "Christian A. Fleetwood — Library of Congress, The Civil War in America",
+          "Christian A. Fleetwood — Congressional Medal of Honor Society"
+        ],
+        "note": "Both carry his taking up and carrying the colors through the New Market Heights assault after two bearers fell."
+      }
+    ],
+    "person_new_market_heights_us_5usct_beaty": [
+      {
+        "key": "medal_of_honor",
+        "prov": "Verified",
+        "sources": [
+          "Powhatan Beaty — Congressional Medal of Honor Society recipient record",
+          "Powhatan Beaty: A Gallant Commander — Congressional Medal of Honor Society feature"
+        ],
+        "note": "Two distinct CMOHS documents (the official recipient record and the editorial feature) carry the award and the taking of company command when the officers fell — same institution, two documents, flagged per the D484 adjudication."
+      }
+    ],
+    "person_new_market_heights_us_36usct_gardiner": [
+      {
+        "key": "medal_of_honor",
+        "prov": "Verified",
+        "sources": [
+          "Civil War Medal of Honor Recipients, A-L — The United States Army",
+          "Congressional Medals of Honor Index — National Archives"
+        ],
+        "note": "The Army citation and the NARA archival index independently carry the award for the advance ahead of Draper's brigade."
+      }
+    ],
+    "person_chickamauga_cs_1tn_watkins": [
+      {
+        "key": "the_chronicler",
+        "prov": "Verified",
+        "sources": [
+          "\"Co. Aytch,\" Maury Grays, First Tennessee Regiment — Project Gutenberg",
+          "Sam Watkins — Chickamauga and Chattanooga NMP"
+        ],
+        "note": "The memoir and the NPS park biography independently attest the participant account this register reads him through."
+      }
+    ],
+    "person_antietam_cs_21va_worsham": [
+      {
+        "key": "the_chronicler",
+        "prov": "Verified",
+        "sources": [
+          "One of Jackson's Foot Cavalry — Documenting the American South, UNC",
+          "John H. Worsham — Cedar Creek and Belle Grove NHP"
+        ],
+        "note": "The memoir and the NPS biography independently attest his first-person account and the service it records."
+      }
+    ],
+    "person_chancellorsville_cs_33va_casler": [
+      {
+        "key": "the_chronicler",
+        "prov": "Verified",
+        "sources": [
+          "Four Years in the Stonewall Brigade (1906 revised edition) — Internet Archive",
+          "Four Years in the Stonewall Brigade (American Civil War Classics) — University of South Carolina Press"
+        ],
+        "note": "The memoir itself and the USC Press edition's independent editorial assessment (among the most cited Confederate soldier accounts) attest the chronicle — primary work plus scholarly appraisal, per the register record."
+      }
+    ],
+    "person_shiloh_cs_6ar_stanley": [
+      {
+        "key": "the_chronicler",
+        "prov": "Verified",
+        "sources": [
+          "The Autobiography of Sir Henry Morton Stanley — Project Gutenberg",
+          "Henry Morton Stanley Goes To War — HistoryNet"
+        ],
+        "note": "The autobiography and the independent feature attest the Dixie Grays Shiloh account; the register record holds it as self-mythologizing and soldier-life-only, and so does this row."
+      }
+    ],
+    "person_gettysburg_cs_1va_dooley": [
+      {
+        "key": "the_chronicler",
+        "prov": "Verified",
+        "sources": [
+          "Dictionary of Virginia Biography — John Edward Dooley — Library of Virginia",
+          "Gettysburg: \"The Whole Ground...\" (Dooley's account) — American Battlefield Trust"
+        ],
+        "note": "The DVB biography and ABT's reproduction of his Pickett's Charge account independently attest the journal."
+      }
+    ],
+    "person_chancellorsville_cs_1sc_benson": [
+      {
+        "key": "the_chronicler",
+        "prov": "Verified",
+        "sources": [
+          "Berry Benson's Civil War Book — University of Georgia Press",
+          "Berry Benson (1843-1923) — New Georgia Encyclopedia"
+        ],
+        "note": "The published memoir and the NGE biography independently attest the account."
+      },
+      {
+        "key": "wounded_in_action",
+        "prov": "Verified",
+        "sources": [
+          "Berry Benson (1843-1923) — New Georgia Encyclopedia",
+          "Confederate Sharpshooter Berry Benson and His Enfield — American Rifleman"
+        ],
+        "note": "Both carry the leg wound at Chancellorsville, May 1863."
+      }
+    ],
+    "person_chickamauga_cs_9ky_green": [
+      {
+        "key": "the_chronicler",
+        "prov": "Verified",
+        "sources": [
+          "Johnny Green of the Orphan Brigade: The Journal of a Confederate Soldier — University Press of Kentucky",
+          "Kentucky Confederate Veterans and Their War Records — Genealogy Trails"
+        ],
+        "note": "The published journal and the independent service-record compilation attest the account and the Orphan Brigade service it records."
+      }
+    ],
+    "person_vicksburg_cs_3la_tunnard": [
+      {
+        "key": "the_chronicler",
+        "prov": "Verified",
+        "sources": [
+          "A Southern Record (1866) — University of Michigan Library, Making of America",
+          "A Southern Record: The History of the Third Regiment Louisiana Infantry — University of Arkansas Press"
+        ],
+        "note": "The 1866 primary work and the U. Arkansas Press edition's independent appraisal attest the regimental record he assembled — read as a participant account, per the register record."
+      }
+    ],
+    "person_chickamauga_cs_4tx_giles": [
+      {
+        "key": "the_chronicler",
+        "prov": "Verified",
+        "sources": [
+          "Rags and Hope: The Recollections of Val C. Giles — Coward-McCann (1961) / HathiTrust",
+          "4th Texas Infantry Regiment — Wikipedia (quotes 'Sergeant Val Giles' on the field)"
+        ],
+        "note": "The memoir and an independent unit history that quotes it attest the recollections."
+      }
+    ],
+    "person_vicksburg_cs_46ms_chambers": [
+      {
+        "key": "the_chronicler",
+        "prov": "Verified",
+        "sources": [
+          "Chambers (William Pitt) Diary, 1862-1865 — USM Special Collections finding aid",
+          "Blood and Sacrifice: The Civil War Journal of a Confederate Soldier — Blue Acorn Press (1994)"
+        ],
+        "note": "The archival diary collection and the published edition independently attest the journal."
+      }
+    ],
+    "person_shiloh_cs_2tx_houston": [
+      {
+        "key": "wounded_in_action",
+        "prov": "Verified",
+        "sources": [
+          "Houston, Sam, Jr. — Handbook of Texas Online",
+          "Sam Houston Jr. — Wikipedia"
+        ],
+        "note": "Both carry the Shiloh second-day wound (critically wounded, left for dead, found alive)."
+      }
+    ],
+    "person_chickamauga_cs_9ky_jackman": [
+      {
+        "key": "the_chronicler",
+        "prov": "Verified",
+        "sources": [
+          "Diary of a Confederate Soldier: John S. Jackman of the Orphan Brigade — University of South Carolina Press",
+          "The Atlanta Campaign: Dalton to Cassville — Savas Beatie (cites the Davis edition)"
+        ],
+        "note": "The published diary and an independent campaign history citing it attest the account."
+      }
+    ],
+    "person_chickamauga_cs_4tx_west": [
+      {
+        "key": "the_chronicler",
+        "prov": "Verified",
+        "sources": [
+          "A Texan in Search of a Fight — The Online Books Page / HathiTrust",
+          "John C. West--A Texan in Search of a Fight — Daily Observations from The Civil War"
+        ],
+        "note": "The cataloged diary/letters and the independent transcription of his Chickamauga letter attest the account."
+      }
+    ],
+    "person_chickamauga_cs_3sc_simpson": [
+      {
+        "key": "fell_in_battle",
+        "prov": "Verified",
+        "sources": [
+          "Old Pendleton District Chapter Newsletter, January 2013 — Old Pendleton District Chapter",
+          "Richard Wright Simpson (1840-1912) — Clemson University"
+        ],
+        "note": "Both carry Cpl. Taliaferro N. Simpson killed at Chickamauga, September 1863."
+      }
+    ],
+    "person_chickamauga_cs_johnson_gap": [
+      {
+        "key": "command_at_the_crisis",
+        "prov": "Verified",
+        "sources": [
+          "Staff Ride Handbook for the Battle of Chickamauga — U.S. Army Center of Military History",
+          "Bushrod Johnson, Soldier, Educator — American History Central"
+        ],
+        "note": "Both carry his provisional division leading the September 20 breakthrough through the Brotherton gap."
+      }
+    ],
+    "person_chickamauga_cs_hood_arrives": [
+      {
+        "key": "wounded_in_action",
+        "prov": "Verified",
+        "sources": [
+          "John Bell Hood — U.S. National Park Service",
+          "John Bell Hood — American Battlefield Trust"
+        ],
+        "note": "Both carry the Chickamauga wound that cost him his leg."
+      }
+    ],
+    "person_bullrun_cs_evans_demibde": [
+      {
+        "key": "command_at_the_crisis",
+        "prov": "Verified",
+        "sources": [
+          "Nathan G. Evans — American Battlefield Trust",
+          "First Battle of Manassas (Bull Run) — Encyclopedia Virginia"
+        ],
+        "note": "ABT carries the pivot of his outnumbered command to meet the flank march; Encyclopedia Virginia carries Alexander's wig-wag warning and the same pivot."
+      }
+    ],
+    "person_bullrun_cs_bee_bde": [
+      {
+        "key": "fell_in_battle",
+        "prov": "Verified",
+        "sources": [
+          "Confederate Order of Battle - First Manassas — Manassas NBP",
+          "Stonewall Brigade — Encyclopedia Virginia"
+        ],
+        "note": "The NPS order of battle records him killed in action; Encyclopedia Virginia carries the Henry House Hill mortal wound. The stone-wall remark stays out of this row — its wording is contested, per the register record."
+      }
+    ],
+    "person_bullrun_cs_bartow_bde": [
+      {
+        "key": "fell_in_battle",
+        "prov": "Verified",
+        "sources": [
+          "The Bartow Monument — Manassas NBP",
+          "The Hidden Marker for the 7th Georgia Infantry — American Battlefield Trust"
+        ],
+        "note": "NPS and ABT independently carry his death leading the 7th Georgia against Ricketts's battery; he died a colonel — the monument's 'Brigadier General' styling is the documented rank trap."
+      }
+    ],
+    "person_bullrun_cs_hampton_legion": [
+      {
+        "key": "wounded_in_action",
+        "prov": "Verified",
+        "sources": [
+          "Battle Person Detail - Wade Hampton — NPS Civil War Soldiers and Sailors database",
+          "Wade Hampton — American Battlefield Trust"
+        ],
+        "note": "NPS and ABT carry the wound taken leading the Legion's infantry battalion in the Henry House Hill fighting, per the register record's source note."
+      }
+    ]
+  },
   "personas": {
     "_note": "R-0 authors the Bull Run leadership cast (Verified). command/tactical/discipline are CALIBRATED so the persona->quality projection reproduces each leader's AUTHORED quality in data/bullrun.json within tolerance (the calibration oracle). Other attributes are historical character. The full prosopography (every identifiable individual) is the D93 target, built via per-army research workflows over this spine.",
     "ld_mcdowell": {

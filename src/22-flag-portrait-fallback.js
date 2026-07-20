@@ -42,8 +42,10 @@
   if (typeof prev !== "function" || prev._cwFlag) return;          // need the chain; install once
 
   var W = 96, H = 120, OX = W / 2, OY = 56, ORX = 40, ORY = 50;    // the shipped frame geometry
-  // aged flag tones, muted into the app's parchment world. NOT the four reserved
-  // D478 tier hexes (#9a9185/#6f9e5b/#9a86f1/#b8863c) — the one-language wall stands.
+  // aged flag tones, muted into the app's parchment world. None of these values is a
+  // reserved D478 rarity-tier colour — the one-language wall stands (its disk scan
+  // polices the literal values, so this comment deliberately names none of them —
+  // the D482/D484 comment-token lesson, fifth instance).
   var NAVY = "#3d4e66", RED = "#8f4a3e", CREAM = "#e8dcc0", CREAM_LT = "#f2e8ce";
   var BRASS = "#9c7a3c", BRASS_LT = "#c9a85f", INK = "#4a3a22";
   var CACHE = {};

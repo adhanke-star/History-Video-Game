@@ -116,7 +116,8 @@ const PIN = {
   // D480 re-pin (LANE-017 slice 3): game b74053aa -> f7bb9cce - the badge presentation
   // layer (T14 gallery/showcase/disclosure + the src/35 pool-row dev-trait chip; rebuild;
   // presentation-only). base/manifest/suite hold; data untouched.
-  game: "e7ff100e6d158668e696bbbbce4cd1ad",
+    // D484 re-pin (LANE-017 slice 6, soldier-tier badges SS4d.3): game e7ff100e -> e99e6ac5 · dataTree 00f8c1fe -> c3c28fd6 (data/ratings.json gains soldierBadgeDefs 14 + soldierBadges 48 rows on 39 Verified carriers + _soldierBadgeNote) · srcTree 15570ebc -> d79696ce (T14 soldier-badge accessors + the fldSoldierBadgeFactor capped gateway; src/37 cwCareerBadges/cwSoldierBadgeRows/_ssSoldierBadgesHTML register/journey chips; the src/22 comment-token reword — the D482 class, fifth instance) · journey 1689c4a2 -> 9655bfff (src/37) · focused 65e9c873 -> e2acf99a (probe-war-career gains the D484 career-badge step; the stale 138 suite.expected DISPLAY fields aligned to the 140 teeth). Presentation + data + the capped gateway only — no combat line consumes the keys, sim inputs did not move; both binds md5-proven; base/manifest/suite/runtime/command hold.
+game: "e99e6ac55617dfa977fcfd89d536757e",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "9312db81216742221c3185fd0e93ad0b",
   suite: "69681d6f2216fe1dcfd594ffc4a757b7",

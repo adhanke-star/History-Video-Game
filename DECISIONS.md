@@ -4,6 +4,78 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D484 — LANE-017 SLICE 6 SHIPPED: SOLDIER-TIER BADGES (§4d.3) — TWO BADGE SOURCES, VISUALLY DISTINCT, ONE CAPPED LEVER WALL — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE] (2026-07-20)
+
+**SHIPPED (the charter's slice-6 clause verbatim):** historical-record badges for the Verified
+register soldiers vs earned-through-play career badges, both through the same capped levers,
+with the register/journey UI showing the distinction.
+
+- **Data (`data/ratings.json`):** `soldierBadgeDefs` — 14 individual-tier defs (8 class
+  `historical`: medal_of_honor · colors_through_fire · led_beyond_station ·
+  bayonets_when_empty · command_at_the_crisis · fell_in_battle · the_chronicler ·
+  wounded_in_action; 6 class `career`: battle_tested · campaign_veteran · field_promoted ·
+  steadfast_in_defeat · bloodied · mustered_through), every `fldLever` in the EXISTING
+  vocabulary, every mag inside even the historian wall. `soldierBadges` — 48 assignment rows
+  on 39 of the 42 Verified replacement records, EVERY row Verified on ≥2 named sources drawn
+  from the record's OWN source list (adjudication 10: the gathering substrate was the in-repo
+  D152/D421 register itself, read and verified directly by the top loop; build gate 4e
+  enforces the floor structurally). `_soldierBadgeNote` carries the law.
+- **Research adjudications (logged, the honest drops):** Sherman's Bull Run crossing rests on
+  his own report alone in-record → NO row; Webb's Medal of Honor is CMOHS-only in-record →
+  ships `command_at_the_crisis` (3 sources) instead; Howard and Griffin carry no ≥2-source
+  individual action → no rows; Beaty's `medal_of_honor` rests on two DISTINCT CMOHS documents
+  (recipient record + feature — same institution, flagged in the row note); Bee's stone-wall
+  remark stays OUT of his memorial row (contested wording, per the register record). The MoH
+  cluster is US-only because the Confederacy had no equivalent decoration — an asymmetry of
+  the record, not of authoring; CS strengths ship where sourced (Evans/Johnson
+  `command_at_the_crisis`, 13 CS chroniclers) and the memorial rows carry both sides
+  (Cushing/Vincent/Ballou · Simpson/Bee/Bartow). No soldier-tier flaw row shipped: none of
+  the 42 records' source trails documents a personal battlefield failure (the notes' caveats
+  are source criticism, already carried on the register); flaw coverage stays at the unit
+  tier.
+- **Runtime:** T14 gains `fldSoldierBadgeDef`/`fldSoldierBadges` (fresh copies, fail-closed)
+  and **`fldSoldierBadgeFactor` — the ONE capped lever gateway**, clamped at the SAME
+  `fldRatingRealismCap("badgeLever")` wall as `fldBadgeFactor` (probe-proven: a stacked
+  0.15+0.10 fixture sum clamps at EXACTLY 1.10 balanced; identity when absent; unknown keys
+  skipped) — inside the 4d-scanned module, pure reads. src/37 gains `cwCareerBadges` (PURE
+  derivation from the journey career log — battles/promotions/defeat-survived/wounded/
+  war-ended; NOTHING stored, `_SAVE_VER=1`, the D149 sanitizer shape untouched),
+  `cwSoldierBadgeRows` (SOLID requires row-Verified AND carrier-Verified), and
+  `_ssSoldierBadgesHTML` (fldProvenanceStyle §10 solid/hatched/dashed accents +
+  cwRungTierInfo tier tint + prov words + hover/SR sources) wired into `ssPersonDetailHTML`
+  and `_ssJourneyActiveHTML`. NO unit is stamped with these keys and no combat line consumes
+  them — sim inputs did not move, so no A/B battery was owed.
+- **Root-fix riding the slice (the D482 comment-token class, FIFTH instance):**
+  probe-loot-survival's D478 one-language wall went red on src/22 (the D483 flag cards) —
+  the four reserved tier hexes appeared in a COMMENT asserting the wall stands (the code is
+  clean; D483's own gates don't run this wall). The comment now names none of them; the scan
+  is untouched. Also aligned probe-war-career's two stale `suite.expected` DISPLAY fields
+  (138→140; the real conjuncts were already 140 since `38451fb`).
+
+**TEETH:** probe-loot-survival 20→24 (dual-source distinction: doubly-Verified SOLID + every
+career chip HATCHED-never-solid · Verified-only: carrier gate AND row gate via runtime
+fixtures · lever caps: vocabulary + per-def mag + the exact-wall clamp + identity/fail-closed
+· legacy-save sanitation: pure derivation, renders never write, sanitizer shape byte-stable,
+no-journey save untouched) — 24/24, artifact read, 0 pageerrors. probe-war-career 45→46
+(the D484 career-badge step: 6-case derivation matrix EXACT + purity + a live
+careerVersion-1 case earning battle_tested+field_promoted + hatched-never-solid +
+zero-save-shape) — 46/46, suite 140/140, 0 pageerrors/realErrors. Adjacents probe-ratings
+31/31 + probe-save-slots 16/16. Both cooked SETUPs preparsed (S-03 item 8). Build GATE OK
+(no-fudge 4d over the new T14 code · citations 4e over the 48 Verified rows).
+
+**BINDS (md5-proven byte-identical restores — src/37 `9655bfff` · game `e99e6ac5`):**
+A career branch styled solid (`fldProvenanceStyle("Verified")` in the career loop) → EXACTLY
+the distinction tooth red ("a play-earned career badge rendered SOLID … battle_tested"),
+23/24 green. B the carrier-Verified conjunct dropped from `cwSoldierBadgeRows` → EXACTLY the
+Verified-only tooth red ("a Verified row on a NON-Verified carrier rendered SOLID"), 23/24
+green. Both restored; final re-run 24/24.
+
+**AD-7 re-pins (documented chains at all four plan-probe sites; both plan probes re-run
+post-commit):** game e7ff100e→e99e6ac5 · dataTree 00f8c1fe→c3c28fd6 · srcTree
+15570ebc→d79696ce · journey 1689c4a2→9655bfff · focused 65e9c873→e2acf99a;
+base/manifest/suite/runtime/command hold. Counts hold 29/62/1,710/140; `_SAVE_VER=1`; frozen
+base `c9db83fa` untouched. Design law recorded as RATING-SYSTEM-DESIGN.md §17.
+
 ## D483 — THE FLAG-CARD PORTRAIT DEFAULT (AARON-DIRECTED): NO-PHOTO PEOPLE GET A SIDE-THEMED FLAG CARD INSTEAD OF THE EGG ENGRAVING — [AARON directive 2026-07-20; CLAUDE CODE (FABLE 5) implementation] (2026-07-20)
 
 **[AARON]** "change the default egg shaped picture for no pic people in game (default
