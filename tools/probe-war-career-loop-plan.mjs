@@ -1106,8 +1106,13 @@ srcTree:"d79696ce8e928481dd9e37b105f18254",
   // 44/44 with the static preflight row); static walls stayed 30/30.
   // AD-7 re-pin (D443): the ONE D438 §19 franchise-archive browser row joined (43 -> 44
   // literal steps, 45/45 with the static preflight row); check( walls stayed 31.
-  if ((focusedText.match(/\bstep\('/g) || []).length !== 44 || (focusedText.match(/\bcheck\(/g) || []).length !== 31) {
-    throw new Error("focused source row/static structure moved from 44 literal steps + 31 checks");
+  // AD-7 re-pin (D484, LANE-017 slice 6): the ONE D484 career-badge browser row joined
+  // (44 -> 45 literal steps, 46/46 with the static preflight row) — it tests the src/37
+  // cwCareerBadges pure derivation + hatched-never-solid render + zero save shape; the
+  // war-career runtime surface itself did NOT move (this probe's own runtime steps prove
+  // it). check( walls stayed 31.
+  if ((focusedText.match(/\bstep\('/g) || []).length !== 45 || (focusedText.match(/\bcheck\(/g) || []).length !== 31) {
+    throw new Error("focused source row/static structure moved from 45 literal steps + 31 checks");
   }
   if (occurrences(focusedText, "step('D411 REACHABILITY + SOURCE-BOUNDED SERVICE'") !== 1) {
     throw new Error("focused D411 reachability row moved");
