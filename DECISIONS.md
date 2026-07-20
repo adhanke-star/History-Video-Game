@@ -46,9 +46,17 @@ EXACTLY the defs-integrity tooth red ("gallery rendered a badge id absent from
 badgeDefs: expected 2 cards, got 3"; every other step green). **AD-7 re-pins in this
 commit:** game b74053aa → f7bb9cce · srcTree 4eed52e8 → 7c23e51d at all four
 plan-probe sites (base/dataTree/journey/manifest/suite/focused hold — src/37 and
-data/ untouched this slice); both plan probes re-run post-commit. Counts hold
-29/62/1,710/140; `_SAVE_VER=1`; frozen base `c9db83fa` untouched. Exact next:
-LANE-017 slices 4+5 (the coverage sweep + R-7, §4d.2) per the committed contract.
+data/ untouched this slice); both plan probes re-run post-commit. **Post-commit
+addendum (the follow-up re-pin commit):** the war-career plan probe's SLICE C lock
+caught the src/35 move at its exact label ("command D411-complete lock moved") — the
+FIRST move of the `command` pin since it was set. Root-fixed per the AD-7
+documented-chain idiom (the D466/D474 class): command 8f12c49f → f3ad1450 with the
+full chain comment (the dev-trait chip is a pure-display devTraits read consumed only
+by `_cmdPoolHTML`; the D413 Matters-of-State political/command seams untouched, proven
+by the probe's own runtime steps + probe-command 94/94); both plan probes then re-run
+green (24/24 · 13/13). The tooth was strengthened by the chain, never weakened.
+Counts hold 29/62/1,710/140; `_SAVE_VER=1`; frozen base `c9db83fa` untouched. Exact
+next: LANE-017 slices 4+5 (the coverage sweep + R-7, §4d.2) per the committed contract.
 
 ## D479 — LANE-017 SLICE 2 SHIPPED: DROP FEEL — RARITY-COLOURED ANNOUNCEMENTS, ONE-TIME FLIP REVEAL, VIEW-SIDE SORT/FILTER, LEGENDARY GLOW — ALL THROUGH THE D478 CANONICAL MAP, ALL INERT UNDER reduceMotion — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE; MEGA-LADDER LEG 2 P1] (2026-07-20)
 

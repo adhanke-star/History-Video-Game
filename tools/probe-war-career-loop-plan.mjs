@@ -949,7 +949,13 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // recentDrops presentation record + announcement/flip/glow renderers + view-side sort/filter;
     // the journey/war-career logic surfaces are untouched, proven by this probe's own runtime steps).
     journey:"1689c4a205df5efad47d28e21962e0d5",
-    command:"8f12c49f7129b3a9be0203677822e048",
+    // D480 re-pin (the AD-7 idiom — the FIRST move of the command pin since it was set; the
+    // D466/D474 documented-chain class): command 8f12c49f -> f3ad1450. LANE-017 slice 3 adds
+    // the _cmdDevChipHTML pool-row dev-trait chip to src/35 — a pure-display read of the
+    // EXISTING devTraits assignment consumed only by _cmdPoolHTML. The war-career political/
+    // command seams src/35 carries (D413 Matters-of-State reads, relief/appoint state) are
+    // untouched, proven by this probe's own runtime steps + probe-command 94/94 at D480.
+    command:"f3ad1450f13dfe54ac7668035062c8fb",
     // D460 re-pin (the AD-7 idiom): focused a29a5351 -> 2816a82c — probe-war-career.mjs
     // carries the D460 register chain (1614 -> 1617, Elkhorn Cherokee OOB); the war-career
     // runtime surface itself did NOT move. D463 re-pin: focused 2816a82c -> 664ca996 —
