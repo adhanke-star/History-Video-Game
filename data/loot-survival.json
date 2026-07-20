@@ -8,25 +8,35 @@
   "rarities": {
     "common": {
       "label": "Common",
-      "color": "#9a9184",
-      "weight": 60
+      "color": "#9a9185",
+      "weight": 60,
+      "glyph": "•"
     },
     "uncommon": {
       "label": "Uncommon",
-      "color": "#6f9e5a",
-      "weight": 28
+      "color": "#6f9e5b",
+      "weight": 28,
+      "glyph": "▲"
     },
     "rare": {
       "label": "Rare",
-      "color": "#9a86f0",
-      "weight": 10
+      "color": "#9a86f1",
+      "weight": 10,
+      "glyph": "◆"
     },
     "legendary": {
       "label": "Legendary",
-      "color": "#b8863b",
-      "weight": 2
+      "color": "#b8863c",
+      "weight": 2,
+      "glyph": "★"
     }
   },
+  "rungTiers": {
+    "star": "uncommon",
+    "superstar": "rare",
+    "xfactor": "legendary"
+  },
+  "_rungTiersNote": "D478 (LANE-017 slice 1): the ONE rarity language - badge rungs resolve their tier presentation (colour+glyph family) through the same rarities palette above; consumers read it via cwTierInfo/cwRungTierInfo, never hardcoded hex. The four tier hexes are RESERVED values (deliberately one step off the app's generic accents) so the one-language wall can enforce that they appear nowhere in src except the src/37 helper default.",
   "survival": {
     "enabledByDefault": false,
     "maxInventorySlots": 18,

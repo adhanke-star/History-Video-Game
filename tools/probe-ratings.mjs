@@ -599,6 +599,31 @@ const SETUP = `(() => {
       if(typeof G!=='undefined' && G.mode!==beforeMode) throw new Error('rating fns mutated G.mode');
       if(typeof __FIELD!=='undefined' && __FIELD.units && __FIELD.units.length!==fu) throw new Error('rating fns mutated __FIELD.units');
       return { gMode:beforeMode, fieldUnits:fu }; });
+
+    step('D478 one rarity language: badge-chip rung glyphs tint from cwRungTierInfo while glyph+sign+label redundancy holds', function(){
+      if(typeof cwRungTierInfo!=='function') throw new Error('cwRungTierInfo missing (the D478 canonical helper)');
+      var RB=D && D.rosterBadges && D.rosterBadges.bullrun1;
+      if(!RB) throw new Error('rosterBadges.bullrun1 missing');
+      var uid=null; for(var k in RB){ if(RB.hasOwnProperty(k) && RB[k] && RB[k].length){ uid=k; break; } }
+      if(!uid) throw new Error('no badged bullrun1 unit');
+      var html=fldRatingBadgesHtml({ badges:RB[uid] });
+      var div=document.createElement('div'); div.innerHTML=html;
+      var chips=div.querySelectorAll('[role="listitem"]');
+      if(!chips.length) throw new Error('no chips rendered');
+      var tinted=0;
+      for(var i=0;i<chips.length;i++){
+        var t=chips[i].textContent||'';
+        if(!/[★◆⬥•]/.test(t)) throw new Error('chip missing its rung glyph');
+        if(!/[+−]/.test(t)) throw new Error('chip missing its polarity sign');
+        if(t.replace(/[★◆⬥•+−\s]/g,'').length<2) throw new Error('chip missing its word label');
+        var g=chips[i].querySelector('span[aria-hidden]');
+        if(g && /color:/.test(g.getAttribute('style')||'')) tinted++;
+      }
+      var def=fldBadgeDef(RB[uid][0]);
+      var want=cwRungTierInfo(def.rung).color.toLowerCase();
+      if(tinted<1) throw new Error('no chip glyph carries the canonical tier tint');
+      if(html.toLowerCase().indexOf(want)<0) throw new Error('chip html does not use the canonical tier colour '+want);
+      return { chips:chips.length, tinted:tinted, tier:want }; });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;

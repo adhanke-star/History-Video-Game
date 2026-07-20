@@ -3060,8 +3060,21 @@ next green commit and confer through this ledger instead of permitting simultane
   politics for the election bind) · ARC 6 rail+naval packets (session-fillers,
   chartered per D455 §7's interleave rule) · Mayhem Slice B (LANE-007) · C72 Shiloh
   rewrite + GEA-01/S44 bundle (parked, Aaron reorder-only).
-- **Resume pointer:** SLICE 1 (one rarity language) per this contract.
-- **Last-touched commit:** the charter commit (this commit).
+- **Resume pointer:** SLICE 2 (drop feel, §4c.3) per this contract — rarity-colored
+  drop announcements + card-flip reveal + inventory sort/filter + legendary glow, all
+  reading the slice-1 canonical map; reduceMotion ⇒ no flip/glow animation; teeth in
+  probe-loot-survival; binds per the contract clause.
+- **Last-touched commit:** the D478 slice-1 commit (this commit).
+- **Slice history:** SLICE 1 SHIPPED as D478 (2026-07-20): the canonical tier map
+  (glyphs + RESERVED hexes — the first one-language wall run caught the old palette
+  colliding with the app-wide generic accents in 40+ files, so the tiers got dedicated
+  values one step off, visually imperceptible, contrast re-proven) + the
+  cwTierInfo/cwRungTierInfo helpers + the glyph+label-redundant loot card chip + the
+  T14 tier-tinted rung glyph (fail-closed byte-identical without the helper). Teeth:
+  loot 12→16 (incl. the tree-wide one-language wall) · ratings 22→23; binds A
+  (T14 hardcode → the wall red naming the file:hex EXACTLY) and B (glyph stripped →
+  the redundancy tooth red EXACTLY) md5-proven; AD-7 game→9dd15ca2 ·
+  dataTree→b3b323fa · srcTree→ce48e9ae.
 - **History:** chartered 2026-07-20 immediately after the D477 ARC 3 close, under
   Aaron's post-D476 24-hour mega-ladder authorization (same-chat, D171). Recon was
   read-only during the D477 battery window: rosterBadges covers exactly the original

@@ -932,7 +932,9 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // commands expose _gcDelegate for probe-field's GEA-03 source tooth; introspection only).
     // D476 re-pin (LANE-014 slice 5): srcTree 8395da0a -> 7cc295df (T24 distance-LOD near
     // set + T23 runtime license wall; presentation-only, no war-career surface touched).
-    srcTree:"7cc295dfb9338127c9cea81547992b87",
+    // D478 re-pin (LANE-017 slice 1): srcTree 7cc295df -> ce48e9ae (the cwTierInfo one-rarity-language
+    // helpers in src/37 + the T14 tier-tinted rung glyph; presentation-only, no war-career surface).
+    srcTree:"ce48e9ae828137231440f63967d06b09",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     command:"8f12c49f7129b3a9be0203677822e048",
@@ -1257,7 +1259,9 @@ step("BASELINES + LANE", () => {
     // probe-field's GEA-03 source tooth + rebuild). base/dataTree/manifest/suite hold.
     // D476 re-pin (LANE-014 slice 5): game bcfd6454 -> a234c52a (T24 near-LOD + T23 runtime
     // license wall + rebuild). base/dataTree/manifest/suite hold.
-    game:"a234c52a49f9b3ceb3f13204581a88b2",
+    // D478 re-pin (LANE-017 slice 1): game a234c52a -> 9dd15ca2 (rarity glyphs/reserved hexes in
+    // data/loot-survival.json + the src/37 helpers + T14 tint + rebuild). base/manifest/suite hold.
+    game:"9dd15ca274e957784ee77ddc819e61bd",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     dataTree:"4bbdebe5c1180ed3ec702d9b6fe68b6b",
     manifest:"4625dca91b9b2cd8e65c1a9439160cf2",
@@ -1685,9 +1689,12 @@ step("REACHABILITY BASELINES", () => {
     // exposure for probe-field's GEA-03 tooth); dataTree/runtime/journey did NOT move.
     // D476 re-pin: game bcfd6454 -> a234c52a, srcTree 8395da0a -> 7cc295df (LANE-014 slice 5:
     // T24 near-LOD + T23 runtime license wall); dataTree/runtime/journey did NOT move.
-    game:"a234c52a49f9b3ceb3f13204581a88b2",
-    dataTree:"4bbdebe5c1180ed3ec702d9b6fe68b6b",
-    srcTree:"7cc295dfb9338127c9cea81547992b87",
+    // D478 re-pin: game a234c52a -> 9dd15ca2, dataTree 4bbdebe5 -> b3b323fa, srcTree 7cc295df ->
+    // ce48e9ae (LANE-017 slice 1: the one rarity language - data glyphs/reserved hexes + cw helpers
+    // + T14 tint); runtime/journey did NOT move.
+    game:"9dd15ca274e957784ee77ddc819e61bd",
+    dataTree:"b3b323faa7e2e92137504d94bd568044",
+    srcTree:"ce48e9ae828137231440f63967d06b09",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     journey:"25c1226edb05f9a1186d0ae4f301656d",
     // D460 re-pin: focused a29a5351 -> 2816a82c (Elkhorn Cherokee, 1614 -> 1617). D463

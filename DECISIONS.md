@@ -4,6 +4,44 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D478 — LANE-017 SLICE 1 SHIPPED: THE ONE RARITY LANGUAGE — THE DATA-CANONICAL CVD-SAFE TIER MAP, THE cwTierInfo/cwRungTierInfo HELPERS, AND THE ENFORCED ONE-LANGUAGE WALL — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE; THE POST-D476 MEGA-LADDER P3] (2026-07-20)
+
+**SHIPPED (the charter's slice-1 clause; ARC 4's first runtime commit):**
+`data/loot-survival.json` rarities become THE canonical tier map: every tier gains a glyph
+(common • · uncommon ▲ · rare ◆ · legendary ★) and a RESERVED hex (#9a9185/#6f9e5b/#9a86f1/
+#b8863c — deliberately one step off the app's generic accents after the first wall run
+proved the old values collided with the app-wide gold/green accents in 40+ files; visually
+imperceptible, contrast re-proven ≥4.5:1, weights untouched); the new `rungTiers` block maps
+the badge rungs onto the same palette (star→uncommon · superstar→rare · xfactor→legendary).
+`src/37` ships the two canonical helpers — `cwTierInfo(id)` / `cwRungTierInfo(rung)`
+(fail-closed defaults for a missing pack; the #9a9185 default is the ONE allowed src
+literal) — and the inventory card tier chip becomes glyph+label redundant (aria-hidden
+glyph span + data-tier attribute). T14's rung glyph reads its tint from `cwRungTierInfo`
+(typeof-guarded: helper absent ⇒ today's chip byte-identical; the polarity border tint and
+the glyph+sign+word meaning encoding are UNCHANGED).
+
+**TEETH (owners per the charter; suite stays 140):** probe-loot-survival 12→16 (helpers
+resolve every tier+rung from data with no divergence · card chips glyph+label redundant ·
+contrast ≥4.5:1 per tier · the ONE-LANGUAGE WALL: a node-side tree scan proving the four
+reserved tier hexes appear in NO src file except the src/37 default — the wall that already
+caught the accent collision at first run) — 16/16, artifact read, 0 pageerrors.
+probe-ratings 22→23 (chip rung glyphs tint from cwRungTierInfo with the canonical colour
+present in the html while glyph+sign+label redundancy holds) — 23/23, artifact read,
+0 pageerrors. Adjacents: probe-accessibility 27 ok (the app's generic-accent contrast pins
+untouched by the reserved hexes — the decoupling's point) + probe-tactical-roster 8/8.
+node --check ×4 · build GATE OK.
+
+**BINDS (both md5-proven byte-identical restores):** A — T14's helper read replaced with a
+hardcoded canonical hex → EXACTLY the one-language wall red naming
+`tactical/T14-ratings.js:#b8863c` (every other step green; restore 49208054 identical,
+re-run 16/16). B — the card chip's glyph span stripped (colour-only chip) → EXACTLY the
+redundancy tooth red ("chip common missing its glyph"; restore a527600d + game 9dd15ca2
+identical, re-run 16/16). **AD-7 re-pins in this commit:** game a234c52a → 9dd15ca2 ·
+dataTree 4bbdebe5 → b3b323fa · srcTree 7cc295df → ce48e9ae at all four plan-probe sites
+(base/manifest/suite/focused hold); both plan probes re-run post-commit. Counts hold
+29/62/1,710/140; `_SAVE_VER=1`; frozen base `c9db83fa` untouched. Exact next: LANE-017
+slice 2 (drop feel) per the committed contract.
+
 ## D477 — THE ARC 3 RELEASE BATTERY IS COMPLETE (140/140 AT SHA `7ac44aa` ACROSS THREE DOCUMENTED LEGS, ZERO UNRESOLVED REDS) — LANE-014 FLIPS SHIPPED; ARC 3 IS CLOSED AND FULLY RELEASED — [CLAUDE CODE (FABLE 5); THE POST-D476 MEGA-LADDER P1/SLICE 6] (2026-07-20)
 
 **THE BATTERY (SHA `7ac44aa` — the D476 slice-5 commit; the tree never moved during or

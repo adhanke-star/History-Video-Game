@@ -45,9 +45,25 @@ function _lootItem(id) {
 }
 function _lootRarity(id) {
   var d = _lootData(), r = d && d.rarities && d.rarities[id];
-  return r || { label: id || "Common", color: "#9a9184", weight: 1 };
+  return r || { label: id || "Common", color: "#9a9185", weight: 1 };
 }
-function _lootRarityColor(item) { return _lootRarity(item && item.rarity).color || "#9a9184"; }
+function _lootRarityColor(item) { return _lootRarity(item && item.rarity).color || "#9a9185"; }
+
+/* D478 (LANE-017 slice 1) — THE ONE RARITY LANGUAGE. Every tier presentation in the
+   game (loot UI, badge chips, register cards, flagship markers) resolves through these
+   two helpers; the tier colours/glyphs live ONLY in data/loot-survival.json (rarities +
+   rungTiers). Tiers are always glyph+label redundant — colour never carries the meaning
+   alone (CVD-safe). The "#9a9185" literal below is the helpers' own fail-closed default
+   for a missing data pack, not a consumer hardcode. */
+function cwTierInfo(id) {
+  var d = _lootData(), r = d && d.rarities && d.rarities[id];
+  if (r) return { id: id, label: r.label || id, color: r.color || "#9a9185", glyph: r.glyph || "•", weight: r.weight };
+  return { id: id || "common", label: "Common", color: "#9a9185", glyph: "•", weight: 1 };
+}
+function cwRungTierInfo(rung) {
+  var d = _lootData(), map = d && d.rungTiers;
+  return cwTierInfo(map && map[rung] ? map[rung] : "common");
+}
 function _lootTurn(C) {
   if (C && C.president && typeof C.president.turn === "number") return C.president.turn;
   if (C && typeof C.idx === "number") return C.idx;
@@ -1674,7 +1690,7 @@ function _ssCap(s) {
 function _ssStatusColor(s) {
   s = _ssStatus(s);
   if (s === "fallen") return "#da6a5a";
-  if (s === "retired" || s === "war-ended") return "#9a9184";
+  if (s === "retired" || s === "war-ended") return "#9a9185";
   if (s === "captured") return "#da6a5a";
   if (s === "wounded") return "#c9712e";
   return "#6f9e5a";
@@ -1716,7 +1732,7 @@ function _ssJourneyActiveHTML(C) {
     + '<span style="font-size:11px;font-weight:bold;color:' + _ssStatusColor(status) + ';border:1px solid ' + _ssStatusColor(status) + ';border-radius:4px;padding:2px 7px">' + _lootEsc(_ssCap(status)) + '</span></div>'
     + '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:7px;margin-top:8px">'
     + _lootPill("Battles", J.battles || 0, "#b8863b")
-    + _lootPill("Last field", last, "#9a9184")
+    + _lootPill("Last field", last, "#9a9185")
     + _lootPill("Promotions", J.promotionCount || 0, "#6f9e5a")
     + '</div>'
     + _ssTrajectoryHTML(J)
@@ -1828,9 +1844,10 @@ function _lootInventoryHTML(C) {
   for (var i = 0; i < inv.length; i++) {
     var row = inv[i], it = _lootItem(row.id); if (!it) continue;
     var col = _lootRarityColor(it), rar = _lootRarity(it.rarity), equipped = "";
+    var tier = cwTierInfo(it.rarity);
     if (it.slot && L.equipped[it.slot] === it.id) equipped = ' &middot; Equipped';
     html += '<div style="border:1px solid ' + col + ';border-left:4px solid ' + col + ';border-radius:6px;padding:9px;background:rgba(0,0,0,.14)">'
-      + '<div style="display:flex;justify-content:space-between;gap:8px"><b>' + _lootEsc(it.name) + '</b><span style="color:' + col + ';font-size:12px">' + _lootEsc(rar.label) + '</span></div>'
+      + '<div style="display:flex;justify-content:space-between;gap:8px"><b>' + _lootEsc(it.name) + '</b><span data-tier="' + _lootAttr(tier.id) + '" style="color:' + col + ';font-size:12px"><span aria-hidden="true">' + _lootEsc(tier.glyph) + '</span> ' + _lootEsc(rar.label) + '</span></div>'
       + '<div style="font-size:11px;opacity:.74">' + _lootEsc(it.category || "Item") + ' x' + row.qty + equipped + '</div>'
       + '<div style="font-size:11px;margin-top:5px;min-height:28px">' + _lootEsc(it.blurb || "") + '</div>'
       + '<div class="btn-row" style="margin-top:7px;justify-content:flex-start;gap:6px">'
@@ -1864,7 +1881,7 @@ function _ssPeopleHTML(C) {
     + _lootPill("People", people.length, "#b8863b")
     + _lootPill("Authored", reg.authored, "#9a86f0")
     + _lootPill("Inferred", reg.generated, "#6f9e5a")
-    + _lootPill("Brigades", reg.brigades, "#9a9184")
+    + _lootPill("Brigades", reg.brigades, "#9a9185")
     + '</div>';
   html += '<div style="border:1px solid var(--rule);border-radius:6px;padding:9px;background:rgba(0,0,0,.12);margin:8px 0">'
     + '<div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center">'

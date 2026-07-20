@@ -1008,6 +1008,65 @@ const SETUP = `(() => {
       if(!disabledCard || !disabledCard.disabled || disabledCard.textContent.indexOf('Journey Active')<0) throw new Error('active journey card starts should be disabled');
       return { text:txt.slice(0,120), cards:cards.length, search:generated.name, unit:generated.team.brigade, started:generated.pid, restartDisabled:disabled.disabled };
     });
+
+    step('D478 one rarity language: cwTierInfo/cwRungTierInfo resolve every tier from the canonical data map (glyph+label+colour)', function(){
+      if (typeof cwTierInfo !== 'function' || typeof cwRungTierInfo !== 'function') throw new Error('helpers missing');
+      var d = gameData('loot-survival');
+      var ids = Object.keys(d.rarities);
+      if (ids.length < 4) throw new Error('expected >=4 tiers, got ' + ids.length);
+      var out = {};
+      for (var i = 0; i < ids.length; i++) {
+        var t = cwTierInfo(ids[i]);
+        if (!t.glyph || !t.label || !/^#[0-9a-f]{6}$/i.test(t.color)) throw new Error('tier ' + ids[i] + ' incomplete: ' + JSON.stringify(t));
+        if (t.color !== d.rarities[ids[i]].color) throw new Error('tier ' + ids[i] + ' colour diverges from data');
+        out[ids[i]] = t.glyph;
+      }
+      var rungs = ['star','superstar','xfactor'];
+      for (var r = 0; r < rungs.length; r++) {
+        var rt = cwRungTierInfo(rungs[r]);
+        var mapped = d.rungTiers && d.rungTiers[rungs[r]];
+        if (!mapped || rt.id !== mapped) throw new Error('rung ' + rungs[r] + ' does not resolve through data rungTiers');
+        if (rt.color !== d.rarities[mapped].color) throw new Error('rung ' + rungs[r] + ' colour diverges from the canonical tier');
+      }
+      return out;
+    });
+
+    step('D478 redundancy: every inventory card tier chip carries glyph + label (never colour-only)', function(){
+      var C = mkC('US');
+      lootAddItem(C, 'commissary_rations', 1, 'probe');
+      lootAddItem(C, 'battle_flag_fragment', 1, 'probe');
+      var html = _lootInventoryHTML(C);
+      var div = document.createElement('div');
+      div.innerHTML = html;
+      var chips = div.querySelectorAll('[data-tier]');
+      if (!chips.length) throw new Error('no data-tier chips rendered');
+      var d = gameData('loot-survival');
+      for (var i = 0; i < chips.length; i++) {
+        var id = chips[i].getAttribute('data-tier');
+        var t = d.rarities[id];
+        if (!t) throw new Error('chip tier ' + id + ' missing from the data map');
+        var txt = chips[i].textContent || '';
+        if (txt.indexOf(t.glyph) < 0) throw new Error('chip ' + id + ' missing its glyph');
+        if (txt.indexOf(t.label) < 0) throw new Error('chip ' + id + ' missing its label');
+      }
+      return { chips: chips.length };
+    });
+
+    step('D478 contrast: every canonical tier colour meets 4.5:1 on the dark card ground', function(){
+      function lum(hex){
+        var n = parseInt(hex.slice(1), 16), c = [(n>>16)&255,(n>>8)&255,n&255].map(function(v){
+          v/=255; return v<=0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4); });
+        return 0.2126*c[0]+0.7152*c[1]+0.0722*c[2];
+      }
+      var d = gameData('loot-survival'), bad = [];
+      var ids = Object.keys(d.rarities);
+      for (var i = 0; i < ids.length; i++) {
+        var ratio = (lum(d.rarities[ids[i]].color)+0.05)/(lum('#000000')+0.05);
+        if (ratio < 4.5) bad.push(ids[i]+'='+ratio.toFixed(2));
+      }
+      if (bad.length) throw new Error('below 4.5:1 -> ' + bad.join(', '));
+      return { tiers: ids.length };
+    });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;
@@ -1029,6 +1088,34 @@ const SETUP = `(() => {
     await page.goto(probe, { waitUntil:'domcontentloaded', timeout:60000 });
     await sleep(500);
     result = JSON.parse(await page.evaluate(SETUP));
+
+    // D478 (LANE-017 slice 1) node-side static scan — THE ONE-LANGUAGE WALL: tier hexes
+    // live ONLY in data/loot-survival.json; the sole allowed src literal is the helpers'
+    // fail-closed default (#9a9184) inside src/37 itself. Any other src file carrying a
+    // canonical tier hex is a consumer hardcode and fails here.
+    try {
+      const { readdirSync } = await import('node:fs');
+      const lootData = JSON.parse(readFileSync(join(ROOT, 'data', 'loot-survival.json'), 'utf8'));
+      const tierHex = Object.values(lootData.rarities).map(r => String(r.color).toLowerCase());
+      const offenders = [];
+      const scanDirs = [['src', ''], [join('src', 'tactical'), 'tactical/']];
+      for (const [dir, prefix] of scanDirs) {
+        for (const f of readdirSync(join(ROOT, dir)).filter(n => n.endsWith('.js'))) {
+          const txt = readFileSync(join(ROOT, dir, f), 'utf8').toLowerCase();
+          for (const hex of tierHex) {
+            if (!txt.includes(hex)) continue;
+            if (f === '37-loot-survival.js' && hex === String(lootData.rarities.common.color).toLowerCase()) continue;   // the helpers' own fail-closed default
+            offenders.push(prefix + f + ':' + hex);
+          }
+        }
+      }
+      const scanOk = offenders.length === 0 && tierHex.length >= 4;
+      result.steps.push({ name: 'D478 one-language wall: no src consumer hardcodes a canonical tier hex (data + the src/37 default are the only literals)', ok: scanOk, v: scanOk ? { tiers: tierHex.length } : null, err: scanOk ? undefined : 'offenders: ' + offenders.join(', ') });
+      if (!scanOk) result.ok = false;
+    } catch (eScan) {
+      result.steps.push({ name: 'D478 one-language wall: no src consumer hardcodes a canonical tier hex (data + the src/37 default are the only literals)', ok: false, err: String(eScan && eScan.message || eScan) });
+      result.ok = false;
+    }
     const shotPath = join(OUT, 'probe-loot-survival.png');
     await page.screenshot({ path: shotPath, fullPage:false, timeout:90000 });
     const shot = statSync(shotPath);

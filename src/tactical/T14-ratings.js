@@ -334,13 +334,17 @@ function fldRatingBadgesHtml(u) {
     var sign = neg ? "−" : "+";                          // − (minus) / + : the polarity, a TEXT glyph (never colour-alone)
     var glyph = _FLD_RUNG_GLYPH[def.rung] || "•";
     var col = neg ? "#c98a5e" : "#86b06a";                    // decorative left-tint only (meaning is the glyph+sign+word)
+    // D478 (LANE-017 slice 1): the rung glyph reads its tint from the ONE rarity language
+    // (cwRungTierInfo → data/loot-survival.json). Helper absent ⇒ today's chip byte-identical.
+    var tierTint = "";
+    try { if (typeof cwRungTierInfo === "function") tierTint = String(cwRungTierInfo(def.rung).color || ""); } catch (eTier) {}
     var label = fldBadgeLabel(def);
     var kind = neg ? "a documented flaw" : "a documented strength";
     var aria = label + ", " + kind + (def.prov ? " (" + def.prov + ")" : "");
     chips += '<span role="listitem" aria-label="' + _fldRatEsc(aria) + '" title="' + _fldRatEsc(aria) + '"'
       + ' style="display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:1px 7px;margin:3px 4px 0 0;'
       + 'border:1px solid ' + col + ';border-left:3px solid ' + col + ';border-radius:9px;background:rgba(0,0,0,.18)">'
-      + '<span aria-hidden="true" style="font-size:9px;opacity:.95">' + glyph + '</span>'
+      + '<span aria-hidden="true" style="font-size:9px;opacity:.95' + (tierTint ? ';color:' + tierTint : '') + '">' + glyph + '</span>'
       + '<b aria-hidden="true">' + sign + '</b>'
       + '<span aria-hidden="true">' + _fldRatEsc(label) + '</span>'
       + '</span>';
