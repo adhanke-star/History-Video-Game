@@ -84,7 +84,11 @@ function probeScript(offline) {
     try {
       var keys = (typeof __ASSETS !== 'undefined' && __ASSETS) ? Object.keys(__ASSETS) : [];
       var portraitKeys = keys.filter(function(k){ return k.indexOf('portraits/') === 0; });
-      var installed = (typeof window.portraitFor === 'function') && window.portraitFor._phe === true;
+      // D483 chain: src/22's flag-card wrap is now the OUTERMOST portraitFor tier (._cwFlag), and the
+      // D71 embed tier rides its wrapper-carry (._prev._phe) — the tooth is STRENGTHENED to assert the
+      // full chain instead of the old single-tier check.
+      var installed = (typeof window.portraitFor === 'function') && window.portraitFor._cwFlag === true
+        && window.portraitFor._prev && window.portraitFor._prev._phe === true;
 
       // Wait for warm: offline, a known portrait can only become a JPEG via the embedded tier
       // (base hi-res is blocked -> engraving PNG). Poll until JPEG or timeout.
@@ -180,7 +184,7 @@ function probeScript(offline) {
   /* ---------- assertions ---------- */
   check('__ASSETS carries the 156-portrait embed tier', rootRes.ok && rootRes.portraitCount === EXPECTED_PORTRAIT_COUNT, rootRes.ok ? ('count=' + rootRes.portraitCount) : ('err=' + rootRes.error));
   check('__ASSETS carries the D154 Rhodes portrait key', rootRes.ok && rootRes.hasRhodes === true);
-  check('override installed (window.portraitFor._phe)', rootRes.ok && rootRes.installed === true);
+  check('override chain installed (D483 flag wrap outermost, the D71 embed tier carried: ._cwFlag + ._prev._phe)', rootRes.ok && rootRes.installed === true);
   check('served-from-root: Lee resolves to a JPEG photo', rootRes.ok && rootRes.leeFmt === 'jpeg', 'fmt=' + (rootRes.leeFmt) + ' len=' + (rootRes.leeLen));
 
   check('OFFLINE (assets blocked): Lee STILL resolves to a JPEG photo (the embedded tier — portability win)',

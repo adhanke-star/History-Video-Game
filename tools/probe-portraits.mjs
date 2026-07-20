@@ -85,6 +85,28 @@ const buildMontage = (names) => `(() => { try {
     await page.screenshot({ path: join(OUT, 'portraits-montage.png'), clip: { x: 0, y: 0, width: 760, height: 290 } });
     // count how many of the curated names came back as photos
     out.photoCount = Object.values(out.classify || {}).filter(v => String(v).indexOf('image/jpeg') > 0).length;
+    // D483: THE FLAG-CARD DEFAULT — no-photo people get a side-themed flag card, never the egg engraving.
+    out.flag = await page.evaluate(`(() => { try {
+      var pf = window.portraitFor;
+      var chain = typeof pf === 'function' && pf._cwFlag === true && pf._prev && typeof window.cwFlagCardFor === 'function';
+      var gBefore = (typeof G !== 'undefined') ? G.mode : null;
+      var prevOut = chain ? pf._prev('Zzq Nobodyhere','US') : '';
+      var outer   = chain ? pf('Zzq Nobodyhere','US') : '';
+      var cardUS  = chain ? window.cwFlagCardFor('US','Zzq Nobodyhere') : '';
+      var cardCS  = chain ? window.cwFlagCardFor('CS','Zzq Nobodyhere') : '';
+      var cardUS2 = chain ? window.cwFlagCardFor('US','Zzq Nobodyhere') : '';
+      var cardOther = chain ? window.cwFlagCardFor('US','Aa Bb') : '';
+      var lee = chain ? pf('Lee','CS',{}) : '';
+      return {
+        chain: chain,
+        cardReplacesEgg: !!(outer && prevOut && outer !== prevOut && outer === cardUS && outer.indexOf('data:image/png') === 0),
+        sideDistinct: !!(cardUS && cardCS && cardUS !== cardCS),
+        initialsVary: !!(cardOther && cardOther !== cardUS),
+        cached: cardUS === cardUS2,
+        photoNeverDowngraded: typeof lee === 'string' && lee.indexOf('data:image/jpeg') === 0,
+        pure: (typeof G === 'undefined') || G.mode === gBefore
+      };
+    } catch(e){ return { err: String(e && e.message || e) }; } })()`);
     out.pageerrors = errs;
   } catch (e) { out.fatal = e.message; }
   finally {
@@ -92,7 +114,12 @@ const buildMontage = (names) => `(() => { try {
     // D237 (E15 follow-through): write the shots artifact the vet-no-regression freshness gate
     // requires of every enrolled probe. ok = no fatal, no pageerrors, and the montage actually
     // classified at least one PD photo (a photoCount of 0 previously passed silently on exit code).
-    out.ok = !out.fatal && (!out.pageerrors || out.pageerrors.length === 0) && (out.photoCount > 0);
+    // D483: the flag-card teeth join the ok conjunction — chain installed, the egg replaced by a
+    // side-distinct, initials-varying, cached PNG card, real photos never downgraded, pure.
+    const fl = out.flag || {};
+    out.flagOk = fl.chain === true && fl.cardReplacesEgg === true && fl.sideDistinct === true
+      && fl.initialsVary === true && fl.cached === true && fl.photoNeverDowngraded === true && fl.pure === true;
+    out.ok = !out.fatal && (!out.pageerrors || out.pageerrors.length === 0) && (out.photoCount > 0) && out.flagOk;
     try { writeFileSync(join(OUT, 'probe-portraits.json'), JSON.stringify(out, null, 1)); } catch {}
     console.log(JSON.stringify(out, null, 1));
     if (!out.ok) process.exitCode = 1;

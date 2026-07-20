@@ -2,6 +2,27 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-20 — D481-D483: THE INTERRUPTED MEGA-LADDER RESUMED — §4d.2 COMPLETE (all 29 battles badged, citation-grade) · R-7 SHIPPED · THE P-END BATTERY GREEN · the Aaron-directed flag-card portrait default
+
+A fresh Fable 5 session resumed the cut-off leg-2 ladder from the clean pushed 6518764
+boundary (Aaron's VSCode-workspace backup audit opened the session: 217 commits verified
+integrated + pushed, zero loss). **D481** (30e181c): the eastern coverage sweep (rosterBadges
+9→19, +26 rows) + the per-row citation law made data (rosterBadgeProv, card provenance line)
++ R-7 situational trigger gating (engine-observable predicates, the absent-state law, ONE
+adjudication-9 exception logged on last_stand_defend). Research: 20 agents (Sonnet gather →
+Opus default-refute), 9 refute-drops + empirical bisects (Cold Harbor rejects ANY mechanical
+badge — display-only; the Crater drops disciplined). The touched battles' own probes became
+the direction authority after the new A/B instrument's OFF-majority heuristic self-refuted
+(the Wilderness proof — recorded in ab-badge-direction.mjs). **D482** (a1b2279): the western
+batch completes the roster (19→29; Stones River display-only per the inverted-parity law;
+the Forrest horseman empirical drop at Fort Donelson). **The P-END battery**: leg 1 + one
+exact-label root-fix (a comment token tripping the terrain decor-leak scan — 7e399a6) +
+leg 2 green to row 140; 142 artifacts swept clean — slices 4+5 release-grade at battery SHA
+7e399a6. **D483** (Aaron-directed): no-photo people now get side-themed flag cards (US
+34-star · CS First National — the logged battle-flag adjudication) instead of the egg
+engraving; both portrait probes green; binds md5-proven. LANE-017 rests at DRIVE mid-ladder;
+slice 6 (soldier-tier badges) is exact next.
+
 ## 2026-07-20 — D476-D478 the MEGA-LADDER: ARC 3 SHIPPED AND CLOSED (slice 5 + the release battery) · ARC 4 CHARTERED · slice 1 SHIPPED
 
 The post-D475 continuation (Fable 5, Aaron's 24-hour mega-ladder authorization): **D476**

@@ -4,6 +4,41 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D483 — THE FLAG-CARD PORTRAIT DEFAULT (AARON-DIRECTED): NO-PHOTO PEOPLE GET A SIDE-THEMED FLAG CARD INSTEAD OF THE EGG ENGRAVING — [AARON directive 2026-07-20; CLAUDE CODE (FABLE 5) implementation] (2026-07-20)
+
+**[AARON]** "change the default egg shaped picture for no pic people in game (default
+should be union or confederate flag type themed card or something."
+
+**SHIPPED:** new `src/22-flag-portrait-fallback.js` (manifest-registered after src/21) wraps
+`window.portraitFor` one tier above the D71 embed layer. When the chain would return the
+frozen base's procedural oval ENGRAVING (the "egg" — the only data:image/png the chain
+produces; photos are JPEG), it returns a runtime-drawn, side-themed FLAG CARD in the shipped
+96x120 oval-mount frame idiom: US = 34-star-era colors (navy canton + star grid over
+red/cream stripes); CS = the FIRST NATIONAL "Stars and Bars" (three bars + the 1861
+seven-star-circle canton). **Adjudication, Aaron may override (one function):** the CS
+default is deliberately the period-accurate national flag, NOT the battle flag — a default
+roster card is a government emblem surface, and the teaching game keeps the battle flag
+where it is taught as content (the anti-Lost-Cause standard). Cards are pattern-distinct
+(stripes+grid vs bars+circle — CVD-safe redundant encoding), muted to the aged-parchment
+palette (no reserved D478 tier hex), and carry an initials cartouche. Preference order:
+any photo tier (hi-res/embedded JPEG) wins untouched → flag card → base engraving only as
+the no-canvas fail-closed path. Cached per (side, initials); a lead-badge observer pass
+mirrors the src/21 idiom (flag-carded badges stay upgradeable to real photos; JPEGs never
+touched). D74: pure presentation, zero sim/data/save writes, zero new embed bytes (runtime
+canvas — the LANE-017 adjudication-1 law).
+
+**TEETH:** probe-portraits gains the D483 conjunction (chain installed `._cwFlag` +
+`._prev._phe` carried · cardReplacesEgg · sideDistinct · initialsVary · cached ·
+photoNeverDowngraded · pure) — ok now requires flagOk; probe-photo-embed's install tooth
+STRENGTHENED to assert the full wrapper-carry chain (was the single-tier `._phe`); 24/24 +
+portraits ok=true/photoCount 8/0 pageerrors at the final tree. **BINDS (md5-proven
+restores — src/22 c391ad12 · game e7ff100e):** A side-theming stripped (both sides US) →
+EXACTLY sideDistinct red; B the JPEG pass-through removed → EXACTLY photoNeverDowngraded
+red (with the shipped photoCount tooth catching the same class at its own label). **AD-7
+re-pins:** game 3774e2d3 → e7ff100e · srcTree 10f20234 → 15570ebc · manifest 4625dca9 →
+9312db81 with the D483 chain; both plan probes green post-commit. Counts hold
+29/62/1,710/140; `_SAVE_VER=1`; frozen base `c9db83fa` untouched.
+
 ## D482 — LANE-017 SLICE 5 SHIPPED: THE WESTERN/TRANS-MISSISSIPPI COVERAGE SWEEP COMPLETES THE ROSTER — rosterBadges 19→29 SCENARIOS (EVERY REGISTERED BATTLE COVERED), THE COVERAGE FLOOR FLIPS TO THE CLEAN FULL REGISTRY — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE] (2026-07-20)
 
 **SHIPPED (the charter's slices-5 clause §4d.2 western batch):** rosterBadges 19 → 29

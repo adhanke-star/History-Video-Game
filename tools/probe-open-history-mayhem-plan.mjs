@@ -109,15 +109,16 @@ const PIN = {
   // D479 re-pin (LANE-017 slice 2): game 9dd15ca2 -> b74053aa - drop feel in src/37
   // (announcement/flip/glow + view-side sort/filter + the additive recentDrops sanitizer;
   // rebuild; presentation-only). base/manifest/suite hold; data untouched.
+  // D483 re-pin (Aaron-directed flag-card portrait default): src/22-flag-portrait-fallback.js registered (manifest 4625dca9 -> 9312db81), the portraitFor wrap + card renderer in the build (game 3774e2d3 -> e7ff100e, srcTree 10f20234 -> 15570ebc). Presentation-only; the D74 walls, both portrait probes, and both binds md5-proven.
   // D482 follow-up re-pin: the battery's terrain-readability decor-leak scan tripped on the R-7 comment's literal terrain-array wording in T14 (the code always used the T0 universal hooks fldInFort+fldWalls; comment reworded, no tooth change) — game 5e3b9b71 -> 3774e2d3 · srcTree 9ee5bf37 -> 10f20234.
   // D482 re-pin (LANE-017 slice 5): the western coverage sweep completes the roster — game 59f2f617 -> 5e3b9b71 (27 western rosterBadges/rosterBadgeProv rows in the build), dataTree 462b0df9 -> 00f8c1fe (data/ratings.json western batch + the D482 note addendum). srcTree HOLDS at 9ee5bf37 (T14 untouched this slice — bind B's tamper restored byte-identical, md5-proven).
   // D481 re-pin (LANE-017 slice 4): the eastern coverage sweep + R-7 situational gating — game f7bb9cce -> 59f2f617 (T14 R-7 gate + row-prov display + 10 new eastern rosterBadges/rosterBadgeProv blocks in the build), dataTree b3b323fa -> 462b0df9 (data/ratings.json: eastern rows + rosterBadgeProv + _rosterNote D481 addendum), srcTree 7c23e51d -> 9ee5bf37 (T14 only; the badge layer stays pure-read — the D74 walls, probe-ratings 31/31 + probe-command/accessibility unaffected, both binds md5-proven).
   // D480 re-pin (LANE-017 slice 3): game b74053aa -> f7bb9cce - the badge presentation
   // layer (T14 gallery/showcase/disclosure + the src/35 pool-row dev-trait chip; rebuild;
   // presentation-only). base/manifest/suite hold; data untouched.
-  game: "3774e2d38cb4f2e4e3293b604fb02d92",
+  game: "e7ff100e6d158668e696bbbbce4cd1ad",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
-  manifest: "4625dca91b9b2cd8e65c1a9439160cf2",
+  manifest: "9312db81216742221c3185fd0e93ad0b",
   suite: "69681d6f2216fe1dcfd594ffc4a757b7",
   scenarios: 29,   // D436: 24 -> 25 atlanta; D442: 25 -> 26 coldHarbor; D463: 26 -> 27 fortPillow (LANE-013 P4, the D455 SS3 row 6 unlock); D469: 27 -> 28 crater at rank 71.5 (LANE-015); D470: 28 -> 29 olustee at rank 65.5 between chattanooga (65) and fortPillow (66) (LANE-016)
   schemas: 62,   // D418: 54 -> 55 mayhem-rules.json; D436: 55 -> 56 atlanta.json; D442: 56 -> 57 cold-harbor.json; D445: 57 -> 58 chief-of-staff.json; D446: 58 -> 59 concept-links.json; D463: 59 -> 60 fort-pillow.json; D469: 60 -> 61 crater.json (LANE-015); D470: 61 -> 62 olustee.json (LANE-016)

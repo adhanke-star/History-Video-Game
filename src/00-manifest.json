@@ -5,6 +5,7 @@
     "10-president-state.js",
     "20-president-render.js",
     "21-photo-embed.js",
+    "22-flag-portrait-fallback.js",
     "30-president-shell.js",
     "31-cabinet.js",
     "32-decisions.js",
