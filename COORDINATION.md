@@ -2893,9 +2893,14 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ### LANE-017 · loot-and-badges — **CONTRACT→DRIVE (chartered ledger-only; ARC 4 of the D455 roadmap — OPENS on ARC 3's close)** (packet §4c+§4d + the badge-chip/rarity-visual media slices + the R-7 reconsideration rider)
 
-- **Owning tool:** unowned — the DRIVE lock RELEASED at the 2026-07-20 mega-ladder
-  closeout (slice 1 SHIPPED clean/pushed; the next session re-takes DRIVE with a
-  committed ledger edit BEFORE any code move; resume: slice 2 per the pointer below).
+- **Owning tool:** Claude Code (Fable 5) — DRIVE re-taken 2026-07-20 (leg 2 of the
+  24-hour mega-ladder, Aaron's same-chat D171 authorization; this ledger edit is the
+  committed code-move gate). The §4 TOP-LOOP resolution for this leg, stated once:
+  TOP LOOP = Claude Code / Fable 5 (the live session model; no fallback needed),
+  helpers Sonnet low/med mechanical · Haiku pure reads · Opus high reasoning,
+  model+effort explicit per call. Resume: slice 2 (drop feel) per the pointer below.
+  Prior-leg history: slice 1 SHIPPED clean/pushed at the 2026-07-20 leg-1 closeout
+  (lock released there, re-taken here).
   Charter-session history: Claude Code (Fable 5) — chartered + DRIVE taken 2026-07-20 under
   Aaron's post-D476 24-hour mega-ladder authorization; the §4 TOP-LOOP resolution:
   TOP LOOP = Claude Code / Fable 5 (session model), helpers Sonnet low/med
