@@ -1319,7 +1319,9 @@ step("BASELINES + LANE", () => {
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     // D478 re-pin: dataTree 4bbdebe5 -> b3b323fa (LANE-017 slice 1: rarity glyphs + reserved tier
     // hexes + rungTiers in data/loot-survival.json — presentation data only, no war-career data).
-    dataTree:"dcf6da5bf3d8fdedc2e470bb00882b41",
+    // D486 re-pin: dataTree dcf6da5b -> 5de65a85 (LANE-017 slice 8: sets + variety items +
+    // salvage/economyHooks blocks in data/loot-survival.json — no war-career data).
+    dataTree:"5de65a85d15c5c22a749c65ec401084c",
     manifest:"9312db81216742221c3185fd0e93ad0b",
     suite:"69681d6f2216fe1dcfd594ffc4a757b7"
   };
