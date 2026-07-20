@@ -2891,6 +2891,189 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
+### LANE-017 · loot-and-badges — **CONTRACT→DRIVE (chartered ledger-only; ARC 4 of the D455 roadmap — OPENS on ARC 3's close)** (packet §4c+§4d + the badge-chip/rarity-visual media slices + the R-7 reconsideration rider)
+
+- **Owning tool:** Claude Code (Fable 5) — chartered + DRIVE taken 2026-07-20 under
+  Aaron's post-D476 24-hour mega-ladder authorization; the §4 TOP-LOOP resolution:
+  TOP LOOP = Claude Code / Fable 5 (session model), helpers Sonnet low/med
+  mechanical · Haiku pure reads · Opus high reasoning, model+effort explicit per
+  call. Charter recon was read-only (loot/badge/ratings seams · rosterBadges
+  coverage inventory · R-7 provenance · rarity-data topology) and ran DURING the
+  D477 battery's row window without touching the tree.
+- **State:** DRIVE — this entry IS the acceptance contract (the LANE-014 `489cfc4`
+  precedent). Slices land teeth with the fixes that green them (§1).
+- **Design law:** DECISIONS D455 §7 + packet `docs/design/unlocked-but-judged-design.md`
+  §4c (loot/Campaign Kit depth — R8) + §4d (badges/ratings expansion) + §7's ARC 4 row
+  (THE LAW: "presentation: loot + badges (§4c+§4d) + the badge-chip/rarity-visual media
+  slices + the R-7 reconsideration rider") · RATING-SYSTEM-DESIGN.md (the D94 OVR/badge
+  law; T14 is its runtime) · SOLDIER-REPLACEMENT-FORMAT.md (the Verified-soldier import
+  lane slice 6 reads) · the D416-D418 dual-ruleset law (mode-split drops) · D74 (levers
+  capped, no per-battle fudge) · the D149 restored-save sanitation law · `_SAVE_VER=1` ·
+  frozen `build/base.html` · the D412 docs law · the D458 scanner.
+- **CHARTER ADJUDICATIONS (recorded at charter; do not re-litigate):**
+  1. **Zero new embed bytes.** The six D300-frozen embed categories stay at ZERO
+     headroom. Every "badge-chip/rarity-visual media" surface ships as CSS/inline-SVG/
+     canvas drawn at runtime — NO new image/font/media assets in the embed pipeline. If
+     a future slice genuinely needs a file asset it goes through the assets3d-style
+     ledger wall with its own documented chain; none is expected.
+  2. **The rarity language is DATA-CANONICAL and CVD-SAFE.** One tier map (the shipped
+     `data/loot-survival.json` rarities block, extended in place: common/uncommon/rare/
+     legendary + the slice-7 `artifact` named-relic tier if slice 7 confirms the need)
+     is THE single source; loot UI, badge chips, register cards, and flagship markers
+     all read it. Every tier is redundantly encoded (glyph/label + colour, never
+     colour-only — the T14 rung-glyph precedent ★/◆/⬥/＋/－ is the idiom) and passes
+     the shipped contrast teeth. No consumer hardcodes a tier colour.
+  3. **D74 stands absolutely.** Badge/X-Factor/artifact levers ride the EXISTING capped
+     frameworks only (T14 `_xf*`/`_spdMul` walls, the loot equip/condition/supply
+     levers). Presentation never touches sim inputs; A/B direction sweeps prove no
+     historical outcome flips (the T14 bug-hunt precedent). NO new lever class without
+     its own future charter.
+  4. **Citation-grade content law.** Every new rosterBadges/X-Factor row, soldier badge,
+     and named artifact: ≥2 sources = Verified (else Inferred/Disputed, displayed as
+     such), anti-Lost-Cause balance (flaw badges are not Confederate-hagiography
+     erasers; US and CS both carry strengths AND flaws where sourced), no fabricated
+     provenance. The Overland/attrition and massacre-family battles keep their
+     documented direction guards.
+  5. **Mode-split drops ride the shipped ruleset kernel.** Historical: named artifacts
+     provenance-locked to the correct battle/unit (never drop elsewhere); Mayhem:
+     general pool per the D416 no-guardrails law. The picker/kernel from D418 is the
+     ONLY mode authority; `MAYHEM_PUBLIC_READY` stays false and this lane does not flip
+     it.
+  6. **Save shape is additive-sanitized.** `_SAVE_VER` stays 1; new inventory/badge
+     state lands as optional fields with D149-law restored-save sanitation; absent
+     fields ⇒ byte-identical legacy behavior, probed.
+  7. **Suite stays 140.** Teeth land in the existing owners (`loot survival` row
+     `tools/probe-loot-survival.mjs` · `ratings` row `tools/probe-ratings.mjs` ·
+     adjacents probe-war-career/probe-command/probe-accessibility as each slice names).
+     A genuinely new row needs its own D### with the append-at-END pin-chain inventory
+     (the D463 way); none is expected.
+  8. **AD-7 plan-probe re-pins ride every slice** (game + dataTree and/or srcTree move
+     each slice; both plan probes re-run post-commit — the standing LANE-013/LANE-014
+     adjudication carried verbatim).
+  9. **THE R-7 ADJUDICATION (the rider the LANE-014 errata routed here):** R-7 =
+     per-situation gating of the R-3 static badge triggers (today: always-on, small,
+     capped, validated historically faithful — the T14 deferred-log). RESOLUTION:
+     **BUNDLED into the coverage-sweep slices** per the packet's same-file efficiency
+     rule (the sweep touches every battle's badge data once; gating rides the same
+     rows) — but as a SEPARATE commit-internal step with its own teeth: each gated
+     trigger keeps the T14 caps, activates only on its documented situation, and the
+     A/B sweep re-proves no-flips AFTER gating. If drive-time evidence shows gating
+     any specific badge would flip a sourced outcome, that badge STAYS static and the
+     exception is logged in the slice's D### — never silently.
+  10. **Research routing.** The coverage-sweep and named-artifact research legs are
+     citation-grade: helpers may GATHER (Sonnet/Haiku inventories of sources already in
+     HISTORICAL-DATA*.md and the battle packets), but every claim is verified by the
+     top loop against ≥2 sources before it enters data (COORDINATION §4; the D336 law).
+     Web research beyond the repo's source registers needs the standing two-source +
+     named-edition rule.
+- **Acceptance contract (the ARC 4 slice ladder — each slice its own D### + focused
+  gates + ≥2 predeclared binds md5-proven byte-identical restores + commit -F + push +
+  HANDOFF EXACT-NEXT amendment; loop rule between slices: clean/committed/pushed ·
+  plan probes re-run post-commit · context/usage check · orphan-Chrome kill):**
+
+  **SLICE 1 — ONE RARITY LANGUAGE (§4c.4).** The canonical tier map stays in
+  `data/loot-survival.json` (colors re-audited CVD-safe at contrast; label+glyph added
+  per tier); loot inventory/announcements (src/37), badge chips (T14 rung styling),
+  register cards (the register card renderer), and flagship markers (src/67) all
+  resolve tier presentation through ONE shared helper (new `src/` seam or the existing
+  gameData read — drive decides, sibling-internal reaches stay forbidden). Every
+  consumer shows glyph+label redundancy. — **Teeth (owners probe-loot-survival +
+  probe-ratings; adjacent probe-accessibility):** one-source-of-truth scan (no
+  hardcoded tier hex outside the data block + helper) · glyph/label redundancy per
+  consumer · contrast floor per tier colour · legacy-save byte-identity. **Binds:**
+  (a) hardcode a diverging tier hex in one consumer → the one-language scan red
+  EXACTLY; (b) strip the glyph/label from one consumer's tier chip → the redundancy
+  tooth red EXACTLY.
+
+  **SLICE 2 — DROP FEEL (§4c.3).** Rarity-colored drop announcements, a card-flip
+  reveal on new drops, inventory sort/filter (by rarity/kind/battle), legendary glow —
+  all reading the slice-1 canonical map; reduceMotion ⇒ NO flip/glow animation
+  (instant reveal); renderRich/off-mode untouched (desk UI, not tactical). —
+  **Teeth (owner probe-loot-survival):** announcement uses canonical tier presentation ·
+  flip/glow present by default AND inert under reduceMotion · sort/filter correctness
+  on a seeded inventory · sim/save byte-identity (drops unchanged in content/weights —
+  presentation only). **Binds:** (a) reduceMotion ignored (animation class still
+  applied) → the rm tooth red EXACTLY; (b) sort mutates inventory order in the SAVE →
+  the byte-identity tooth red EXACTLY.
+
+  **SLICE 3 — BADGE PRESENTATION LAYER (§4d.1).** Madden-style badge chips on general
+  + brigade cards, a badge gallery, X-Factor showcase with LIVE activation state
+  (reads the existing `_xfActive`/`_xfGlow`, never writes), hover/tap provenance
+  (badge def + source basis text). Keyboard-operable and screen-reader-labelled. —
+  **Teeth (owner probe-ratings; adjacents probe-command + probe-accessibility):**
+  chips render from badgeDefs/rosterBadges without new data fields · X-Factor state
+  mirrors runtime truth (probe fires a trigger, showcase flips) · provenance hover
+  content present · zero sim writes (the D74 output-wall scan extended to the new
+  render path). **Binds:** (a) showcase shows active with no trigger fired → the
+  state-mirror tooth red EXACTLY; (b) a chip renders a badge id absent from badgeDefs
+  → the defs-integrity tooth red EXACTLY.
+
+  **SLICES 4+5 — THE COVERAGE SWEEP + R-7 (§4d.2, two theater batches: eastern then
+  western/trans-Mississippi).** rosterBadges + X-Factors extended from the original 9
+  battles to ALL 29 scenarios (~20 new battle rosters), every row ≥2-source Verified
+  with anti-Lost-Cause balance; the R-7 situational gating lands per adjudication 9
+  in the same files; the 8-seed A/B direction battery re-run per touched battle
+  proving ZERO historical flips (the direction guards for Stones River/Perryville/
+  Wilson's Creek/McDowell and the massacre family stand). — **Teeth (owner
+  probe-ratings; adjacents the touched battles' probes):** coverage floor (every
+  scenario id has a roster row) · per-row source floor · A/B no-flip battery ·
+  R-7 gated-trigger caps + situation binding. **Binds:** (a) cut one badge row to a
+  single source → the source tooth red EXACTLY; (b) inflate one gated trigger past
+  the T14 cap → the cap tooth red EXACTLY.
+
+  **SLICE 6 — SOLDIER-TIER BADGES (§4d.3).** Historical-record badges for Verified
+  register soldiers (SOLID styling; from the documented service/valor of the 31+
+  Verified records) vs earned-through-play career badges (HATCHED/Inferred styling);
+  both through the same capped levers; the register/journey UI shows the distinction.
+  — **Teeth (owners probe-loot-survival + probe-war-career):** dual-source visual
+  distinction · Verified-only for solid badges · lever caps · legacy-save sanitation.
+  **Binds:** (a) a play-earned badge rendered solid → the distinction tooth red
+  EXACTLY; (b) a solid badge on a non-Verified record → the Verified tooth red EXACTLY.
+
+  **SLICE 7 — NAMED LEGENDARY ARTIFACTS + MODE-SPLIT DROPS (§4c.1).** Citation-grade
+  named items (documented presentation swords, a Henry rifle, battle flags — each with
+  sourced provenance text, ≥2 sources); Historical: provenance-locked to the correct
+  battle/unit; Mayhem: general pool; effects ONLY via the existing capped equip path.
+  The `artifact` tier enters the canonical map here if adopted. — **Teeth (owner
+  probe-loot-survival; adjacent probe-open-history-mayhem):** provenance-lock in
+  Historical (the item CANNOT drop at a wrong battle, probed) · Mayhem general-pool
+  path · per-item source floor · equip-lever caps. **Binds:** (a) a named artifact
+  drops at a non-provenance battle under Historical → the lock tooth red EXACTLY;
+  (b) an artifact's second source dropped → the source tooth red EXACTLY.
+
+  **SLICE 8 — SET COLLECTIONS + ITEM VARIETY (§4c.2+§4c.5; may split at drive time).**
+  Themed kits with completion effects through the existing condition/supply levers;
+  item variety from real quartermaster/ordnance records; salvage flow; captured arms
+  as the CS supply channel; economy hooks; survival-mode as a campaign-setup choice
+  (default unchanged). Scope confirmed against room at drive time — shed from the
+  back, never thin.
+
+  **SLICE 9 — the ARC 4 release checkpoint.** The full serialized battery (suite at
+  its then-pinned count; TMPDIR set; vet:noreg ALONE; war-career 900s; every artifact
+  JSON read; reds root-fixed at exact labels) → on green flip this lane SHIPPED with
+  the battery SHA.
+- **Probe design (owners; how to run):** fs+browser probes probe-loot-survival +
+  probe-ratings own nearly every tooth (both already ride the suite, rows 'loot
+  survival'/'ratings'); adjacents per slice as named. Browser runs serialized on the
+  8 GB Mac (TMPDIR, 2>/dev/null, shared :8765, artifact JSON read every run).
+- **Standing queue behind this lane:** ARC 5 GM completion (blocked on ARC 6
+  politics for the election bind) · ARC 6 rail+naval packets (session-fillers,
+  chartered per D455 §7's interleave rule) · Mayhem Slice B (LANE-007) · C72 Shiloh
+  rewrite + GEA-01/S44 bundle (parked, Aaron reorder-only).
+- **Resume pointer:** SLICE 1 (one rarity language) per this contract.
+- **Last-touched commit:** the charter commit (this commit).
+- **History:** chartered 2026-07-20 immediately after the D477 ARC 3 close, under
+  Aaron's post-D476 24-hour mega-ladder authorization (same-chat, D171). Recon was
+  read-only during the D477 battery window: rosterBadges covers exactly the original
+  9 battles (bullrun1/fredericksburg/antietam/gettysburg/shiloh/vicksburg/
+  chancellorsville/malvernHill/chickamauga) → the sweep target is the ~20 uncovered
+  scenarios; badgeDefs 26 · devTraits 5 · the T14 rung/polarity glyph idiom is the
+  CVD template; the loot rarity map lives in data/loot-survival.json (4 tiers);
+  flagship markers render in src/67; R-7's exact provenance is the T14 bug-hunt
+  deferred-log ("per-situation gating of the R-3 static triggers").
+
+---
+
 ## 6 · JOINT STRATEGY BOARD — Fable ⇄ Sol (cross-tool planning, not just locks)
 
 **What this is (Aaron, 2026-07-11):** the lanes above carry contracts and locks; this board
