@@ -936,7 +936,10 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // helpers in src/37 + the T14 tier-tinted rung glyph; presentation-only, no war-career surface).
     srcTree:"ce48e9ae828137231440f63967d06b09",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
-    journey:"25c1226edb05f9a1186d0ae4f301656d",
+    // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
+    // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
+    // the journey/war-career logic surfaces are untouched, proven by this probe's own runtime steps).
+    journey:"a527600de997a4cb2dd8723af4239248",
     command:"8f12c49f7129b3a9be0203677822e048",
     // D460 re-pin (the AD-7 idiom): focused a29a5351 -> 2816a82c — probe-war-career.mjs
     // carries the D460 register chain (1614 -> 1617, Elkhorn Cherokee OOB); the war-career
@@ -1263,7 +1266,9 @@ step("BASELINES + LANE", () => {
     // data/loot-survival.json + the src/37 helpers + T14 tint + rebuild). base/manifest/suite hold.
     game:"9dd15ca274e957784ee77ddc819e61bd",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
-    dataTree:"4bbdebe5c1180ed3ec702d9b6fe68b6b",
+    // D478 re-pin: dataTree 4bbdebe5 -> b3b323fa (LANE-017 slice 1: rarity glyphs + reserved tier
+    // hexes + rungTiers in data/loot-survival.json — presentation data only, no war-career data).
+    dataTree:"b3b323faa7e2e92137504d94bd568044",
     manifest:"4625dca91b9b2cd8e65c1a9439160cf2",
     suite:"69681d6f2216fe1dcfd594ffc4a757b7"
   };
@@ -1696,7 +1701,10 @@ step("REACHABILITY BASELINES", () => {
     dataTree:"b3b323faa7e2e92137504d94bd568044",
     srcTree:"ce48e9ae828137231440f63967d06b09",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
-    journey:"25c1226edb05f9a1186d0ae4f301656d",
+    // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
+    // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
+    // the journey/war-career logic surfaces are untouched, proven by this probe's own runtime steps).
+    journey:"a527600de997a4cb2dd8723af4239248",
     // D460 re-pin: focused a29a5351 -> 2816a82c (Elkhorn Cherokee, 1614 -> 1617). D463
     // re-pin: focused 2816a82c -> 664ca996 (the D463 register chain 1617 -> 1632 + the
     // suite-138 pins; the war-career runtime surface untouched).
