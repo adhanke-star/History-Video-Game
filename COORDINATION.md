@@ -2448,9 +2448,15 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-014 · graphics-uplift — **CONTRACT (slices 1-4 SHIPPED as D467/D468/D472/D473, VERIFIED by the D475 battery at `a7c9e7e`; slices 5-6 remain; unowned — the DRIVE lock released at the 2026-07-20 closeout)** (ARC 3 of the D455 roadmap)
+### LANE-014 · graphics-uplift — **DRIVE (slices 1-4 SHIPPED as D467/D468/D472/D473, VERIFIED by the D475 battery at `a7c9e7e`; SLICE 5 IN DRIVE — Claude Code / Fable 5; slice 6 queued)** (ARC 3 of the D455 roadmap)
 
-- **Owning tool:** unowned — the DRIVE lock RELEASED at the 2026-07-20 closeout
+- **Owning tool:** Claude Code (Fable 5) — DRIVE re-taken 2026-07-20 for SLICE 5
+  under Aaron's post-D475 continuation kickoff; the §4 TOP-LOOP resolution
+  recorded here: TOP LOOP = Claude Code / Fable 5 (the session model, addressed
+  by the kickoff directly; fallbacks unneeded), helpers Sonnet low/med
+  mechanical · Haiku pure reads · Opus high reasoning, model+effort explicit on
+  every call. Prior owner state: unowned — the DRIVE lock RELEASED at the
+  2026-07-20 closeout
   (the post-D471 continuation ladder: Claude Code / Fable 5, the §4 TOP-LOOP
   resolution recorded at `5d6d955`; helpers routed Sonnet low/med mechanical ·
   Haiku pure reads · Opus high reasoning, model+effort explicit per call). The
@@ -2730,7 +2736,23 @@ next green commit and confer through this ledger instead of permitting simultane
   was shed honestly; the DRIVE lock RELEASED at the closeout. Resume: slice 5
   (formation density/LOD, T24 extension + T23 fixture-only slots) per this
   contract, then slice 6 (the ARC 3 release checkpoint — the lane flips SHIPPED
-  only when slice 5 lands and its own battery gates it).
+  only when slice 5 lands and its own battery gates it). DRIVE RE-TAKEN
+  2026-07-20 (Claude Code / Fable 5, the §4 resolution in the owner field
+  above) for SLICE 5 under Aaron's post-D475 continuation kickoff — this
+  ledger-only commit precedes any code move per the standing law. Slice-5
+  design intent (per the contract clause verbatim): distance-based figure LOD
+  as a T24 extension with the near set in its OWN scene-level shared instanced
+  group (the far set + `fldLow()` tier byte-current; the existing
+  layerMeshCount==5 teeth stay green UNAMENDED), near-tier density uplift
+  INSIDE the locked walls, the E20 recolor latch extended to the near set;
+  T23 enablement = the runtime license wall (enabled slots additionally
+  require license.status "clear" at slot-match time — fail-closed twin of the
+  shipped import-gate wall) proven with the FIXTURE pack ONLY (adjudication
+  10 stands: no real slot generated/downloaded/enabled). Teeth in the
+  existing owners probe-formation-figures + probe-tripo-unit-assets +
+  probe-intel-uhd617-profile; binds per the contract: (a) near-LOD set forced
+  resident at low tier → the low-tier branch tooth red EXACTLY; (b) a slot
+  enabled with license `pending` → the import gate red EXACTLY.
 
 ---
 
