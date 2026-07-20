@@ -29,6 +29,7 @@ const SETUP = `(() => {
   var R = { steps: [], errors: [], ok: true };
   function step(name, fn){ try{ var v=fn(); R.steps.push({name, ok:true, v: v===undefined?null:v}); }
     catch(e){ R.ok=false; R.steps.push({name, ok:false, err:String(e&&e.message||e)}); } }
+  function _scrubDataUris(h){ return String(h).replace(/data:[a-zA-Z0-9.+\/-]+;base64,[A-Za-z0-9+\/=]+/g, 'data:scrubbed'); }   // opaque data-URI payloads are image bytes, not rendered text - the NaN/undefined teeth scan the TEXT surface (D487: the D483 flag-card base64 false-positive class)
   window.addEventListener('error', function(ev){ R.errors.push(String(ev.message||ev.error||ev)); });
   function mkC(side, y, m){ var C={ side:side, iron:false, idx:0, funds:200000, recovery:false, completed:[],
     roster:[{id:'R1',type:'inf',weapon:'rifled',xp:1,name:'core'}], nextId:2, stats:{battles:0,won:0,infl:0,suff:0},
@@ -49,7 +50,7 @@ const SETUP = `(() => {
       if(sc.reached.length!==0||sc.near.length!==0) throw new Error('a fresh campaign must have no endings opened, got '+JSON.stringify({r:sc.reached.length,n:sc.near.length}));
       var html=endRenderSection(C);
       if(html.indexOf('fantastical')<0) throw new Error('the empty section must still name the fantastical tier');
-      if(html.indexOf('NaN')>=0||html.indexOf('undefined')>=0) throw new Error('fresh render leaked NaN/undefined');
+      if(_scrubDataUris(html).indexOf('NaN')>=0||_scrubDataUris(html).indexOf('undefined')>=0) throw new Error('fresh render leaked NaN/undefined');
       return { reached:0, near:0 }; });
 
     step('EARNED — a gambit OPENS an ending (within reach); the performance GATE SECURES it (reached)', function(){
@@ -102,7 +103,7 @@ const SETUP = `(() => {
       if(html.indexOf('Reached')<0) throw new Error('a reached ending must render its "Reached" chip word');
       if(html.indexOf('\\u2605')<0 && html.indexOf('★')<0) throw new Error('the reached chip must carry its CVD glyph');
       if(html.indexOf('Howard Jones')<0 && html.indexOf('Robertson')<0) throw new Error('the section must show a counterfactual citation');
-      if(html.indexOf('NaN')>=0||html.indexOf('>undefined')>=0) throw new Error('the rich render leaked NaN/undefined');
+      if(_scrubDataUris(html).indexOf('NaN')>=0||_scrubDataUris(html).indexOf('>undefined')>=0) throw new Error('the rich render leaked NaN/undefined');
       // the compact (after-action) form
       var comp=endRenderSection(C,{compact:true});
       if(comp.indexOf('Alternate endings')<0) throw new Error('the compact form must name alternate endings');
@@ -225,7 +226,7 @@ const SETUP = `(() => {
       var html=endRenderSection(C);
       if(html.indexOf('Plausible')<0) throw new Error('the grounded recognized-independence must render under the Plausible band');
       if(html.indexOf('Fantastical')<0) throw new Error('the fantastical British-war must render under the Fantastical band');
-      if(html.indexOf('NaN')>=0||html.indexOf('>undefined')>=0) throw new Error('the banded render leaked NaN/undefined');
+      if(_scrubDataUris(html).indexOf('NaN')>=0||_scrubDataUris(html).indexOf('>undefined')>=0) throw new Error('the banded render leaked NaN/undefined');
       return { noLeak:true, banded:true }; });
 
     // ---- D117: the GROUNDED tier (US-half) — 8 plausible/long-shot end-states. ----
@@ -313,7 +314,7 @@ const SETUP = `(() => {
       if(html.indexOf('Plausible')<0) throw new Error('the grounded Reconstruction-holds must render under the Plausible band');
       if(html.indexOf('Long shot')<0) throw new Error('a US long-shot grounded ending (forty-acres) must render under the Long shot band');
       if(html.indexOf('Fantastical')<0) throw new Error('the fantastical Russo-American must render under the Fantastical band');
-      if(html.indexOf('NaN')>=0||html.indexOf('>undefined')>=0) throw new Error('the banded US render leaked NaN/undefined');
+      if(_scrubDataUris(html).indexOf('NaN')>=0||_scrubDataUris(html).indexOf('>undefined')>=0) throw new Error('the banded US render leaked NaN/undefined');
       return { noLeak:true, banded:true }; });
 
     step('LANE-012 SLICE 1 (D455 4a.2) - the sourced ending counterfactuals render under BOTH rulesets, byte-identically (endings are a mode-independent teaching carrier)', function(){

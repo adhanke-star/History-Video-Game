@@ -976,6 +976,11 @@ srcTree:"8174d79dd88de5f66415716f1c014c54",
     // command seams src/35 carries (D413 Matters-of-State reads, relief/appoint state) are
     // untouched, proven by this probe's own runtime steps + probe-command 94/94 at D480.
     command:"f3ad1450f13dfe54ac7668035062c8fb",
+    // D487 re-pin: commandProbe 5ffd40fd -> 048bfed34ee90e8c1c5c4227d5e9ac13 (the four NaN/undefined render teeth
+    // now scan with opaque data-URI payloads STRIPPED - the D483 flag-card canvas-PNG base64
+    // false-positive class, surfaced by the first full battery after D483; the teeth are
+    // PRECISION-strengthened, never weakened - a text-surface leak still bites, proven both
+    // ways; the same scrub swept probe-afteraction/divergence/endings, unpinned).
     // D460 re-pin (the AD-7 idiom): focused a29a5351 -> 2816a82c — probe-war-career.mjs
     // carries the D460 register chain (1614 -> 1617, Elkhorn Cherokee OOB); the war-career
     // runtime surface itself did NOT move. D463 re-pin: focused 2816a82c -> 664ca996 —
@@ -991,7 +996,7 @@ srcTree:"8174d79dd88de5f66415716f1c014c54",
     // tooth (138 -> 140) missed by the D469/D470 sweeps, fixed at its exact label (the
     // D443 AD-6 precedent); the war-career runtime surface held.
     focused:"e2acf99a9f7a1c639563030c91cf58a7",
-    commandProbe:"5ffd40fd221179f2e01cad59ef43bf7d"
+    commandProbe:"048bfed34ee90e8c1c5c4227d5e9ac13"
   };
   for (const key of Object.keys(expected)) {
     if (locks[key] !== expected[key]) throw new Error(key + " D411-complete lock moved: " + locks[key]);

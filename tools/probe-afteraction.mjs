@@ -32,6 +32,7 @@ const SETUP = `(() => {
   var R = { steps: [], errors: [], ok: true };
   function step(name, fn){ try{ var v=fn(); R.steps.push({name, ok:true, v: v===undefined?null:v}); }
     catch(e){ R.ok=false; R.steps.push({name, ok:false, err:String(e&&e.message||e)}); } }
+  function _scrubDataUris(h){ return String(h).replace(/data:[a-zA-Z0-9.+\/-]+;base64,[A-Za-z0-9+\/=]+/g, 'data:scrubbed'); }   // opaque data-URI payloads are image bytes, not rendered text - the NaN/undefined teeth scan the TEXT surface (D487: the D483 flag-card base64 false-positive class)
   window.addEventListener('error', function(ev){ R.errors.push(String(ev.message||ev.error||ev)); });
   function mkC(side, y, m){ var C={ side:side, iron:false, idx:0, funds:200000, recovery:false, completed:[],
     roster:[{id:'R1',type:'inf',weapon:'rifled',xp:1,name:'core'}], nextId:2, stats:{battles:0,won:0,infl:0,suff:0},
@@ -62,7 +63,7 @@ const SETUP = `(() => {
       var ov=aarOverall(_aarDomains(C)); if(!ov.grade||!ov.grade.letter) throw new Error('overall grade missing on a fresh campaign');
       var html=aarRenderTab(C);
       if(html.indexOf('After-Action')<0) throw new Error('the live tab must carry its heading');
-      if(html.indexOf('NaN')>=0||html.indexOf('undefined')>=0) throw new Error('fresh render leaked NaN/undefined');
+      if(_scrubDataUris(html).indexOf('NaN')>=0||_scrubDataUris(html).indexOf('undefined')>=0) throw new Error('fresh render leaked NaN/undefined');
       var safe=aarRenderTab(null); if(safe.indexOf('No active campaign')<0) throw new Error('a null campaign must render the safe placeholder');
       return { overall:ov.grade.letter }; });
 
@@ -175,7 +176,7 @@ const SETUP = `(() => {
         var d=dom(C,'homefront');
         if(typeof d.score!=='number'||!isFinite(d.score)) throw new Error('the home-front score must stay finite when moraleCompute returns NaN, got '+d.score);
         var html=aarRenderReport(C,{final:false});
-        if(html.indexOf('NaN')>=0) throw new Error('a NaN public-will must not leak into the render');
+        if(_scrubDataUris(html).indexOf('NaN')>=0) throw new Error('a NaN public-will must not leak into the render');
         if(html.indexOf('An honest accounting')>=0) throw new Error('the graded home-front row must not mis-render as the non-graded panel under NaN');
         var ds=_aarDomains(C); var graded=ds.filter(function(x){return typeof x.score==='number'&&isFinite(x.score);}).length;
         if(html.indexOf('Across '+graded+' graded domains')<0) throw new Error('the overall-panel count must equal the isFinite-graded divisor (no off-by-one under NaN)');

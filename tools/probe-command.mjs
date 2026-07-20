@@ -28,6 +28,7 @@ const SETUP = `(() => {
   var R = { steps: [], errors: [], ok: true };
   function step(name, fn){ try{ var v=fn(); R.steps.push({name, ok:true, v: v===undefined?null:v}); }
     catch(e){ R.ok=false; R.steps.push({name, ok:false, err:String(e&&e.message||e)}); } }
+  function _scrubDataUris(h){ return String(h).replace(/data:[a-zA-Z0-9.+\/-]+;base64,[A-Za-z0-9+\/=]+/g, 'data:scrubbed'); }   // opaque data-URI payloads are image bytes, not rendered text - the NaN/undefined teeth scan the TEXT surface (D487: the D483 flag-card base64 false-positive class)
   window.addEventListener('error', function(ev){ R.errors.push(String(ev.message||ev.error||ev)); });
   function mkC(side, y, m){ var C={ side:side, iron:false, idx:0, funds:200000, recovery:false, completed:[],
     roster:[{id:'R1',type:'inf',weapon:'rifled',xp:1,name:'core'}], nextId:2, stats:{battles:0,won:0,infl:0,suff:0},
@@ -459,7 +460,7 @@ const SETUP = `(() => {
         if(!isFinite(rep)) throw new Error('start='+v+' -> non-finite reputation '+rep);
         if(!(rep>=5&&rep<=98)) throw new Error('start='+v+' -> out-of-band reputation '+rep);
         var html=cmdRenderTab(C);
-        if(html.indexOf('NaN')>=0) throw new Error('start='+v+' -> "NaN" leaked into the Career Arc render');
+        if(_scrubDataUris(html).indexOf('NaN')>=0) throw new Error('start='+v+' -> "NaN" leaked into the Career Arc render');
         return +rep.toFixed(2); }
       return { fromNaN:tamper(NaN), from500:tamper(500), fromNeg:tamper(-99) }; });
 
@@ -1123,7 +1124,7 @@ const SETUP = `(() => {
       var html=cmdRenderTab(C);
       if(html.indexOf('Election support')<0) throw new Error('the active card must show the election-support tell for a seated political general in the window');
       if(html.indexOf('political capital')<0) throw new Error('the tell must name the +capital relief cost');
-      if(html.indexOf('NaN')>=0||html.indexOf('undefined')>=0) throw new Error('the tell leaked NaN/undefined');
+      if(_scrubDataUris(html).indexOf('NaN')>=0||_scrubDataUris(html).indexOf('undefined')>=0) throw new Error('the tell leaked NaN/undefined');
       return { tell:true }; });
 
     step('D113 bug-hunt (MED): the bind is UNION-ONLY — a CS political general (Floyd, pv 78) carries NO surcharge and NO "Lincoln" tell (the CSA held no 1864 election)', function(){
@@ -1300,7 +1301,7 @@ const SETUP = `(() => {
       // consumer) and the standing no-output wall. The pre-E70 "records readiness only" phrasing
       // became false the moment readiness gained its consumer, so this tooth pins the new truth.
       if(html.indexOf('command-friction')<0||html.indexOf('never decides the battle')<0) throw new Error('Transfer section must disclose the friction consumer + the no-output contract');
-      if(html.indexOf('NaN')>=0||html.indexOf('undefined')>=0) throw new Error('Transfer render leaked NaN/undefined');
+      if(_scrubDataUris(html).indexOf('NaN')>=0||_scrubDataUris(html).indexOf('undefined')>=0) throw new Error('Transfer render leaked NaN/undefined');
       cmdTransfer(C,'us-thomas');
       var html2=cmdRenderTab(C);
       if(html2.indexOf('Transferred for')<0) throw new Error('completed Transfer should render as transferred');
@@ -1381,7 +1382,7 @@ const SETUP = `(() => {
       if(html.indexOf('Enemy command shadow')<0) throw new Error('Command tab must render the AI-GM shadow readout');
       if(html.indexOf('theater')<0) throw new Error('AI-GM readout should surface the command theater');
       if(html.indexOf('hidden Transfer')<0) throw new Error('readout should make clear Transfer is not secretly active');
-      if(html.indexOf('NaN')>=0||html.indexOf('undefined')>=0) throw new Error('AI-GM readout leaked NaN/undefined');
+      if(_scrubDataUris(html).indexOf('NaN')>=0||_scrubDataUris(html).indexOf('undefined')>=0) throw new Error('AI-GM readout leaked NaN/undefined');
       return { leadership:lead, attackEdge:atk, defendEdge:def, renders:true }; });
 
     step('D406: default, legacy, and excluded careers contribute zero — commandLeadership is byte-identical', function(){

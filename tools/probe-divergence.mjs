@@ -30,6 +30,7 @@ const SETUP = `(() => {
   var R = { steps: [], errors: [], ok: true };
   function step(name, fn){ try{ var v=fn(); R.steps.push({name, ok:true, v: v===undefined?null:v}); }
     catch(e){ R.ok=false; R.steps.push({name, ok:false, err:String(e&&e.message||e)}); } }
+  function _scrubDataUris(h){ return String(h).replace(/data:[a-zA-Z0-9.+\/-]+;base64,[A-Za-z0-9+\/=]+/g, 'data:scrubbed'); }   // opaque data-URI payloads are image bytes, not rendered text - the NaN/undefined teeth scan the TEXT surface (D487: the D483 flag-card base64 false-positive class)
   window.addEventListener('error', function(ev){ R.errors.push(String(ev.message||ev.error||ev)); });
   function mkC(side, y, m){ var C={ side:side, iron:false, idx:0, funds:200000, recovery:false, completed:[],
     roster:[{id:'R1',type:'inf',weapon:'rifled',xp:1,name:'core'}], nextId:2, stats:{battles:0,won:0,infl:0,suff:0},
@@ -52,7 +53,7 @@ const SETUP = `(() => {
       if(ix.word!=='On the historical track') throw new Error('fresh word should be "On the historical track", got '+ix.word);
       var html=divRenderTab(C);
       if(html.indexOf('followed the historical record')<0) throw new Error('empty state copy missing');
-      if(html.indexOf('NaN')>=0||html.indexOf('undefined')>=0) throw new Error('fresh render leaked NaN/undefined');
+      if(_scrubDataUris(html).indexOf('NaN')>=0||_scrubDataUris(html).indexOf('undefined')>=0) throw new Error('fresh render leaked NaN/undefined');
       return { entries:0, idx:ix.idx, word:ix.word }; });
 
     step('EMANCIPATION declined -> a radical Emancipation divergence with a real counterfactual', function(){
@@ -196,7 +197,7 @@ const SETUP = `(() => {
       if(html.indexOf('\\u2605')<0 && html.indexOf('★')<0) throw new Error('the radical chip must carry its CVD glyph');
       if(html.indexOf('Emancipation')<0||html.indexOf('trajectory')<0) throw new Error('the ledger must show its category headers');
       if(html.indexOf('McPherson')<0) throw new Error('the footer must cite sources');
-      if(html.indexOf('NaN')>=0||html.indexOf('>undefined')>=0) throw new Error('the rich render leaked NaN/undefined');
+      if(_scrubDataUris(html).indexOf('NaN')>=0||_scrubDataUris(html).indexOf('>undefined')>=0) throw new Error('the rich render leaked NaN/undefined');
       var safe=divRenderTab(null);
       if(safe.indexOf('No active campaign')<0) throw new Error('a null campaign must render the safe placeholder');
       return { len:html.length }; });
