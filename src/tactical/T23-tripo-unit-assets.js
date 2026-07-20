@@ -23,7 +23,7 @@ var FLDGLB_S = {
   templates: {},
   loading: {},
   failed: {},
-  stats: { records: 0, enabled: 0, requested: 0, loaded: 0, attached: 0, fallback: 0, overBudget: 0, disabledByTier: 0 },
+  stats: { records: 0, enabled: 0, requested: 0, loaded: 0, attached: 0, fallback: 0, overBudget: 0, disabledByTier: 0, licenseBlocked: 0 },
   errN: 0
 };
 
@@ -66,6 +66,15 @@ function fldUnitGlbArm(u) {
   return a;
 }
 
+/* D476 (LANE-014 slice 5): the shipped import-gate license wall gets a runtime twin.
+   An enabled slot whose license.status is not "clear" is refused at slot-match time,
+   fail-closed — the import gate remains the commit-time wall; this bites even if a
+   tampered pack reaches the browser. */
+function fldUnitGlbLicenseClear(r) {
+  try { return !!(r && r.license && String(r.license.status).toLowerCase() === "clear"); } catch (e) {}
+  return false;
+}
+
 function fldUnitGlbSlot(u) {
   if (fldUnitGlbOff()) { FLDGLB_S.stats.disabledByTier++; return null; }
   var recs = fldUnitGlbRecords();
@@ -75,6 +84,7 @@ function fldUnitGlbSlot(u) {
   for (var i = 0; i < recs.length; i++) {
     var r = recs[i];
     if (!r || r.enabled !== true) continue;
+    if (!fldUnitGlbLicenseClear(r)) { FLDGLB_S.stats.licenseBlocked++; continue; }
     FLDGLB_S.stats.enabled++;
     if (!(r.side === "ANY" || r.side === side)) continue;
     if (!(r.arm === "any" || r.arm === arm)) continue;

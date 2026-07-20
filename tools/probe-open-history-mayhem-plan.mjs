@@ -100,7 +100,10 @@ const PIN = {
   // commands expose their underlying command as _gcDelegate (the GEA-05 delegate idiom) so
   // probe-field's GEA-03 source tooth scans the real command through the wrap (rebuild).
   // base/manifest/suite hold; data untouched.
-  game: "bcfd6454e4920442defd4da11b6f0152",
+  // D476 re-pin (LANE-014 slice 5): game bcfd6454 -> a234c52a — T24 distance-LOD near set
+  // (own scene-level shared instanced group) + T23 runtime license wall (rebuild).
+  // base/manifest/suite hold; data untouched.
+  game: "a234c52a49f9b3ceb3f13204581a88b2",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "4625dca91b9b2cd8e65c1a9439160cf2",
   suite: "69681d6f2216fe1dcfd594ffc4a757b7",

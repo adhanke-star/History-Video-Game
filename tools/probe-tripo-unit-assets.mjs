@@ -29,6 +29,8 @@ function staticScan() {
   check('static: T23 is in manifest after T22 and before register modules', t23 > t22 && t23 >= 0, 'T22=' + t22 + ' T23=' + t23);
   check('static: runtime module contains no live Tripo/API/account calls', !/(fetch\s*\(|XMLHttpRequest|tripo3d\.ai|platform\.tripo|Authorization|api[-_ ]?key)/i.test(mod));
   check('static: runtime module does not reference sibling visual-layer internals', !/(fldRr|FLDRR|fldVf|FLDVF|fldTr[A-Z]|FLDTR)/.test(mod));
+  check('static: D476 runtime license wall exists (slot match refuses enabled records without license.status=clear)',
+    /function fldUnitGlbLicenseClear/.test(mod) && /fldUnitGlbLicenseClear\(r\)/.test(mod) && /licenseBlocked/.test(mod));
   check('static: canonical asset pack has the expected schema', canonicalPack.schema === 'cw_tripo_unit_assets_v1');
   check('static: canonical Tripo slots are disabled until local files + license proof land',
     Array.isArray(canonicalPack.records) && canonicalPack.records.length >= 8 && canonicalPack.records.every(r => r.enabled === false),
@@ -84,6 +86,20 @@ function sceneScript(label, opts) {
         version:1,
         policy:{runtimeMode:"local-files-only", maxRuntimeBytes:1500000, maxRuntimeVertices:20, maxRuntimeTriangles:10},
         records:[{
+          // D476: license-pending slot listed FIRST — it would win the slot match if the
+          // runtime license wall did not refuse it. It must never load or attach.
+          id:"probe_unit_glb_pending",
+          label:"Probe pending-license slot (must be refused)",
+          enabled:true,
+          side:"US",
+          arm:"inf",
+          runtimePath:tinyGltfDataUri(),
+          targetHeight:36,
+          rotationY:0,
+          hideBaseMarker:true,
+          generation:{provider:"tripo", modelVersion:"probe", geometryQuality:"standard", textureQuality:"standard", pbr:false, smartLowPoly:true, runtimeFaceLimit:10},
+          license:{status:"pending", name:"", attribution:"", requiresAttribution:true, commercialUse:"unknown"}
+        },{
           id:"probe_unit_glb",
           label:"Probe unit glTF",
           enabled:true,
@@ -138,11 +154,24 @@ function sceneScript(label, opts) {
           formationLayerSlotActive = ffScale > 0.01 && Number(ffEl[13] || -9999) > -1000;
         }
       } catch(e) {}
+      var formationNearSlotActive = false;
+      try {
+        var ffN = g.userData && g.userData._ff;
+        if (ffN && ffN.nearLayer && ffN.nearLayer.body && ffN.nearSlot >= 0 && window.THREE) {
+          var nMat = new window.THREE.Matrix4();
+          ffN.nearLayer.body.getMatrixAt(ffN.nearSlot, nMat);
+          var nEl = nMat.elements || [];
+          var nScale = Math.sqrt(Math.pow(Number(nEl[0] || 0), 2) + Math.pow(Number(nEl[1] || 0), 2) + Math.pow(Number(nEl[2] || 0), 2));
+          formationNearSlotActive = nScale > 0.01 && Number(nEl[13] || -9999) > -1000;
+        }
+      } catch(e) {}
       return {
         found:true,
         unitId:u.id,
         model:!!m,
+        modelId:(m && m.userData && m.userData.unitGlb && m.userData.unitGlb.id) || null,
         modelVisible:!!(m && m.visible),
+        formationNearSlotActive:formationNearSlotActive,
         formationFigures:!!ff,
         formationFiguresVisible:!!(ff && ff.visible),
         slabVisible:slab ? slab.visible !== false : null,
@@ -190,7 +219,8 @@ function sceneScript(label, opts) {
         off: (typeof fldUnitGlbOff === 'function') ? fldUnitGlbOff() : null,
         errN: (typeof FLDGLB_S !== 'undefined' && FLDGLB_S) ? FLDGLB_S.errN : -1,
         stats: (typeof FLDGLB_S !== 'undefined' && FLDGLB_S) ? FLDGLB_S.stats : null,
-        failed: (typeof FLDGLB_S !== 'undefined' && FLDGLB_S) ? Object.keys(FLDGLB_S.failed || {}) : []
+        failed: (typeof FLDGLB_S !== 'undefined' && FLDGLB_S) ? Object.keys(FLDGLB_S.failed || {}) : [],
+        pendingLoaded: (typeof FLDGLB_S !== 'undefined' && FLDGLB_S) ? !!(FLDGLB_S.templates && FLDGLB_S.templates['probe_unit_glb_pending']) : null
       };
       if (${JSON.stringify(!!opts.fixture && !opts.off && !opts.low)}) {
         var fu = firstUnit(), fg = fu && __FIELD._u3d && __FIELD._u3d[fu.id];
@@ -251,8 +281,13 @@ async function runScene(browser, label, opts) {
   check('fixture pack: a local glTF model attaches to the infantry group',
     F.ok && F.unit && F.unit.model === true && F.unit.modelVisible === true && F.unit.stats && F.unit.stats.vertices === 3,
     JSON.stringify(F.unit || {}));
-  check('fixture pack: hideBaseMarker hides every base representation but keeps flag and ring cues',
-    F.ok && F.unit && F.unit.modelVisible === true && F.unit.formationFiguresVisible !== true && F.unit.formationLayerSlotActive !== true && F.unit.slabVisible !== true && F.unit.frontVisible !== true && F.unit.bodyLayerSlotActive !== true && F.unit.flagVisible === true && F.unit.ringExists === true,
+  check('D476 fixture pack: the enabled license-pending slot is refused at runtime and the license-clear slot attaches instead',
+    F.ok && F.unit && F.unit.modelId === 'probe_unit_glb' && F.state && F.state.stats &&
+    Number(F.state.stats.licenseBlocked || 0) >= 1 && Number(F.state.stats.requested || 0) === 1 &&
+    F.state.pendingLoaded === false && (F.state.failed || []).indexOf('probe_unit_glb_pending') < 0,
+    JSON.stringify({ modelId: F.unit && F.unit.modelId, licenseBlocked: F.state && F.state.stats && F.state.stats.licenseBlocked, requested: F.state && F.state.stats && F.state.stats.requested, pendingLoaded: F.state && F.state.pendingLoaded, failed: F.state && F.state.failed }));
+  check('fixture pack: hideBaseMarker hides every base representation but keeps flag and ring cues (near-LOD slots parked too)',
+    F.ok && F.unit && F.unit.modelVisible === true && F.unit.formationFiguresVisible !== true && F.unit.formationLayerSlotActive !== true && F.unit.formationNearSlotActive !== true && F.unit.slabVisible !== true && F.unit.frontVisible !== true && F.unit.bodyLayerSlotActive !== true && F.unit.flagVisible === true && F.unit.ringExists === true,
     JSON.stringify(F.unit || {}));
   check('renderRich="off": GLB layer is disabled and base marker is restored',
     F.ok && F.offCheck && F.offCheck.off === true && F.offCheck.unit && F.offCheck.unit.modelVisible !== true && F.offCheck.unit.formationFiguresVisible !== true && F.offCheck.unit.slabVisible === true,

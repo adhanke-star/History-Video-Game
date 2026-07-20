@@ -75,6 +75,16 @@ function sceneScript(label, opts) {
       for (var i=0;i<__FIELD.units.length;i++) { var e = __FIELD.units[i]; if (e && e.alive && e.side !== u.side) return e; }
       return null;
     }
+    function slotActive(mesh, slot){
+      try {
+        if (!mesh || slot == null || slot < 0 || !window.THREE) return null;
+        var m = new window.THREE.Matrix4();
+        mesh.getMatrixAt(slot, m);
+        var el = m.elements || [];
+        var sc = Math.sqrt(Math.pow(Number(el[0]||0),2) + Math.pow(Number(el[1]||0),2) + Math.pow(Number(el[2]||0),2));
+        return sc > 0.01 && Number(el[13] || -9999) > -1000;
+      } catch(e){ return null; }
+    }
     function snap(){
       var u = firstInf();
       var g = u && __FIELD._u3d && __FIELD._u3d[u.id];
@@ -82,6 +92,10 @@ function sceneScript(label, opts) {
       var ff = g.getObjectByName("ffFormation");
       var meta = (ff && ff.userData && ff.userData.ff) || {};
       var layer = (typeof __FIELD !== "undefined" && __FIELD && __FIELD._ffLayer) || null;
+      var nearLayer = (typeof __FIELD !== "undefined" && __FIELD && __FIELD._ffNearLayer) || null;
+      var nearGrp = null;
+      try { if (__FIELD && __FIELD.scene) __FIELD.scene.traverse(function(o){ if (o && o.name === "ffNearLayer") nearGrp = o; }); } catch(e){}
+      var ffState = (g.userData && g.userData._ff) || null;
       var bodies = layer && layer.body;
       var heads = layer && layer.head;
       var rifles = layer && layer.rifle;
@@ -162,7 +176,14 @@ function sceneScript(label, opts) {
         topper:!!topper,
         topperVisible:topper ? topper.visible !== false : null,
         pegsResident:!!pegs,
-        pegsVisible:pegs ? pegs.visible !== false : null
+        pegsVisible:pegs ? pegs.visible !== false : null,
+        lod:meta.lod || null,
+        nearResident:!!nearGrp,
+        nearMeshCount:nearGrp && nearGrp.children ? nearGrp.children.length : 0,
+        nearLayerCount:nearLayer ? nearLayer.nextSlot : 0,
+        nearSlot:(ffState && ffState.nearSlot != null) ? ffState.nearSlot : -1,
+        farSlotActive:slotActive(layer && layer.body, ffState ? ffState.slot : -1),
+        nearSlotActive:slotActive(nearLayer && nearLayer.body, ffState ? ffState.nearSlot : -1)
       };
     }
     function simSnap(){
@@ -191,6 +212,14 @@ function sceneScript(label, opts) {
       for (var w=0; w<200 && !(__FIELD.mode3d && __FIELD.renderer); w++) await wait(100);
       if (!__FIELD.mode3d || !__FIELD.renderer) throw new Error('3D renderer did not become active; kind=' + __FIELD.rendererKind);
       if (__FIELD.phase === 'deploy') { __FIELD.phase = 'battle'; __FIELD.paused = false; }
+      // D476: pin the camera provably OUTSIDE the near threshold of the snapped unit so the
+      // legacy far-tier assertions stay deterministic regardless of the engine's home framing.
+      if (!${JSON.stringify(!!opts.off || !!opts.low)}) {
+        var pu0 = firstInf(), pg0 = pu0 && __FIELD._u3d && __FIELD._u3d[pu0.id];
+        if (pg0 && __FIELD.camera && __FIELD.camera.position) {
+          __FIELD.camera.position.set(pg0.position.x + 900, 420, pg0.position.z + 700);
+        }
+      }
       for (var f=0; f<8; f++) { fldRender(); await wait(80); }
       out.initial = snap();
 
@@ -224,6 +253,30 @@ function sceneScript(label, opts) {
         fld3dBuildUnits();
         for (var f2=0; f2<4; f2++) { fldRender(); await wait(60); }
         out.rebuild = snap();
+
+        // D476 (LANE-014 slice 5) — distance LOD. Camera inside NEAR_IN ⇒ the richer near set
+        // (own scene-level layer, 7 instanced meshes, density uplift); camera beyond NEAR_OUT ⇒
+        // the pre-slice-5 far set with the near slots parked.
+        var lu = firstInf(), lg = lu && __FIELD._u3d && __FIELD._u3d[lu.id];
+        if (lu && lg && __FIELD.camera && __FIELD.camera.position) {
+          __FIELD.camera.position.set(lg.position.x + 60, 90, lg.position.z + 60);
+          fld3dSyncUnit(lu, lg); fld3dSyncUnit(lu, lg);
+          out.near = snap();
+          var NL = __FIELD._ffNearLayer;
+          if (NL && NL.body && NL.body.instanceColor) {
+            var nv0 = NL.body.instanceColor.version;
+            fld3dSyncUnit(lu, lg); fld3dSyncUnit(lu, lg);
+            out.nearColorVerStable = (NL.body.instanceColor.version === nv0);
+          }
+          __FIELD.camera.position.set(lg.position.x + 900, 420, lg.position.z + 700);
+          fld3dSyncUnit(lu, lg);
+          out.farBack = snap();
+          // Finish in the NEAR tier so the byte-identity render burst below also covers
+          // near-tier frames and the screenshot shows the richer near set.
+          __FIELD.camera.position.set(lg.position.x + 60, 90, lg.position.z + 60);
+          fld3dSyncUnit(lu, lg);
+          for (var f3=0; f3<3; f3++) { fldRender(); await wait(60); }
+        }
       }
 
       __FIELD.paused = true;
@@ -304,6 +357,19 @@ async function runScene(label, opts) {
     H.ok && H.rebuild && H.rebuild.found === true && H.rebuild.ff === true && H.rebuild.active > 0 &&
     H.rebuild.mode === 'shared-instanced' && H.rebuild.layerCount > 0 && H.rebuild.layerCount <= H.rebuild.layerCap,
     JSON.stringify(H.rebuild ? { ff: H.rebuild.ff, active: H.rebuild.active, layerCount: H.rebuild.layerCount, layerCap: H.rebuild.layerCap } : {}));
+  check('D476 LOD near branch: camera inside the near threshold switches the unit to the richer near set (density uplift inside the locked walls)',
+    H.ok && H.near && H.near.lod === 'near' && H.near.nearResident === true && H.near.nearMeshCount === 7 &&
+    H.near.active > 42 && H.near.active <= 66 && H.near.nearSlotActive === true && H.near.farSlotActive === false,
+    JSON.stringify(H.near ? { lod: H.near.lod, active: H.near.active, meshes: H.near.nearMeshCount, nearSlotActive: H.near.nearSlotActive, farSlotActive: H.near.farSlotActive } : {}));
+  check('D476 LOD far branch: camera beyond the exit threshold restores the current far set and parks the near slots',
+    H.ok && H.farBack && H.farBack.lod === 'far' && H.farBack.active >= 10 && H.farBack.active <= 42 &&
+    H.farBack.farSlotActive === true && H.farBack.nearSlotActive === false,
+    JSON.stringify(H.farBack ? { lod: H.farBack.lod, active: H.farBack.active, farSlotActive: H.farBack.farSlotActive, nearSlotActive: H.farBack.nearSlotActive } : {}));
+  check('D476 E20 near set: steady-state near syncs do not re-upload the near instanceColor',
+    H.ok && H.nearColorVerStable === true, 'stable=' + (H && H.nearColorVerStable));
+  check('D476 LOD low branch: fldLow() keeps the near set non-resident (the low tier is unchanged)',
+    LOW.ok && LOW.initial && LOW.initial.nearResident === false && LOW.initial.ff !== true,
+    'nearResident=' + (LOW.initial && LOW.initial.nearResident) + ' ff=' + (LOW.initial && LOW.initial.ff));
   check('byte-identity: synchronous render burst leaves seed and mutable unit fields unchanged',
     H.ok && H.seedStable === true && H.simStable === true && H.errN === 0,
     JSON.stringify({ seedStable:H.seedStable, simStable:H.simStable, errN:H.errN }));

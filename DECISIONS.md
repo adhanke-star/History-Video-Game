@@ -4,6 +4,66 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D476 — LANE-014 SLICE 5 SHIPPED: FORMATION DISTANCE-LOD (T24 EXTENSION) + THE T23 RUNTIME LICENSE WALL, FIXTURE-PROVEN — [CLAUDE CODE (FABLE 5), LANE-014 DRIVE; THE POST-D475 LADDER P1] (2026-07-20)
+
+**SHIPPED (the contract's slice-5 clause verbatim; DRIVE re-taken ledger-only at `4ab1b43`
+BEFORE any code move, the §4 TOP-LOOP resolution recorded in the owner field):**
+
+**T24 DISTANCE LOD (extension in place — the contract's named seam; no new module, manifest
+untouched).** Units inside the camera near threshold render from a SECOND shared instanced
+layer `ffNearLayer` — its OWN scene-level group, so the existing far layer keeps EXACTLY 5
+meshes and the two layerMeshCount==5 teeth (probe-formation-figures + uhd617) stay green
+UNAMENDED. The near set carries 7 instanced meshes: richer geometry (8-segment bodies/kepis,
+10×7 heads vs the far tier's 5/6×4) plus knapsack + bedroll accessories, and the density
+uplift the contract's "INF_CAP revisited" clause names — NEAR_CAP 66 active figures vs the
+far tier's unchanged INF_CAP 42, a 4th rank keeping the denser line compact
+(fldFfLayout's rows tweak is unreachable at n≤48, so the far layout is byte-current).
+Tier selection is camera-distance with hysteresis (NEAR_IN 430 / NEAR_OUT 490); a tier flip
+zeroes the vacated set's slots; `fldLow()` ALWAYS resolves far (the low tier is UNCHANGED —
+no near layer is ever built there; the walls hold by construction). The near layer builds
+LAZILY on the first near-tier sync (+7 draw calls at high tier only, then parked-at-zero
+when unused); E19 reset/rebuild and fldExit dispose/null BOTH layers; the E20
+no-per-frame-instanceColor-upload latch is extended to the near set (nearColorKey/N).
+Far-tier writes are the pre-slice-5 path byte-for-byte. Pure presentation: no sim writes,
+no fldRng, no _SAVE_VER; sim seed + unit fields probed INVARIANT across a 60-frame burst
+that now finishes IN the near tier.
+
+**T23 RUNTIME LICENSE WALL (the "T23 enablement" leg, FIXTURE-PROVEN per adjudication 10 —
+no real slot generated, downloaded, or enabled; data/tripo-unit-assets.json untouched,
+all 8 canonical slots stay disabled/pending).** `fldUnitGlbSlot` now refuses an enabled
+record whose license.status is not "clear" (fldUnitGlbLicenseClear, stats.licenseBlocked)
+— the shipped import-gate wall gets a fail-closed runtime twin that bites even if a
+tampered pack reaches the browser. Proven with the fixture pack ONLY: a license-pending
+enabled record listed FIRST (it would win the slot match) is never requested/loaded/attached
+(licenseBlocked 24, requested 1, pendingLoaded false) and the license-clear fixture attaches
+instead (modelId proof). envMap on GLB materials: NOT taken — the contract allows it only
+with profile evidence, none gathered.
+
+**TEETH (existing owners, adjudication 6 — suite stays 140):** probe-formation-figures
+19→23 (LOD near branch: lod=near, 7 near meshes, active 66>42 inside the walls, near slot
+live + far slot parked · LOD far branch: lod=far, active≤42, far live + near parked · E20
+near-set version stability · LOD low branch: near set non-resident at fldLow) — 23/23,
+artifact read, 0 pageerrors/0 texture warnings; the near-tier screenshot visually verified.
+probe-tripo-unit-assets 14→17 (static license-wall scan · the runtime refusal tooth · the
+hideBaseMarker three-way residency tooth STRENGTHENED with a near-slot-parked conjunct) —
+17/17, artifact read, 0 pageerrors. Adjacents: probe-intel-uhd617-profile 26/26 (largest
+scene kennesaw low-tier caps GREEN: 117 calls ≤ 360 · 169 objects ≤ 1400 — E68 values
+untouched) + import-tripo-unit-assets exit 0 (8 records, 0 enabled). node --check ×6 ·
+build GATE OK.
+
+**BINDS (both md5-proven byte-identical restores):** A — the near layer force-built at low
+tier (a fldLow-gated build-wrapper line) → EXACTLY the LOD-low-branch tooth red
+(nearResident=true; 22/23); restore md5-proven (T24 01ff23b5 · game a234c52a), re-run 23/23.
+B — canonical records[0] flipped enabled:true with its license pending → the import gate
+red EXACTLY at the license wall ("enabled records require license.status=clear", exit 1,
+with the missing-file/name/attribution walls also biting); restore md5-proven (95cd0c93),
+re-run exit 0. **AD-7 re-pins in this commit:** game bcfd6454 → a234c52a · srcTree
+8395da0a → 7cc295df at all four plan-probe sites (base/dataTree/manifest/suite/focused
+hold; data/ untouched); both plan probes re-run post-commit (the three pre-commit
+dirty-tree allowlist reds are the documented post-commit-green class). Counts hold
+29/62/1,710/140; `_SAVE_VER=1`; frozen base `c9db83fa` untouched. Slice 6 (the ARC 3
+release battery) is the ladder's P2 — the lane flips SHIPPED only on its green.
+
 ## D475 — THE D473/D474 DAY-END BATTERY IS COMPLETE (140/140 ACROSS THE DOCUMENTED RESUMED SEGMENTS, ZERO UNRESOLVED REDS) — SLICES 3-4 VERIFIED AT RELEASE GRADE; LANE-014 RESTS AT CONTRACT (SLICES 5-6 REMAIN); THE DRIVE LOCK RELEASED — [CLAUDE CODE (FABLE 5); THE POST-D471 LADDER P4 CLOSEOUT] (2026-07-20)
 
 **THE BATTERY (SHA `a7c9e7e`):** the full 140-row suite ran serialized/ALONE (TMPDIR set,

@@ -2448,7 +2448,7 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-014 · graphics-uplift — **DRIVE (slices 1-4 SHIPPED as D467/D468/D472/D473, VERIFIED by the D475 battery at `a7c9e7e`; SLICE 5 IN DRIVE — Claude Code / Fable 5; slice 6 queued)** (ARC 3 of the D455 roadmap)
+### LANE-014 · graphics-uplift — **DRIVE (slices 1-5 SHIPPED as D467/D468/D472/D473/D476; SLICE 6 — the ARC 3 release battery — is the sole remainder; Claude Code / Fable 5 holds the lock for it)** (ARC 3 of the D455 roadmap)
 
 - **Owning tool:** Claude Code (Fable 5) — DRIVE re-taken 2026-07-20 for SLICE 5
   under Aaron's post-D475 continuation kickoff; the §4 TOP-LOOP resolution
@@ -2752,7 +2752,25 @@ next green commit and confer through this ledger instead of permitting simultane
   existing owners probe-formation-figures + probe-tripo-unit-assets +
   probe-intel-uhd617-profile; binds per the contract: (a) near-LOD set forced
   resident at low tier → the low-tier branch tooth red EXACTLY; (b) a slot
-  enabled with license `pending` → the import gate red EXACTLY.
+  enabled with license `pending` → the import gate red EXACTLY. SLICE 5
+  SHIPPED as D476 (this commit): T24 distance LOD exactly as designed (the
+  near set in its own scene-level `ffNearLayer` group — 7 richer instanced
+  meshes incl. knapsack/bedroll, NEAR_CAP 66 vs the unchanged far INF_CAP 42,
+  NEAR_IN 430/NEAR_OUT 490 hysteresis, lazy build, fldLow() always far, E19/
+  E20/fldExit extended to both layers, far tier byte-current) + the T23
+  runtime license wall (fldUnitGlbLicenseClear at slot match, fixture-proven:
+  the pending-enabled record listed first never loads, the clear record
+  attaches; canonical pack untouched, 0 slots enabled). Teeth:
+  probe-formation-figures 19→23 + probe-tripo-unit-assets 14→17 (three-way
+  residency tooth strengthened with the near-park conjunct), both artifacts
+  0-pageerror; adjacents uhd617 26/26 (kennesaw low caps 117≤360 · 169≤1400)
+  + import gate exit 0. Binds A/B bit EXACTLY as predeclared, restores
+  md5-proven (T24 01ff23b5 · game a234c52a · data 95cd0c93). AD-7 re-pins
+  game→a234c52a · srcTree→7cc295df; suite stays 140; counts hold
+  29/62/1,710/140. Resume: SLICE 6 — the ARC 3 release checkpoint battery
+  (suite 140, TMPDIR set, serialized, ALONE, war-career 900s, every artifact
+  JSON read, reds root-fixed at exact labels) — on green THIS LANE FLIPS
+  SHIPPED with the battery SHA and ARC 3 CLOSES.
 
 ---
 
