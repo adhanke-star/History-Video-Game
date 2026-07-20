@@ -2,6 +2,41 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-20 — D485: LANE-017 SLICE 7 — NAMED LEGENDARY ARTIFACTS + MODE-SPLIT DROPS (§4c.1) SHIPPED
+
+A fresh Fable 5 session continued the held DRIVE from the clean pushed d39105b (D484
+closeout) boundary. **D485** (a52a5e5): the `artifact` tier ADOPTED into the canonical map
+(glyph ❖ · reserved hex · contrast-proven; the D478 one-language wall and contrast teeth
+auto-extend) + FOUR Verified named objects, each ≥2 distinct sources with sourced
+provenance text and an artifact battle/unit lock: the 28th Virginia battle flag
+(gettysburg — Marshall Sherman/1st Minnesota MoH, MNHS custody), the 4th USCT national
+colors (newMarketHeights — Fleetwood's citation text), Cleburne's kepi (franklin —
+Tennessee State Museum), the Jo Daviess County Grant sword (vicksburg — the 'Hero of the
+Mississippi' counterguard tie, the March 1864 presentation stated plainly; slot weapon).
+Research per adjudication 10: two workflows (5 Sonnet gathers → 5 Opus default-refuters +
+a dedicated second-family hunt), the top loop re-verifying the anchor rows directly. THE
+HONEST DROPS: the packet's Henry-rifle example DROPPED — the Franklin combat claim rests
+on the single Jacobson family (the trust + encyclopedia relays both cite it; Cox 1897 and
+Shellenberger are silent on repeaters AND are one family via verbatim-shared text; the one
+independent find is an auction-house ownership provenance, not citation-grade) — the D387
+single-scholar-collapse class caught at the item tier; the Cleburne presentation sword
+RESHAPED to the death kepi; the Hilton/Veal vignette excluded (single family). Runtime:
+src/37 `_lootItemEligible` + the C/B-aware weighted pick — Historical pool-eligibility
+ONLY at the provenance battle, malformed ruleset flags fail closed, the D418 kernel the
+ONLY mode authority; Mayhem general pool per D416; wrong-battle Historical pools
+BYTE-IDENTICAL (the shipped deterministic-drop teeth held UNMOVED; weights 2/1/0 held);
+effects ride the existing capped equip path (existing keys at existing magnitudes, probed
+structurally); nothing stored, _SAVE_VER=1. Teeth: loot-survival 24→28; adjacents
+mayhem-mode 24/24 + ratings 31/31 + save-slots 16/16; binds A (lock conjunct killed → the
+lock tooth EXACTLY + the Mayhem twin-conjunct sibling) and B (second source dropped →
+gate 4e exit-5 AND the source-floor tooth EXACTLY) md5-proven (src/37 73a817a8 · game
+27e73f38). AD-7 game→27e73f38 · dataTree→dcf6da5b · srcTree→b7648a67 · journey→73a817a8
+(focused holds); both plan probes green post-commit (24/24 · 13/13). Counts hold
+29/62/1,710/140. MAYHEM_PUBLIC_READY untouched (the packet's 'stays false' phrasing was a
+stale D418-era carry; the operative 'this lane never flips it' honored). LANE-017 stays
+DRIVE mid-ladder; slice 8 (sets/variety §4c.2+§4c.5) is exact next; slice 9 (the ARC 4
+release battery) alone flips the lane SHIPPED.
+
 ## 2026-07-20 — D484: LANE-017 SLICE 6 — SOLDIER-TIER BADGES (§4d.3) SHIPPED — §4d COMPLETE
 
 A fresh Fable 5 session continued the held DRIVE from the clean pushed 850d533 (D483)
