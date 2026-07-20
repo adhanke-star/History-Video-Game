@@ -934,12 +934,18 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // set + T23 runtime license wall; presentation-only, no war-career surface touched).
     // D478 re-pin (LANE-017 slice 1): srcTree 7cc295df -> ce48e9ae (the cwTierInfo one-rarity-language
     // helpers in src/37 + the T14 tier-tinted rung glyph; presentation-only, no war-career surface).
-    srcTree:"ce48e9ae828137231440f63967d06b09",
+    // D479 re-pin (LANE-017 slice 2): srcTree ce48e9ae -> 4eed52e8 (drop feel in src/37 —
+    // announcement panel + flip/glow + view-side sort/filter + the additive recentDrops
+    // sanitizer; presentation-only, no war-career surface).
+    srcTree:"4eed52e8afc6cf2b5b836607e5757455",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
     // the journey/war-career logic surfaces are untouched, proven by this probe's own runtime steps).
-    journey:"a527600de997a4cb2dd8723af4239248",
+    // D479 re-pin: journey a527600d -> 1689c4a2 (LANE-017 slice 2 drop feel in src/37 — the
+    // recentDrops presentation record + announcement/flip/glow renderers + view-side sort/filter;
+    // the journey/war-career logic surfaces are untouched, proven by this probe's own runtime steps).
+    journey:"1689c4a205df5efad47d28e21962e0d5",
     command:"8f12c49f7129b3a9be0203677822e048",
     // D460 re-pin (the AD-7 idiom): focused a29a5351 -> 2816a82c — probe-war-career.mjs
     // carries the D460 register chain (1614 -> 1617, Elkhorn Cherokee OOB); the war-career
@@ -1264,7 +1270,9 @@ step("BASELINES + LANE", () => {
     // license wall + rebuild). base/dataTree/manifest/suite hold.
     // D478 re-pin (LANE-017 slice 1): game a234c52a -> 9dd15ca2 (rarity glyphs/reserved hexes in
     // data/loot-survival.json + the src/37 helpers + T14 tint + rebuild). base/manifest/suite hold.
-    game:"9dd15ca274e957784ee77ddc819e61bd",
+    // D479 re-pin (LANE-017 slice 2): game 9dd15ca2 -> b74053aa (drop feel in src/37 + rebuild;
+    // presentation-only). base/dataTree/manifest/suite hold.
+    game:"b74053aadec893d499dd5e96198fb542",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     // D478 re-pin: dataTree 4bbdebe5 -> b3b323fa (LANE-017 slice 1: rarity glyphs + reserved tier
     // hexes + rungTiers in data/loot-survival.json — presentation data only, no war-career data).
@@ -1697,14 +1705,19 @@ step("REACHABILITY BASELINES", () => {
     // D478 re-pin: game a234c52a -> 9dd15ca2, dataTree 4bbdebe5 -> b3b323fa, srcTree 7cc295df ->
     // ce48e9ae (LANE-017 slice 1: the one rarity language - data glyphs/reserved hexes + cw helpers
     // + T14 tint); runtime/journey did NOT move.
-    game:"9dd15ca274e957784ee77ddc819e61bd",
+    // D479 re-pin: game 9dd15ca2 -> b74053aa, srcTree ce48e9ae -> 4eed52e8 (LANE-017 slice 2:
+    // drop feel in src/37 — announcement/flip/glow + view-side sort/filter + the additive
+    // recentDrops sanitizer + rebuild); dataTree/runtime did NOT move.
+    game:"b74053aadec893d499dd5e96198fb542",
     dataTree:"b3b323faa7e2e92137504d94bd568044",
-    srcTree:"ce48e9ae828137231440f63967d06b09",
+    srcTree:"4eed52e8afc6cf2b5b836607e5757455",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
     // the journey/war-career logic surfaces are untouched, proven by this probe's own runtime steps).
-    journey:"a527600de997a4cb2dd8723af4239248",
+    // D479 re-pin: journey a527600d -> 1689c4a2 (LANE-017 slice 2 drop feel in src/37; the
+    // journey/war-career logic surfaces are untouched, proven by this probe's own runtime steps).
+    journey:"1689c4a205df5efad47d28e21962e0d5",
     // D460 re-pin: focused a29a5351 -> 2816a82c (Elkhorn Cherokee, 1614 -> 1617). D463
     // re-pin: focused 2816a82c -> 664ca996 (the D463 register chain 1617 -> 1632 + the
     // suite-138 pins; the war-career runtime surface untouched).

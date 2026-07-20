@@ -3068,12 +3068,24 @@ next green commit and confer through this ledger instead of permitting simultane
   politics for the election bind) · ARC 6 rail+naval packets (session-fillers,
   chartered per D455 §7's interleave rule) · Mayhem Slice B (LANE-007) · C72 Shiloh
   rewrite + GEA-01/S44 bundle (parked, Aaron reorder-only).
-- **Resume pointer:** SLICE 2 (drop feel, §4c.3) per this contract — rarity-colored
-  drop announcements + card-flip reveal + inventory sort/filter + legendary glow, all
-  reading the slice-1 canonical map; reduceMotion ⇒ no flip/glow animation; teeth in
-  probe-loot-survival; binds per the contract clause.
-- **Last-touched commit:** the D478 slice-1 commit (this commit).
-- **Slice history:** SLICE 1 SHIPPED as D478 (2026-07-20): the canonical tier map
+- **Resume pointer:** SLICE 3 (badge presentation layer, §4d.1) per this contract —
+  Madden-style badge chips on general + brigade cards, a badge gallery, X-Factor
+  showcase reading (never writing) the live `_xfActive`/`_xfGlow` state, hover/tap
+  provenance; keyboard-operable + screen-reader-labelled; teeth in probe-ratings,
+  adjacents probe-command + probe-accessibility; binds per the contract clause.
+- **Last-touched commit:** the D479 slice-2 commit (this commit).
+- **Slice history:** SLICE 2 SHIPPED as D479 (2026-07-20): drop feel per §4c.3 — the
+  additive-sanitized `recentDrops` record + the Latest Recovery announcement panel
+  (canonical-map chips, glyph+label redundant), the one-time flip reveal + legendary
+  glow (runtime CSS, zero new hexes, fully withheld under reduceMotion — instant
+  reveal), and view-side inventory sort/filter (rarity/kind/battle + count line; the
+  saved order NEVER mutated — the view sorts a decorated copy). Teeth: loot 16→20;
+  adjacents ratings 23/23 + save-slots 16/16. Binds A (rm conjunct stripped → the rm
+  tooth red EXACTLY) and B (in-place sort → the saved-order byte-identity tooth red
+  EXACTLY, with the sibling sim/save twin-divergence tooth also catching the class)
+  md5-proven (src/37 1689c4a2 · game b74053aa); AD-7 game→b74053aa ·
+  srcTree→4eed52e8 · journey→1689c4a2 (dataTree held — no data edit).
+  SLICE 1 SHIPPED as D478 (2026-07-20): the canonical tier map
   (glyphs + RESERVED hexes — the first one-language wall run caught the old palette
   colliding with the app-wide generic accents in 40+ files, so the tiers got dedicated
   values one step off, visually imperceptible, contrast re-proven) + the

@@ -106,7 +106,10 @@ const PIN = {
   // D478 re-pin (LANE-017 slice 1): game a234c52a -> 9dd15ca2 - the one rarity language (data
   // glyphs + reserved tier hexes + the cwTierInfo/cwRungTierInfo helpers + the T14 tier tint;
   // rebuild). base/manifest/suite hold.
-  game: "9dd15ca274e957784ee77ddc819e61bd",
+  // D479 re-pin (LANE-017 slice 2): game 9dd15ca2 -> b74053aa - drop feel in src/37
+  // (announcement/flip/glow + view-side sort/filter + the additive recentDrops sanitizer;
+  // rebuild; presentation-only). base/manifest/suite hold; data untouched.
+  game: "b74053aadec893d499dd5e96198fb542",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "4625dca91b9b2cd8e65c1a9439160cf2",
   suite: "69681d6f2216fe1dcfd594ffc4a757b7",

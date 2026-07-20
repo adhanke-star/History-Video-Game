@@ -64,6 +64,31 @@ function cwRungTierInfo(rung) {
   var d = _lootData(), map = d && d.rungTiers;
   return cwTierInfo(map && map[rung] ? map[rung] : "common");
 }
+
+/* D479 (LANE-017 slice 2) — DROP FEEL. Presentation only: every tier colour still
+   resolves through cwTierInfo (the D478 one-language wall scans src every probe run),
+   the flip/glow animation classes are withheld ENTIRELY under reduceMotion (instant
+   reveal), and the view sort/filter never reorders the saved inventory (D149 law —
+   the view sorts a decorated copy). The reward path itself is untouched. */
+function _lootReduce() { try { return !!(G && G.settings && G.settings.reduceMotion); } catch (e) { return false; } }
+var _lootViewPrefs = { sort: "", tier: "", kind: "", battle: "" };
+function _lootFeelCss() {
+  if (typeof document === "undefined" || document.getElementById("cwLootFeelCss")) return;
+  var s = document.createElement("style");
+  s.id = "cwLootFeelCss";
+  s.textContent = [
+    "@keyframes cwLootFlip{from{transform:rotateY(88deg);opacity:.2}to{transform:rotateY(0deg);opacity:1}}",
+    ".cw-loot-flip{animation:cwLootFlip .55s ease-out both;backface-visibility:hidden}",
+    "@keyframes cwLootGlow{from{box-shadow:0 0 3px var(--cw-tier-glow)}to{box-shadow:0 0 14px var(--cw-tier-glow)}}",
+    ".cw-loot-glow{animation:cwLootGlow 1.5s ease-in-out infinite alternate}"
+  ].join("\n");
+  document.head.appendChild(s);
+}
+function _lootTierRank(id) {
+  var d = _lootData(), r = d && d.rarities, n = 0;
+  if (r) for (var k in r) { if (!_lootOwn(r, k)) continue; if (k === id) return n; n++; }
+  return -1;
+}
 function _lootTurn(C) {
   if (C && C.president && typeof C.president.turn === "number") return C.president.turn;
   if (C && typeof C.idx === "number") return C.idx;
@@ -850,6 +875,20 @@ function lootInit(C) {
     }
   }
   L.inventory = clean;
+  if (_lootOwn(L, "recentDrops")) {
+    /* D479 additive presentation record (D149 sanitation): only known item ids survive,
+       text capped, capped at 6 rows; an absent field is NEVER created (legacy saves stay
+       byte-identical), an unusable one is dropped fail-closed. */
+    var rdClean = [];
+    if (Array.isArray(L.recentDrops)) {
+      for (var rdi = 0; rdi < L.recentDrops.length && rdClean.length < 6; rdi++) {
+        var rd = L.recentDrops[rdi];
+        if (!rd || typeof rd !== "object" || !_lootItem(rd.id)) continue;
+        rdClean.push({ id: rd.id, battle: _lootCleanText(rd.battle || "", 120), seen: rd.seen === true });
+      }
+    }
+    if (rdClean.length) L.recentDrops = rdClean; else delete L.recentDrops;
+  }
   _ssCleanJourney(C, L);
   if (typeof warCareerEnsureRunId === "function") warCareerEnsureRunId(C);
   _ssCleanPeopleState(L);
@@ -1020,14 +1059,20 @@ function lootOnResolve(winnerSide, type, B, C, win) {
   var L = lootInit(C); if (!L) return;
   var dc = _lootDropsCfg();
   var n = 1 + (win ? _lootNum(dc.winBonus, 2) : (type === "draw" ? _lootNum(dc.drawBonus, 1) : _lootNum(dc.lossBonus, 0)));
-  var got = [], base = (B && (B.id || B.name)) || "battle";
+  var got = [], drops = [], base = (B && (B.id || B.name)) || "battle";
   for (var i = 0; i < n; i++) {
     var it = _lootWeightedPick(base + ":" + _lootTurn(C) + ":" + i + ":" + (win ? "W" : "L"));
     if (!it) continue;
     if (it.unique && _lootHasItem(C, it.id)) it = _lootItem("commissary_rations");
     var res = lootAddItem(C, it.id, 1, _lootBattleLabel(B));
-    if (res.ok && res.item) got.push(res.item.name);
+    if (res.ok && res.item) {
+      got.push(res.item.name);
+      /* D479: the presentation record of this resolve's drops (announcement + one-time
+         flip reveal). The pick/weight/add path above is byte-identical to pre-slice. */
+      if (drops.length < 6) drops.push({ id: res.item.id, battle: _lootBattleLabel(B), seen: false });
+    }
   }
+  if (drops.length) L.recentDrops = drops;
   lootSurvivalTick(C, B, win);
   if (typeof ssJourneyOnResolve === "function") ssJourneyOnResolve(winnerSide, type, B, C, win);
   if (got.length && typeof _pdLog === "function") _pdLog(C, "Recovered from " + _lootBattleLabel(B) + ": " + got.join(", ") + ".");
@@ -1837,16 +1882,104 @@ function _ssWarCareerButtonHTML(C, p, cls, id) {
     + (st.ok ? "" : ' disabled aria-disabled="true"') + '>' + _lootEsc(label) + '</button>';
 }
 
+function _lootRecentHTML(C) {
+  var L = lootInit(C), rd = L.recentDrops;
+  if (!rd || !rd.length) return "";
+  var rm = _lootReduce();
+  var html = '<div id="lootRecent" style="border:1px solid var(--rule);border-radius:6px;padding:8px;background:rgba(0,0,0,.12);margin:0 0 8px">'
+    + '<div class="gn-col-head" style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:5px">Latest Recovery' + (rd[0].battle ? ' &middot; ' + _lootEsc(rd[0].battle) : '') + '</div>'
+    + '<div style="display:flex;flex-wrap:wrap;gap:6px">';
+  for (var i = 0; i < rd.length; i++) {
+    var it = _lootItem(rd[i].id); if (!it) continue;
+    var tier = cwTierInfo(it.rarity);
+    var anim = (!rd[i].seen && !rm) ? ' cw-loot-flip' + (tier.id === "legendary" ? ' cw-loot-glow' : '') : '';
+    html += '<span class="cw-drop-chip' + anim + '" data-drop-tier="' + _lootAttr(tier.id) + '" style="--cw-tier-glow:' + tier.color + ';display:inline-flex;align-items:center;gap:6px;border:1px solid ' + tier.color + ';border-left:4px solid ' + tier.color + ';border-radius:5px;padding:4px 8px;font-size:12px;background:rgba(0,0,0,.16)">'
+      + '<span style="color:' + tier.color + '"><span aria-hidden="true">' + _lootEsc(tier.glyph) + '</span> ' + _lootEsc(tier.label) + '</span>'
+      + '<b>' + _lootEsc(it.name) + '</b></span>';
+  }
+  return html + '</div></div>';
+}
+
+function _lootFacetVals(inv, fn) {
+  var out = [], seen = {};
+  for (var i = 0; i < inv.length; i++) {
+    var v = fn(inv[i]);
+    if (v && !_lootBadKey(v) && !seen[v]) { seen[v] = 1; out.push(v); }
+  }
+  out.sort();
+  return out;
+}
+
+function _lootInventoryControlsHTML(C) {
+  var L = lootInit(C), inv = L.inventory;
+  if (!inv.length) return "";
+  var d = _lootData(), rar = (d && d.rarities) ? d.rarities : {};
+  var kinds = _lootFacetVals(inv, function (r) { var it = _lootItem(r.id); return it ? (it.category || "Item") : ""; });
+  var battles = _lootFacetVals(inv, function (r) { return r.found || ""; });
+  var p = _lootViewPrefs;
+  if (p.tier && !_lootOwn(rar, p.tier)) p.tier = "";
+  if (p.kind && kinds.indexOf(p.kind) < 0) p.kind = "";
+  if (p.battle && battles.indexOf(p.battle) < 0) p.battle = "";
+  var lab = 'display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:3px';
+  var ctl = 'width:100%;min-width:0;padding:7px;border-radius:6px;border:1px solid var(--rule);background:#21190f;color:var(--ink)';
+  function opt(v, label, cur) { return '<option value="' + _lootAttr(v) + '"' + (cur === v ? ' selected' : '') + '>' + _lootEsc(label) + '</option>'; }
+  var html = '<div id="lootInvControls" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:8px;align-items:end;margin:0 0 8px">'
+    + '<label style="min-width:0"><span style="' + lab + '">Sort</span><select id="lootSortSel" style="' + ctl + '" aria-label="Sort inventory">'
+    + opt("", "Recovery order", p.sort) + opt("rarity", "Rarity", p.sort) + opt("kind", "Kind", p.sort) + opt("battle", "Battle", p.sort)
+    + '</select></label>'
+    + '<label style="min-width:0"><span style="' + lab + '">Rarity</span><select id="lootTierSel" style="' + ctl + '" aria-label="Filter by rarity"><option value="">All rarities</option>';
+  for (var tk in rar) {
+    if (!_lootOwn(rar, tk) || _lootBadKey(tk)) continue;
+    var ti = cwTierInfo(tk);
+    html += opt(tk, ti.glyph + ' ' + ti.label, p.tier);
+  }
+  html += '</select></label>'
+    + '<label style="min-width:0"><span style="' + lab + '">Kind</span><select id="lootKindSel" style="' + ctl + '" aria-label="Filter by kind"><option value="">All kinds</option>';
+  for (var ki = 0; ki < kinds.length; ki++) html += opt(kinds[ki], kinds[ki], p.kind);
+  html += '</select></label>'
+    + '<label style="min-width:0"><span style="' + lab + '">Battle</span><select id="lootBattleSel" style="' + ctl + '" aria-label="Filter by battle recovered"><option value="">All battles</option>';
+  for (var bi = 0; bi < battles.length; bi++) html += opt(battles[bi], battles[bi], p.battle);
+  html += '</select></label></div>';
+  return html;
+}
+
+/* The VIEW pipeline (D479): decorate -> filter -> sort a COPY. The saved
+   L.inventory array is never reordered or filtered — only the render order is. */
+function _lootInventoryView(inv) {
+  var view = [], p = _lootViewPrefs, i;
+  for (i = 0; i < inv.length; i++) {
+    var it = _lootItem(inv[i].id); if (!it) continue;
+    view.push({ row: inv[i], it: it, idx: i });
+  }
+  var total = view.length;
+  var kept = [];
+  for (i = 0; i < view.length; i++) {
+    var e = view[i];
+    if (p.tier && (e.it.rarity || "common") !== p.tier) continue;
+    if (p.kind && (e.it.category || "Item") !== p.kind) continue;
+    if (p.battle && (e.row.found || "") !== p.battle) continue;
+    kept.push(e);
+  }
+  if (p.sort === "rarity") kept.sort(function (a, b) { var d = _lootTierRank(b.it.rarity || "common") - _lootTierRank(a.it.rarity || "common"); return d || (a.idx - b.idx); });
+  else if (p.sort === "kind") kept.sort(function (a, b) { var ka = a.it.category || "Item", kb = b.it.category || "Item"; return ka < kb ? -1 : (ka > kb ? 1 : a.idx - b.idx); });
+  else if (p.sort === "battle") kept.sort(function (a, b) { var ka = a.row.found || "", kb = b.row.found || ""; return ka < kb ? -1 : (ka > kb ? 1 : a.idx - b.idx); });
+  return { view: kept, total: total };
+}
+
 function _lootInventoryHTML(C) {
   var L = lootInit(C), inv = L.inventory;
   if (!inv.length) return '<p class="lede" style="font-size:12px;text-align:center;opacity:.72">No campaign kit recovered yet.</p>';
-  var html = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px">';
-  for (var i = 0; i < inv.length; i++) {
-    var row = inv[i], it = _lootItem(row.id); if (!it) continue;
+  var vp = _lootInventoryView(inv), view = vp.view, rm = _lootReduce();
+  var html = '<div id="lootInvCount" style="font-size:11px;opacity:.74;margin:4px 0">' + view.length + ' of ' + vp.total + ' items</div>';
+  if (!view.length) return html + '<p class="lede" style="font-size:12px;text-align:center;opacity:.72">No items match the current filters.</p>';
+  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px">';
+  for (var i = 0; i < view.length; i++) {
+    var row = view[i].row, it = view[i].it;
     var col = _lootRarityColor(it), rar = _lootRarity(it.rarity), equipped = "";
     var tier = cwTierInfo(it.rarity);
+    var glow = (tier.id === "legendary" && !rm) ? ' class="cw-loot-glow"' : '';
     if (it.slot && L.equipped[it.slot] === it.id) equipped = ' &middot; Equipped';
-    html += '<div style="border:1px solid ' + col + ';border-left:4px solid ' + col + ';border-radius:6px;padding:9px;background:rgba(0,0,0,.14)">'
+    html += '<div data-loot-card="1" data-loot-id="' + _lootAttr(it.id) + '" data-loot-tier="' + _lootAttr(tier.id) + '"' + glow + ' style="--cw-tier-glow:' + col + ';border:1px solid ' + col + ';border-left:4px solid ' + col + ';border-radius:6px;padding:9px;background:rgba(0,0,0,.14)">'
       + '<div style="display:flex;justify-content:space-between;gap:8px"><b>' + _lootEsc(it.name) + '</b><span data-tier="' + _lootAttr(tier.id) + '" style="color:' + col + ';font-size:12px"><span aria-hidden="true">' + _lootEsc(tier.glyph) + '</span> ' + _lootEsc(rar.label) + '</span></div>'
       + '<div style="font-size:11px;opacity:.74">' + _lootEsc(it.category || "Item") + ' x' + row.qty + equipped + '</div>'
       + '<div style="font-size:11px;margin-top:5px;min-height:28px">' + _lootEsc(it.blurb || "") + '</div>'
@@ -1979,11 +2112,14 @@ function _ssClosestAttr(el, attr, stop) {
 
 function lootRenderTab(C) {
   lootInit(C);
+  _lootFeelCss();
   return '<h2 class="title-lg" style="text-align:center">Campaign Kit</h2>'
     + '<p class="title-sub" style="text-align:center">Loot, survival, and The Soldier\'s Story</p>'
     + '<hr class="rule">'
     + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:5px">Inventory</div>'
-    + _lootInventoryHTML(C)
+    + _lootRecentHTML(C)
+    + _lootInventoryControlsHTML(C)
+    + '<div id="lootInvBlock">' + _lootInventoryHTML(C) + '</div>'
     + '<hr class="rule">'
     + '<div class="gn-col-head" style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--rule);margin-bottom:5px">Survival</div>'
     + _lootSurvivalHTML(C)
@@ -1998,10 +2134,28 @@ function lootWireTab(C) {
     if (typeof saveLocal === "function") saveLocal();
     if (typeof _wdRefresh === "function") _wdRefresh();
   }
-  var uses = document.querySelectorAll("[data-loot-use]");
-  for (var i = 0; i < uses.length; i++) uses[i].addEventListener("click", function () { lootUseItem(C, this.getAttribute("data-loot-use")); refresh(); });
-  var eqs = document.querySelectorAll("[data-loot-equip]");
-  for (var j = 0; j < eqs.length; j++) eqs[j].addEventListener("click", function () { lootEquipItem(C, this.getAttribute("data-loot-equip")); refresh(); });
+  var invBlock = document.getElementById("lootInvBlock");
+  /* D479: delegated so the block can re-render on view changes without re-wiring. */
+  if (invBlock) invBlock.addEventListener("click", function (ev) {
+    var use = _ssClosestAttr(ev.target, "data-loot-use", invBlock);
+    if (use) { lootUseItem(C, use.getAttribute("data-loot-use")); refresh(); return; }
+    var eq = _ssClosestAttr(ev.target, "data-loot-equip", invBlock);
+    if (eq) { lootEquipItem(C, eq.getAttribute("data-loot-equip")); refresh(); }
+  });
+  function lootRerenderInv() {
+    if (invBlock) invBlock.innerHTML = _lootInventoryHTML(C);
+  }
+  function lootBindPref(id, key) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener("change", function () { _lootViewPrefs[key] = String(el.value || ""); lootRerenderInv(); });
+  }
+  lootBindPref("lootSortSel", "sort");
+  lootBindPref("lootTierSel", "tier");
+  lootBindPref("lootKindSel", "kind");
+  lootBindPref("lootBattleSel", "battle");
+  var recent = C && C.loot && C.loot.recentDrops;
+  if (recent) for (var ridx = 0; ridx < recent.length; ridx++) if (recent[ridx]) recent[ridx].seen = true;   // the flip reveal fires once per recovery
   var tog = document.getElementById("lootSurvToggle");
   if (tog) tog.addEventListener("click", function () { lootSetSurvival(C, !lootSurvivalActive(C)); refresh(); });
   var forage = document.getElementById("lootForage");

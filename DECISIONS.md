@@ -4,6 +4,53 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D479 — LANE-017 SLICE 2 SHIPPED: DROP FEEL — RARITY-COLOURED ANNOUNCEMENTS, ONE-TIME FLIP REVEAL, VIEW-SIDE SORT/FILTER, LEGENDARY GLOW — ALL THROUGH THE D478 CANONICAL MAP, ALL INERT UNDER reduceMotion — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE; MEGA-LADDER LEG 2 P1] (2026-07-20)
+
+**SHIPPED (the charter's slice-2 clause §4c.3; presentation only — the reward path is
+byte-identical):** `src/37` gains (1) the `L.recentDrops` presentation record — written by
+`lootOnResolve` from exactly the items the UNCHANGED pick/weight/add path granted (the
+`_pdLog` "Recovered from …" record text stays verbatim for the record), sanitized in
+`lootInit` under the D149 law (known ids only, text capped, ≤6 rows, absent NEVER created
+⇒ legacy saves byte-identical, unusable dropped fail-closed); (2) the Latest Recovery
+announcement panel — per-drop chips glyph+label redundant with border/colour from
+`cwTierInfo` (no new hex anywhere — the D478 wall scans every run); (3) the one-time
+card-flip reveal on unseen drops + the legendary glow (runtime-injected `cwLootFeelCss`
+keyframes; colour via a CSS var set inline from the data map), BOTH withheld entirely
+under `G.settings.reduceMotion` (instant reveal — the fldReduceMotion idiom) and marked
+seen at wire time so the flip fires once per recovery; (4) inventory sort/filter
+(sort recovery-order/rarity/kind/battle + facet filters rarity/kind/battle with an
+"N of M items" count line) — the VIEW pipeline decorates/filters/sorts a COPY with a
+stable idx tiebreaker; the saved `L.inventory` order is NEVER touched; stale prefs
+self-reset; the use/equip buttons move to delegated wiring on `#lootInvBlock` so the
+grid re-renders without re-wiring.
+
+**TEETH (owner probe-loot-survival per the charter; suite stays 140):** 16→20 —
+announcement-from-canonical-map + `_pdLog` record unchanged · flip/glow present by
+default AND fully inert under reduceMotion (zero animation classes, every chip/card
+still rendered) · sort/filter correctness on a seeded 4-tier/4-kind/3-battle inventory
+(all three sorts + all three facets + count line + round-trip) with the saved-order
+byte-identity assert after the FIRST sort AND at the end · sim/save byte-identity (a
+presentation-churned campaign's drops match an untouched twin's exactly; weights pinned
+2/1/0; recentDrops records the LATEST resolve) — 20/20, artifact read, 0 pageerrors,
+screenshot 445KB. Adjacents: probe-ratings 23/23 + probe-save-slots 16/16, both
+artifacts read, 0 pageerrors. node --check ×2 · build GATE OK · the one-language wall
+green with the new render layer.
+
+**BINDS (both md5-proven byte-identical restores to src/37 `1689c4a2` + game
+`b74053aa`):** A — the reduceMotion conjunct stripped from the announcement reveal
+(animation class applied regardless) → EXACTLY the rm tooth red ("reduceMotion still
+carries 2 flip/glow animation class(es)"; every other step green; re-run 20/20). B —
+the sort handler made to sort `C.loot.inventory` IN PLACE → the saved-order
+byte-identity tooth red EXACTLY ("sort/filter mutated the SAVED inventory order") AND
+the sibling sim/save byte-identity tooth red at its own label (the churned campaign
+diverged from its twin — the second tooth catching the same violation class from its
+independent angle); all 18 unrelated steps green; re-run 20/20. **AD-7 re-pins in this
+commit:** game 9dd15ca2 → b74053aa · srcTree ce48e9ae → 4eed52e8 · journey a527600d →
+1689c4a2 at all four plan-probe sites (base/dataTree/manifest/suite/focused hold — no
+data edit this slice); both plan probes re-run post-commit. Counts hold 29/62/1,710/140;
+`_SAVE_VER=1`; frozen base `c9db83fa` untouched. Exact next: LANE-017 slice 3 (badge
+presentation layer, §4d.1) per the committed contract.
+
 ## D478 — LANE-017 SLICE 1 SHIPPED: THE ONE RARITY LANGUAGE — THE DATA-CANONICAL CVD-SAFE TIER MAP, THE cwTierInfo/cwRungTierInfo HELPERS, AND THE ENFORCED ONE-LANGUAGE WALL — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE; THE POST-D476 MEGA-LADDER P3] (2026-07-20)
 
 **SHIPPED (the charter's slice-1 clause; ARC 4's first runtime commit):**

@@ -1067,6 +1067,148 @@ const SETUP = `(() => {
       if (bad.length) throw new Error('below 4.5:1 -> ' + bad.join(', '));
       return { tiers: ids.length };
     });
+
+    step('D479 drop feel: the rarity-coloured announcement renders the latest recovery through the canonical map and the _pdLog record text is unchanged', function(){
+      var C=mkC('US'); G.campaign=C; _t1InitAll(C);
+      C.president={turn:0,log:[]};
+      lootOnResolve('US','win',{id:'bullrun1',name:'First Bull Run'},C,true);
+      var rd=C.loot.recentDrops;
+      if(!rd || !rd.length) throw new Error('recentDrops record missing after a winning resolve');
+      var log=C.president.log||[], rec='';
+      for(var li=0;li<log.length;li++) if(String(log[li]).indexOf('Recovered from First Bull Run: ')===0) rec=String(log[li]);
+      if(!rec) throw new Error('the _pdLog record line is gone — the announcement upgrade must keep the log text');
+      var div=document.createElement('div');
+      div.innerHTML=lootRenderTab(C);
+      var panel=div.querySelector('#lootRecent');
+      if(!panel) throw new Error('announcement panel missing');
+      var chips=panel.querySelectorAll('[data-drop-tier]');
+      if(chips.length!==rd.length) throw new Error('announcement chips '+chips.length+' != recentDrops '+rd.length);
+      var d=gameData('loot-survival');
+      for(var i=0;i<chips.length;i++){
+        var it=null, items=d.items;
+        for(var ii=0;ii<items.length;ii++) if(items[ii].id===rd[i].id) it=items[ii];
+        var tid=chips[i].getAttribute('data-drop-tier');
+        if(tid!==(it.rarity||'common')) throw new Error('chip tier '+tid+' != item rarity '+it.rarity);
+        var t=d.rarities[tid];
+        var txt=chips[i].textContent||'';
+        if(txt.indexOf(t.glyph)<0 || txt.indexOf(t.label)<0) throw new Error('announcement chip '+tid+' not glyph+label redundant');
+        if(txt.indexOf(it.name)<0) throw new Error('announcement chip missing the item name');
+        var sty=(chips[i].getAttribute('style')||'').toLowerCase();
+        if(sty.indexOf(String(t.color).toLowerCase())<0) throw new Error('announcement chip '+tid+' does not use the canonical tier colour');
+      }
+      return { chips:chips.length, record:rec.slice(0,80) };
+    });
+
+    step('D479 flip/glow: the reveal animation and legendary glow are present by default AND fully inert under reduceMotion (instant reveal)', function(){
+      var C=mkC('US'); G.campaign=C; _t1InitAll(C);
+      lootAddItem(C,'battle_flag_fragment',1,'First Bull Run');
+      lootAddItem(C,'commissary_rations',2,'First Bull Run');
+      C.loot.recentDrops=[{id:'battle_flag_fragment',battle:'First Bull Run',seen:false},{id:'commissary_rations',battle:'First Bull Run',seen:false}];
+      var s0=!!(G.settings&&G.settings.reduceMotion);
+      if(!G.settings) G.settings={};
+      G.settings.reduceMotion=false;
+      var div=document.createElement('div');
+      div.innerHTML=lootRenderTab(C);
+      var flips=div.querySelectorAll('.cw-loot-flip');
+      if(!flips.length) throw new Error('no flip reveal class on unseen drops by default');
+      var glows=div.querySelectorAll('.cw-loot-glow');
+      if(!glows.length) throw new Error('no legendary glow by default');
+      for(var gi=0;gi<glows.length;gi++){
+        var t=glows[gi].getAttribute('data-drop-tier')||glows[gi].getAttribute('data-loot-tier')||'';
+        if(t!=='legendary') throw new Error('glow applied to a non-legendary tier: '+(t||'(none)'));
+      }
+      if(!document.getElementById('cwLootFeelCss')) throw new Error('runtime animation style layer missing');
+      for(var ri=0;ri<C.loot.recentDrops.length;ri++) C.loot.recentDrops[ri].seen=false;
+      G.settings.reduceMotion=true;
+      var div2=document.createElement('div');
+      div2.innerHTML=lootRenderTab(C);
+      var animated=div2.querySelectorAll('.cw-loot-flip, .cw-loot-glow');
+      if(animated.length) throw new Error('reduceMotion still carries '+animated.length+' flip/glow animation class(es)');
+      var chips=div2.querySelectorAll('[data-drop-tier]');
+      if(chips.length!==2) throw new Error('instant reveal must still render every chip, got '+chips.length);
+      var cards=div2.querySelectorAll('[data-loot-card]');
+      if(!cards.length) throw new Error('instant reveal must still render inventory cards');
+      G.settings.reduceMotion=s0;
+      return { flips:flips.length, glows:glows.length, rmChips:chips.length };
+    });
+
+    step('D479 sort/filter: view-side ordering and facet filters are correct on a seeded inventory and NEVER mutate the saved order', function(){
+      var C=mkC('US'); G.campaign=C; _t1InitAll(C);
+      lootAddItem(C,'commissary_rations',2,'First Bull Run');
+      lootAddItem(C,'field_glass',1,'Shiloh');
+      lootAddItem(C,'wool_blankets',1,'Antietam');
+      lootAddItem(C,'battle_flag_fragment',1,'Shiloh');
+      var savedBefore=JSON.stringify(C.loot.inventory);
+      openWarDept();
+      var tab=document.getElementById('wdTab_loot');
+      if(!tab) throw new Error('missing Campaign Kit tab button');
+      tab.click();
+      var cont=document.getElementById('wdContent');
+      var sortSel=cont.querySelector('#lootSortSel'), tierSel=cont.querySelector('#lootTierSel'),
+          kindSel=cont.querySelector('#lootKindSel'), battleSel=cont.querySelector('#lootBattleSel');
+      if(!sortSel||!tierSel||!kindSel||!battleSel) throw new Error('sort/filter controls missing');
+      function order(){
+        var cards=cont.querySelectorAll('[data-loot-card]'), out=[];
+        for(var i=0;i<cards.length;i++) out.push(cards[i].getAttribute('data-loot-id'));
+        return out.join(',');
+      }
+      function countLine(){ var el=cont.querySelector('#lootInvCount'); return el?el.textContent:''; }
+      setCtl(sortSel,'rarity');
+      var got=order();
+      if(got!=='battle_flag_fragment,field_glass,wool_blankets,commissary_rations') throw new Error('rarity sort wrong: '+got);
+      if(JSON.stringify(C.loot.inventory)!==savedBefore) throw new Error('sort/filter mutated the SAVED inventory order');
+      setCtl(sortSel,'kind');
+      got=order();
+      if(got!=='field_glass,wool_blankets,battle_flag_fragment,commissary_rations') throw new Error('kind sort wrong: '+got);
+      setCtl(sortSel,'battle');
+      got=order();
+      if(got!=='wool_blankets,commissary_rations,field_glass,battle_flag_fragment') throw new Error('battle sort wrong: '+got);
+      setCtl(sortSel,'');
+      got=order();
+      if(got!=='commissary_rations,field_glass,wool_blankets,battle_flag_fragment') throw new Error('default order wrong after sort round-trip: '+got);
+      setCtl(tierSel,'legendary');
+      got=order();
+      if(got!=='battle_flag_fragment') throw new Error('legendary filter wrong: '+got);
+      if(countLine().indexOf('1 of 4')<0) throw new Error('count line wrong under filter: '+countLine());
+      setCtl(tierSel,'');
+      setCtl(kindSel,'Supply');
+      got=order();
+      if(got!=='commissary_rations') throw new Error('kind filter wrong: '+got);
+      setCtl(kindSel,'');
+      setCtl(battleSel,'Shiloh');
+      got=order();
+      if(got!=='field_glass,battle_flag_fragment') throw new Error('battle filter wrong: '+got);
+      setCtl(battleSel,'');
+      got=order();
+      if(got!=='commissary_rations,field_glass,wool_blankets,battle_flag_fragment') throw new Error('clearing filters lost items: '+got);
+      if(JSON.stringify(C.loot.inventory)!==savedBefore) throw new Error('sort/filter mutated the SAVED inventory order');
+      return { finalOrder:got, count:countLine() };
+    });
+
+    step('D479 sim/save byte-identity: drops land unchanged in content and weights — the presentation layer never touches the reward path', function(){
+      var C1=mkC('US'); _t1InitAll(C1);
+      var C2=mkC('US'); _t1InitAll(C2);
+      lootOnResolve('US','win',{id:'shiloh',name:'Shiloh'},C1,true);
+      lootOnResolve('US','win',{id:'shiloh',name:'Shiloh'},C2,true);
+      G.campaign=C1; openWarDept();
+      var tab=document.getElementById('wdTab_loot');
+      if(!tab) throw new Error('missing Campaign Kit tab button');
+      tab.click();
+      var cont=document.getElementById('wdContent');
+      var sortSel=cont.querySelector('#lootSortSel'), tierSel=cont.querySelector('#lootTierSel');
+      if(sortSel) setCtl(sortSel,'rarity');
+      if(tierSel){ setCtl(tierSel,'common'); setCtl(tierSel,''); }
+      if(sortSel) setCtl(sortSel,'');
+      lootOnResolve('US','loss',{id:'antietam',name:'Antietam'},C1,false);
+      lootOnResolve('US','loss',{id:'antietam',name:'Antietam'},C2,false);
+      if(JSON.stringify(C1.loot.inventory)!==JSON.stringify(C2.loot.inventory)) throw new Error('presentation churn changed drop content: '+JSON.stringify(C1.loot.inventory)+' vs '+JSON.stringify(C2.loot.inventory));
+      if(JSON.stringify(facets(bridgeArmy(C1)))!==JSON.stringify(facets(bridgeArmy(C2)))) throw new Error('presentation churn changed sim facets');
+      var dc=GAME_DATA['loot-survival'].drops;
+      if(dc.winBonus!==2||dc.drawBonus!==1||dc.lossBonus!==0) throw new Error('drop weights moved: '+JSON.stringify(dc));
+      var rd2=C2.loot.recentDrops||[];
+      for(var i=0;i<rd2.length;i++) if(rd2[i].battle!=='Antietam') throw new Error('recentDrops should record the LATEST resolve, got '+rd2[i].battle);
+      return { inv:C1.loot.inventory.length, latest:rd2.length };
+    });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;
