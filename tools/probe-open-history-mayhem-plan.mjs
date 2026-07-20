@@ -109,11 +109,12 @@ const PIN = {
   // D479 re-pin (LANE-017 slice 2): game 9dd15ca2 -> b74053aa - drop feel in src/37
   // (announcement/flip/glow + view-side sort/filter + the additive recentDrops sanitizer;
   // rebuild; presentation-only). base/manifest/suite hold; data untouched.
+  // D482 re-pin (LANE-017 slice 5): the western coverage sweep completes the roster — game 59f2f617 -> 5e3b9b71 (27 western rosterBadges/rosterBadgeProv rows in the build), dataTree 462b0df9 -> 00f8c1fe (data/ratings.json western batch + the D482 note addendum). srcTree HOLDS at 9ee5bf37 (T14 untouched this slice — bind B's tamper restored byte-identical, md5-proven).
   // D481 re-pin (LANE-017 slice 4): the eastern coverage sweep + R-7 situational gating — game f7bb9cce -> 59f2f617 (T14 R-7 gate + row-prov display + 10 new eastern rosterBadges/rosterBadgeProv blocks in the build), dataTree b3b323fa -> 462b0df9 (data/ratings.json: eastern rows + rosterBadgeProv + _rosterNote D481 addendum), srcTree 7c23e51d -> 9ee5bf37 (T14 only; the badge layer stays pure-read — the D74 walls, probe-ratings 31/31 + probe-command/accessibility unaffected, both binds md5-proven).
   // D480 re-pin (LANE-017 slice 3): game b74053aa -> f7bb9cce - the badge presentation
   // layer (T14 gallery/showcase/disclosure + the src/35 pool-row dev-trait chip; rebuild;
   // presentation-only). base/manifest/suite hold; data untouched.
-  game: "59f2f61738e0120a799daefe222bae23",
+  game: "5e3b9b71bf39bfd27ed04c72d9f685c7",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "4625dca91b9b2cd8e65c1a9439160cf2",
   suite: "69681d6f2216fe1dcfd594ffc4a757b7",

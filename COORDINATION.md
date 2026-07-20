@@ -3068,19 +3068,24 @@ next green commit and confer through this ledger instead of permitting simultane
   politics for the election bind) · ARC 6 rail+naval packets (session-fillers,
   chartered per D455 §7's interleave rule) · Mayhem Slice B (LANE-007) · C72 Shiloh
   rewrite + GEA-01/S44 bundle (parked, Aaron reorder-only).
-- **Resume pointer:** SLICE 5 (the western/trans-Mississippi batch, §4d.2) per this
-  contract — the banked research workflow `wf_8f5ed36c-1a6` (10 gather + 10 refute,
-  complete) is adjudicated by the top loop with the D481 discipline (default-refute
-  drops stand; empirical bisect against the touched battles' own probes — THE
-  direction authority per the D481 lesson; massacre-family fortPillow/olustee and
-  inverted-direction stonesRiver are zero-tolerance); rows + rosterBadgeProv records
-  land in data/ratings.json; the probe-ratings coverage-floor PENDING list (10
-  western ids) EMPTIES in the same commit; the ab-badge-direction activation
-  evidence + ≥2 binds (single-source row → the source-floor tooth red EXACTLY; a
-  gated trigger past the T14 cap → the gated-stack conjunct red EXACTLY) md5-proven;
-  AD-7 re-pins + both plan probes re-run post-commit; then slice 6+ per the ladder.
-- **Last-touched commit:** the D481 slice-4 + R-7 commit (this commit).
-- **Slice history:** SLICE 4 + R-7 SHIPPED as D481 (2026-07-20, the resumed
+- **Resume pointer:** the P-END day-end battery FIRST (suite 140, serialized, ALONE,
+  every artifact JSON read — the session-boundary law), then SLICE 6 (soldier-tier
+  badges §4d.3) per this contract: historical-record badges for Verified register
+  soldiers (SOLID styling) vs earned-through-play career badges (HATCHED/Inferred),
+  both through the same capped levers; teeth in probe-loot-survival +
+  probe-war-career; binds per the contract clause (a play-earned badge rendered
+  solid → the distinction tooth red EXACTLY; a solid badge on a non-Verified record
+  → the Verified tooth red EXACTLY). §4d.2 is COMPLETE (D481 eastern + D482
+  western); the direction authority for any future badge row is the battle's own
+  probe (the D481 lesson, recorded in ab-badge-direction.mjs's header).
+- **Last-touched commit:** the D482 slice-5 commit (this commit).
+- **Slice history:** SLICE 5 SHIPPED as D482 (2026-07-20): the western batch
+  completes §4d.2 — rosterBadges 19→29 (+26 shipped rows), prov 53 records 49V/4I,
+  the coverage floor at the clean full registry; Stones River display-only (the
+  inverted near-parity law), Fort Donelson display-only (the Forrest horseman
+  empirical drop, third chaotic-inversion instance); all 10 western probes green;
+  binds A+B md5-proven; AD-7 game→5e3b9b71 · dataTree→00f8c1fe (srcTree holds).
+  SLICE 4 + R-7 SHIPPED as D481 (2026-07-20, the resumed
   mega-ladder): the eastern coverage sweep (rosterBadges 9→19, +26 rows 24V/2I, the
   rosterBadgeProv per-row citation law + card provenance line) and the R-7
   situational gating (engine-observable predicates, the absent-state law, the

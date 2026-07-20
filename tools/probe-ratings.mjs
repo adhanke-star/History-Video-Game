@@ -775,11 +775,12 @@ const SETUP = `(() => {
     });
 
     step('D481 COVERAGE FLOOR: every registered scenario carries a rosterBadges entry (the slice-4 eastern batch; the pinned western/trans-Mississippi remainder lands in slice 5)', function(){
-      // D481 chain: slice 4 covers the 10 eastern scenarios; slice 5 (the western/trans-Mississippi
-      // batch) EMPTIES this pending list and flips the floor to the clean full registry. A battle
-      // shipped after this sweep must add its roster row (or join a documented pending list) in the
-      // same commit — this tooth is the coverage law, and it is EXPECTED to move with the registry.
-      var PENDING=['elkhornTavern','stonesRiver','chattanooga','olustee','fortPillow','kennesaw','atlanta','franklin','nashville','fortDonelson'];
+      // D481 chain: slice 4 covered the 10 eastern scenarios with the western remainder pinned here.
+      // D482 chain: slice 5 (the western/trans-Mississippi batch) EMPTIED the list — the floor is now
+      // the clean full registry. A battle shipped after this sweep must add its roster row (or join a
+      // documented pending list) in the same commit — this tooth is the coverage law, and it is
+      // EXPECTED to move with the registry.
+      var PENDING=[];
       var reg=(typeof fldScenarioRegistry==='function')?fldScenarioRegistry():{};
       var ids=Object.keys(reg); if(ids.length<29) throw new Error('registry readback too small: '+ids.length);
       var RB=D&&D.rosterBadges; if(!RB) throw new Error('rosterBadges missing');

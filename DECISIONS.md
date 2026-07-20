@@ -4,6 +4,58 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D482 — LANE-017 SLICE 5 SHIPPED: THE WESTERN/TRANS-MISSISSIPPI COVERAGE SWEEP COMPLETES THE ROSTER — rosterBadges 19→29 SCENARIOS (EVERY REGISTERED BATTLE COVERED), THE COVERAGE FLOOR FLIPS TO THE CLEAN FULL REGISTRY — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE] (2026-07-20)
+
+**SHIPPED (the charter's slices-5 clause §4d.2 western batch):** rosterBadges 19 → 29
+scenarios (+27 rows, 25 Verified / 2 Inferred at authoring; 26 shipped after one empirical
+drop): elkhornTavern (Welfley massed_battery — display-only; the Shea/two-family register
+rule honored) · stonesRiver (Mendenhall massed_battery — display-only: THE INVERTED
+NEAR-PARITY BATTLE SHIPS NO MECHANICAL BADGE, the D481 Cold Harbor lesson applied
+prospectively; the refuter dropped all five mechanical proposals) · chattanooga (Hazen
+grand_charge — the unauthorized Missionary Ridge ascent that SUCCEEDED, the D104
+cs_johnson_gap upside-only precedent; forward-pits powder_shy · Geary flank_march · Moore
+reckless_valor) · olustee (Colquitt blooded · Smith horseman-Inferred; the two US rearguard
+rally proposals were zero-tolerance drops) · fortPillow (Bell woods_fighter · Sharp
+marksman · 6th-USCHA cannoneer — all guard-aligned; grand_charge and the Forrest feared
+misattribution dropped) · kennesaw (Maney stonewall · Mebane cannoneer-display ·
+Harker rigid_plan) · atlanta (Leggett stonewall · G.W.Smith green_levies · the twenty
+massed guns) · franklin (Brown reckless_valor+rigid_plan · Cox stonewall · Opdycke rally) ·
+nashville (Thompson USCT earned_in_blood · Wood rigid_plan · McArthur flank_march · Wilson
+horseman; the Cheatham piecemeal posture-trap refuted) · fortDonelson (Baldwin
+flank_march-Inferred — display-only after the empirical drop). rosterBadgeProv totals
+53 records (49 Verified / 4 Inferred, majority-Verified tooth green).
+
+**RESEARCH:** the second 20-agent workflow (`wf_8f5ed36c-1a6`, 10 Sonnet gatherers → 10
+Opus default-refute verifiers, primed with the D481 precedent) — the refuters dropped 13 of
+46 proposals pre-adjudication (flip-risk, posture-trap, phase-scoping, source-mismatch, and
+zero-tolerance classes); the top loop kept 27 and verified every source against the repo
+registers. **THE EMPIRICAL DROP (the D391 practice, third chaotic-inversion instance):**
+horseman on Forrest at Fort Donelson alone pushed the P2 breakout-seizure guard below its
+5/8 floor (4/8; green with it removed) — the speed nudge on the breakout cavalry perturbed
+the knife-edge phase AGAINST its own side, the same counterintuitive class as the D481
+Cold Harbor and Crater drops; Fort Donelson ships display-only and Forrest's escape lives
+in the teaching cards. **THE DIRECTION AUTHORITY:** all 10 western battles' own probes
+green at the final tree (franklin's first run was a 30s waitForFunction harness timeout —
+the D454/D471/D477 slow-Mac class, FIFTH instance, re-run green alone with zero tree
+changes); probe-ratings 31/31 with the COVERAGE FLOOR now the clean full registry
+({registry:29, covered:29, pendingWestern:0} — the D481 PENDING list EMPTIED with its
+documented chain) and the source floor at 20 swept scenarios / 53 rows / 49 Verified.
+**A/B ACTIVATION EVIDENCE:** tools/ab-badge-direction.mjs over the western 10 — zero
+silent R-7 deactivations (artifact read, 0 pageerrors).
+
+**BINDS (md5-proven byte-identical restores — data ed6f8386 · T14 0492809f · game
+5e3b9b71):** A (the single-source clause, record-removed variant on
+fortPillow/cs_fp_bell/woods_fighter) → EXACTLY the D481 source-floor tooth red, 1 failed
+step; B (the gated-cap exemption tamper) → EXACTLY the D481 gated-stack conjunct red
+("got 1.25"), 1 failed step; restores re-run 31/31, 0 pageerrors. **AD-7 re-pins in this
+commit:** game 59f2f617 → 5e3b9b71 · dataTree 462b0df9 → 00f8c1fe at all four plan-probe
+sites (srcTree HOLDS at 9ee5bf37 — T14 untouched net this slice); both plan probes re-run
+green post-commit. Counts hold 29/62/1,710/140; `_SAVE_VER=1`; frozen base `c9db83fa`
+untouched. **§4d.2 IS COMPLETE: every registered scenario carries a citation-grade badge
+roster.** Exact next per the charter ladder: SLICE 6 (soldier-tier badges §4d.3) — but the
+day-end battery (suite 140, serialized, ALONE) is owed FIRST at this session boundary per
+the P-END law.
+
 ## D481 — LANE-017 SLICES 4 (EASTERN COVERAGE SWEEP) + R-7 SHIPPED: rosterBadges 9→19 SCENARIOS WITH THE PER-ROW CITATION LAW MADE DATA, AND THE R-3 SITUATIONAL TRIGGERS GATED ON ENGINE-OBSERVABLE STATE — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE; THE INTERRUPTED MEGA-LADDER RESUMED] (2026-07-20)
 
 **SHIPPED (the charter's slices-4 clause §4d.2 eastern batch + the R-7 rider per adjudication 9):**
