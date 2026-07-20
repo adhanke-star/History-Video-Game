@@ -4,6 +4,31 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D477 — THE ARC 3 RELEASE BATTERY IS COMPLETE (140/140 AT SHA `7ac44aa` ACROSS THREE DOCUMENTED LEGS, ZERO UNRESOLVED REDS) — LANE-014 FLIPS SHIPPED; ARC 3 IS CLOSED AND FULLY RELEASED — [CLAUDE CODE (FABLE 5); THE POST-D476 MEGA-LADDER P1/SLICE 6] (2026-07-20)
+
+**THE BATTERY (SHA `7ac44aa` — the D476 slice-5 commit; the tree never moved during or
+between legs):** the full 140-row suite ran serialized/ALONE (TMPDIR set, one shared :8765
+server, orphan Chromes killed between legs): LEG 1 rows 1-101 green; row 102 `tactical
+roster` red on a `page.screenshot` 30s timeout immediately after a 542s row — re-run ALONE
+green 8/8/0-pageerrors at normal speed (environment flake, the D454/D471 class, NO tree
+change); LEG 2 resumed `--from="tactical roster"` rows 102-108 green; row 109 `antietam`
+red on the 360s in-battery budget — re-run ALONE green in 77s (17 steps, 0 pageerrors;
+same class, NO tree change; T24's new near-LOD provably not implicated — the row runs at
+normal speed on an idle machine); LEG 3 resumed `--from="antietam"` rows 109-140 to the
+END: 34/34 exit 0, "VET NO-REGRESSION OK". TOTALS: 140 green rows across the legs; the
+programmatic sweep of the battery window read 139 artifact JSONs — EVERY one ok, ZERO
+pageerrors anywhere (the D466 139-artifact shape). The one tracked byproduct
+(tools/shots/data-schema-validation.html) is a timestamp-only regeneration and rides this
+commit (the D470/D474 precedent).
+
+**THE FLIP:** slices 5 (D476) and 6 are verified at release grade on the same SHA slice 5
+shipped at. **LANE-014 is SHIPPED in full — all six slices (D467 provenance wall · D468
+terrain T32 · D472 HDRI sky T33 · D473 ground camera T34 · D476 formation LOD + license
+wall · this battery). ARC 3 IS CLOSED AND FULLY RELEASED.** Doc-only commit — no pinned
+surface moves; both plan probes re-run post-commit. Counts hold 29/62/1,710/140;
+`_SAVE_VER=1`; frozen base `c9db83fa` untouched. Exact next: the ARC 4 charter (LANE-017
+loot-and-badges, ledger-only, per Aaron's post-D476 24-hour mega-ladder authorization).
+
 ## D476 — LANE-014 SLICE 5 SHIPPED: FORMATION DISTANCE-LOD (T24 EXTENSION) + THE T23 RUNTIME LICENSE WALL, FIXTURE-PROVEN — [CLAUDE CODE (FABLE 5), LANE-014 DRIVE; THE POST-D475 LADDER P1] (2026-07-20)
 
 **SHIPPED (the contract's slice-5 clause verbatim; DRIVE re-taken ledger-only at `4ab1b43`

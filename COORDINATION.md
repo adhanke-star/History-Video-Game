@@ -2448,9 +2448,11 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-014 · graphics-uplift — **DRIVE (slices 1-5 SHIPPED as D467/D468/D472/D473/D476; SLICE 6 — the ARC 3 release battery — is the sole remainder; Claude Code / Fable 5 holds the lock for it)** (ARC 3 of the D455 roadmap)
+### LANE-014 · graphics-uplift — **SHIPPED (all six slices; the D477 release battery at SHA `7ac44aa` — 140/140 across three documented legs, zero unresolved reds — ARC 3 IS CLOSED AND FULLY RELEASED)** (ARC 3 of the D455 roadmap)
 
-- **Owning tool:** Claude Code (Fable 5) — DRIVE re-taken 2026-07-20 for SLICE 5
+- **Owning tool:** unowned — lane CLOSED at the D477 battery flip (2026-07-20,
+  Claude Code / Fable 5; no further work in this lane). Final DRIVE history:
+  Claude Code (Fable 5) — DRIVE re-taken 2026-07-20 for SLICE 5
   under Aaron's post-D475 continuation kickoff; the §4 TOP-LOOP resolution
   recorded here: TOP LOOP = Claude Code / Fable 5 (the session model, addressed
   by the kickoff directly; fallbacks unneeded), helpers Sonnet low/med
@@ -2770,7 +2772,18 @@ next green commit and confer through this ledger instead of permitting simultane
   29/62/1,710/140. Resume: SLICE 6 — the ARC 3 release checkpoint battery
   (suite 140, TMPDIR set, serialized, ALONE, war-career 900s, every artifact
   JSON read, reds root-fixed at exact labels) — on green THIS LANE FLIPS
-  SHIPPED with the battery SHA and ARC 3 CLOSES.
+  SHIPPED with the battery SHA and ARC 3 CLOSES. SLICE 6 COMPLETED and the
+  lane FLIPPED SHIPPED 2026-07-20 (D477, this commit): the full 140-row
+  battery ran serialized/ALONE at SHA `7ac44aa` across THREE documented legs
+  (rows 1-101 · a tactical-roster screenshot-timeout flake re-run green alone
+  8/8 · rows 102-108 · an antietam 360s in-battery timeout flake re-run green
+  alone in 77s — both the D454/D471 slow-Mac environment class, ZERO tree
+  changes · rows 109-140 to the END, "VET NO-REGRESSION OK"); 140 green rows,
+  139 battery-window artifact JSONs swept — every one ok, ZERO pageerrors
+  anywhere. Slices 5 (D476) and 6 are verified at release grade on the same
+  SHA the slices shipped at. **ARC 3 IS CLOSED AND FULLY RELEASED. The next
+  arc is ARC 4 (loot + badges) — chartered as LANE-017 in the immediately
+  following ledger-only commit.**
 
 ---
 
