@@ -937,12 +937,13 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // D479 re-pin (LANE-017 slice 2): srcTree ce48e9ae -> 4eed52e8 (drop feel in src/37 —
     // announcement panel + flip/glow + view-side sort/filter + the additive recentDrops
     // sanitizer; presentation-only, no war-career surface).
+    // D482 follow-up re-pin: the battery's terrain-readability decor-leak scan tripped on the R-7 comment's literal terrain-array wording in T14 (the code always used the T0 universal hooks fldInFort+fldWalls; comment reworded, no tooth change) — game 5e3b9b71 -> 3774e2d3 · srcTree 9ee5bf37 -> 10f20234.
     // D482 re-pin (LANE-017 slice 5): the western coverage sweep completes the roster — game 59f2f617 -> 5e3b9b71 (27 western rosterBadges/rosterBadgeProv rows in the build), dataTree 462b0df9 -> 00f8c1fe (data/ratings.json western batch + the D482 note addendum). srcTree HOLDS at 9ee5bf37 (T14 untouched this slice — bind B's tamper restored byte-identical, md5-proven).
     // D481 re-pin (LANE-017 slice 4): the eastern coverage sweep + R-7 situational gating — game f7bb9cce -> 59f2f617 (T14 R-7 gate + row-prov display + 10 new eastern rosterBadges/rosterBadgeProv blocks in the build), dataTree b3b323fa -> 462b0df9 (data/ratings.json: eastern rows + rosterBadgeProv + _rosterNote D481 addendum), srcTree 7c23e51d -> 9ee5bf37 (T14 only; the badge layer stays pure-read — the D74 walls, probe-ratings 31/31 + probe-command/accessibility unaffected, both binds md5-proven).
     // D480 re-pin (LANE-017 slice 3): srcTree 4eed52e8 -> 7c23e51d (the badge presentation
     // layer — T14 gallery/showcase/disclosure + the src/35 pool-row dev-trait chip;
     // presentation-only, no war-career surface).
-    srcTree:"9ee5bf37419ff712b167035e13356b4e",
+    srcTree:"10f20234239252eb17cb6e2af7a3cd94",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
@@ -1283,11 +1284,12 @@ step("BASELINES + LANE", () => {
     // data/loot-survival.json + the src/37 helpers + T14 tint + rebuild). base/manifest/suite hold.
     // D479 re-pin (LANE-017 slice 2): game 9dd15ca2 -> b74053aa (drop feel in src/37 + rebuild;
     // presentation-only). base/dataTree/manifest/suite hold.
+    // D482 follow-up re-pin: the battery's terrain-readability decor-leak scan tripped on the R-7 comment's literal terrain-array wording in T14 (the code always used the T0 universal hooks fldInFort+fldWalls; comment reworded, no tooth change) — game 5e3b9b71 -> 3774e2d3 · srcTree 9ee5bf37 -> 10f20234.
     // D482 re-pin (LANE-017 slice 5): the western coverage sweep completes the roster — game 59f2f617 -> 5e3b9b71 (27 western rosterBadges/rosterBadgeProv rows in the build), dataTree 462b0df9 -> 00f8c1fe (data/ratings.json western batch + the D482 note addendum). srcTree HOLDS at 9ee5bf37 (T14 untouched this slice — bind B's tamper restored byte-identical, md5-proven).
     // D481 re-pin (LANE-017 slice 4): the eastern coverage sweep + R-7 situational gating — game f7bb9cce -> 59f2f617 (T14 R-7 gate + row-prov display + 10 new eastern rosterBadges/rosterBadgeProv blocks in the build), dataTree b3b323fa -> 462b0df9 (data/ratings.json: eastern rows + rosterBadgeProv + _rosterNote D481 addendum), srcTree 7c23e51d -> 9ee5bf37 (T14 only; the badge layer stays pure-read — the D74 walls, probe-ratings 31/31 + probe-command/accessibility unaffected, both binds md5-proven).
     // D480 re-pin (LANE-017 slice 3): game b74053aa -> f7bb9cce (badge presentation layer in
     // T14 + src/35 + rebuild; presentation-only). base/dataTree/manifest/suite hold.
-    game:"5e3b9b71bf39bfd27ed04c72d9f685c7",
+    game:"3774e2d38cb4f2e4e3293b604fb02d92",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     // D478 re-pin: dataTree 4bbdebe5 -> b3b323fa (LANE-017 slice 1: rarity glyphs + reserved tier
     // hexes + rungTiers in data/loot-survival.json — presentation data only, no war-career data).
@@ -1723,14 +1725,15 @@ step("REACHABILITY BASELINES", () => {
     // D479 re-pin: game 9dd15ca2 -> b74053aa, srcTree ce48e9ae -> 4eed52e8 (LANE-017 slice 2:
     // drop feel in src/37 — announcement/flip/glow + view-side sort/filter + the additive
     // recentDrops sanitizer + rebuild); dataTree/runtime did NOT move.
+    // D482 follow-up re-pin: the battery's terrain-readability decor-leak scan tripped on the R-7 comment's literal terrain-array wording in T14 (the code always used the T0 universal hooks fldInFort+fldWalls; comment reworded, no tooth change) — game 5e3b9b71 -> 3774e2d3 · srcTree 9ee5bf37 -> 10f20234.
     // D482 re-pin (LANE-017 slice 5): the western coverage sweep completes the roster — game 59f2f617 -> 5e3b9b71 (27 western rosterBadges/rosterBadgeProv rows in the build), dataTree 462b0df9 -> 00f8c1fe (data/ratings.json western batch + the D482 note addendum). srcTree HOLDS at 9ee5bf37 (T14 untouched this slice — bind B's tamper restored byte-identical, md5-proven).
     // D481 re-pin (LANE-017 slice 4): the eastern coverage sweep + R-7 situational gating — game f7bb9cce -> 59f2f617 (T14 R-7 gate + row-prov display + 10 new eastern rosterBadges/rosterBadgeProv blocks in the build), dataTree b3b323fa -> 462b0df9 (data/ratings.json: eastern rows + rosterBadgeProv + _rosterNote D481 addendum), srcTree 7c23e51d -> 9ee5bf37 (T14 only; the badge layer stays pure-read — the D74 walls, probe-ratings 31/31 + probe-command/accessibility unaffected, both binds md5-proven).
     // D480 re-pin: game b74053aa -> f7bb9cce, srcTree 4eed52e8 -> 7c23e51d (LANE-017 slice 3:
     // the badge presentation layer — T14 gallery/showcase/disclosure + the src/35 pool-row
     // dev-trait chip + rebuild); dataTree/runtime/journey did NOT move.
-    game:"5e3b9b71bf39bfd27ed04c72d9f685c7",
+    game:"3774e2d38cb4f2e4e3293b604fb02d92",
     dataTree:"00f8c1fe8bde4cd5e527bac009b24989",
-    srcTree:"9ee5bf37419ff712b167035e13356b4e",
+    srcTree:"10f20234239252eb17cb6e2af7a3cd94",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;

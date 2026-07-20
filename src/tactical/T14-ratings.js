@@ -238,10 +238,12 @@ function _fldBadgeActive() {
   return (typeof __FIELD !== "undefined" && __FIELD && __FIELD.badges) ? true : false;
 }
 /* R-7 (D481): is the ground at (x,z) fortified — inside a fort circle OR within assault
-   reach (~45yd) of a terrain wall segment? The shipped works are modeled BOTH ways:
-   fort circles (terrain.forts) where a scenario declares them, and wall segments
-   (terrain.walls — the Fredericksburg stone wall / Vicksburg works idiom). Absent or
-   unreadable terrain -> false (no fortification observed). Pure read, deterministic. */
+   reach (~45yd) of a terrain wall segment? The shipped works are modeled BOTH ways: fort
+   circles where a scenario declares them, and wall segments (the Fredericksburg stone
+   wall / Vicksburg works idiom). READS ONLY THE T0 UNIVERSAL HOOKS (fldInFort + fldWalls)
+   — never a raw terrain array (the terrain-readability decor-leak scan polices this; its
+   token tripped on this comment's old wording, D482 follow-up). Absent or unreadable
+   terrain -> false (no fortification observed). Pure read, deterministic. */
 function _fldNearWallSeg(x, z, r) {
   var W = (typeof fldWalls === "function") ? fldWalls() : null; if (!W || !W.length) return false;
   for (var i = 0; i < W.length; i++) {
