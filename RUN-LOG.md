@@ -2,6 +2,38 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-20 — D490: LANE-018 SLICE 2 SHIPPED (`f43d1f0`): THE AI-GM PERSONA CHOICE AT SETUP + THE TRANSFER SYMMETRY RIDER
+
+A fresh Fable 5 session resumed the HELD LANE-018 DRIVE at the clean pushed 11b1619
+(D489 closeout) boundary and executed the committed slice-2 charter clause verbatim
+(the §4 TOP-LOOP resolution stated at the top: Claude Code / Fable 5 xhigh; one
+4-agent mechanical recon workflow — Sonnet med ×2 + Haiku ×2, model+effort explicit —
+inventoried the picker-DOM teeth, the tenure data, the AD-7 pin sites with their hash
+functions, and the preparse gate before any edit; all four packets verified at the top
+loop against the live tree). The picker gained the labelled native Enemy-command-persona
+select threaded fail-closed through the D486 token chain to `cmdSetAiGmPersona`;
+`cmd.aiGmPersona` rides D149 additive; `cmdEnemyShadow` honors Historical (tenure
+windows, zero friction) vs Competitive (role sort under `_cmdAiGmFriction` through the
+one `_cmdTransferMalus` [0,6] clamp, the chosen cross-theater commander paying the same
+malus on leadership); the readout discloses each persona honestly and is byte-identical
+at default; the aiGm `_note` stale-blocker sentence was replaced (adjudication 2). A
+CHARTER ERRATUM was recorded rather than silently rebuilt (the D489-adjudication-1
+class): "Davis keeps Bragg through his documented tenure" is half-stale — cs-bragg
+carries `commandFrom: null`; the shipped single-slot chains are the US chain→Grant
+(March 1864) and CS Johnston→Lee (June 1862); the teaching copy cites what the data
+records, no new sourced claim. Teeth probe-command 94→99 (99/99, 0 pageerrors);
+adjacents oob 21/21 · save-slots 16/16 · accessibility 27/27 · mayhem-mode 24/24;
+build GATE OK · schema 62/62 · cooked-SETUP preparse via the template-literal VM cook
+(lesson: raw extraction false-alarms on template escapes — cook the literal first);
+binds A/B bit EXACTLY at their teeth with md5-proven restores (src/35 a69d6249 · game
+b2b23ed2), final 99/99; honest A/B: zero values moved at the absent choice. AD-7
+re-pins (verbatim-extracted hash functions) game→b2b23ed2 · dataTree→fa4ce39d ·
+srcTree→cfa7648d · command→a69d6249 · commandProbe→d861722c; both plan probes re-ran
+green POST-COMMIT (24/24 · 13/13). Counts hold 29/62/1,710/140; `_SAVE_VER=1`; frozen
+base untouched. Zero environment flakes this session. LANE-018 DRIVE remains HELD
+mid-ladder; EXACT NEXT: SLICE 3, the 1864 election bind (the load-bearing slice, the
+packet §3/§3.5 verbatim), routed to a fresh session per the D171 phase boundary.
+
 ## 2026-07-20 — D489: ARC 5 OPENED — LANE-018 `gm-completion` CHARTERED AT DRIVE (`358bf35`) + SLICE 1 SHIPPED (`32051dd`): THE MUSTER-ROLL DESK SURFACE
 
 A fresh Fable 5 session opened at the clean pushed d8ca128 (D488 closeout) boundary and
