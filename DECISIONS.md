@@ -4,6 +4,49 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D487 — LANE-017 SLICE 9: THE ARC 4 RELEASE BATTERY IS COMPLETE AND GREEN — LANE-017 SHIPPED, ARC 4 CLOSED (+ THE D483-LATENT NaN-SCAN FALSE-POSITIVE ROOT-FIX, SWEPT TREE-WIDE) — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE→SHIPPED] (2026-07-20)
+
+**THE BATTERY:** the full 140-row suite ran serialized/ALONE at battery SHA `fec05a3` across
+SIX documented legs (rows 1-6 · 7-9 · 10-33 · 34-94 incl. the 900s war-career row · ~96-104 ·
+the final leg to row 140, "VET NO-REGRESSION OK"); the battery-window artifact sweep read
+**168 artifact JSONs — every one ok, ZERO pageerrors.**
+
+- **ONE REAL RED, root-fixed at its exact label (`fec05a3`):** probe-command's four
+  NaN/undefined render teeth (D105 Career Arc · D113 political tell · D323 Transfer ·
+  D173 AI-GM readout) red on the literal 3-char "NaN" token INSIDE the D483 flag-card
+  per-(side, initials) canvas-PNG **base64 payloads** now inlined in `cmdRenderTab` — image
+  bytes, not rendered text. A D483-LATENT false-positive class: probe-command was not in
+  D483's focused gates, so this battery was its first run since the wrap landed (the
+  D480-latent/C11 precedent). FIX: the teeth scan with opaque data-URI payloads STRIPPED
+  (`_scrubDataUris`) — PRECISION-strengthened, never weakened; a text-surface leak still
+  bites, proven both ways (text-NaN caught · base64-NaN ignored). The class swept tree-wide
+  to its siblings probe-afteraction/probe-divergence/probe-endings (latent, seed-lucky
+  green). All four owners re-run green ALONE: command 94/94 · afteraction 19/19 ·
+  divergence 15/15 · endings 25/25, 0 pageerrors. `commandProbe` md5 re-pinned with its
+  chain (5ffd40fd→048bfed3); both plan probes re-run green post-commit (24/24 · 13/13).
+- **FOUR environmental flakes, each re-run green ALONE with zero tree change (the
+  D454/D471/D477/D482 slow-Mac class):** t1probe (a 60s page-load timeout while the ARC 6
+  research workflow ran CONCURRENTLY — a sequencing error, lesson logged: even
+  browser-free helper workflows contend enough on the 8 GB Mac to break a battery; batteries
+  get the machine ALONE, full stop) · probe-bridge (360s in-battery kill → 6/6 alone) ·
+  probe-weather (a frame-timing tooth at 417.8s → 30/30 alone) · probe-fredericksburg
+  (360s in-battery kill → green alone).
+
+**LANE-017 IS SHIPPED IN FULL (all nine slices: D478 language · D479 feel · D480
+presentation · D481 eastern+R-7 · D482 western · D484 soldier tier · D485 named artifacts ·
+D486 sets/variety/salvage/economy/setup · this battery) — ARC 4 IS CLOSED AND FULLY
+RELEASED.** Counts hold 29/62/1,710/140; `_SAVE_VER=1`; frozen base `c9db83fa` untouched;
+AD-7 head: game 67fbe534 · dataTree 5de65a85 · srcTree 8174d79d · journey 214fb6e5 ·
+manifest 9312db81 · suite 69681d6f · focused e2acf99a · commandProbe 048bfed3.
+
+**Banked for the next session (the Aaron-ratified 2026-07-20 tail):** the ARC 6 politics
+research workflow `wf_854e0760-ef2` is COMPLETE (13/13 agents: six Sonnet-gather topics —
+election-1864 · midterms-1862 · war-weariness · emancipation-politics · soldier-vote ·
+CS-politics — each Opus-high default-refuted, plus the election-bind repo data-needs
+inventory); adjudicate from its journal and author the packet per the D481/D482
+banked-workflow practice. GEA-01 + S44 were found ALREADY DISCHARGED (both REVIEW-QUEUE
+rows struck through, FIXED IN D423) — T3 collapses into the T1 stale-row sweep.
+
 ## D486 — LANE-017 SLICE 8 SHIPPED: SET COLLECTIONS + ITEM VARIETY + SALVAGE + THE CS CAPTURED-ARMS CHANNEL + READ-ONLY ECONOMY HOOKS + THE CAMPAIGN-SETUP KIT CHOICE (§4c.2+§4c.5, UNSPLIT) — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE] (2026-07-20)
 
 **SHIPPED (the charter's slice-8 clause verbatim, NOT split — the P0 recon sized every

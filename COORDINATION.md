@@ -2891,16 +2891,14 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ---
 
-### LANE-017 · loot-and-badges — **CONTRACT→DRIVE (chartered ledger-only; ARC 4 of the D455 roadmap — OPENS on ARC 3's close)** (packet §4c+§4d + the badge-chip/rarity-visual media slices + the R-7 reconsideration rider)
+### LANE-017 · loot-and-badges — **SHIPPED (all nine slices D478-D487; the D487 release battery at SHA `fec05a3` — 140 rows across six documented legs, 168 artifact JSONs all ok/0-pageerrors; ARC 4 IS CLOSED AND FULLY RELEASED)** (packet §4c+§4d + the badge-chip/rarity-visual media slices + the R-7 reconsideration rider)
 
-- **Owning tool:** Claude Code (Fable 5) — DRIVE re-taken 2026-07-20 (leg 2 of the
-  24-hour mega-ladder, Aaron's same-chat D171 authorization; this ledger edit is the
-  committed code-move gate). The §4 TOP-LOOP resolution for this leg, stated once:
-  TOP LOOP = Claude Code / Fable 5 (the live session model; no fallback needed),
-  helpers Sonnet low/med mechanical · Haiku pure reads · Opus high reasoning,
-  model+effort explicit per call. Resume: slice 2 (drop feel) per the pointer below.
-  Prior-leg history: slice 1 SHIPPED clean/pushed at the 2026-07-20 leg-1 closeout
-  (lock released there, re-taken here).
+- **Owning tool:** unowned — lane CLOSED at the D487 battery flip (2026-07-20; the
+  DRIVE lock RELEASED at this closeout). Drive history: Claude Code (Fable 5) held
+  DRIVE through the slice ladder (chartered `023ec91` at the D477 ARC 3 close; DRIVE
+  re-taken per leg under Aaron's D171 same-chat authorizations; the §4 TOP-LOOP
+  resolution each leg: Claude Code / Fable 5, helpers Sonnet low/med mechanical ·
+  Haiku pure reads · Opus high reasoning, model+effort explicit per call).
   Charter-session history: Claude Code (Fable 5) — chartered + DRIVE taken 2026-07-20 under
   Aaron's post-D476 24-hour mega-ladder authorization; the §4 TOP-LOOP resolution:
   TOP LOOP = Claude Code / Fable 5 (session model), helpers Sonnet low/med
@@ -2908,8 +2906,14 @@ next green commit and confer through this ledger instead of permitting simultane
   call. Charter recon was read-only (loot/badge/ratings seams · rosterBadges
   coverage inventory · R-7 provenance · rarity-data topology) and ran DURING the
   D477 battery's row window without touching the tree.
-- **State:** DRIVE — this entry IS the acceptance contract (the LANE-014 `489cfc4`
-  precedent). Slices land teeth with the fixes that green them (§1).
+- **State:** SHIPPED — the D487 release battery (140 rows serialized/ALONE at
+  `fec05a3` across six documented legs; ONE real red — the D483-latent NaN-scan
+  base64 false-positive class — root-fixed at its exact label and swept to its three
+  sibling probes, teeth precision-strengthened never weakened; four slow-Mac
+  environmental flakes each re-run green ALONE; 168 artifact JSONs all ok, ZERO
+  pageerrors) gated this flip. This entry WAS the acceptance contract (the LANE-014
+  `489cfc4` precedent); every slice landed its teeth with the fixes that greened
+  them (§1).
 - **Design law:** DECISIONS D455 §7 + packet `docs/design/unlocked-but-judged-design.md`
   §4c (loot/Campaign Kit depth — R8) + §4d (badges/ratings expansion) + §7's ARC 4 row
   (THE LAW: "presentation: loot + badges (§4c+§4d) + the badge-chip/rarity-visual media
@@ -3068,19 +3072,15 @@ next green commit and confer through this ledger instead of permitting simultane
   politics for the election bind) · ARC 6 rail+naval packets (session-fillers,
   chartered per D455 §7's interleave rule) · Mayhem Slice B (LANE-007) · C72 Shiloh
   rewrite + GEA-01/S44 bundle (parked, Aaron reorder-only).
-- **Resume pointer:** SLICE 9 — the ARC 4 RELEASE BATTERY (suite 140; TMPDIR set;
-  `npm run vet:noreg` ALONE on the machine, serialized; war-career 900s;
-  probe-visual-fidelity 600s documented slow row; read EVERY artifact JSON — ok +
-  0 pageerrors; reds root-fixed at their exact labels, slow-Mac timeouts/CDN blips
-  re-run ALONE first per the D454/D471/D477/D482 precedent; never weaken a tooth).
-  On full green flip this lane SHIPPED with the battery SHA. §4c + §4d are COMPLETE
-  (D478 language · D479 feel · D480 presentation · D481 eastern+R-7 · D482 western ·
-  D484 soldier tier · D485 named artifacts · D486 sets/variety/salvage/economy/setup);
-  the P-END battery for slices 4-5 ran at `7e399a6` (D482-BATTERY). Behind the
-  battery: the Aaron-ratified 2026-07-20 [IF-ROOM] tail in order (T1 stale-docs
-  sweep incl. THIS lane's standing-queue rows · T2 the ARC 6 politics research
-  packet · T3 GEA-01/S44 · T4 brigade flag markers), shed from the back.
-- **Last-touched commit:** the D486 slice-8 commit (this commit).
+- **Resume pointer:** NONE — the lane is closed. The forward pointer (the Aaron-
+  ratified 2026-07-20 tail + the D455 ladder): T2 the ARC 6 POLITICS packet — the
+  research workflow `wf_854e0760-ef2` is COMPLETE and banked (six default-refuted
+  topics + the election-bind repo data-needs inventory); a next session adjudicates
+  its journal and authors the packet (the D481/D482 banked-workflow practice), which
+  unblocks ARC 5 GM completion (the election bind). T4 brigade flag markers (Phase
+  H1b, Aaron-ratified for the tail) remains a candidate behind it. T3 GEA-01/S44
+  was found ALREADY DISCHARGED (both rows FIXED IN D423) — recorded in the T1 sweep.
+- **Last-touched commit:** the D487 battery-flip docs commit (this commit).
 - **Slice history:** SLICE 8 SHIPPED as D486 (2026-07-20, UNSPLIT — the P0 recon
   sized every sub-feature onto an existing seam): 4 possession-derived sets entering
   ONLY via _lootEquippedEffect under the same bridge ±cap (pure, reversible,
