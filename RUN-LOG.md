@@ -2,6 +2,19 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-21 — D494: ARC 5 RELEASED — LANE-018 SHIPPED
+
+The 140-row serialized release battery is green at code SHA `fc8ccc2`. D492 root-fixed
+the schema validator's missing politics enrollment (63/63); D493 root-fixed Mayhem's two
+stale D491 baselines (24/24). The only environmental rerun was Antietam: the harness
+timed out at 360 seconds without producing a fresh artifact, so no stale evidence was
+credited; its isolated rerun passed 17/17 with zero pageerrors, then the battery resumed
+at Gettysburg and completed. War-career passed 46/46 in 612.7s and visual-fidelity
+49/49 in 363.7s. The fresh-artifact audit covered 140 JSON files and found `ok:true`,
+zero failed steps, and zero pageerrors throughout. Schema 63, suite 140, frozen base,
+`_SAVE_VER=1`, `MAYHEM_PUBLIC_READY=true`, and all AD-7 pins held. LANE-018 is SHIPPED;
+next work is a fresh ledger charter for T4 brigade flag markers, not implementation.
+
 ## 2026-07-21 — D493: LANE-018 BATTERY ROOT-FIX 2 — MAYHEM BASELINE RE-PIN
 
 The restarted battery passed every row through save-slots, then `mayhem mode` stopped

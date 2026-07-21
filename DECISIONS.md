@@ -4,6 +4,25 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D494 — ARC 5 RELEASED: LANE-018 IS SHIPPED AFTER THE 140-ROW NO-REGRESSION BATTERY — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-018 VERIFY] (2026-07-21)
+
+The serialized ARC 5 release checkpoint is fully green. The first complete run exposed
+two real integration omissions, both fixed at their exact labels and committed before
+continuing: D492 enrolled `politics.json` in the closed-world schema validator (63/63),
+and D493 re-pinned Mayhem's D491-owned data-count and additive-save-signature baselines
+(24/24). The resumed battery then passed every row. Antietam alone hit the harness's
+360-second wall; its artifact was stale and was not credited, and the required isolated
+rerun passed 17/17 with zero pageerrors before the battery resumed at Gettysburg. This
+was the only environmental flake. War-career passed 46/46 in 612.7s (under its 900s
+budget); visual-fidelity passed 49/49 in 363.7s (under 600s). A cutoff-based audit found
+140 fresh suite JSON artifacts: every file parsed, every top-level `ok` was true, and
+failed steps/pageerrors were both zero. Suite 140, schema 63, `_SAVE_VER=1`,
+`MAYHEM_PUBLIC_READY=true`, frozen base md5 `c9db83fa99230ffb95bdfdfe059f3fb9`, and every
+AD-7 pin held. LANE-018 therefore moves VERIFY→SHIPPED at battery code SHA
+`fc8ccc212babcc291739cc040f0fe9d07dc92fd7`. Exact next is a fresh, ledger-first charter
+for the standing T4 brigade flag-marker tail; no implementation starts without that
+committed lock.
+
 ## D493 — LANE-018 SLICE-4 BATTERY ROOT-FIX 2: MAYHEM'S FROZEN BASELINE ACKNOWLEDGES THE D491 DATA COUNT AND ADDITIVE SAVE SIGNATURE — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-018 VERIFY] (2026-07-21)
 
 The restarted ARC 5 battery reached `mayhem mode` after every prior row passed, then

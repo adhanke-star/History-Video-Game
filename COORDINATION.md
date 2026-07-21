@@ -3204,13 +3204,13 @@ next green commit and confer through this ledger instead of permitting simultane
   flagship markers render in src/67; R-7's exact provenance is the T14 bug-hunt
   deferred-log ("per-situation gating of the R-3 static triggers").
 
-### LANE-018 · gm-completion — **VERIFY (Slices 1–3 shipped; Slice 4 ARC 5 battery queued)** (§4e: AI-GM persona choice · muster-roll desk surface · the 1864 election bind · the Transfer AI-GM rider)
+### LANE-018 · gm-completion — **SHIPPED (ARC 5 released at D494)** (§4e: AI-GM persona choice · muster-roll desk surface · the 1864 election bind · the Transfer AI-GM rider)
 
-- **Owning tool:** none — Codex released DRIVE at the clean D491 Slice-3 boundary.
-  The next session must take the battery machine exclusively; no simultaneous edits.
-- **State:** VERIFY — Slices 1–3 are shipped; only the Slice-4 release battery remains.
-  This entry IS the acceptance contract. Charter recon was
-  read-only against the clean pushed D488 boundary (`d8ca128`).
+- **Owning tool:** none — released after the D494 ARC 5 checkpoint. No provider may
+  reopen this shipped lane or edit its surfaces without a new committed ledger lock.
+- **State:** SHIPPED — Slices 1–3 plus the Slice-4 release checkpoint are complete.
+  The serialized 140-row battery is green at code SHA
+  `fc8ccc212babcc291739cc040f0fe9d07dc92fd7`; D492/D493 are its two root-fix commits.
 - **Design law:** DECISIONS D455 §7's ARC 5 row (`unlocked-but-judged-design.md` §4e +
   §7: "AI-GM (player-choice persona) + the muster-roll UI + the election bind") ·
   **`docs/design/politics-election-research-packet.md` (D488) — §3 the bind's exact
@@ -3381,12 +3381,19 @@ next green commit and confer through this ledger instead of permitting simultane
   runtime-drawn, zero embed bytes, its own ledger charter) — the ratified tail
   candidate; LANE-002 5b keeps its S-04 fresh-context reservation; ARC 6 rail/naval/
   medicine packets remain session-fillers; ARC 7/8/9 queue behind ARC 5/6.
-- **Resume pointer:** SLICE 4, the ARC 5 release battery. Set `TMPDIR`, run
-  `npm run vet:noreg` serialized and ALONE (war-career 900s; visual-fidelity 600s),
-  read every artifact JSON for current mtime, `ok:true`, zero failed steps and zero
-  pageerrors, root-fix any real red at its exact label, then flip LANE-018 SHIPPED
-  with the battery SHA. No provider may edit concurrently.
-- **Slice history:** SLICE-4 battery root-fix 2 shipped as D493 (2026-07-21,
+- **Resume pointer:** LANE-018 is closed. Exact next is a fresh ledger-only charter
+  for T4 brigade flag markers (Phase H1b; CVD-safe runtime-drawn; zero embed bytes).
+  Do not implement before that lane and its acceptance contract are committed.
+- **Slice history:** SLICE 4 SHIPPED as D494 (2026-07-21, ChatGPT/Codex 5.6 Sol
+  Ultra): the complete serialized battery is green at `fc8ccc2`. D492 and D493 were
+  the two real root fixes. Antietam's 360s timeout produced no fresh artifact and was
+  not credited; its isolated rerun passed 17/17, zero pageerrors, before the battery
+  resumed at Gettysburg. War-career passed 46/46 in 612.7s; visual-fidelity passed
+  49/49 in 363.7s. The cutoff audit read 140 fresh suite JSON artifacts: all parsed,
+  all `ok:true`, zero failed steps, zero pageerrors. Schema 63, suite 140,
+  `_SAVE_VER=1`, `MAYHEM_PUBLIC_READY=true`, frozen base md5
+  `c9db83fa99230ffb95bdfdfe059f3fb9`, and every AD-7 pin held. SLICE-4 battery
+  root-fix 2 shipped as D493 (2026-07-21,
   ChatGPT/Codex 5.6 Sol Ultra): the restarted battery passed through save-slots,
   then mayhem's frozen-baseline tooth caught the two stale pre-D491 values: data
   count 62→63 and the additive `applySave` signature `201fa746ea8e8755`→
