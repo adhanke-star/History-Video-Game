@@ -2,6 +2,42 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-20 — D486+D487: LANE-017 SLICES 8+9 — SETS/VARIETY/SALVAGE/ECONOMY/SETUP SHIPPED UNSPLIT, THE ARC 4 RELEASE BATTERY GREEN, LANE-017 SHIPPED, ARC 4 CLOSED
+
+A fresh Fable 5 session continued the held DRIVE from the clean pushed d0e4490 (D485
+closeout) boundary. P0 (Aaron's popup option (a) adopted): the recon sized every slice-8
+sub-feature onto an existing seam — ship UNSPLIT, then the battery this session. **D486**
+(594c6bb + the 4890fdb pin follow-up): four possession-derived set collections entering
+ONLY via _lootEquippedEffect under the same bridge ±cap (pure, reversible, absent-set
+byte-identical; a node set-cap wall enforces vocabulary + magnitudes on disk); nine
+Inferred quartermaster/ordnance variety items (22 total; the honest-provenance card
+stamp); once-per-turn costed battlefield salvage (CS Arms ×3); the CS captured-arms
+VICTORY channel in lootOnResolve with the Union path replay-proven byte-identical;
+read-only economy hooks (the sutler price line + requisition reading C.economy.inflation
+only, snapshot-equality probed); the ruleset-picker Campaign Kit setup checkbox threading
+a normalized token (absent ⇒ off, probed). Teeth loot-survival 28→35 (0 pageerrors);
+adjacents save-slots 16/16 · ratings 31/31 · economy 8/8 · mayhem-mode 24/24 ·
+accessibility 27/27; binds A (set bonus past the wall → the set-cap tooth EXACTLY) + B
+(the setup default flipped at the REAL seam — the wrapper normalization; the first
+candidate refused by the fail-closed normalization, logged honestly) md5-proven; the
+weights tooth held 2/1/0 UNMOVED; AD-7 re-pins at all four sites, both plan probes green
+post-commit. **D487** (fec05a3 root-fix + ece0328 flip): the full 140-row battery
+serialized/ALONE across six documented legs — "VET NO-REGRESSION OK", the artifact sweep
+168 JSONs all ok/0 pageerrors. ONE real red root-fixed at its exact label: probe-command's
+four NaN/undefined render teeth tripped on the literal token INSIDE the D483 flag-card
+canvas-PNG base64 payloads (image bytes, not rendered text — a D483-latent false-positive;
+probe-command was not in D483's focused gates). The teeth now scrub opaque data-URI
+payloads before scanning (precision-strengthened; bite proven both ways), the class swept
+to probe-afteraction/divergence/endings, commandProbe re-pinned with its chain. FOUR
+slow-Mac flakes re-run green ALONE (t1probe — CONCURRENT research-workflow contention, the
+lesson logged: batteries get the machine ALONE even against browser-free helper
+workflows · bridge 360s · weather frame-timing · fredericksburg 360s). **LANE-017 SHIPPED
+IN FULL (D478-D487) — ARC 4 CLOSED AND FULLY RELEASED.** The T1 stale-docs sweep landed
+(2e9e258): Mayhem Slice B/C72/GEA-01/S44 discharge notes (all shipped D419-D423). BANKED:
+the ARC 6 politics research workflow wf_854e0760-ef2 (13/13 — six Opus-default-refuted
+topics + the election-bind repo data-needs inventory) for next-session adjudication.
+Counts 29/62/1,710/140; _SAVE_VER=1; frozen base untouched.
+
 ## 2026-07-20 — D485: LANE-017 SLICE 7 — NAMED LEGENDARY ARTIFACTS + MODE-SPLIT DROPS (§4c.1) SHIPPED
 
 A fresh Fable 5 session continued the held DRIVE from the clean pushed d39105b (D484
