@@ -3410,19 +3410,28 @@ next green commit and confer through this ledger instead of permitting simultane
   participation/fate, and replacement-overlay boundaries. One citation-grade packet
   is authorized for ARC 8 narrative evidence, with no medical mechanic, formula,
   probability, treatment action, invented personal fate, or protected-surface
-  change.
-- **Resume pointer:** LANE-018 is closed. Exact next is D501: author
-  `docs/design/medicine-hospitals-disease-research-packet.md` under D500's complete
-  docs/research contract. External historical research is authorized for that packet
-  only. Required registers cover sources, claims, care-chain and narrative
-  categories, institutions, individual cases and consumer eligibility; preserve
-  D169/Human Cost/women-in-war/War Career/LANE-002 ownership; enforce the two-
-  independent-non-tertiary-family Verified floor, dignity/non-spectacle law, and the
-  deterministic-outcome ban; return exactly one `READY_FOR_SOLDIER_DEPTH_LAW`,
-  `NEEDS_MORE_RESEARCH`, or `DO_NOT_MODEL`. Do not begin ARC 8 design/runtime or
-  mutate source/data/probes/assets/saves/generated output. No new lane is required
-  for one session; commit a Contract Relay lane first if unfinished work must cross a
-  session or provider boundary.
+  change. **D501 medicine-packet completion:**
+  `docs/design/medicine-hospitals-disease-research-packet.md` is shipped
+  `READY_FOR_SOLDIER_DEPTH_LAW` with 38 source records, 36 claims (22 Verified · 14
+  Inferred · 0 Disputed), 10 dated care-chain categories, 12 narrative categories,
+  14 institutional cases, and 11 person cases. D169, Human Cost, canonical people,
+  primary-source presentation, War Career, LANE-002, rail/water, D74, and all
+  protected surfaces hold. Company K leads are category evidence only pending the
+  underlying records; weak Confederate-western, refugee, and prison evidence stays
+  quarantined. No medical mechanic, probability, personal fate, or joined schema is
+  authorized.
+- **Resume pointer:** LANE-018 is closed. Exact next is D502: perform a separate
+  docs-only ARC 6 release reconciliation and ARC 7 scope adjudication. Reconcile D455
+  with the shipped politics/election, rail, water, and medicine packets plus current
+  logistics, blockade, diplomacy, Western Theater, bridge, auto-resolve,
+  custom-builder, Chronicle/divergence, War Career, terrain, and tactical ownership.
+  Decide whether ARC 6 is complete and whether ARC 7 first needs a dedicated
+  conquest design-law artifact. Do not select consequential territory granularity,
+  turn scale, economy, movement capacity, objective rewards, hex interaction, save
+  architecture, or implementation; HALT for Aaron if committed law/evidence does not
+  settle a necessary choice. No new lane is required for one session; commit a
+  Contract Relay lane first if unfinished work must cross a session or provider
+  boundary.
 - **Slice history:** SLICE 4 SHIPPED as D494 (2026-07-21, ChatGPT/Codex 5.6 Sol
   Ultra): the complete serialized battery is green at `fc8ccc2`. D492 and D493 were
   the two real root fixes. Antietam's 360s timeout produced no fresh artifact and was
@@ -3496,7 +3505,7 @@ next green commit and confer through this ledger instead of permitting simultane
   alone (a teardown hang after a green artifact; a wedged :8765 server). AD-7 game
   67fbe534→7b83d48b · srcTree 8174d79d→3ce634af · manifest 9312db81→a6699981
   (base/dataTree/journey/suite/focused/runtime/command/commandProbe hold).
-- **Last-touched commit:** D500 docs-only medicine/hospitals/disease scope adjudication (LANE-018 remains closed; D494 release SHA `fc8ccc2`; slice 3: D491; slice 2: D490; slice 1: `32051dd`; charter: `358bf35`).
+- **Last-touched commit:** D501 docs/research medicine/hospitals/disease packet completion (LANE-018 remains closed; D494 release SHA `fc8ccc2`; slice 3: D491; slice 2: D490; slice 1: `32051dd`; charter: `358bf35`).
 - **History:** chartered 2026-07-20 immediately after the D488 politics-packet
   close, per the packet's READY_FOR_SPEC verdict and the LANE-017 resume pointer's
   T2-DISCHARGED forward addendum. Charter recon (read-only at `d8ca128`): T29

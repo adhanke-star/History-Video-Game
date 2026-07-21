@@ -4,6 +4,66 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D501 — MEDICINE/HOSPITALS/DISEASE RESEARCH IS READY FOR SOLDIER-DEPTH LAW, WITH PERSONAL FATE AND STRATEGIC MEDICINE STILL CLOSED — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS/RESEARCH] (2026-07-21)
+
+The D500 packet is complete at
+`docs/design/medicine-hospitals-disease-research-packet.md` with the single verdict
+`READY_FOR_SOLDIER_DEPTH_LAW`. Its 38 historical source records support 36 claim
+rows: 22 Verified, 14 Inferred, and 0 Disputed. The design input is deliberately
+larger than that claim ledger: ten dated care-chain categories, twelve separable
+disease/wound narrative categories, fourteen institutional cases (8 Verified / 6
+Inferred), and eleven person cases (4 Verified / 7 Inferred).
+
+The evidence floor is met without claiming uniformity. Independent families cover
+the 1862 Army of the Potomac reform and March 1864 federal statute; Antietam,
+Fredericksburg, Camp Letterman, and later transport/care pathways; camp exposure and
+convalescent/disposition boundaries; women in distinct professional, administrative,
+relief, and labor roles; and Black medical authority/labor, USCT unequal care, and
+freedom-seeker/refugee institutions. Chimborazo supplies a bounded Confederate
+institutional/labor case; *Red Rover*, Camp Nelson, and Fort Scott supply bounded
+western evidence. Confederate western/Trans-Mississippi depth remains only a
+Lauderdale Springs order-book lead and McPheeters diary lead. Prison medicine remains
+below the floor except as an Andersonville register/source-limit example.
+
+The packet corrects several dangerous shortcuts: Letterman's 1862 AOP reform is not
+instant Union-wide practice; a care chain permits delay, bypass, and failure rather
+than functioning as a conveyor; admission, treatment, transfer, convalescence,
+return, reassignment, disability, discharge, and death are independent evidence
+states; Barton was an independent wartime civilian rather than a Red Cross agent;
+hospital scale is not care quality; USCT inequality is structural rather than a
+racial susceptibility rule; and Chimborazo cannot be detached from enslaved labor.
+No credible direct source conflict required a Disputed row; chronology, archive
+survival, and weak corroboration remain explicit Inferred limits.
+
+The consumer boundary is binding. `genericTeaching`, `namedHistoricalRecord`, and
+`yourTimelineCategory` are evidence-eligibility labels, not runtime authority.
+Company K's five one-family trajectories may inform generic or future category
+design, but cannot enter strict named historical content until the underlying
+service/medical records are retrieved. Taylor, Tubman, Hancock, Powell, Augusta, and
+Stokes remain support/medical/witness records, never Soldier's Story replacements.
+War Career still owns identity, service, participation, and historical/`Your
+Timeline` fate separation.
+
+D169 remains the sole owner of the aggregate strategic `C.medical` system, medical
+relief, Campaign Kit teaching, formulas, saves, and UI. Human Cost, canonical
+women-in-war/codex records, primary-source presentation, LANE-002 overlays, and the
+rail/water packets retain their existing ownership. This decision creates no
+probability, diagnosis or outcome table, treatment action, recovery timer, capacity,
+medical economy, hospital mechanic, personal fate, joined transport schema, data,
+runtime, probe, save, asset, or generated-output change. Suite 140, schema 63,
+`_SAVE_VER=1`, `MAYHEM_PUBLIC_READY=true`, D74, and frozen base MD5
+`c9db83fa99230ffb95bdfdfe059f3fb9` remain closed.
+
+**Exact next: D502, a separate docs-only ARC 6 release reconciliation and ARC 7
+scope adjudication.** Reconcile D455 with the shipped politics/election, rail, water,
+and medicine packets and the current logistics, blockade, diplomacy, Western
+Theater, bridge, auto-resolve, custom-builder, Chronicle/divergence, War Career,
+terrain, and tactical ownership. Decide whether ARC 6 is complete and whether ARC 7
+first requires a dedicated conquest design-law artifact. Do not select consequential
+territory granularity, turn scale, economy, movement capacity, objective rewards,
+hex interaction, save architecture, or implementation. HALT for Aaron if committed
+law and evidence do not settle an otherwise necessary choice.
+
 ## D500 — ARC 8 REQUIRES A CITATION-GRADE MEDICINE/HOSPITALS/DISEASE PACKET; D169 REMAINS THE SOLE STRATEGIC MEDICAL SYSTEM — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS-ONLY SCOPE ADJUDICATION] (2026-07-21)
 
 **ADJUDICATION: `PACKET_JUSTIFIED`.** D455 already charters medicine / hospitals /
