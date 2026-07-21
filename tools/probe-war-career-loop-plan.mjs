@@ -1345,7 +1345,7 @@ step("BASELINES + LANE", () => {
     // D490 re-pin (LANE-018 slice 2): game 7b83d48b -> b2b23ed2 (the persona seams in src/35 + src/107 in the build; the full chain is documented at this file's srcTree pin sites). base/manifest/suite hold.
     // D491 re-pin: game b2b23ed2 -> 19489898; dataTree fa4ce39d -> 9b2da5bc; manifest a6699981 -> d686e44e. Politics data/module + owner teeth; base/suite hold; schema 63.
     // D504 re-pin: game 19489898 -> ba68ebfd; dataTree 9b2da5bc -> 24773ac8; manifest d686e44e -> 8e9d8987. Territory data/read-only board/build/probes; base/suite hold; schema 64.
-    // D506 re-pin: game ba68ebfd -> d278c30f; dataTree 24773ac8 -> 5f1364c9; manifest 8e9d8987 -> 309a7bc1. Read-only transport evidence/module/build/probes; base/suite hold; schema 65.
+    // D506 re-pin: game ba68ebfd -> d278c30f; dataTree 24773ac8 -> 2e9e4df4; manifest 8e9d8987 -> 309a7bc1. Read-only transport evidence/module/build/probes; base/suite hold; schema 65.
     game:"d278c30f4cbbe2179b10bc566a8a461b",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     // D478 re-pin: dataTree 4bbdebe5 -> b3b323fa (LANE-017 slice 1: rarity glyphs + reserved tier
@@ -1354,7 +1354,7 @@ step("BASELINES + LANE", () => {
     // salvage/economyHooks blocks in data/loot-survival.json — no war-career data).
     // D490 re-pin: dataTree 5de65a85 -> fa4ce39d (LANE-018 slice 2: the aiGm _note honesty
     // amendment in data/ratings.json — free text only, no numeric movement, no war-career data).
-    dataTree:"5f1364c96e256bfccf4d8925273218ed",
+    dataTree:"2e9e4df430eaaaeca4ce6f58f51a3b2e",
     manifest:"309a7bc1eb43407f405e12323af7638d",
     suite:"69681d6f2216fe1dcfd594ffc4a757b7"
   };
@@ -1818,9 +1818,9 @@ step("REACHABILITY BASELINES", () => {
     // movement). runtime/journey/focused hold; both binds md5-proven.
     // D491 re-pin: the same politics chain at the reachability baseline; runtime/journey/focused hold.
     // D504 re-pin: game 19489898 -> ba68ebfd; dataTree 9b2da5bc -> 24773ac8 for the territory registry and read-only shell; runtime/journey/focused hold.
-    // D506 re-pin: game ba68ebfd -> d278c30f; dataTree 24773ac8 -> 5f1364c9 for read-only transport evidence; runtime/journey/focused hold.
+    // D506 re-pin: game ba68ebfd -> d278c30f; dataTree 24773ac8 -> 2e9e4df4 for read-only transport evidence; runtime/journey/focused hold.
     game:"d278c30f4cbbe2179b10bc566a8a461b",
-    dataTree:"5f1364c96e256bfccf4d8925273218ed",
+    dataTree:"2e9e4df430eaaaeca4ce6f58f51a3b2e",
         // D484 re-pin (LANE-017 slice 6, soldier-tier badges SS4d.3): game e7ff100e -> e99e6ac5 · dataTree 00f8c1fe -> c3c28fd6 (data/ratings.json gains soldierBadgeDefs 14 + soldierBadges 48 rows on 39 Verified carriers + _soldierBadgeNote) · srcTree 15570ebc -> d79696ce (T14 soldier-badge accessors + the fldSoldierBadgeFactor capped gateway; src/37 cwCareerBadges/cwSoldierBadgeRows/_ssSoldierBadgesHTML register/journey chips; the src/22 comment-token reword — the D482 class, fifth instance) · journey 1689c4a2 -> 9655bfff (src/37) · focused 65e9c873 -> e2acf99a (probe-war-career gains the D484 career-badge step; the stale 138 suite.expected DISPLAY fields aligned to the 140 teeth). Presentation + data + the capped gateway only — no combat line consumes the keys, sim inputs did not move; both binds md5-proven; base/manifest/suite/runtime/command hold.
     // D486 re-pin (LANE-017 slice 8): srcTree b7648a67 -> 8174d79d (src/37 sets/salvage/
     // requisition/captured-arms/economy-read + UI; src/107 the picker opt-in token thread).
