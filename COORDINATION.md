@@ -3512,12 +3512,16 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **DRIVE (SLICE 1 ONLY; PACKAGE A FINAL LAW)**
+### LANE-019 · conquest-design-law — **HALT (SLICE 1 WIP; ALLOWLIST/GATE CONTRADICTION)**
 
 - **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. No simultaneous edits.
-- **State:** DRIVE for Slice 1 only. The standalone ledger take authorizes only the
-  D503 registry, fail-closed normalization, read-only board, H0 menu entry, build
-  validation, focused probes, negative binds, and closeout described below.
+- **State:** HALT at the Slice-1 adjacent-gate boundary. The standalone ledger take
+  authorized only the D503 registry, fail-closed normalization, read-only board, H0
+  menu entry, build validation, focused probes, negative binds, and closeout below.
+  The implementation remains uncommitted on the owning Desktop worktree because the
+  required Mayhem adjacent probe is hard-pinned to data count 63 while this slice is
+  required to move the count to 64, and `tools/probe-mayhem-mode.mjs` is explicitly
+  outside the allowed-file list. No simultaneous edits.
 - **Design law:** `docs/design/unlocked-but-judged-design.md` §5 and §8, especially
   §§8.11-8.23; DECISIONS D455, D497, D499, D502, and D503; the rail and strategic-
   water packets. D503 records Aaron's exact answer: "execute option a."
@@ -3589,16 +3593,27 @@ next green commit and confer through this ledger instead of permitting simultane
   due at the first playable transport-loop checkpoint unless a shared-surface red or
   Aaron instruction moves it earlier. The new data owner must move data/schema
   63 -> 64 with every count pin documented; suite membership remains 140 in Slice 1.
-- **Resume pointer:** from the committed DRIVE lock, run both planning probes and read
-  their fresh 13/13 and 24/24 JSON artifacts; then create the exact 36-row registry,
-  immutable fail-closed normalization, list-first/schematic board, single guarded H0
-  entry, build validation, and both probes. Run every focused/adjacent gate and both
-  exact-red binds; restore byte-identically; sync D504 docs; commit/push; then move
-  this lane only to same-session LAW-DRAFT for the docs-only Slice-2A transport audit.
+- **HALT evidence and resume pointer (2026-07-21):** the dirty owning worktree at
+  `7a0ca42` contains the complete 36-row registry, module 114 board, guarded H0 entry,
+  build validation, both new probes, generated output, and mechanically proved planning
+  pins. Build is `GATE OK` at schema/data 64 and suite 140; the plan probe is 10/10;
+  the real-menu board probe is 13/13 with zero failed/page/console errors and inspected
+  desktop/390 screenshots; accessibility is 27/27 with a clean artifact; frozen base
+  MD5 remains `c9db83fa99230ffb95bdfdfe059f3fb9`. The Mayhem probe stops the run at
+  23/24 solely on `EXCLUSIONS + BASELINES + SUITE`: live `dataCount` is 64 but line
+  1026 of `tools/probe-mayhem-mode.mjs` requires 63. The packet both requires Mayhem
+  24/24 and prohibits editing that file. Custom Builder, both negative binds, D504
+  docs/implementation commit, and the docs-only Slice-2A audit have not run. Obtain
+  Aaron's narrow authorization to add `tools/probe-mayhem-mode.mjs` as a mechanical
+  count-pin-only allowed file (recommended because it preserves the required adjacent
+  tooth); then change only 63 -> 64 with D504 pin history, rerun Mayhem and read its
+  artifact, continue Custom Builder, both exact-red binds, D504 docs/commit/push, and
+  only then begin Slice 2A. Do not bypass the adjacent gate or broaden any other seam.
   Runtime transport, movement, state/save, economy/rewards, Council, terrain, hex,
   AI, battle/result, Chronicle, War Career, and Custom Builder work remain prohibited.
 - **Last-touched commits:** D503 standalone design-lock `a3403da`; D503 final-law
-  commit `44ffac5`; Slice-1 DRIVE taken by the next standalone ledger commit.
+  commit `44ffac5`; Slice-1 DRIVE take `7a0ca42`; the next ledger-only commit records
+  the allowlist/gate HALT while preserving the uncommitted implementation WIP.
 - **History:** D502 created the design-only contract. Aaron chose Package A. D503
   completed the final law and returned the lane unowned; no ARC 7 runtime/data/probe/
   asset/generated/save work began.
