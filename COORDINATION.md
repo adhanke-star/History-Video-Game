@@ -3386,7 +3386,13 @@ next green commit and confer through this ledger instead of permitting simultane
   read every artifact JSON for current mtime, `ok:true`, zero failed steps and zero
   pageerrors, root-fix any real red at its exact label, then flip LANE-018 SHIPPED
   with the battery SHA. No provider may edit concurrently.
-- **Slice history:** SLICE 3 SHIPPED as D491 (2026-07-21, ChatGPT/Codex 5.6 Sol
+- **Slice history:** SLICE-4 battery root-fix 1 shipped as D492 (2026-07-21,
+  ChatGPT/Codex 5.6 Sol Ultra): the first battery stopped at `data schemas` because
+  D491's new `politics.json` was absent from the validator's closed-world map (62/63,
+  correctly fail-closed as unclassified). The narrow tooling fix enrolls `_meta`,
+  `cycles`, and `teaching` as required meta-family owners; the failed row reran 63/63,
+  adjacent importers passed, build GATE OK, and runtime/data/pins held. The complete
+  battery must restart from row 1. SLICE 3 SHIPPED as D491 (2026-07-21, ChatGPT/Codex 5.6 Sol
   Ultra): `data/politics.json` + `src/74-politics.js`, the post-clock guarded
   consumer, pure divergence/endings teaching hooks, and additive save sanitation.
   Runtime caps: 1864 pre-election weariness ±4, 1862 capital ±1; exact zero at

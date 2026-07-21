@@ -2,6 +2,15 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-21 — D492: LANE-018 BATTERY ROOT-FIX 1 — POLITICS SCHEMA ENROLLMENT
+
+The ARC 5 battery stopped at `data schemas`: `politics.json` parsed but correctly failed
+closed as the only unclassified file (62/63). The validator's closed-world meta map now
+requires its `_meta`, `cycles`, and `teaching` owners. The failed row reran 63/63; adjacent
+importers passed; node check, build GATE OK, and diff check passed. Runtime/data remain
+unchanged; suite 140, `_SAVE_VER=1`, and frozen base `c9db83fa` hold. Exact next: rerun the
+complete battery alone; only a full green result may close LANE-018.
+
 ## 2026-07-21 — D491: LANE-018 SLICE 3 SHIPPED — THE 1864 ELECTION BIND
 
 Codex 5.6 Sol Ultra took the Aaron-authorized provider transfer at clean `f53f32c` and

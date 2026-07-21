@@ -4,6 +4,17 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D492 — LANE-018 SLICE-4 BATTERY ROOT-FIX 1: `politics.json` IS ENROLLED IN THE CLOSED-WORLD DATA-SCHEMA MAP — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-018 VERIFY] (2026-07-21)
+
+The ARC 5 release battery stopped at its exact `data schemas` label: 62/63 passed because
+the D491 `politics.json` file had not been enrolled in `tools/validate-data-schemas.mjs`'s
+closed-world file map. The data itself parsed, but the validator correctly failed closed as
+`unclassified`. The narrow root fix registers politics as a meta-family document requiring
+its three shipped top-level owners (`_meta`, `cycles`, `teaching`); no runtime, data, suite,
+save, or frozen-base bytes moved. `node --check` passed; the failed row reran 63/63 green;
+both adjacent importer rows passed; build printed GATE OK; `git diff --check` passed.
+LANE-018 remains VERIFY/unowned. Exact next: rerun the complete 140-row battery alone.
+
 ## D491 — LANE-018 SLICE 3 SHIPPED: THE 1864 ELECTION BIND — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-018 DRIVE] (2026-07-21)
 
 `data/politics.json` now carries the 1862 midterm card (both halves; 28–31 range), the

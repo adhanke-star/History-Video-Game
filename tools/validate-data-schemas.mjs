@@ -47,6 +47,7 @@ const META_REQUIREMENTS = new Map([
   ['decisions.json', ['_meta', 'cards']],
   ['generals.json', ['comment', 'sides', 'teachingCards']],
   ['loot-survival.json', ['_meta', 'rarities', 'survival', 'drops', 'items']],
+  ['politics.json', ['_meta', 'cycles', 'teaching']],
   ['press.json', ['_meta', 'papers', 'teachingCards']],
   ['primary-sources.json', ['_meta', 'schema', 'categories', 'records']],
   ['soldier-replacements.json', ['_meta', 'schema', 'records', '_template']],
