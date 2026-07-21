@@ -3512,16 +3512,42 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **HALT (SLICE 1 WIP; ALLOWLIST/GATE CONTRADICTION)**
+### LANE-019 · conquest-design-law — **LAW-DRAFT, DESIGN-ONLY, SLICE 2A TRANSPORT SUBSTRATE**
 
 - **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. No simultaneous edits.
-- **State:** HALT at the Slice-1 adjacent-gate boundary. The standalone ledger take
-  authorized only the D503 registry, fail-closed normalization, read-only board, H0
-  menu entry, build validation, focused probes, negative binds, and closeout below.
-  The implementation remains uncommitted on the owning Desktop worktree because the
-  required Mayhem adjacent probe is hard-pinned to data count 63 while this slice is
-  required to move the count to 64, and `tools/probe-mayhem-mode.mjs` is explicitly
-  outside the allowed-file list. No simultaneous edits.
+- **State:** Slice 1 ships in the D504 implementation commit containing this entry.
+  The same-session owner now holds only a docs-only LAW-DRAFT for Slice 2A. Transport
+  runtime remains prohibited. No simultaneous edits.
+- **D504 shipped evidence:** exact 36/36 registry in D503 order; all 35 RN, 41 WN,
+  and two Missouri battle-library anchors assigned uniquely (78/78); resolved
+  source/provenance/uncertainty/non-link data; CT-29/30 direct Missouri sources and
+  explicit no packet-authorized rail/water service; immutable whole-registry
+  fail-closed normalization; one guarded H0 entry; accessible semantic 36-row list
+  plus 36-control schematic; desktop/390 screenshots inspected with readable,
+  non-color provenance and no overflow. Build `GATE OK`, schema/data 64, suite 140,
+  module 114 last. Plan 10/10, board 13/13, accessibility 27/27, Mayhem 24/24,
+  Custom Builder 16/16; fresh artifacts `ok:true`, zero failed/page/real errors.
+  Aaron authorized only Mayhem's mechanical data pin 63 -> 64 plus D504 history.
+  Bind A isolated the exact combined fail-closed label at 1 red / 12 green and
+  restored source/game MD5 `14a6ea602c23b2efd29a82b4651502fa` /
+  `ba68ebfdb6ae778d355b3169fe70978d`. Bind B isolated the exact source/provenance/
+  uncertainty/non-link integrity label at 1 red / 9 green and restored data/game
+  `7dc40508ae2d7d68c96680cbeac42a6a` /
+  `ba68ebfdb6ae778d355b3169fe70978d`. Frozen base remains
+  `c9db83fa99230ffb95bdfdfe059f3fb9`; save shape is unchanged.
+- **Slice-2A docs-only resume pointer:** audit every D497 RE-01..RE-29 and D499
+  WE-01..WE-29 row against all CT-01..CT-36. For each row record endpoints/anchors,
+  supported territories, retained service versus explicit interchange/non-link/
+  evidence-context-only classification, provenance/uncertainty, current owner,
+  Historical dated eligibility, Mayhem physical-service eligibility, segment versus
+  complete connection, and apparent contacts that remain non-links. Decide a bounded
+  source-backed sea subset without importing blockade/naval ownership. Choose one
+  road verdict; prefer `ROAD_REQUIRES_BOUNDED_SOURCE_PASS` if exact road rows and
+  non-links are not already supported. Author D505 as either the smallest read-only,
+  fail-closed transport-evidence substrate CONTRACT or an exact bounded source-pass
+  CONTRACT. Do not change `src/**`, `data/**`, `tools/**`, assets, tactical, package,
+  generated output, save/schema, or frozen base; only closeout docs and a genuinely
+  necessary non-design-changing §8 clarification may move.
 - **Design law:** `docs/design/unlocked-but-judged-design.md` §5 and §8, especially
   §§8.11-8.23; DECISIONS D455, D497, D499, D502, and D503; the rail and strategic-
   water packets. D503 records Aaron's exact answer: "execute option a."
@@ -3565,7 +3591,8 @@ next green commit and confer through this ledger instead of permitting simultane
   `src/114-conquest-board.js`, `src/00-manifest.json`, `src/98-h0-main-menu.js`,
   `tools/build.mjs`, new `tools/probe-conquest-layer-plan.mjs`, new
   `tools/probe-conquest-board.mjs`, mechanically proved pin updates in both planning
-  probes, generated `civil_war_generals.html`, and `COORDINATION.md`/`DECISIONS.md`/
+  probes, Aaron-authorized mechanical 63 -> 64 data-count pin and D504 history only
+  in `tools/probe-mayhem-mode.mjs`, generated `civil_war_generals.html`, and `COORDINATION.md`/`DECISIONS.md`/
   `HANDOFF.md` closeout. Every other source/data/tool/asset/package/save/schema/
   tactical/generated/frozen-base surface is prohibited; `build/base.html` and
   `tools/save-shape.json` cannot move.
@@ -3593,27 +3620,14 @@ next green commit and confer through this ledger instead of permitting simultane
   due at the first playable transport-loop checkpoint unless a shared-surface red or
   Aaron instruction moves it earlier. The new data owner must move data/schema
   63 -> 64 with every count pin documented; suite membership remains 140 in Slice 1.
-- **HALT evidence and resume pointer (2026-07-21):** the dirty owning worktree at
-  `7a0ca42` contains the complete 36-row registry, module 114 board, guarded H0 entry,
-  build validation, both new probes, generated output, and mechanically proved planning
-  pins. Build is `GATE OK` at schema/data 64 and suite 140; the plan probe is 10/10;
-  the real-menu board probe is 13/13 with zero failed/page/console errors and inspected
-  desktop/390 screenshots; accessibility is 27/27 with a clean artifact; frozen base
-  MD5 remains `c9db83fa99230ffb95bdfdfe059f3fb9`. The Mayhem probe stops the run at
-  23/24 solely on `EXCLUSIONS + BASELINES + SUITE`: live `dataCount` is 64 but line
-  1026 of `tools/probe-mayhem-mode.mjs` requires 63. The packet both requires Mayhem
-  24/24 and prohibits editing that file. Custom Builder, both negative binds, D504
-  docs/implementation commit, and the docs-only Slice-2A audit have not run. Obtain
-  Aaron's narrow authorization to add `tools/probe-mayhem-mode.mjs` as a mechanical
-  count-pin-only allowed file (recommended because it preserves the required adjacent
-  tooth); then change only 63 -> 64 with D504 pin history, rerun Mayhem and read its
-  artifact, continue Custom Builder, both exact-red binds, D504 docs/commit/push, and
-  only then begin Slice 2A. Do not bypass the adjacent gate or broaden any other seam.
-  Runtime transport, movement, state/save, economy/rewards, Council, terrain, hex,
-  AI, battle/result, Chronicle, War Career, and Custom Builder work remain prohibited.
+- **Resolved HALT history (2026-07-21):** Aaron's narrow authorization added
+  `tools/probe-mayhem-mode.mjs` only for its frozen data-count pin. The sole change
+  was 63 -> 64 plus accurate D504 history; Mayhem returned from 23/24 to 24/24.
+  Custom Builder and both binds then passed their exact contracts. This authorization
+  is exhausted and broadens no Mayhem or conquest runtime boundary.
 - **Last-touched commits:** D503 standalone design-lock `a3403da`; D503 final-law
-  commit `44ffac5`; Slice-1 DRIVE take `7a0ca42`; the next ledger-only commit records
-  the allowlist/gate HALT while preserving the uncommitted implementation WIP.
+  commit `44ffac5`; Slice-1 DRIVE take `7a0ca42`; allowlist/gate HALT ledger
+  `cb46f55`; Slice 1 ships in the D504 implementation commit containing this entry.
 - **History:** D502 created the design-only contract. Aaron chose Package A. D503
   completed the final law and returned the lane unowned; no ARC 7 runtime/data/probe/
   asset/generated/save work began.

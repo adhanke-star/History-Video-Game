@@ -81,6 +81,71 @@ if (existsSync(DATA)) {
   if (parts.length) inject += '\n/* ===== data (build-injected from data/*.json) ===== */\nvar GAME_DATA = {\n' + parts.join(',\n') + '\n};\n';
 }
 
+// ---- 2a-1. D504 conquest territory registry gate ----
+// Slice 1 is a closed 36-row read-only source registry. Validate it before the
+// generated file can be written so malformed roots, ids, anchors, sources, or
+// later-slice authority never reach the dormant board module.
+let conquestTerritoryCount = 0;
+{
+  const p = join(DATA, 'conquest-territories.json');
+  if (!existsSync(p)) die(5, 'conquest-territories: required D504 data owner is missing');
+  let pack; try { pack = JSON.parse(readFileSync(p, 'utf8')); } catch (e) { die(5, 'conquest-territories: invalid JSON: ' + e.message); }
+  const plain = v => !!v && typeof v === 'object' && !Array.isArray(v);
+  const exact = (o, keys) => plain(o) && Object.keys(o).sort().join('|') === keys.slice().sort().join('|');
+  const expected = [
+    'Baltimore-Washington Corridor','Upper Potomac-Harpers Ferry','Northern Virginia-Manassas','Shenandoah Valley-Strasburg',
+    'Richmond Capital District','Petersburg-City Point','Virginia Southside-Lynchburg','Hampton Roads-Peninsula',
+    'North Carolina Sounds-Weldon','Cape Fear-Wilmington','Charleston-Port Royal Lowcountry','Savannah-Coastal Georgia',
+    'Augusta-Upper Savannah','Atlanta-North Georgia','Macon-Central Georgia','Montgomery-Central Alabama',
+    'Mobile Bay-Lower Alabama','Louisville-Ohio Falls','Cairo-Paducah-Western Kentucky','Nashville-Middle Tennessee',
+    'Chattanooga-East Tennessee','Tennessee River-Shiloh','Memphis-West Tennessee','Corinth-North Mississippi',
+    'Vicksburg-Mississippi Bend','Jackson-Central Mississippi','Meridian-East Mississippi','Lower Mississippi-New Orleans',
+    'Missouri River-St. Louis','Missouri Ozarks','Lower Arkansas-Arkansas Post','Little Rock-Central Arkansas',
+    'Alexandria-Lower Red River','Shreveport-North Louisiana','Marshall-East Texas','Houston-Galveston'
+  ];
+  const rootKeys = ['schema','version','enablement','sourceRegisters','territories'];
+  const rowKeys = ['id','name','displayOrder','teachingRegion','anchors','sources','provenance','uncertainty','nonLinks'];
+  const sourceKeys = ['id','label','locator'], nonLinkKeys = ['id','claim','sourceRefs'];
+  const forbidden = /^(movement|movementpoints|capacity|ownership|owner|control|condition|economy|reinforcement|objective|ai|save|state|army|armies|casualty|casualties|winner|score|surrender|tacticaloutput|battleResult|reward|receipt)$/i;
+  const badKeys = [];
+  const scan = (node, trail='root', depth=0) => {
+    if (depth > 10) { badKeys.push(trail + ' exceeds nesting limit'); return; }
+    if (Array.isArray(node)) { node.forEach((v,i)=>scan(v,trail+'['+i+']',depth+1)); return; }
+    if (!plain(node)) return;
+    for (const k of Object.keys(node)) { if (forbidden.test(k)) badKeys.push(trail+'.'+k); scan(node[k],trail+'.'+k,depth+1); }
+  };
+  scan(pack);
+  const errors = [];
+  if (!exact(pack, rootKeys) || pack.schema !== 'cw_conquest_territories_v1' || pack.version !== 1) errors.push('root schema/version/keys must be exact');
+  if (!exact(pack.enablement, ['mode','enabled','status']) || pack.enablement.mode !== 'read-only' || pack.enablement.enabled !== true || pack.enablement.status !== 'read-only foundation; conquest play not yet enabled') errors.push('enablement must be exact dormant read-only authority');
+  if (badKeys.length) errors.push('forbidden later-slice key(s): ' + badKeys.join(', '));
+  const sourceIds = new Set();
+  if (!Array.isArray(pack.sourceRegisters) || !pack.sourceRegisters.length) errors.push('sourceRegisters must be non-empty');
+  else for (const s of pack.sourceRegisters) {
+    if (!exact(s, sourceKeys) || !/^[A-Z0-9][A-Z0-9-]{1,31}$/.test(s.id || '') || !String(s.label || '').trim() || !String(s.locator || '').trim() || sourceIds.has(s.id)) errors.push('malformed/duplicate source register row');
+    else sourceIds.add(s.id);
+  }
+  const requiredAnchors = new Set();
+  for (let i=1;i<=35;i++) requiredAnchors.add('RN-' + String(i).padStart(2,'0'));
+  for (let i=1;i<=41;i++) requiredAnchors.add('WN-' + String(i).padStart(2,'0'));
+  requiredAnchors.add('BATTLE-WILSONS-CREEK'); requiredAnchors.add('BATTLE-ELKHORN-TAVERN');
+  const seenAnchors = new Set();
+  if (!Array.isArray(pack.territories) || pack.territories.length !== 36) errors.push('territories must contain exactly 36 rows');
+  else pack.territories.forEach((r,i) => {
+    const id = 'CT-' + String(i+1).padStart(2,'0');
+    if (!exact(r,rowKeys) || r.id !== id || r.name !== expected[i] || r.displayOrder !== i+1) errors.push(id + ' id/name/order/keys mismatch');
+    if (!['Verified','Inferred','Disputed'].includes(r.provenance) || !String(r.uncertainty || '').trim()) errors.push(id + ' provenance/uncertainty invalid');
+    if (!Array.isArray(r.anchors) || !r.anchors.length) errors.push(id + ' anchors missing');
+    else for (const a of r.anchors) { if (!requiredAnchors.has(a) || seenAnchors.has(a)) errors.push(id + ' invalid/duplicate anchor ' + a); else seenAnchors.add(a); }
+    if (!Array.isArray(r.sources) || r.sources.length < 2 || r.sources.some(s=>!sourceIds.has(s)) || new Set(r.sources).size !== r.sources.length) errors.push(id + ' unresolved/duplicate source refs');
+    if (!Array.isArray(r.nonLinks) || !r.nonLinks.length) errors.push(id + ' explicit non-link missing');
+    else for (const n of r.nonLinks) if (!exact(n,nonLinkKeys) || !/^NL-CT\d{2}-\d{2}$/.test(n.id || '') || !String(n.claim || '').trim() || !Array.isArray(n.sourceRefs) || n.sourceRefs.length < 2 || n.sourceRefs.some(s=>!sourceIds.has(s))) errors.push(id + ' malformed/unresolved non-link');
+  });
+  if (seenAnchors.size !== requiredAnchors.size || [...requiredAnchors].some(a=>!seenAnchors.has(a))) errors.push('RN/WN/battle anchor coverage is not complete and unique');
+  if (errors.length) die(5, 'conquest-territories: ' + errors.length + ' validation error(s):\n  ' + errors.join('\n  '));
+  conquestTerritoryCount = pack.territories.length;
+}
+
 // ---- 2b. inject assets/embed/** as a single __ASSETS global (D71 H1 ingestion pipeline) ----
 // The OFFLINE tier: every file under assets/embed/<category>/ (the small, compressed,
 // licence-vetted PD media produced by tools/prep-embed-assets.mjs) is Base64-inlined as a
@@ -565,6 +630,7 @@ for (const rm of RATING_MODULES) {
 const KB = (s) => (s.length / 1024).toFixed(1) + 'KB';
 console.log('GATE OK · parse ✓ · hex ✓ · collision ✓ · no-fudge ✓ · citations ✓ · women-in-war ✓ · save-shape ✓');
 console.log('  data:      GAME_DATA = {' + (dataKeys.join(', ') || '(none)') + '}');
+console.log('  schemas:   ' + dataKeys.length + ' data files; conquest territories: ' + conquestTerritoryCount + '/36');
 console.log('  assets:    __ASSETS = ' + embedCount + ' embedded (' + (embedBytes / 1024).toFixed(0) + 'KB raw' + (embedCount ? '; ' + Object.keys(embedCats).map(c => c + ':' + embedCats[c]).join(', ') : '') + ')');
 console.log('  modules:   ' + modules.join(', '));
 console.log('  new fns:   ' + (newFns.map(x => x.name).join(', ') || '(none)'));

@@ -434,6 +434,14 @@
       : (typeof _gorDatelineYear === "function") ? _gorDatelineYear() : String(campaignYear(C || {}));
     var sceneKey = h0SceneKey(battleId);
     var somber = !!(sceneKey && H0_SOMBER_SCENES[sceneKey]);
+    var conquestAction = "";
+    try {
+      if (typeof conquestBoardReady === "function" && typeof conquestBoardOpen === "function" && conquestBoardReady()) {
+        conquestAction = h0Action("gnConquestBoard", "neutral", "36", "Conquest Territory Board",
+          "Explore the source-backed 36-territory read-only foundation. Conquest play is not yet enabled.",
+          "Conquest Territory Board - open the read-only source-backed territory register");
+      }
+    } catch (e) { conquestAction = ""; }
 
     var actionHtml = "";
     if (hasCampaignSave) {
@@ -493,6 +501,7 @@
             + h0Action("gnLoad", "neutral", "&#8681;", "Load from File",
               "Import an exported campaign save from this machine.",
               "Load from File - import a previously exported save")
+            + conquestAction
           + '</div>'
         + '</aside>'
       + '</div>'
@@ -540,6 +549,9 @@
 
     var btnSettings = document.getElementById("gnSettings");
     if (btnSettings) btnSettings.addEventListener("click", function () { if (typeof openSettings === "function") openSettings(); });
+
+    var btnConquest = document.getElementById("gnConquestBoard");
+    if (btnConquest && typeof conquestBoardOpen === "function") btnConquest.addEventListener("click", conquestBoardOpen);
   }
 
   h0InjectCss();

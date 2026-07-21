@@ -1023,7 +1023,7 @@ async function inspectNarrowLayout(browser, probeUrl) {
       evidence.baseMd5 === "c9db83fa99230ffb95bdfdfe059f3fb9" &&
       evidence.saveVer === 1 &&
       evidence.applySaveSignature === "820f02da7a3e6341" &&   // D491: additive politics sanitation enrolled in applySave; _SAVE_VER remains 1
-      evidence.dataCount === 63 &&   // D436: 55 -> 56 — atlanta.json. D442: 56 -> 57 — cold-harbor.json. D445: 57 -> 58 — chief-of-staff.json (GEA-08). D446: 58 -> 59 — concept-links.json (GEA-10). D463: 59 -> 60 — fort-pillow.json; D469: 60 -> 61 — crater.json (LANE-015); D470: 61 -> 62 — olustee.json (LANE-016); D491: 62 -> 63 — politics.json (LANE-018 Slice 3)
+      evidence.dataCount === 64 &&   // D436: 55 -> 56 — atlanta.json. D442: 56 -> 57 — cold-harbor.json. D445: 57 -> 58 — chief-of-staff.json (GEA-08). D446: 58 -> 59 — concept-links.json (GEA-10). D463: 59 -> 60 — fort-pillow.json; D469: 60 -> 61 — crater.json (LANE-015); D470: 61 -> 62 — olustee.json (LANE-016); D491: 62 -> 63 — politics.json (LANE-018 Slice 3); D504: 63 -> 64 — conquest-territories.json (LANE-019 Slice 1)
       evidence.rosterIds.length === 29 &&   // D436: 24 -> 25 — atlanta. D442: 25 -> 26 — coldHarbor. D463: 26 -> 27 — fortPillow (LANE-013 P4). D469: 27 -> 28 — crater (LANE-015); D470: 28 -> 29 — olustee (LANE-016)
       evidence.builderIds.length === 29 &&
       JSON.stringify(evidence.rosterIds) === JSON.stringify(evidence.builderIds) &&

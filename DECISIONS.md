@@ -4,6 +4,61 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D504 — ARC 7 SLICE 1 SHIPS THE FAIL-CLOSED, READ-ONLY 36-TERRITORY BOARD; TRANSPORT REMAINS DESIGN-ONLY — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION + CONTRACT RELAY] (2026-07-21)
+
+LANE-019 Slice 1 ships in the D504 implementation commit containing this entry.
+`data/conquest-territories.json` owns exactly 36 `CT-*` rows in D503's exact ID,
+name, and display order. The registry assigns all 35 `RN-*`, all 41 `WN-*`, and
+the Wilson's Creek and Elkhorn Tavern battle-library anchors exactly once: 78/78
+unique assignments. Every territory carries resolved sources, provenance,
+uncertainty, and at least one explicit non-link. CT-29 and CT-30 cite the existing
+Missouri/border-war research directly and expressly authorize no rail or water
+service from the conquest packets.
+
+`src/114-conquest-board.js` is enrolled last as module 114. It normalizes the
+closed registry without mutation and fails the whole entry point closed on malformed
+core data, wrong count/order/name, duplicate or missing anchors, unresolved sources,
+bad provenance, malformed non-links, missing enablement, forbidden later fields, or
+missing helpers. The guarded H0 control opens a semantic 36-row authoritative list
+plus a 36-control schematic enhancement. The presentation was visually inspected at
+desktop and 390px: readable, no horizontal overflow or clipping, provenance and
+uncertainty are not communicated by color alone, and the list remains complete.
+Pointer/keyboard parity, named headings/regions, focus and deterministic return,
+Escape, 200% zoom, high contrast, visible focus, reduced motion, and zero automatic
+motion are verified. The exact visible status is `read-only foundation; conquest
+play not yet enabled`; no conquest-start action exists.
+
+Build is `GATE OK`: data/schema 64, conquest registry 36/36, no-regression suite
+membership 140, module 114 last. Focused and adjacent results are conquest plan
+10/10, real-menu board 13/13, accessibility 27/27, Mayhem 24/24, and Custom Builder
+16/16. Fresh artifacts are `ok:true` with zero failed steps, `pageerrors`, and
+`realErrors`; both board screenshots were read. Aaron narrowly authorized one
+mechanical Mayhem baseline repair: `tools/probe-mayhem-mode.mjs` changes only the
+data-count pin 63 -> 64 and appends the accurate D504 history. No other Mayhem tooth
+or runtime behavior moved.
+
+Both predeclared binds bit in isolation. Bind A removed only the
+`conquestBoardReady()` readiness conjunct: exactly
+`FAIL CLOSED: absent, malformed, disabled, and helper-absent variants leave zero entry trace`
+failed, 1 red / 12 green, with zero browser errors; source and generated output
+restored byte-identically to MD5 `14a6ea602c23b2efd29a82b4651502fa` and
+`ba68ebfdb6ae778d355b3169fe70978d`. Bind B removed one non-link source reference:
+exactly `sources, provenance, uncertainty, and explicit non-links resolve` failed,
+1 red / 9 green; data and generated output restored byte-identically to MD5
+`7dc40508ae2d7d68c96680cbeac42a6a` and
+`ba68ebfdb6ae778d355b3169fe70978d`. Frozen `build/base.html` remains
+`c9db83fa99230ffb95bdfdfe059f3fb9`; `tools/save-shape.json` remains byte-identical.
+
+No transport runtime ships. No movement, ownership/control state, service condition,
+capacity, economy, reinforcement, reward, Council, terrain/hex action, AI,
+battle-result routing, Chronicle receipt, War Career effect, Custom Builder behavior,
+save field, casualty, winner, score, surrender, or tactical output changed. LANE-019
+therefore advances only to `LAW-DRAFT, DESIGN-ONLY, SLICE 2A TRANSPORT SUBSTRATE`.
+The immediate docs-only pass must classify every D497 RE-01..RE-29 row and every
+D499 WE-01..WE-29 row against CT-01..CT-36, decide the bounded sea subset and an
+honest road verdict, then leave either the smallest read-only transport-evidence
+CONTRACT or a bounded source-pass CONTRACT. It may not implement transport.
+
 ## D503 — AARON LOCKS ARC 7 PACKAGE A: 36 OPERATIONAL CATCHMENTS, TWO-MONTH HYBRID AUTHORITY, AND A READ-ONLY TERRITORY BOARD AS SLICE 1 — [AARON + CHATGPT/CODEX 5.6 SOL ULTRA, FINAL DESIGN LAW] (2026-07-21)
 
 **AARON:** "execute option a." The selected architecture is Package A. Its Why
