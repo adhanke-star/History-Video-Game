@@ -3512,13 +3512,13 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **CONTRACT (DESIGN-ONLY; Aaron decisions required before runtime)**
+### LANE-019 · conquest-design-law — **DRIVE (DESIGN-ONLY; PACKAGE A AARON-LOCKED; NO RUNTIME)**
 
-- **Owning tool:** none. The next session is an Aaron-led TOP LOOP design
-  adjudication; no implementation lock exists.
-- **State:** CONTRACT for design-law completion only. It may advance to runtime DRIVE
-  only through a later committed ledger-only charter after Aaron's decisions and the
-  final law are recorded.
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. This lock covers only the
+  final-law/docs milestone; it confers no runtime ownership.
+- **State:** DRIVE for design-law completion only. Runtime remains closed. The lane
+  returns to unowned CONTRACT for Slice 1 in the final-law commit; any later runtime
+  session must take DRIVE through a separate committed ledger edit.
 - **Design law:** `docs/design/unlocked-but-judged-design.md` §5 and §8 (D455 +
   D502); `docs/design/strategic-rail-conquest-research-packet.md`;
   `docs/design/strategic-water-transport-research-packet.md`; DECISIONS D455, D497,
@@ -3528,6 +3528,21 @@ next green commit and confer through this ledger instead of permitting simultane
   `ARC_7_REQUIRES_DEDICATED_DESIGN_LAW`, and `ARC_7_RUNTIME_CLOSED`. The four D455
   packet families are shipped; no additional packet is required before design. This
   is not a territory graph, schema, runtime, or release authorization.
+- **Aaron lock (2026-07-21): PACKAGE A — 36 operational catchments / two-month
+  hybrid.** Aaron explicitly answered "execute option a." The final law must carry
+  Package A's exact territory list; 24 two-month turns plus a bounded 1865 endgame;
+  sourced physical-availability dates plus player-authored control/service receipts;
+  territory control with distinct node operation and unowned service-state edges;
+  a common evidence envelope with separate rail/water/road/sea registries joined by
+  explicit interchanges; one army order and one attack opportunity per turn; one
+  default heavy-transport order with a second only through a guarded existing-owner
+  readiness signal; cuts consuming attack, repair consuming one full turn, and
+  source-backed bypasses only; existing-economy muster claims/theater/objective
+  rewards with no new currency or D74 output lever; curated-site hex zoom separated
+  from strategy control; fresh-start conquest saves in a future separate namespace;
+  same-legal-order AI; `bridgeArmy`/shared-result/Chronicle ownership; accessible
+  list-first presentation; and fail-closed offline behavior. Package B/C are rejected
+  for this law milestone, not erased as design history.
 - **Acceptance criteria — the next design-law milestone, in full:**
   1. Extend only `docs/design/unlocked-but-judged-design.md` §8; do not create a
      second conquest plan, roadmap, schema, or design-law file.
@@ -3582,11 +3597,10 @@ next green commit and confer through this ledger instead of permitting simultane
   12. Finish with exact Slice-1 allowed/do-not-touch files, negative binds, focused and
       adjacent gates, artifact readback, release battery point, and provider/lock
       state. Stop before runtime and commit/push the completed law separately.
-- **Aaron decision/HALT gates:** exact territory granularity; turn scale; campaign
-  economy; movement capacity; objective-card rewards; hex interaction; campaign save
-  compatibility; or any similarly consequential architecture choice. If a package
-  comparison does not resolve the choice for Aaron, keep it explicitly open and the
-  dependent runtime slice closed.
+- **Aaron decision/HALT gates:** Package A resolves the D502 architecture gates for
+  the final law. HALT if writing it exposes a new consequential fork, unsupported
+  topology, owner collision, or need for runtime/data/probe/asset/generated edits;
+  never invent a substitute merely to complete the docs milestone.
 - **First-runtime boundary after law:** the territory-board substrate in §8.8 is the
   maximum candidate Slice 1. It must be no-op/fail-closed when data/enablement is
   absent or malformed and must leave the ladder, both rulesets, saves, bridge,
@@ -3608,16 +3622,15 @@ next green commit and confer through this ledger instead of permitting simultane
   `build/base.html` change. Suite 140, schema 63, `_SAVE_VER=1`,
   `MAYHEM_PUBLIC_READY=true`, frozen base MD5
   `c9db83fa99230ffb95bdfdfe059f3fb9`, and D74 hold.
-- **Resume pointer:** start a fresh Aaron-led ChatGPT/Codex 5.6 Sol Ultra TOP LOOP
-  session. Fetch/status/HEAD/origin and pull only when clean; read START-HERE,
-  COORDINATION §1-§4 + this lane, HANDOFF top, D455 §5-§8, both conquest
-  packets' verdict/limits, then the direct owner surfaces. Ask Aaron the bundled
-  architecture questions, record each lock, extend §8 into the final design law,
-  update this lane to a separate Slice-1 CONTRACT, commit/push docs only, run build +
-  diff + both planning probes, prove clean sync, and STOP before runtime. No
-  simultaneous edits.
-- **Last-touched commit:** D502 docs-only ARC 6 release reconciliation / ARC 7
-  design-law contract (commit containing this entry).
+- **Resume pointer:** continue docs-only from the standalone Package-A lock commit.
+  Extend only `docs/design/unlocked-but-judged-design.md` §8 into the final ARC 7
+  law; add the next DECISIONS entry and HANDOFF top amendment; replace this design
+  DRIVE with the complete unowned Slice-1 CONTRACT; run the prescribed build/base/
+  generated/diff/manual-inspection gates; commit/push docs only; rerun and read both
+  planning probes post-commit; prove clean `HEAD == origin/main`; STOP before
+  runtime. No simultaneous edits.
+- **Last-touched commit:** standalone docs-only Package-A design-lock commit
+  containing this entry.
 - **History:** created after all four ARC 6 feeders shipped; no runtime/data/probe/
   asset/generated work began. D455's stale ARC-number mapping labels were corrected
   against its own canonical arc list; no product choice changed.
