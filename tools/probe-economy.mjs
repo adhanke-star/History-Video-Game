@@ -76,6 +76,21 @@ const SETUP = `(() => {
         if(csText.indexOf(token)<0) throw new Error('CS finance readout missing token: '+token);
       });
       return { usLen:usText.length, csLen:csText.length }; });
+    step('POLITICS FORMULA NEUTRALITY / FAIL-CLOSED — absent config and sentiment 50 are exact zero', function(){
+      var C=mkCampaign('US'); C.clock={year:1863,weariness:40,capital:20,resolved1864:false};
+      var absent=politicsCycleDelta(C,'1864-presidential',75,{cycles:{}}), neutral=politicsCycleDelta(C,'1864-presidential',50);
+      if(absent.weariness!==0||absent.capital!==0||neutral.weariness!==0||neutral.capital!==0) throw new Error('neutrality/fail-closed delta was not exact zero');
+      return { absent:absent, neutral:neutral }; });
+    step('POLITICS BOUNDS / ONE-SHOT / SIDE-WINDOW — only permitted clock inputs move', function(){
+      var C=mkCampaign('US'); C.clock={year:1863,weariness:40,capital:20,resolved1864:false,elected:true}; C.press={reacted:true,sentiment:100};
+      var hi=politicsCycleDelta(C,'1864-presidential',100), lo=politicsCycleDelta(C,'1864-presidential',0);
+      if(hi.weariness!==-4||lo.weariness!==4) throw new Error('configured weariness cap failed');
+      var owner=JSON.stringify({elected:C.clock.elected,resolved:C.clock.resolved1864}); politicsOnResolve('US','win',{},C,true); var once=JSON.stringify(C.clock); politicsOnResolve('US','win',{},C,true);
+      if(JSON.stringify(C.clock)!==once) throw new Error('same cycle stacked');
+      if(JSON.stringify({elected:C.clock.elected,resolved:C.clock.resolved1864})!==owner) throw new Error('election ownership fields moved');
+      var S=mkCampaign('CS'); S.clock={year:1863,weariness:40,capital:20,resolved1864:false}; if(politicsCycleDelta(S,'1864-presidential',100).weariness!==0) throw new Error('non-US not zero');
+      C.clock.year=1864; if(politicsCycleDelta(C,'1864-presidential',100).weariness!==0) throw new Error('out-of-window not zero');
+      return { hi:hi, lo:lo, oneShot:true }; });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;

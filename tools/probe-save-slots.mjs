@@ -245,6 +245,18 @@ const SETUP = `(() => {
       return { scanned:txt.length };
     });
 
+    step('POLITICS SAVE: absent legacy state stays absent; malformed optional state fails closed', function() {
+      var legacy=mkC('US',0), sv={ver:_SAVE_VER,settings:{},campaign:legacy}; delete legacy.politics;
+      applySave(JSON.parse(JSON.stringify(sv)));
+      if(Object.prototype.hasOwnProperty.call(G.campaign,'politics')) throw new Error('legacy absent politics field was created');
+      var bad=mkC('US',0); bad.politics={applied:'tampered'}; applySave({ver:_SAVE_VER,settings:{},campaign:bad});
+      if(Object.prototype.hasOwnProperty.call(G.campaign,'politics')) throw new Error('malformed politics state survived sanitation');
+      var good=mkC('US',0); good.politics={applied:{'1864-presidential':true,evil:true}}; applySave({ver:_SAVE_VER,settings:{},campaign:good});
+      if(!G.campaign.politics||G.campaign.politics.applied['1864-presidential']!==true||Object.prototype.hasOwnProperty.call(G.campaign.politics.applied,'evil')) throw new Error('politics allowlist sanitation failed');
+      if(_SAVE_VER!==1) throw new Error('_SAVE_VER moved');
+      return { legacyAbsent:true, malformedDropped:true, saveVer:_SAVE_VER };
+    });
+
     return JSON.stringify(R);
   } catch(e) {
     return JSON.stringify({ ok:false, fatal:String(e && e.message || e), steps:R.steps });

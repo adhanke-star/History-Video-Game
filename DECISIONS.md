@@ -4,6 +4,26 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D491 — LANE-018 SLICE 3 SHIPPED: THE 1864 ELECTION BIND — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-018 DRIVE] (2026-07-21)
+
+`data/politics.json` now carries the 1862 midterm card (both halves; 28–31 range), the
+1864 referendum/Blind-Memorandum/reversal/result anchors, sourced emancipation and
+Thirteenth-Amendment hooks, the honestly Disputed 75–80% soldier-vote row, and the
+side-gated Confederate home-front mirror. `src/74-politics.js` is the one config-driven
+interlink: in the pre-election 1863 window, press sentiment maps to weariness at a hard
+±4 cap; the 1862 card permits only ±1 capital. Neutral 50, absent config, non-US,
+out-of-window, and resolved paths are exact zero; each cycle is one-shot. The one guarded
+consumer sits immediately after `clkOnResolve`; the clock remains the only election owner.
+Malformed optional politics save state is dropped/allowlisted under the additive E41
+contract; `_SAVE_VER=1`. Teaching integrates through the existing divergence and endings
+pure-reader seams; no soldier-vote mechanic or decision UI exists. Existing-owner teeth:
+economy 10/10, divergence 16/16, endings 26/26, command 100/100, save-slots 17/17;
+adjacents press 10/10, morale 10/10, afteraction 19/19; all artifacts `ok:true`, zero
+failed steps, zero pageerrors. Binds bit exactly at FORMULA NEUTRALITY / FAIL-CLOSED and
+POLITICS TEACHING SIDE GATE, with source/game md5 restored to `674e8946`/`19489898`.
+Schema 63; suite 140; frozen base `c9db83fa` held. LANE-018 releases to VERIFY/unowned;
+exact next is Slice 4, the serialized ARC 5 release battery.
+
 ## D490 — LANE-018 SLICE 2 SHIPPED: THE AI-GM PERSONA CHOICE AT SETUP + THE TRANSFER SYMMETRY RIDER (§4e.1 + §4e.2, adjudication 2) — [CLAUDE CODE (FABLE 5), LANE-018 DRIVE] (2026-07-20)
 
 **SHIPPED (this commit): the campaign-setup Enemy-command-persona choice, per the committed

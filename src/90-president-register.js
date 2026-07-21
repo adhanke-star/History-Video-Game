@@ -54,6 +54,7 @@ function _t1InitAll(C) {
 function _t1Resolve(winnerSide, type, B, C, win) {
   if (!C) return;
   try { if (typeof clkOnResolve === "function") clkOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve clkOnResolve:", e); }
+  try { if (typeof politicsOnResolve === "function") politicsOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve politicsOnResolve:", e); }
   try { if (typeof econOnResolve === "function") econOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve econOnResolve:", e); }  // S1a: after clk → feeds clock.weariness
   try { if (typeof wrOnResolve  === "function") wrOnResolve(winnerSide, type, B, C, win);  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve wrOnResolve:", e); }
   try { if (typeof blockadeOnResolve === "function") blockadeOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve blockadeOnResolve:", e); }  // S1c: BEFORE prod → sets importFactor + funds + clock.intervention

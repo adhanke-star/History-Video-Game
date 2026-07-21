@@ -111,5 +111,6 @@ function applySave(sv) {
   }
   var nextCampaign = sv.campaign || null;
   G.campaign = nextCampaign; // MAYHEM_BIND_D:REPLACE_CAMPAIGN_FOR_CROSS_SAVE_ISOLATION
+  if (G.campaign && typeof politicsSanitizeOnLoad === "function") politicsSanitizeOnLoad(G.campaign);
   if (G.campaign && typeof mayhemInit === "function") mayhemInit(G.campaign, null, "load");
 }

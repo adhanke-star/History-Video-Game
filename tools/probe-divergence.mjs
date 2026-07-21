@@ -213,6 +213,13 @@ const SETUP = `(() => {
       if(hH!==hM) throw new Error('the divergence tab must render byte-identically under both rulesets (always-visible in BOTH modes)');
       return { bothModes:true, len:hH.length }; });
 
+    step('POLITICS TEACHING SIDE GATE — US election rows and CS home-front rows never cross', function(){
+      var U=mkC('US',1864,11), S=mkC('CS',1864,11), uh=politicsTeachingHTML(U), sh=politicsTeachingHTML(S);
+      if(uh.indexOf('212–21')<0||uh.indexOf('75–80')<0||uh.indexOf('Disputed')<0) throw new Error('US election teaching/provenance missing');
+      if(/No Confederate presidential election|Dissent inside a slaveholding/.test(uh)) throw new Error('CS rows leaked to US');
+      if(sh.indexOf('No Confederate presidential election')<0||sh.indexOf('committed to slavery')<0||sh.indexOf('Inferred')<0) throw new Error('CS home-front teaching missing');
+      if(/212–21|Lincoln's military-vote/.test(sh)) throw new Error('Northern election language leaked to CS');
+      return { us:true, cs:true }; });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;

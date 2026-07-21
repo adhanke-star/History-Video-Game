@@ -327,6 +327,12 @@ const SETUP = `(() => {
       if(hH!==hM) throw new Error('the endings section must render byte-identically under both rulesets (always-visible in BOTH modes)');
       return { bothModes:true }; });
 
+    step('POLITICS ENDINGS ACCESSOR — pure, side-aware, teaching-only, existing election state unchanged', function(){
+      var U=mkC('US',1864,11); U.clock.resolved1864=true; U.clock.elected=true; var before=JSON.stringify(U), rows=endPoliticsTeaching(U);
+      if(JSON.stringify(U)!==before) throw new Error('politics endings accessor mutated campaign');
+      if(!rows.some(function(r){return r.id==='us-soldier-vote';})||!rows.some(function(r){return r.id==='us-thirteenth-amendment';})) throw new Error('teaching hooks missing');
+      var S=mkC('CS',1864,11); if(endPoliticsTeaching(S).some(function(r){return /^us-/.test(r.id||'');})) throw new Error('US hooks leaked to CS');
+      return { pure:true, rows:rows.length, elected:_endElected(U) }; });
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;

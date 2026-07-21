@@ -537,7 +537,7 @@ step("EXCLUSIONS + BASELINES", () => {
   const baseHash = md5(BASE);
 
   if (t1Count !== 29) throw new Error("scenario baseline must be 29, got " + t1Count);   // D436: 24 -> 25 — Atlanta registers at rank 71. D442: 25 -> 26 — Cold Harbor registers at rank 68.5. D463: 26 -> 27 — Fort Pillow registers at rank 66 (LANE-013 P4). D469: 27 -> 28 — The Crater registers at rank 71.5 (LANE-015). D470: 28 -> 29 — Olustee registers at rank 65.5 (LANE-016)
-  if (schemaCount !== 62) throw new Error("schema/data baseline must be 62, got " + schemaCount);   // D436: 54 -> 56 — mayhem-rules.json (D418, pin missed then) + atlanta.json (D436); documented honestly. D442: 56 -> 57 — cold-harbor.json. D445: 57 -> 58 — chief-of-staff.json (GEA-08). D446: 58 -> 59 — concept-links.json (GEA-10). D463: 59 -> 60 — fort-pillow.json (LANE-013 P4). D469: 60 -> 61 — crater.json (LANE-015). D470: 61 -> 62 — olustee.json (LANE-016)
+  if (schemaCount !== 63) throw new Error("schema/data baseline must be 63, got " + schemaCount);   // D436: 54 -> 56 — mayhem-rules.json (D418, pin missed then) + atlanta.json (D436); documented honestly. D442: 56 -> 57 — cold-harbor.json. D445: 57 -> 58 — chief-of-staff.json (GEA-08). D446: 58 -> 59 — concept-links.json (GEA-10). D463: 59 -> 60 — fort-pillow.json (LANE-013 P4). D469: 60 -> 61 — crater.json (LANE-015). D470: 61 -> 62 — olustee.json (LANE-016). LANE-018 Slice 3: 62 -> 63 — politics.json.
   if (!/people\.length\s*!==\s*1710/.test(loot) || !loot.includes("1710 of 1710")) {   // D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7); D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (the AD-7 chain idiom)
     throw new Error("Army Register 1710 pins missing");
   }
@@ -967,7 +967,8 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // shadow disclosure; src/107 threads the picker token; the war-career logic surfaces are
     // untouched, proven by this probe's own runtime steps; both binds md5-proven;
     // runtime/focused hold).
-srcTree:"cfa7648df7b11c2026bd3991279ff1df",
+// D491 re-pin: srcTree cfa7648d -> 8bbf47b8 for src/74 plus the guarded register, teaching hooks, and additive save sanitation.
+srcTree:"8bbf47b8f58caf2b3661baf2cb734c5b",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
@@ -1013,7 +1014,8 @@ srcTree:"cfa7648df7b11c2026bd3991279ff1df",
     // D490 re-pin (LANE-018 slice 2): commandProbe 048bfed3 -> d861722c (probe-command grows
     // 94 -> 99 with the five persona/friction/save/setup teeth; the four D406 tooth names this
     // probe scans are unmoved).
-    commandProbe:"d861722c756981a62a3cd5ce160b4fa1"
+    // D491 re-pin: commandProbe d861722c -> eac3ea4e for the distinct-D113 collision tooth; command runtime holds.
+    commandProbe:"eac3ea4ebdab25b3cee96ad0536102f3"
   };
   for (const key of Object.keys(expected)) {
     if (locks[key] !== expected[key]) throw new Error(key + " D411-complete lock moved: " + locks[key]);
@@ -1244,7 +1246,7 @@ step("BASELINES + LANE", () => {
     manifest:md5(MANIFEST),
     suite:md5(VET)
   };
-  if (t1Count !== 29 || schemaCount !== 62) {   // D436: 24/54 -> 25/56 (atlanta + the D418 mayhem-rules pin catch-up). D442: 25/56 -> 26/57 (cold harbor). D445: 57 -> 58 (chief-of-staff.json). D446: 58 -> 59 (concept-links.json; scenarios stay 26). D463: 26/59 -> 27/60 (fort-pillow, LANE-013 P4). D469: 27/60 -> 28/61 (crater, LANE-015). D470: 28/61 -> 29/62 (olustee, LANE-016)
+  if (t1Count !== 29 || schemaCount !== 63) {   // D436: 24/54 -> 25/56 (atlanta + the D418 mayhem-rules pin catch-up). D442: 25/56 -> 26/57 (cold harbor). D445: 57 -> 58 (chief-of-staff.json). D446: 58 -> 59 (concept-links.json; scenarios stay 26). D463: 26/59 -> 27/60 (fort-pillow, LANE-013 P4). D469: 27/60 -> 28/61 (crater, LANE-015). D470: 28/61 -> 29/62 (olustee, LANE-016). LANE-018 Slice 3: 29/62 -> 29/63.
     throw new Error("scenario/schema baseline moved: " + t1Count + "/" + schemaCount);
   }
   if (!/people\.length\s*!==\s*1710/.test(loot) || !loot.includes("1710 of 1710")) {   // D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7); D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (the AD-7 chain idiom)
@@ -1339,7 +1341,8 @@ step("BASELINES + LANE", () => {
     // D486 re-pin (LANE-017 slice 8): game 27e73f38 -> 67fbe534 · dataTree dcf6da5b -> 5de65a85 (data/loot-survival.json gains 4 sets + 9 Inferred variety items + the salvage/economyHooks blocks; src/37 + src/107 in the build — the full chain is documented at this file's srcTree pin sites). base/manifest/suite hold.
     // D489 re-pin (LANE-018 slice 1, the muster desk surface): game 67fbe534 -> 7b83d48b · manifest 9312db81 -> a6699981 (T35 registered after T34; T15 player-flagged seam in the build; presentation-only, zero data movement — the full chain is documented at this file's srcTree pin sites). base/dataTree/suite hold.
     // D490 re-pin (LANE-018 slice 2): game 7b83d48b -> b2b23ed2 (the persona seams in src/35 + src/107 in the build; the full chain is documented at this file's srcTree pin sites). base/manifest/suite hold.
-    game:"b2b23ed22f92be4b0078c90b15e89529",
+    // D491 re-pin: game b2b23ed2 -> 19489898; dataTree fa4ce39d -> 9b2da5bc; manifest a6699981 -> d686e44e. Politics data/module + owner teeth; base/suite hold; schema 63.
+    game:"1948989849508789e723afc79d0e4f1e",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     // D478 re-pin: dataTree 4bbdebe5 -> b3b323fa (LANE-017 slice 1: rarity glyphs + reserved tier
     // hexes + rungTiers in data/loot-survival.json — presentation data only, no war-career data).
@@ -1347,8 +1350,8 @@ step("BASELINES + LANE", () => {
     // salvage/economyHooks blocks in data/loot-survival.json — no war-career data).
     // D490 re-pin: dataTree 5de65a85 -> fa4ce39d (LANE-018 slice 2: the aiGm _note honesty
     // amendment in data/ratings.json — free text only, no numeric movement, no war-career data).
-    dataTree:"fa4ce39dec16fe52af184823d3da64b3",
-    manifest:"a6699981697a57c26e48cc501b12ad5e",
+    dataTree:"9b2da5bc525bd7453ae2130ec2805b75",
+    manifest:"d686e44e3488838553f11481a77359bd",
     suite:"69681d6f2216fe1dcfd594ffc4a757b7"
   };
   for (const key of Object.keys(expectedHashes)) {
@@ -1809,8 +1812,9 @@ step("REACHABILITY BASELINES", () => {
     // b2b23ed2 · dataTree 5de65a85 -> fa4ce39d (src/35 persona seams + src/107 picker token in
     // the build; the ratings aiGm _note honesty amendment — free text only, no numeric
     // movement). runtime/journey/focused hold; both binds md5-proven.
-    game:"b2b23ed22f92be4b0078c90b15e89529",
-    dataTree:"fa4ce39dec16fe52af184823d3da64b3",
+    // D491 re-pin: the same politics chain at the reachability baseline; runtime/journey/focused hold.
+    game:"1948989849508789e723afc79d0e4f1e",
+    dataTree:"9b2da5bc525bd7453ae2130ec2805b75",
         // D484 re-pin (LANE-017 slice 6, soldier-tier badges SS4d.3): game e7ff100e -> e99e6ac5 · dataTree 00f8c1fe -> c3c28fd6 (data/ratings.json gains soldierBadgeDefs 14 + soldierBadges 48 rows on 39 Verified carriers + _soldierBadgeNote) · srcTree 15570ebc -> d79696ce (T14 soldier-badge accessors + the fldSoldierBadgeFactor capped gateway; src/37 cwCareerBadges/cwSoldierBadgeRows/_ssSoldierBadgesHTML register/journey chips; the src/22 comment-token reword — the D482 class, fifth instance) · journey 1689c4a2 -> 9655bfff (src/37) · focused 65e9c873 -> e2acf99a (probe-war-career gains the D484 career-badge step; the stale 138 suite.expected DISPLAY fields aligned to the 140 teeth). Presentation + data + the capped gateway only — no combat line consumes the keys, sim inputs did not move; both binds md5-proven; base/manifest/suite/runtime/command hold.
     // D486 re-pin (LANE-017 slice 8): srcTree b7648a67 -> 8174d79d (src/37 sets/salvage/
     // requisition/captured-arms/economy-read + UI; src/107 the picker opt-in token thread).
@@ -1821,7 +1825,8 @@ step("REACHABILITY BASELINES", () => {
     // D490 re-pin (LANE-018 slice 2): srcTree 3ce634af -> cfa7648d (the src/35 persona
     // seams + the src/107 picker token thread; the war-career/journey logic surfaces are
     // untouched, proven by this probe's own runtime steps; both binds md5-proven).
-srcTree:"cfa7648df7b11c2026bd3991279ff1df",
+// D491 re-pin: srcTree cfa7648d -> 8bbf47b8; no war-career runtime surface moved.
+srcTree:"8bbf47b8f58caf2b3661baf2cb734c5b",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;

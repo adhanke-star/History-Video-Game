@@ -43,6 +43,7 @@ function _endRecognition(C) { var BL = (C && C.blockade) || {}; return _endNum(B
 function _endWon(C) { var st = (C && C.stats) || {}; return _endNum(st.won, 0); }
 function _endVictoryReady(C) { var S = (C && C.strategy) || {}; return S.victoryReady || null; }
 function _endElected(C) { var clk = (C && C.clock) || {}; return !!(clk.resolved1864 && clk.elected); }
+function endPoliticsTeaching(C) { return (typeof politicsTeachingRows === "function") ? politicsTeachingRows(C, "1864-presidential") : []; }
 function _endEmancipation(C) { return (C && C.president && C.president.emancipation) || {}; }
 /* grounded-tier accessors (D116): the enemy's will, the war year, the strategic levers. */
 function _endEnemyWill(C) { var S = (C && C.strategy) || {}; return _endNum(S.enemyWill, 100); }   // default HIGH so a missing value never falsely opens a "Northern will cracking" path

@@ -3204,15 +3204,12 @@ next green commit and confer through this ledger instead of permitting simultane
   flagship markers render in src/67; R-7's exact provenance is the T14 bug-hunt
   deferred-log ("per-situation gating of the R-3 static triggers").
 
-### LANE-018 · gm-completion — **DRIVE (chartered ledger-only; ARC 5 per the D455 ladder, unblocked by the D488 politics packet)** (§4e: AI-GM persona choice · muster-roll desk surface · the 1864 election bind · the Transfer AI-GM rider)
+### LANE-018 · gm-completion — **VERIFY (Slices 1–3 shipped; Slice 4 ARC 5 battery queued)** (§4e: AI-GM persona choice · muster-roll desk surface · the 1864 election bind · the Transfer AI-GM rider)
 
-- **Owning tool:** ChatGPT/Codex (5.6 Sol Ultra) — Aaron explicitly authorized the
-  provider transfer on 2026-07-21; Codex takes the existing DRIVE lock in this
-  ledger-only transfer commit before any Slice-3 code move. The §4 TOP-LOOP
-  resolution: TOP LOOP = ChatGPT/Codex 5.6 Sol Ultra; the main loop retains
-  architecture, historical judgment, integration, verification, and the commit.
-  No simultaneous edits by any provider.
-- **State:** DRIVE — this entry IS the acceptance contract. Charter recon was
+- **Owning tool:** none — Codex released DRIVE at the clean D491 Slice-3 boundary.
+  The next session must take the battery machine exclusively; no simultaneous edits.
+- **State:** VERIFY — Slices 1–3 are shipped; only the Slice-4 release battery remains.
+  This entry IS the acceptance contract. Charter recon was
   read-only against the clean pushed D488 boundary (`d8ca128`).
 - **Design law:** DECISIONS D455 §7's ARC 5 row (`unlocked-but-judged-design.md` §4e +
   §7: "AI-GM (player-choice persona) + the muster-roll UI + the election bind") ·
@@ -3384,14 +3381,22 @@ next green commit and confer through this ledger instead of permitting simultane
   runtime-drawn, zero embed bytes, its own ledger charter) — the ratified tail
   candidate; LANE-002 5b keeps its S-04 fresh-context reservation; ARC 6 rail/naval/
   medicine packets remain session-fillers; ARC 7/8/9 queue behind ARC 5/6.
-- **Resume pointer:** SLICE 3 (the 1864 election bind — the load-bearing slice; the
-  packet §3/§3.5 VERBATIM per adjudication 3, the packet §5 ten teeth the basis) per
-  this contract — DRIVE is HELD by ChatGPT/Codex 5.6 Sol Ultra after Aaron's
-  explicit 2026-07-21 provider-transfer authorization; a fresh session re-takes
-  DRIVE with a committed ledger edit if the lock is released at a boundary. The full
-  slice-3 clause + binds live in the acceptance contract above; the HANDOFF top ⚡
-  block's D490 amendment carries the zero-context EXACT-NEXT packet.
-- **Slice history:** SLICE 2 SHIPPED as D490 (2026-07-20, the slice-1 session
+- **Resume pointer:** SLICE 4, the ARC 5 release battery. Set `TMPDIR`, run
+  `npm run vet:noreg` serialized and ALONE (war-career 900s; visual-fidelity 600s),
+  read every artifact JSON for current mtime, `ok:true`, zero failed steps and zero
+  pageerrors, root-fix any real red at its exact label, then flip LANE-018 SHIPPED
+  with the battery SHA. No provider may edit concurrently.
+- **Slice history:** SLICE 3 SHIPPED as D491 (2026-07-21, ChatGPT/Codex 5.6 Sol
+  Ultra): `data/politics.json` + `src/74-politics.js`, the post-clock guarded
+  consumer, pure divergence/endings teaching hooks, and additive save sanitation.
+  Runtime caps: 1864 pre-election weariness ±4, 1862 capital ±1; exact zero at
+  neutral/absent/non-US/out-of-window/resolved; one-shot. Teeth economy 10/10,
+  divergence 16/16, endings 26/26, command 100/100, save-slots 17/17; adjacents
+  press 10/10, morale 10/10, afteraction 19/19; zero pageerrors. Binds A/B bit
+  exactly and restored source/game md5 `674e8946`/`19489898`. Schema 63; suite 140;
+  `_SAVE_VER=1`; frozen base held. AD-7 game `19489898` · dataTree `9b2da5bc` ·
+  srcTree `8bbf47b8` · manifest `d686e44e` · commandProbe `eac3ea4e`; base/journey/
+  suite/focused/runtime/command held. SLICE 2 SHIPPED as D490 (2026-07-20, the slice-1 session
   continuing the held DRIVE): the AI-GM persona choice at setup + the Transfer
   symmetry rider — the picker's labelled native select (no data-mh-mode, no
   announce; the D486 token chain gains `aiGmPersona` with `_mhGmPersona` fail-closed
@@ -3432,7 +3437,7 @@ next green commit and confer through this ledger instead of permitting simultane
   alone (a teardown hang after a green artifact; a wedged :8765 server). AD-7 game
   67fbe534→7b83d48b · srcTree 8174d79d→3ce634af · manifest 9312db81→a6699981
   (base/dataTree/journey/suite/focused/runtime/command/commandProbe hold).
-- **Last-touched commit:** the D490 slice-2 commit (slice 1: `32051dd`; charter: `358bf35`).
+- **Last-touched commit:** D491 Slice 3 (this commit; slice 2: D490; slice 1: `32051dd`; charter: `358bf35`).
 - **History:** chartered 2026-07-20 immediately after the D488 politics-packet
   close, per the packet's READY_FOR_SPEC verdict and the LANE-017 resume pointer's
   T2-DISCHARGED forward addendum. Charter recon (read-only at `d8ca128`): T29

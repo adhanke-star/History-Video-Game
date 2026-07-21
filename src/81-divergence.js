@@ -299,8 +299,9 @@ function divRenderTab(C) {
   // E1 deepening (D115): the alternate-endings section (fantastical tier) — guarded,
   // byte-identical when 83-endings.js is absent.
   var endings = (typeof endRenderSection === "function") ? endRenderSection(C) : '';
+  var politics = (typeof politicsTeachingHTML === "function") ? politicsTeachingHTML(C) : '';
 
-  return head + idxPanel + togPanel + ledger + endings + foot;
+  return head + idxPanel + togPanel + ledger + politics + endings + foot;
 }
 
 /* ---- divWireTab(C): the divergence-tab emergent-only toggle handler. One of TWO surfaces

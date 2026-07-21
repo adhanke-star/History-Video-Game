@@ -1569,6 +1569,16 @@ const SETUP = `(() => {
       } finally { _mhStartToken=null; G.campaign=keepCampaign; G.mode=keepMode; }
       return { labelled:true, keyboard:'native-select', thread:true }; });
 
+    step('POLITICS / D113 COLLISION — the election relief bind remains structurally distinct', function(){
+      var r=gameData('ratings'), p=gameData('politics');
+      if(!r||!r.electionReliefBind||!p||!p.cycles) throw new Error('required configs missing');
+      if(Object.prototype.hasOwnProperty.call(p,'electionReliefBind')) throw new Error('politics collided with D113 key');
+      if(String(politicsCycleDelta).indexOf('_cmdReliefCost')>=0||String(_cmdReliefCost).indexOf('politicsCycleDelta')>=0) throw new Error('consumer collision');
+      var C=mkC('US',1864,9), banks=_cmdCommissionEntry('US','us-banks'); C.clock.resolved1864=false;
+      if(_cmdElectionSupportSurcharge(C,banks)<=0) throw new Error('D113 Union/window behavior regressed');
+      C.clock.resolved1864=true; if(_cmdElectionSupportSurcharge(C,banks)!==0) throw new Error('D113 resolved relaxation regressed');
+      return { distinct:true }; });
+
     // helper: read a general's current reputation
     function C0rep(C,id){ return (C.president&&C.president.command&&typeof C.president.command.reputation[id]==='number')?C.president.command.reputation[id]:60; }
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }

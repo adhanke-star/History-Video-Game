@@ -2,6 +2,17 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-21 — D491: LANE-018 SLICE 3 SHIPPED — THE 1864 ELECTION BIND
+
+Codex 5.6 Sol Ultra took the Aaron-authorized provider transfer at clean `f53f32c` and
+shipped the load-bearing politics slice. New `data/politics.json` + `src/74-politics.js`
+add the source-stamped, side-gated teaching layer and one bounded press-to-clock interlink
+(1864 pre-election weariness ±4; 1862 capital ±1; neutral/absent/wrong-side/window/resolved
+exact zero; one-shot). Clock election ownership, D113, combat outputs, and press ownership
+remain distinct. Five owners and three adjacents passed with zero pageerrors; both required
+binds bit exactly and restored md5-identically. Schema moves 62→63; suite holds 140;
+`_SAVE_VER=1`; frozen base holds. LANE-018 is VERIFY/unowned. Exact next: Slice 4 battery.
+
 ## 2026-07-20 — D490: LANE-018 SLICE 2 SHIPPED (`f43d1f0`): THE AI-GM PERSONA CHOICE AT SETUP + THE TRANSFER SYMMETRY RIDER
 
 A fresh Fable 5 session resumed the HELD LANE-018 DRIVE at the clean pushed 11b1619

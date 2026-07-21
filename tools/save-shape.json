@@ -8,6 +8,6 @@
     "build/base.html::importSave": "34e7e850b56e32a8",
     "src/91-save-slots.js::_slValidSave": "c39bba325959a05c",
     "src/105-save-guard.js::loadLocal": "03b946b75009c1f3",
-    "src/105-save-guard.js::applySave": "201fa746ea8e8755"
+    "src/105-save-guard.js::applySave": "820f02da7a3e6341"
   }
 }
