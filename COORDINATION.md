@@ -3714,12 +3714,15 @@ next green commit and confer through this ledger instead of permitting simultane
   commit `44ffac5`; Slice-1 DRIVE take `7a0ca42`; allowlist/gate HALT ledger
   `cb46f55`; D504 Slice-1 implementation `74237b9`; D505 docs-only contract ships in
   `53befb6`; Slice-2A DRIVE take `af90db1`; D506 implementation ships in the
-  commit containing this entry.
+  commit containing that entry; D507 DRIVE take `f54d1d4`; D507 packet/closeout
+  `c547bb4`; whitespace-gate cleanup `ba127f8`; final lane reconciliation is the
+  commit containing this edit.
 - **History:** D502 created the design-only contract. Aaron chose Package A. D503
   completed the final law. D504 shipped the read-only territory board. D505 audits
   every rail/water evidence row, contracts the read-only substrate, and D506 ships
-  it. The lane is unowned for the bounded road source pass; transport gameplay
-  remains closed.
+  it. D507 ships the first bounded road source pass with `NEEDS_MORE_RESEARCH` and
+  releases the lane unowned. No read-only road substrate or transport gameplay is
+  authorized.
 
 ---
 
