@@ -2,6 +2,40 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-20 — D489: ARC 5 OPENED — LANE-018 `gm-completion` CHARTERED AT DRIVE (`358bf35`) + SLICE 1 SHIPPED (`32051dd`): THE MUSTER-ROLL DESK SURFACE
+
+A fresh Fable 5 session opened at the clean pushed d8ca128 (D488 closeout) boundary and
+ran the ARC 5 GM COMPLETION charter packet (the §4 TOP-LOOP resolution: Claude Code /
+Fable 5 xhigh; no helper agents were spawned — the recon was direct targeted reads).
+P1 (ledger-only, `358bf35`): LANE-018 authored in COORDINATION.md as the complete
+acceptance contract with DRIVE taken in the charter commit — twelve adjudications
+(headline recon findings: §4e.4's in-battle half was ALREADY DISCHARGED by T29/D357, so
+the chartered half is the strategic-desk surface; the Transfer gap is CONFIRMED
+AI-GM-side — `cmdEnemyShadow` is theater-blind while the player pays the D354 friction,
+the aiGm `_note` blocker being stale since D322/D323; the election bind is chartered per
+the D488 packet §3/§3.5 VERBATIM with the D113 collision tooth owed and NO new lever
+class) + the four-slice ladder (muster desk → persona choice + Transfer symmetry → the
+election bind → the release battery), each slice with owners and predeclared binds.
+P2 (`32051dd`): SLICE 1 shipped — T35 renders the probe-vetted T14 muster panel as a
+T29-idiom disclosure on the Command desk OOB board through the T15 player-flagged
+guarded seam (the flag at exactly ONE call site; the enemy column renders zero
+disclosure at every scout tier; fail-closed on malformed shapes; in-place toggle,
+nothing rides the save). Teeth probe-oob 17→21 (21/21, 0 pageerrors); adjacents ratings
+31/31 · command 94/94 · accessibility 27/27; binds A/B exact-red with md5-proven
+restores; AD-7 re-pins game→7b83d48b · srcTree→3ce634af · manifest→a6699981 at all four
+plan-probe sites; BOTH plan probes green post-commit (24/24 · 13/13) after BOTH commits.
+Session lessons: one authored-tooth root-fix (the presence tooth's ≥2-button floor met
+the 1-brigade Sumter default board — the tooth now walks to a real multi-brigade board,
+strengthened); two environment flakes re-run green alone with zero tree changes (a
+probe teardown hang AFTER a green artifact — the D398 readback applied; a wedged shared
+:8765 http.server stalling page.goto — kill the server, not the probe); one
+phantom-dirty episode cleared by `git update-index --refresh` + diff readback; and a
+hash-replica trap — a hand-rolled dataTree md5 replica disagreed with the pin until the
+probe's functions were extracted VERBATIM (replicate pins only by verbatim extraction,
+never by paraphrase). Boundary: clean/pushed at `32051dd`; LANE-018 DRIVE held with
+SLICE 2 (persona choice + Transfer symmetry) the exact next; the HANDOFF top ⚡ block's
+D489 amendment carries the zero-context packet.
+
 ## 2026-07-20 — D488: THE ARC 6 POLITICS/ELECTION RESEARCH PACKET (T2, docs-only) — THE BANKED WORKFLOW ADJUDICATED, READY_FOR_SPEC, ARC 5 GM COMPLETION UNBLOCKED
 
 A fresh Fable 5 session opened at the clean pushed c8d1e9c (D487 closeout) boundary and
