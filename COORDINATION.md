@@ -3512,12 +3512,14 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **CONTRACT (D506 SLICE 2A SHIPPED; ROAD SOURCE PASS NEXT; UNOWNED)**
+### LANE-019 · conquest-design-law — **DRIVE (D506 SHIPPED; BOUNDED ROAD SOURCE PASS ONLY)**
 
-- **Owning tool:** none. A future ChatGPT/Codex 5.6 Sol Ultra TOP LOOP must take
-  DRIVE in a standalone committed ledger edit. No simultaneous edits.
-- **State:** CONTRACT after D506 ships the D505 read-only transport-evidence
-  substrate. D504 Slice
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. No simultaneous edits.
+- **State:** DRIVE for D505's docs/research-only bounded road source pass. D506
+  shipped the read-only transport-evidence substrate at
+  `932fb89e7e2f3e47eaf87e88e99a740cab240062`. No road data, runtime, gameplay,
+  movement, state, save, UI, cost, capacity, repair, bonus, AI, or terrain work is
+  authorized. D504 Slice
   1 shipped at `74237b9273f4640f031a8c46041a98e1d96809a3`. Transport gameplay/runtime,
   movement, and state remain prohibited.
 - **D504 shipped evidence:** exact 36/36 registry in D503 order; all 35 RN, 41 WN,
@@ -3603,10 +3605,10 @@ next green commit and confer through this ledger instead of permitting simultane
   RE-29 to service or erases its non-link/provenance and exactly evidence integrity
   reds. All other teeth stay green; data and generated output restore byte-identically.
 - **Gate sequence and resume pointer:** D506's implementation commit containing
-  this entry completes Slice 2A. Exact next is D505's docs/research-only bounded
-  road source pass: take DRIVE in a standalone ledger commit, author the declared
-  source/node/edge/non-link/interchange registers and exactly one declared verdict,
-  and stop. No road data/runtime or transport gameplay is authorized. Any later
+  this entry completes Slice 2A. Exact next is to author one citation-grade road
+  packet with source/node/edge/non-link/interchange registers and exactly one
+  declared verdict, then stop. No road data/runtime or transport gameplay is
+  authorized. Any later
   playable slice needs a separate full contract. For D506 verification, `node --check` all touched JS/probes; build
   `GATE OK` at 65 data, 36 territories, 111 modules, suite 140; run/read both focused
   artifacts; run board 13/13, accessibility 27/27, Mayhem 24/24, Custom Builder 16/16
