@@ -4,6 +4,103 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D496 — ARC 6 RAIL SCOPE IS A CONQUEST-TOPOLOGY RESEARCH PACKET, NOT A SECOND LOGISTICS SYSTEM — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS-ONLY ADJUDICATION] (2026-07-21)
+
+The ARC 6 rail candidate is justified, but D455's phrase "Railroads / logistics
+depth" is too broad. D159 already ships the strategic rail/logistics system:
+`data/logistics-rail.json` owns citation-backed US/CS profiles, theater and
+battle-route friction, repair/rolling-stock/gauge teaching, and two transfer
+benchmarks; `src/61-logistics-rail.js` turns existing production, blockade,
+engineering, supply, and War Room state into a readout and an opt-in capped bridge
+input; `probe-logistics-rail.mjs` binds exact-zero default behavior, caps, source
+floor, save sanitation, UI wiring, rail decay, and the D74 tactical/output wall. The
+battle-build library is exhaustive for battle construction, and its naval/river
+packet answers tactical buildability rather than strategic transport topology.
+Repeating any of those claims, values, bridge formulas, or battle-route rows would be
+duplication and is forbidden.
+
+ARC 7 nevertheless requires evidence the shipped surfaces do not contain. Its
+30-45-territory graph needs dated, geographically explicit transport inputs: which
+rail corridors connect which territory-scale nodes; where breaks of gauge, river/
+rail/port interchange, termini, mountain gaps, and unconnected lines interrupt those
+links; how military control, capture, destruction, repair, and bypass changed usable
+connectivity; and which historical concentration/supply cases can validate a future
+movement design without becoming outcome gates. The current `routes` object is keyed
+to the fixed battle ladder and contains mostly Inferred scalar friction. It is not a
+map topology, does not represent edge ownership or temporal change, and cannot answer
+conquest adjacency or cut-route questions.
+
+**AUTHORIZED NEXT TASK — RESEARCH ONLY.** Produce
+`docs/design/strategic-rail-conquest-research-packet.md`. It may gather external
+sources and author docs, but may not design or implement ARC 7 runtime, choose the
+final territory graph, assign gameplay movement points/capacities, or change any
+`src/`, `data/`, `tools/`, assets, save, generated HTML, suite membership, or probe.
+No new lane is needed for one fresh-session packet pass; if it must cross a session or
+provider boundary, commit a full Contract Relay lane before the handoff.
+
+The packet contract is:
+
+- **Geographic/date scope:** the wartime United States and Confederacy relevant to
+  the future eastern/Trans-Mississippi 30-45-territory board, including border-state
+  and immediately adjacent Northern feeder corridors; 1861-1865. Use dated network
+  snapshots or change records sufficient to distinguish opening-war, mid-war, and
+  late-war connectivity. Do not invent a territory list merely to fit the target
+  count.
+- **Research questions:** identify candidate territory-scale rail nodes and edges;
+  railroad names and endpoints; junctions, termini, gauge or physical breaks;
+  rail-river-port and rail-road interchanges; side/control and material changes over
+  time; documented cut, repair, reroute, and concentration cases; and what evidence
+  could support qualitative relative throughput or availability. Exact capacities,
+  speeds, repair turns, and movement costs remain unresolved unless a source directly
+  supports the historical fact, and even then the packet records evidence rather than
+  a gameplay value.
+- **Source families:** period railroad maps and timetables/annual reports where
+  available; Official Records and USMRR/Quartermaster/Confederate railroad records;
+  Library of Congress, National Archives, state archives, and public-domain map
+  collections; NPS and other government histories; and specialist scholarship such
+  as Black/Turner/Weber/Clark plus corridor-specific modern scholarship. Tertiary
+  sources are discovery aids only. A topology or historical-effect claim is Verified
+  only with two independent non-tertiary families; otherwise display Inferred or
+  Disputed.
+- **Required schema in the document:** scope and exclusions; existing-surface
+  crosswalk; source register; a candidate-node table; a candidate-edge table with
+  endpoints, dates, mode/interchange, control/change evidence, provenance, and
+  sources; a cuts/repairs/concentrations case-study table; unresolved map/data
+  decisions; rail-to-ARC-7 input requirements; D74/source-integrity risks; validation
+  recommendations; remaining traps; and a final
+  `READY_FOR_CONQUEST_LAW` / `NEEDS_MORE_RESEARCH` / `DO_NOT_MODEL` verdict.
+- **Acceptance:** every proposed edge resolves to evidence and dates; no fabricated
+  route, gauge, capacity, junction, destruction, or repair claim; all current D159
+  profiles/benchmarks/battle friction are cross-referenced rather than re-authored;
+  Trans-Mississippi sparsity and the border-state feeder network receive explicit
+  coverage; at least three independently sourced operational cases include the
+  Chattanooga/Longstreet comparison as a reuse check rather than a new claim; and the
+  packet states exactly which questions remain for ARC 7 architecture.
+- **Validation concept:** a future packet guard may check required sections, source
+  counts, provenance enums, unique node/edge ids, endpoint referential integrity,
+  date ordering, and the absence of runtime/gameplay-value fields. It must not encode
+  the historical network as outcome gates or force the future territory graph. No
+  probe is authorized by this adjudication.
+- **HALT:** stop if the work can only restate D159; if a source cannot distinguish a
+  proposed link from a schematic/cartographic inference; if completing a table
+  requires choosing ARC 7 territory boundaries, movement costs, turns, capacities,
+  or combat effects; if source independence cannot meet the floor; or if runtime,
+  data, probe, suite, save, or protected boundaries would need to move.
+
+Rail and naval remain **separate research packets** because their source families,
+control regimes, and failure modes differ. They share a future transport-network
+dependency, so each packet must expose compatible evidence categories (dated
+endpoints, mode/interchange, control/change, provenance), but neither may pre-decide a
+joined runtime schema. ARC 7 design law must adjudicate that common interface after
+both packets exist. This sequencing yields durable evidence without locking gameplay.
+
+After the rail packet, the smallest next adjudication is the strategic naval/river/
+blockade packet scope. It must reconcile D159's `N` theater/interchange teaching and
+the battle-build naval/river packet before research; alternatives are the medicine
+packet (independent but does not unblock conquest movement) or the reserved
+LANE-002 5b opener (valuable, but its S-04 fresh-context reservation remains intact).
+No LANE-019 is created, LANE-018 stays SHIPPED, and ARC 7 implementation stays closed.
+
 ## D495 — THE T4 BRIGADE FLAG-MARKER TAIL IS STALE AND STRUCK: D131/D197 ALREADY SHIP THE PROCEDURAL FIELD-MARKER CONTRACT — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS-ONLY ADJUDICATION] (2026-07-21)
 
 The post-D494 standing T4 candidate is not a new slice. Live recon confirms that T10
