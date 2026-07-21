@@ -1,8 +1,8 @@
 # Strategic Road and Wagon Transport Research Packet
 
-**Milestone:** D507 road source pass  
-**Date:** 2026-07-21  
-**Research boundary:** documents and historical evidence only  
+**Milestone:** D507 road source pass
+**Date:** 2026-07-21
+**Research boundary:** documents and historical evidence only
 **Access date for web sources:** 2026-07-21
 
 ## 1. Scope, question, and non-goals
