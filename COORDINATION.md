@@ -3512,12 +3512,12 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **CONTRACT (SLICE 1; PACKAGE A FINAL LAW; UNOWNED)**
+### LANE-019 · conquest-design-law — **DRIVE (SLICE 1 ONLY; PACKAGE A FINAL LAW)**
 
-- **Owning tool:** none. Runtime DRIVE requires a fresh standalone committed ledger
-  edit by ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. No simultaneous edits.
-- **State:** CONTRACT for Slice 1 only. D503 completes the design law; it authorizes
-  no runtime until the separate DRIVE take.
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. No simultaneous edits.
+- **State:** DRIVE for Slice 1 only. The standalone ledger take authorizes only the
+  D503 registry, fail-closed normalization, read-only board, H0 menu entry, build
+  validation, focused probes, negative binds, and closeout described below.
 - **Design law:** `docs/design/unlocked-but-judged-design.md` §5 and §8, especially
   §§8.11-8.23; DECISIONS D455, D497, D499, D502, and D503; the rail and strategic-
   water packets. D503 records Aaron's exact answer: "execute option a."
@@ -3589,14 +3589,16 @@ next green commit and confer through this ledger instead of permitting simultane
   due at the first playable transport-loop checkpoint unless a shared-surface red or
   Aaron instruction moves it earlier. The new data owner must move data/schema
   63 -> 64 with every count pin documented; suite membership remains 140 in Slice 1.
-- **Resume pointer:** fetch/status/HEAD/origin and pull only when clean; read
-  START-HERE, COORDINATION §1-§4 + this lane, HANDOFF D503, law §§8.11-8.23, both
-  conquest packet verdict/limits, then allowed owner seams. Take DRIVE in a standalone
-  committed ledger edit; run both planning probes post-lock; implement exactly Slice
-  1; verify every gate/artifact/bind; docs sync; commit/push; release the lock; prove
-  clean sync; STOP before transport movement.
+- **Resume pointer:** from the committed DRIVE lock, run both planning probes and read
+  their fresh 13/13 and 24/24 JSON artifacts; then create the exact 36-row registry,
+  immutable fail-closed normalization, list-first/schematic board, single guarded H0
+  entry, build validation, and both probes. Run every focused/adjacent gate and both
+  exact-red binds; restore byte-identically; sync D504 docs; commit/push; then move
+  this lane only to same-session LAW-DRAFT for the docs-only Slice-2A transport audit.
+  Runtime transport, movement, state/save, economy/rewards, Council, terrain, hex,
+  AI, battle/result, Chronicle, War Career, and Custom Builder work remain prohibited.
 - **Last-touched commits:** D503 standalone design-lock `a3403da`; D503 final-law
-  commit containing this entry.
+  commit `44ffac5`; Slice-1 DRIVE taken by the next standalone ledger commit.
 - **History:** D502 created the design-only contract. Aaron chose Package A. D503
   completed the final law and returned the lane unowned; no ARC 7 runtime/data/probe/
   asset/generated/save work began.
