@@ -3419,19 +3419,14 @@ next green commit and confer through this ledger instead of permitting simultane
   protected surfaces hold. Company K leads are category evidence only pending the
   underlying records; weak Confederate-western, refugee, and prison evidence stays
   quarantined. No medical mechanic, probability, personal fate, or joined schema is
-  authorized.
-- **Resume pointer:** LANE-018 is closed. Exact next is D502: perform a separate
-  docs-only ARC 6 release reconciliation and ARC 7 scope adjudication. Reconcile D455
-  with the shipped politics/election, rail, water, and medicine packets plus current
-  logistics, blockade, diplomacy, Western Theater, bridge, auto-resolve,
-  custom-builder, Chronicle/divergence, War Career, terrain, and tactical ownership.
-  Decide whether ARC 6 is complete and whether ARC 7 first needs a dedicated
-  conquest design-law artifact. Do not select consequential territory granularity,
-  turn scale, economy, movement capacity, objective rewards, hex interaction, save
-  architecture, or implementation; HALT for Aaron if committed law/evidence does not
-  settle a necessary choice. No new lane is required for one session; commit a
-  Contract Relay lane first if unfinished work must cross a session or provider
-  boundary.
+  authorized. **D502 ARC 6 release / ARC 7 scope adjudication:** ARC 6 is complete as
+  the four-packet research arc. ARC 7 requires a dedicated Aaron-locked design law;
+  runtime remains closed. D455 §8 now carries the sole law path and interim
+  design-law process contract; LANE-019 carries the cross-session relay. No duplicate plan file or
+  product choice was created.
+- **Resume pointer:** LANE-018 is closed with ARC 5 released and its standing ARC 6
+  queue discharged. All forward conquest work moves to LANE-019. Do not reopen this
+  lane, take a runtime lock, or treat feeder verdicts as gameplay authorization.
 - **Slice history:** SLICE 4 SHIPPED as D494 (2026-07-21, ChatGPT/Codex 5.6 Sol
   Ultra): the complete serialized battery is green at `fc8ccc2`. D492 and D493 were
   the two real root fixes. Antietam's 360s timeout produced no fresh artifact and was
@@ -3505,7 +3500,7 @@ next green commit and confer through this ledger instead of permitting simultane
   alone (a teardown hang after a green artifact; a wedged :8765 server). AD-7 game
   67fbe534→7b83d48b · srcTree 8174d79d→3ce634af · manifest 9312db81→a6699981
   (base/dataTree/journey/suite/focused/runtime/command/commandProbe hold).
-- **Last-touched commit:** D501 docs/research medicine/hospitals/disease packet completion (LANE-018 remains closed; D494 release SHA `fc8ccc2`; slice 3: D491; slice 2: D490; slice 1: `32051dd`; charter: `358bf35`).
+- **Last-touched commit:** D502 docs-only ARC 6 release reconciliation / ARC 7 scope relay (LANE-018 remains closed; D494 release SHA `fc8ccc2`; slice 3: D491; slice 2: D490; slice 1: `32051dd`; charter: `358bf35`).
 - **History:** chartered 2026-07-20 immediately after the D488 politics-packet
   close, per the packet's READY_FOR_SPEC verdict and the LANE-017 resume pointer's
   T2-DISCHARGED forward addendum. Charter recon (read-only at `d8ca128`): T29
@@ -3516,6 +3511,116 @@ next green commit and confer through this ledger instead of permitting simultane
   electionReliefBind in data/ratings.json); `data/politics.json` does not yet exist;
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
+
+### LANE-019 · conquest-design-law — **CONTRACT (DESIGN-ONLY; Aaron decisions required before runtime)**
+
+- **Owning tool:** none. The next session is an Aaron-led TOP LOOP design
+  adjudication; no implementation lock exists.
+- **State:** CONTRACT for design-law completion only. It may advance to runtime DRIVE
+  only through a later committed ledger-only charter after Aaron's decisions and the
+  final law are recorded.
+- **Design law:** `docs/design/unlocked-but-judged-design.md` §5 and §8 (D455 +
+  D502); `docs/design/strategic-rail-conquest-research-packet.md`;
+  `docs/design/strategic-water-transport-research-packet.md`; DECISIONS D455, D497,
+  D499, and D502. Politics/election and medicine are completed ARC 6 feeders but do
+  not authorize ARC 7 mechanics.
+- **Release boundary:** D502 adjudicates `ARC_6_RESEARCH_COMPLETE`,
+  `ARC_7_REQUIRES_DEDICATED_DESIGN_LAW`, and `ARC_7_RUNTIME_CLOSED`. The four D455
+  packet families are shipped; no additional packet is required before design. This
+  is not a territory graph, schema, runtime, or release authorization.
+- **Acceptance criteria — the next design-law milestone, in full:**
+  1. Extend only `docs/design/unlocked-but-judged-design.md` §8; do not create a
+     second conquest plan, roadmap, schema, or design-law file.
+  2. Preserve D455's Aaron-locked envelope: both rulesets; an optional conquest
+     campaign beside the ladder; roughly 30-45 named territories plus hex zoom;
+     transport-real rail/river/road/sea movement; the four Risk lever families;
+     optional tactical/auto-resolved engagements; Council of War; public-domain
+     pre-baked real-ground/period-surface sites; sourced canonical-history / `Your
+     Timeline` juxtaposition.
+  3. Present Aaron 2-3 coherent architecture packages with recommendation and reasons
+     covering exact territory grain/boundaries; campaign turn scale; dated
+     availability and divergent control; node/edge/service ownership; separate versus
+     common transport interface; cuts/repairs/bypasses/reopening; movement/capacity;
+     reinforcements/theater/economy/objectives; hex interaction; save/fresh-start;
+     and any AI/bridge/result coupling. Do not decide one merely to advance the lane.
+  4. Every candidate territory map stays inside the approximate 30-45 envelope and is
+     evaluated against packet coverage/non-links, eastern/western/coastal/border/
+     Trans-Mississippi teaching, keyboard/screen-reader legibility, strategic-node vs
+     tactical-site separation, offline/public-domain asset budget, and fail-closed
+     state/save cost.
+  5. Compare at least coarse turn-owned state, event/delta ledger, and hybrid dated-
+     availability/player-control time models. Each comparison must address opening,
+     closure, cut, repair, capture, bypass, seasonal/conditional reach, and historical
+     versus `Your Timeline` authority without preordaining an outcome.
+  6. Decide whether transport modes share only an evidence envelope or also a runtime
+     interface. Before any schema, define referential integrity, mode-specific facts,
+     explicit non-links, date/control authority, absent/malformed fallback,
+     interchange, and double-count prevention. Packet compatibility alone is not a
+     joined-schema decision.
+  7. Preserve current owners: D159 aggregate logistics; blockade cotton/import/port/
+     recognition state; Real Diplomacy; Western Theater readout; `bridgeArmy` as the
+     sole bounded strategy→battle seam under D74; the existing auto-resolve/result
+     path; Chronicle/divergence as pure canonical/`Your Timeline` comparison; War
+     Career as ladder-based consequence-only; tactical terrain as battle-local; and
+     the Custom Builder as local/noncanonical.
+  8. Bound Council of War to pre-battle site/commitment/equipment/doctrine choices
+     through existing owners; no parallel battle resolver, outcome write, OOB
+     invention, or D74 output lever. Bound builder inheritance to reusable site/
+     terrain selectors that fail closed without conquest machinery.
+  9. Define the terrain pipeline before asset work: USGS elevation plus LoC/NPS
+     period-map evidence, pre-baked candidate sites, license/provenance, geographic
+     transform, resolution/LOD, land-cover inference, offline/embed budget,
+     accessibility fallback, and site-selection honesty. Google Maps remains barred.
+  10. Ratify the first smallest runtime slice as the territory-board substrate or
+      narrow it further. The present candidate is final-law registry + read-only,
+      keyboard-operable board shell only: no movement/control writes, economy,
+      reinforcement, objectives, Council of War, terrain assets, resolver routing,
+      AI, Chronicle receipts, War Career effects, or saves.
+  11. Specify Historical/Mayhem plausibility and fail-closed authority explicitly.
+      `MAYHEM_PUBLIC_READY=true` does not make settings/localStorage the owner;
+      immutable `C.ruleset` and the shipped picker contract remain authoritative.
+  12. Finish with exact Slice-1 allowed/do-not-touch files, negative binds, focused and
+      adjacent gates, artifact readback, release battery point, and provider/lock
+      state. Stop before runtime and commit/push the completed law separately.
+- **Aaron decision/HALT gates:** exact territory granularity; turn scale; campaign
+  economy; movement capacity; objective-card rewards; hex interaction; campaign save
+  compatibility; or any similarly consequential architecture choice. If a package
+  comparison does not resolve the choice for Aaron, keep it explicitly open and the
+  dependent runtime slice closed.
+- **First-runtime boundary after law:** the territory-board substrate in §8.8 is the
+  maximum candidate Slice 1. It must be no-op/fail-closed when data/enablement is
+  absent or malformed and must leave the ladder, both rulesets, saves, bridge,
+  battles, canonical history, and generated output byte-identical.
+- **Probe design before implementation:** Slice 1 must author and green a new
+  filesystem-first `tools/probe-conquest-layer-plan.mjs` in the same commit as the
+  implementation; no red tooth lands earlier. It must assert D455/D502 locks, stable
+  and referentially valid IDs, source/provenance resolution, explicit non-links,
+  malformed/absent fail-closed behavior, ownership separation, no later-slice fields,
+  accessible board reachability/text fallback, and zero entry-point trace without
+  lawful enablement. Predeclare at least two binds: remove fail-closed normalization →
+  exactly its tooth red; erase a topology claim/source ref → exactly provenance/
+  integrity red; restore both byte-identically. Build, node/schema/importer, focused
+  plan/UI/accessibility, 1-3 adjacent owner probes, JSON/error readback, diff check,
+  post-commit planning probes, and the full serialized 140-row release battery in a
+  full-access non-Seatbelt session remain mandatory.
+- **Protected surfaces during the next milestone:** docs only. No `src/**`, `data/**`,
+  `tools/**`, `assets/**`, package, manifest, schema, save, probe, generated HTML, or
+  `build/base.html` change. Suite 140, schema 63, `_SAVE_VER=1`,
+  `MAYHEM_PUBLIC_READY=true`, frozen base MD5
+  `c9db83fa99230ffb95bdfdfe059f3fb9`, and D74 hold.
+- **Resume pointer:** start a fresh Aaron-led ChatGPT/Codex 5.6 Sol Ultra TOP LOOP
+  session. Fetch/status/HEAD/origin and pull only when clean; read START-HERE,
+  COORDINATION §1-§4 + this lane, HANDOFF top, D455 §5-§8, both conquest
+  packets' verdict/limits, then the direct owner surfaces. Ask Aaron the bundled
+  architecture questions, record each lock, extend §8 into the final design law,
+  update this lane to a separate Slice-1 CONTRACT, commit/push docs only, run build +
+  diff + both planning probes, prove clean sync, and STOP before runtime. No
+  simultaneous edits.
+- **Last-touched commit:** D502 docs-only ARC 6 release reconciliation / ARC 7
+  design-law contract (commit containing this entry).
+- **History:** created after all four ARC 6 feeders shipped; no runtime/data/probe/
+  asset/generated work began. D455's stale ARC-number mapping labels were corrected
+  against its own canonical arc list; no product choice changed.
 
 ---
 

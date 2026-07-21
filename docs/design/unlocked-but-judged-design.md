@@ -6,6 +6,11 @@ convention: decisions locked by Aaron via popup Q&A are honored verbatim. Build 
 chartered AFTER the D454 release ships. This packet is the single source for the next
 session's lane charters.
 
+**D502 release amendment (2026-07-21):** ARC 6's four research packets are complete.
+Section 8 is the canonical interim ARC 7 design-law process contract and records the
+choices that still require Aaron; it is not the final law or runtime authority. No
+duplicate conquest plan file is authorized.
+
 **The governing clarification (Aaron, verbatim):** "I was more concerned with morality
 taking away gameplay features, i like the idea of continuing to cast moral judgment on a
 player, even if the player likes the tactics and doesnt care about morals. I still want
@@ -198,18 +203,18 @@ builds with existing planned phases to maximize efficiency")
 
 | Existing open item (V1-CHECKLIST / roadmap) | Absorbed into |
 |---|---|
-| Phase D / D1 full hex tactical mode | ARC 6 conquest layer (Aaron's "both layers": territory board + hex zoom IS D1) |
+| Phase D / D1 full hex tactical mode | ARC 7 conquest layer (Aaron's "both layers": territory board + hex zoom IS D1) |
 | C3 USCT battles remaining: the Crater, Olustee | ARC 2 content unlocks — the Crater shares the Fort Pillow massacre-treatment design family; ONE research pass covers both |
 | Phase H media (unlocked, D324/D398 rules) | ARC 3 — PROMOTED to its own early arc (Aaron, 2026-07-18: "adopt rec and reslot" after reviewing the live tactical renders): the graphics uplift is the biggest built-vs-felt gap. Real 3D unit models via the D398-authorized Tripo/CC-BY pipeline (importer + license + geometry + perf gates already ship in the suite), terrain texturing, HDRI lighting, ground-level camera polish, formation-figure density/LOD — all under the media-budget guard. The badge-chip/rarity-visual media slices batch with ARC 4 |
-| Phase I / LANE-002 5b Soldier's Story batches | ARC 7 FEEDER — each 5b citation batch also stamps service/valor badge data (one research pass, two outputs: Verified records + historical-record soldier badges) |
-| Phase E strategic S3-S5 (election, victory depth) | ARC 5 politics/election packet + ARC 4 election bind + conquest endings-from-receipts |
-| Mayhem roadmap leftovers (timeline gallery/Chronicle, content packs) | ARC 6 Chronicle tree + ARC 3 loot content packs |
+| Phase I / LANE-002 5b Soldier's Story batches | ARC 8 FEEDER — each 5b citation batch also stamps service/valor badge data (one research pass, two outputs: Verified records + historical-record soldier badges) |
+| Phase E strategic S3-S5 (election, victory depth) | ARC 6 politics/election packet + ARC 5 election bind + ARC 7 conquest endings-from-receipts |
+| Mayhem roadmap leftovers (timeline gallery/Chronicle, content packs) | ARC 7 Chronicle tree + ARC 4 loot content packs |
 | GEA-11 interactive campaign layer (design-only, closed) | SUPERSEDED by the conquest design law (record in the D### entry) |
-| Cross-theater Transfer (listed deferred) | MOSTLY SHIPPED (D322/D323 theater substrate + cmdTransfer; D354 readiness consumer) — only the AI-GM side + election bind remain (ARC 4) |
+| Cross-theater Transfer (listed deferred) | MOSTLY SHIPPED (D322/D323 theater substrate + cmdTransfer; D354 readiness consumer) — only the AI-GM side + election bind remained for ARC 5, both now shipped |
 | C72 Shiloh two-source rewrite | ARC 1 rider (tiny, text-only) |
-| R-7 situational badge triggers (not chartered, R7) | ARC 3 reconsideration rider: the coverage sweep touches every battle's badge data anyway — bundling R-7 would touch each file once instead of twice. Flag at charter time |
-| Custom battle builder depth | ARC 6 free rider — the builder inherits the Council of War + terrain-site machinery |
-| War Career compatibility | ARC 6 constraint — career mode rides the ladder; conquest campaigns must leave the career adapters' frozen ladder rows untouched |
+| R-7 situational badge triggers (not chartered, R7) | ARC 4 reconsideration rider: the coverage sweep touches every battle's badge data anyway — bundling R-7 would touch each file once instead of twice. Flag at charter time |
+| Custom battle builder depth | ARC 7 free rider — the builder inherits only law-authorized Council of War + terrain-site machinery |
+| War Career compatibility | ARC 7 constraint — career mode rides the ladder; conquest campaigns must leave the career adapters' frozen ladder rows untouched |
 
 **The arcs (Aaron's locked relative order is the backbone; absorbed items slot in):**
 
@@ -255,3 +260,204 @@ ships in session-sized slices under the standing per-slice gate law.
 
 Standing candidates behind the arcs: the remaining Phase H media backlog, further
 5b batches beyond the badge feeder need, J-phase polish items.
+
+## 8. D502 — ARC 6 release and interim ARC 7 design-law process contract
+
+### 8.1 Adjudication
+
+- `ARC_6_RESEARCH_COMPLETE`: all four §6 packet families are shipped. Politics /
+  election is `READY_FOR_SPEC`; rail and strategic water transport are
+  `READY_FOR_CONQUEST_LAW`; medicine / hospitals / disease is
+  `READY_FOR_SOLDIER_DEPTH_LAW`.
+- `ARC_7_REQUIRES_DEDICATED_DESIGN_LAW`: the two conquest packets prove that a
+  bounded transport topology can be designed, but they deliberately do not select
+  the territory graph, common interface, time/control model, values, campaign state,
+  or save architecture.
+- `ARC_7_RUNTIME_CLOSED`: no `src/**`, `data/**`, `tools/**`, `assets/**`, package,
+  manifest, schema, save, probe, generated HTML, or frozen-base change is authorized
+  by D502. No implementation lane may take DRIVE from this section alone.
+
+ARC 6 is complete as a research milestone only. D455's high-level conquest choices
+remain Aaron-locked, while the research → design law → phased buildout sequence in
+§6 remains load-bearing. Packet gaps are limits to omit or label, not excuses to
+invent topology: upper White/Arkansas and Red River reach, Potomac capacity,
+Charleston/Savannah routine transfer, Texas/Galveston, Confederate western depth,
+and every packet-specific weak row keep their stated provenance.
+
+### 8.2 Evidence versus gameplay architecture
+
+Evidence may establish a dated place, physical connection, interchange, navigation
+condition, chokepoint, cut, repair, reopening, operation, or explicit non-link. It may
+also establish uncertainty. Evidence does **not** choose:
+
+- a territory or hex boundary;
+- whether a place is a territory, node, edge endpoint, site, port state, or label;
+- the campaign clock, control-state machine, route ownership, or divergence rule;
+- movement points, capacity, cost, reinforcement, supply, economy, repair, objective,
+  AI, UI, save, or battle-conditioning values;
+- whether rail, river, road, and sea share one runtime schema; or
+- a historical outcome for a player-authored timeline.
+
+The final law must preserve `Verified` / `Inferred` / `Disputed`, exact dates,
+source-family independence, conditional reach, closures/reopenings, and explicit
+non-links. A visually convenient connection cannot outrank the packet. Historical
+record and `Your Timeline` state must remain separately labelled.
+
+### 8.3 Sole law path; no duplicate plan
+
+This file remains the single conquest law-draft owner. The next top-loop design
+session extends **this §8** into the final ARC 7 law after Aaron resolves the gates in
+§8.4; it must not create `CONQUEST-PLAN.md`, a second roadmap, or an implementation
+schema disguised as research. `COORDINATION.md` LANE-019 carries the cross-session
+contract and lock. `DECISIONS.md` records each Aaron lock and the eventual law
+ratification.
+
+### 8.4 Aaron decision gates — HALT before choosing
+
+D455 settles the product thesis and outer envelope: both rulesets; a new optional
+conquest campaign beside the ladder; a named-territory graph of roughly 30-45
+territories plus hex zoom; transport-real movement; Risk-style reinforcement,
+theater, movement/attack, and objective levers; optional tactical or auto-resolved
+engagements; Council of War; pre-baked public-domain terrain; and sourced divergence
+juxtaposition. It does **not** settle the following implementation-grade choices:
+
+1. exact territory count, names, boundaries, and node-versus-territory grain;
+2. campaign turn scale and how dated historical availability meets player divergence;
+3. whether control attaches to territory, node, edge, service right, or a mixed model;
+4. whether rail/water/road/sea share one interface and how interchange fails closed;
+5. movement capacity, attack cadence, cuts, repairs, bypasses, and reopening semantics;
+6. reinforcement, theater-bonus, campaign-economy, and objective-card/set rewards;
+7. hex interaction and the boundary between strategic choice and tactical setup;
+8. campaign save compatibility, migration/fresh-start boundary, and offline state; and
+9. any conquest AI, battle-bridge input, or campaign-result coupling.
+
+These require Aaron's judgment. The next session must present 2-3 coherent packages
+with a recommendation and reasons, rather than decide them from packet counts or keep
+the long run moving. Until Aaron answers, LANE-019 remains design-only CONTRACT and
+unowned; no runtime DRIVE lock may be taken.
+
+### 8.5 Required decision process
+
+The territory decision begins with candidate maps, not a single assumed graph. Each
+candidate must stay inside D455's approximate 30-45 envelope and be scored against:
+
+- rail/water packet coverage and explicit non-links;
+- historical/operational teaching value across eastern, western, coastal, border, and
+  Trans-Mississippi areas without forced symmetry;
+- legible keyboard- and screen-reader-navigable presentation at the target viewport;
+- Council-of-War site inheritance and the difference between a strategic territory,
+  transport node, and tactical site;
+- public-domain/offline asset size and pre-bake cost; and
+- the smallest state/save surface that can fail closed without poisoning ladder play.
+
+For time and control, the design session must compare at least: a coarse turn-owned
+state; an event/delta ledger over a persistent graph; and a hybrid with historically
+dated availability plus player-authored control receipts. The comparison must show
+how each option handles opening dates, cuts, closures, repairs, captures, bypasses,
+seasonal/conditional reach, and a divergent campaign without rewriting canonical
+history. No option may turn a historical date into a predetermined game outcome.
+
+For the common transport interface, the law must answer whether evidence categories
+share an envelope while mode-specific facts remain separate, or whether rail, water,
+road, and sea stay separate registries joined only through explicit interchange rows.
+It must define referential integrity, absent/malformed fallback, date/control
+authority, non-link representation, and double-count prevention before any schema is
+created. Packet compatibility is not permission to join them.
+
+### 8.6 Existing-owner boundaries
+
+- **D159 logistics rail:** retains aggregate rail asymmetry, battle-route teaching,
+  the opt-in priority, capped bridge, saves, UI, and formulas. It is not the map.
+- **Blockade / Real Diplomacy:** retain cotton/import/port/recognition/intervention and
+  diplomatic state. Conquest may consume an explicit guarded interface only after
+  law; it cannot redefine those ledgers or equate blockade status with transport
+  reach.
+- **Western Theater:** remains a readout/teaching consumer, never the graph or battle
+  owner.
+- **Battle bridge / D74:** `bridgeArmy` remains the sole strategic-to-tactical input
+  seam. Any future conquest input is zero-default and bounded; it cannot set casualty,
+  winner, firepower, or score.
+- **Auto-resolve:** the existing headless tactical simulation and shared result/apply
+  path remain the only battle resolver. No conquest resolver forks battle truth.
+- **Chronicle / divergence:** remains a pure comparison/read surface separating
+  canonical history from `Your Timeline`; conquest receipts may be a future input,
+  not a second Chronicle.
+- **War Career:** remains ladder-based and consequence-only. Conquest cannot infer a
+  named fate, advancement, or relationship from territory ownership or aggregate
+  casualties; frozen ladder adapters remain untouched unless Aaron later expands the
+  mode by explicit law.
+- **Tactical terrain:** battle-local elevation, cover, water, objectives, and unit
+  ownership stay tactical. Strategic geography cannot repurpose those fields.
+
+### 8.7 Council of War, terrain, and builder boundaries
+
+Council of War is a pre-battle chooser for site, commitment, equipment, and doctrine
+in conquest and ladder. Its eventual effects must enter through existing armory,
+conditioning, and bridge owners as bounded D74-clean inputs. It does not decide the
+battle, bypass side choice, mutate an OOB without authority, or replace auto-resolve.
+
+The terrain pipeline remains build-time and public-domain: USGS elevation plus
+Library of Congress/NPS period-map evidence, pre-baked for a curated set of plausible
+sites. The final law must define license/provenance rows, geographic transform,
+resolution/LOD, land-cover inference, offline/embed budget, accessibility fallback,
+and site-selection honesty before assets are fetched. Google Maps remains excluded.
+
+The Custom Battle Builder may later inherit law-owned site/terrain selectors and
+validation components. It remains a local, single-phase, noncanonical scenario
+surface; it cannot become the conquest graph, a campaign save, or a backdoor around
+the historical registry. Builder inheritance must fail closed when conquest data or
+machinery is absent.
+
+### 8.8 First smallest runtime slice — authorized only after final law
+
+The first runtime slice is the **territory-board substrate**, matching the D455 ARC 7
+order. It contains only the final law's validated registry and a read-only,
+keyboard-operable board shell with provenance/uncertainty presentation. Absent or
+malformed conquest data yields no conquest entry point and leaves the current ladder,
+both rulesets, saves, bridge, battles, and generated historical output byte-identical.
+
+This slice has no movement, control writes, economy, reinforcements, objective cards,
+Council of War, terrain assets, auto-resolve routing, AI, Chronicle receipts, War
+Career effects, or save fields. The final design session may narrow it further; it
+may not add those later-slice concerns to make the shell feel complete.
+
+### 8.9 Lane and probe contract before implementation
+
+LANE-019 is the sole ARC 7 lane. Its current CONTRACT covers design-law completion
+only. After Aaron's §8.4 decisions and the final law commit, a separate ledger-only
+charter must replace the design-only criteria with Slice-1 acceptance criteria, take
+DRIVE for exactly one top loop, and name every file allowed to move.
+
+The future filesystem-first `tools/probe-conquest-layer-plan.mjs` is required in the
+Slice-1 implementation commit, never as red teeth beforehand. Its minimum teeth are:
+
+1. D455's Aaron locks and D502's evidence/owner boundaries are present exactly once;
+2. every territory/node/edge/site ID is unique and referentially valid, with every
+   historical topology row resolving to a packet claim/source and provenance;
+3. explicit non-links and absent/malformed data fail closed;
+4. the current ladder, Historical/Mayhem picker, D159, blockade, diplomacy, Western
+   Theater, bridge, auto-resolve, Chronicle, War Career, tactical terrain, and Custom
+   Builder owners remain structurally distinct;
+5. no movement, capacity, economy, objective, save, AI, battle result, casualty,
+   winner, score, or tactical-output field appears in Slice 1;
+6. the read-only board is reachable by pointer and keyboard, has programmatic names,
+   focus order/visibility, non-color provenance/uncertainty cues, reduced-motion
+   safety, and a text/list fallback; and
+7. no new runtime entry point appears when conquest data is missing, malformed, or
+   the final law's explicit enablement is absent.
+
+The implementation contract must predeclare at least two negative binds: remove the
+malformed/absent fail-closed guard and the exact fail-closed tooth goes red; erase an
+edge's claim/source reference and only the referential-integrity/provenance tooth goes
+red. Both restore byte-identically. Standard build, node checks, schema/importer,
+focused plan/UI/accessibility probes, 1-3 adjacent owners, `git diff --check`, JSON
+readback, and post-commit planning probes remain mandatory. The full 140-row battery
+runs at the release checkpoint, serialized in a full-access non-Seatbelt session.
+
+### 8.10 Exact next and terminal condition
+
+The exact next milestone is an Aaron-led, ChatGPT/Codex 5.6 Sol Ultra top-loop design
+session that resolves §8.4 through explicit questions, extends this section into the
+complete ARC 7 design law, and updates LANE-019 to a Slice-1 implementation contract.
+It stops before runtime. If Aaron declines or defers any dependency, record the held
+choice and keep the corresponding slice closed rather than inventing a default.

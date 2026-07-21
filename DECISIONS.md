@@ -4,6 +4,92 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D502 — ARC 6 RESEARCH IS COMPLETE; ARC 7 REQUIRES A DEDICATED AARON-LOCKED CONQUEST LAW BEFORE RUNTIME — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS-ONLY RELEASE RECONCILIATION + CONTRACT RELAY] (2026-07-21)
+
+**ADJUDICATIONS:** `ARC_6_RESEARCH_COMPLETE` ·
+`ARC_7_REQUIRES_DEDICATED_DESIGN_LAW` · `ARC_7_RUNTIME_CLOSED`.
+
+D455 §6 charters exactly four research families. All four now have final packet
+verdicts: politics/election is `READY_FOR_SPEC` (D488); rail is
+`READY_FOR_CONQUEST_LAW` (D497); strategic water transport is
+`READY_FOR_CONQUEST_LAW` (D499); medicine/hospitals/disease is
+`READY_FOR_SOLDIER_DEPTH_LAW` (D501). The water packet's bounded use of existing
+blockade/naval owners satisfies D455's naval/river/blockade feeder without duplicating
+blockade economics or tactical naval combat. Remaining source gaps are explicit
+omissions/limits, not missing feeder milestones. ARC 6 therefore closes as the
+research-packet arc. It does not close the separately required design-law or phased-
+buildout stages.
+
+D455 already owns the conquest thesis and high-level Aaron locks, so no duplicate
+plan file is created. `docs/design/unlocked-but-judged-design.md` remains the sole ARC
+7 law-draft owner and gains §8, the D502 contract. Eight stale ARC-number labels in
+its mapping table are mechanically corrected against its own canonical arc list:
+Phase D/hex, Soldier's Story 5b, politics/election, Chronicle, Transfer, R-7,
+Custom Builder, and War Career. These are schedule-label errata; no product decision
+or shipped behavior changes.
+
+The evidence/architecture boundary is now explicit. Rail/water evidence may prove
+dated nodes, endpoints, connections, interchanges, conditions, chokepoints, cuts,
+repairs, reopenings, operations, and non-links. It does not choose territory or hex
+boundaries, campaign time, control authority, a shared schema, route ownership,
+movement/capacity, economy, reinforcement, objectives, UI, AI, save shape, battle
+coupling, or a player-timeline result. Provenance and conditional/failed reach remain
+binding; visually convenient topology cannot outrank the packets.
+
+Existing owners stay closed against conquest duplication: D159 owns aggregate rail
+teaching/priority/bridge/formulas/saves/UI; blockade and Real Diplomacy own their
+political-economic ledgers; Western Theater is readout-only; `bridgeArmy` is the sole
+bounded strategy-to-battle seam under D74; the existing headless tactical simulation
+and shared result/apply path are the only auto-resolver; Chronicle/divergence is a
+pure canonical-history / `Your Timeline` comparison surface; War Career is ladder-
+based and consequence-only; tactical terrain is battle-local; and the Custom Battle
+Builder is local, single-phase, and noncanonical.
+
+**Aaron judgment is required before final law.** D455 fixes both rulesets, an optional
+conquest campaign beside the ladder, roughly 30-45 named territories plus hex zoom,
+transport-real movement, the four Risk lever families, optional tactical resolution,
+Council of War, public-domain pre-baked terrain, and sourced divergence comparison.
+It does not settle exact territories/boundaries, turn scale, dated control model,
+node/edge/service authority, joined-versus-separate transport interface, movement/
+capacity/cuts/repairs, campaign economy/reinforcement/objective rewards, hex
+interaction, save compatibility, or AI/bridge/result coupling. The packets expressly
+leave the same choices open. D502 refuses to choose them autonomously.
+
+The next law session must present 2-3 coherent packages with a recommendation and
+reasons. Territory candidates must remain inside the 30-45 envelope and be compared
+on source coverage/non-links, theater teaching, accessible legibility, strategic-node
+versus tactical-site separation, offline/public-domain cost, and fail-closed state/
+save impact. Time/control must compare coarse turn-owned, event/delta-ledger, and
+hybrid dated-availability/player-control models. The common-interface decision must
+define referential integrity, mode-specific facts, explicit non-links, date/control
+authority, interchange, absent/malformed fallback, and double-count prevention before
+any runtime schema.
+
+LANE-019 `conquest-design-law` is created as a complete design-only CONTRACT,
+unowned. The next Aaron-led ChatGPT/Codex 5.6 Sol Ultra session extends D455/D502 §8
+into the final law and replaces the lane's design criteria with a separate Slice-1
+implementation contract; it stops before runtime. The maximum candidate first slice
+is the final-law territory registry plus a read-only, accessible territory-board
+shell, no-op/fail-closed when data/authority is absent. It contains no movement,
+control writes, economy, reinforcement, objectives, Council of War, terrain assets,
+resolver routing, AI, Chronicle receipts, War Career effects, or saves.
+
+The future Slice-1 commit must add and green a filesystem-first
+`tools/probe-conquest-layer-plan.mjs`; red teeth do not land earlier. Its minimum
+contract covers stable/referentially valid source-backed IDs, explicit non-links,
+fail-closed absence/malformed data, ownership separation, no later-slice fields,
+accessible board reachability/text fallback, and zero entry-point trace without
+lawful enablement. Two binds are predeclared: kill fail-closed normalization → only
+that tooth red; erase a topology claim/source reference → only provenance/integrity
+red; both restore byte-identically. Runtime stays closed until Aaron's choices, final
+law, separate charter, allowed-file list, focused/adjacent gates, and release point
+are committed.
+
+**Exact next / HALT:** stop at the clean D502 docs boundary. In a fresh top-loop
+design session, ask Aaron to resolve the bundled ARC 7 architecture packages; commit
+the final law and Slice-1 contract, then stop again before implementation. Do not use
+ARC 7 runtime as filler and do not take DRIVE while any consequential gate is open.
+
 ## D501 — MEDICINE/HOSPITALS/DISEASE RESEARCH IS READY FOR SOLDIER-DEPTH LAW, WITH PERSONAL FATE AND STRATEGIC MEDICINE STILL CLOSED — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS/RESEARCH] (2026-07-21)
 
 The D500 packet is complete at
