@@ -4,6 +4,60 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D497 — ARC 6 STRATEGIC RAIL CONQUEST RESEARCH IS READY FOR LAW-DRAFT INPUT, WITH EXPLICIT BREAKS AND NO GAMEPLAY GRAPH — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS/RESEARCH] (2026-07-21)
+
+The D496 packet is complete at
+`docs/design/strategic-rail-conquest-research-packet.md`. Its 26-source register
+anchors three independent period network views (1861, 1863, and 1864), federal
+archives/USMRR records, NPS corridor histories, Texas institutional scholarship,
+primary destruction/campaign maps and photography, an academic 1861 GIS cross-check,
+and the Black/Turner/Weber/Clark specialist bibliography. The claim register contains
+73 rows: 35 candidate nodes, 29 candidate edges, and 9 operational cases. Provenance
+is 61 Verified (including one explicit D159-reuse case), 9 Inferred, and 3 Disputed.
+Every edge endpoint resolves; every source ID resolves; the candidate topology is
+evidence, not a final territory graph.
+
+The top-loop audit corrected four high-risk map assumptions. First, the Richmond &
+Petersburg lines did not possess a timeless seamless city connection: NPS dates the
+direct Petersburg connection to August 1861. Second, the Manassas Gap Railroad ends
+at the new Strasburg research node; it does not create a rail edge to Harpers Ferry.
+Third, Union seizure of the Weldon line degraded rather than instantly zeroed
+Confederate supply because freight shifted to a wagon bypass. Fourth, Texas and
+Trans-Mississippi lines remain local, incomplete, relocated, or disputed rather than
+a filled-in national network; in particular, the claim that Texas & New Orleans rails
+east of the Neches were removed conflicts with a cited 1870 property inspection and
+ships `Disputed`.
+
+The nine cases satisfy D496's operational set: D159's Chattanooga/Longstreet pair is
+reused only as a non-duplication/interchange check; the Orange & Alexandria cut,
+Potomac Creek repair, City Point rail-port rebuilding, Corinth concentration/control,
+Vicksburg rail-river severance, Atlanta/March destruction, Petersburg isolation and
+late collapse, and Texas cannibalization/dispute cover cut, repair, reroute, bypass,
+interchange, concentration, and network failure. No D159 value, formula, bridge cap,
+route friction, or rail-decay value was re-authored.
+
+**VERDICT: `READY_FOR_CONQUEST_LAW`.** This means ready as historical input only.
+ARC 7 must still adjudicate territory granularity, dated control/operation, explicit
+non-links, the common rail/water/road evidence interface, Historical/Mayhem
+plausibility, cut/repair semantics, D159 compatibility, War Career isolation, saves,
+and offline constraints. It may not derive gameplay values from exact historical
+quantities.
+
+Remaining traps are named rather than papered over: company timetables/annual reports
+for exact operating intervals; a gauge/terminal ledger; B&O interruption chronology;
+stronger Carolinas and Alabama transfer coverage; Jackson/Meridian repair dates;
+Arkansas/Louisiana/Trans-Mississippi quartermaster evidence; direct reading of the
+Texas court/inspection record; and a future decision on off-board Northern feeders.
+
+Rail and naval remain separate packets. They may expose compatible evidence fields
+(dated endpoints, mode/interchange, control/change, break, provenance, qualitative
+availability), but this packet authorizes no joined schema. **Exact next:** a separate
+docs-only strategic naval/river/blockade scope adjudication. It must decide whether a
+bounded `docs/design/strategic-water-transport-research-packet.md` is needed after
+reconciling existing naval battle research, blockade/trade/diplomacy runtime, D159's
+`N`-theater teaching, ports/rivers/amphibious transfer, and D455. The adjudication gets
+its own commit; packet authorship, if justified, comes later.
+
 ## D496 — ARC 6 RAIL SCOPE IS A CONQUEST-TOPOLOGY RESEARCH PACKET, NOT A SECOND LOGISTICS SYSTEM — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS-ONLY ADJUDICATION] (2026-07-21)
 
 The ARC 6 rail candidate is justified, but D455's phrase "Railroads / logistics
