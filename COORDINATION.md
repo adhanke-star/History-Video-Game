@@ -3206,11 +3206,12 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ### LANE-018 · gm-completion — **DRIVE (chartered ledger-only; ARC 5 per the D455 ladder, unblocked by the D488 politics packet)** (§4e: AI-GM persona choice · muster-roll desk surface · the 1864 election bind · the Transfer AI-GM rider)
 
-- **Owning tool:** Claude Code (Fable 5) — DRIVE taken IN this ledger-only charter
-  commit (the LANE-014 `489cfc4` / LANE-017 `023ec91` precedent). The §4 TOP-LOOP
-  resolution: TOP LOOP = Claude Code / Fable 5 (xhigh, the session model); helpers
-  Sonnet low/med mechanical · Haiku pure reads · Opus high default-refute/reasoning,
-  model+effort explicit per call. No simultaneous edits by any provider.
+- **Owning tool:** ChatGPT/Codex (5.6 Sol Ultra) — Aaron explicitly authorized the
+  provider transfer on 2026-07-21; Codex takes the existing DRIVE lock in this
+  ledger-only transfer commit before any Slice-3 code move. The §4 TOP-LOOP
+  resolution: TOP LOOP = ChatGPT/Codex 5.6 Sol Ultra; the main loop retains
+  architecture, historical judgment, integration, verification, and the commit.
+  No simultaneous edits by any provider.
 - **State:** DRIVE — this entry IS the acceptance contract. Charter recon was
   read-only against the clean pushed D488 boundary (`d8ca128`).
 - **Design law:** DECISIONS D455 §7's ARC 5 row (`unlocked-but-judged-design.md` §4e +
@@ -3385,9 +3386,9 @@ next green commit and confer through this ledger instead of permitting simultane
   medicine packets remain session-fillers; ARC 7/8/9 queue behind ARC 5/6.
 - **Resume pointer:** SLICE 3 (the 1864 election bind — the load-bearing slice; the
   packet §3/§3.5 VERBATIM per adjudication 3, the packet §5 ten teeth the basis) per
-  this contract — DRIVE is HELD by the Claude Code (Fable 5) slice-2 session
-  mid-ladder (the D481/D484 held-DRIVE precedent); a fresh session re-takes DRIVE
-  with a committed ledger edit if the lock is released at a boundary. The full
+  this contract — DRIVE is HELD by ChatGPT/Codex 5.6 Sol Ultra after Aaron's
+  explicit 2026-07-21 provider-transfer authorization; a fresh session re-takes
+  DRIVE with a committed ledger edit if the lock is released at a boundary. The full
   slice-3 clause + binds live in the acceptance contract above; the HANDOFF top ⚡
   block's D490 amendment carries the zero-context EXACT-NEXT packet.
 - **Slice history:** SLICE 2 SHIPPED as D490 (2026-07-20, the slice-1 session
