@@ -4,6 +4,55 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D488 — THE ARC 6 POLITICS/ELECTION RESEARCH PACKET (T2, docs-only): `wf_854e0760-ef2` ADJUDICATED AT THE TOP LOOP AND THE PACKET AUTHORED — ARC 5 GM COMPLETION IS UNBLOCKED — [CLAUDE CODE (FABLE 5), no lane lock (docs-only)] (2026-07-20)
+
+**SHIPPED:** `docs/design/politics-election-research-packet.md` — the ARC 6 politics packet
+chartered by `unlocked-but-judged-design.md` §6, in the battle-build-research idiom (source
+register · adjudicated scope · the ARC 5 bind's exact data needs · D74/anti-Lost-Cause risk
+notes · probe-teeth recommendations · verdict), deliberately OUTSIDE the probe-pinned
+`battle-build-research/` folder. **Verdict: READY_FOR_SPEC** with an 8-item remaining-traps
+list (Dubin/Martis seat-count pins, Benton's soldier-vote table, Neely's arrest totals,
+Mitchell's gold tables, the Feb 1865 joint resolution, the Douglass date, dropped rows stay
+dropped).
+
+- **Adjudication (the D481/D482 banked-workflow practice + the adjudication-10 law):** the
+  banked 13/13-agent workflow's journal was the sole source of truth (six Sonnet-gather
+  topics, each Opus-high default-refuted, + the election-bind repo inventory). 78 verdict
+  rows: **57 CONFIRMED · 16 WEAK · 0 REFUTED**; one gather row the refute layer never
+  processed (the cs-politics dissent-drivers synthesis) was adjudicated at the top loop and
+  carried Inferred as a §4 anti-Lost-Cause guardrail. Verified entered ONLY on ≥2 surviving
+  independent NON-TERTIARY families (Wikipedia = relay corroboration only; repo registers
+  corroborate but never count; the Lincoln Institute's sites = one family); WEAK rows
+  entered displayed as Inferred/Disputed or were dropped; **nine drops/corrections logged**
+  in the packet's §7 (the D485 honest-drops precedent) — headline catches: the Foote habeas
+  quote welded 1862→1864, the "McClellan learned by newspaper" misattribution, the
+  internally-inconsistent 13th-Amendment switcher arithmetic, the unsupported six-state
+  soldier-vote margin attribution.
+- **Top-loop spot re-verification (the D366/D481 practice):** 9 fetch attempts, 6 landed
+  (Miller Center · Wikipedia 1862-63 House · NARA 1864 Electoral College · Wikipedia 1863
+  CS House · NPS Voting at Cedar Creek · APP National Union platform) — all faithful to the
+  refuters' readings. **One refuter overclaim caught:** Miller Center does NOT print 212-21
+  or the LA/TN exclusion; those rows were re-anchored on the NARA official record. Two
+  bot-403/404s logged honestly (bot-403 ≠ dead link).
+- **The ARC 5 bind's data needs (banked repo inventory, §3 of the packet):** the state
+  owner exists (`C.clock` in frozen base.html — one-shot 1864 resolve at support≥60); the
+  gap is INPUT BREADTH (press.sentiment computed but unread by the clock); the extension
+  seam is a src/* post-clkOnResolve interlink (the 40-economy pattern), byte-identical at
+  neutral; ONE writer path stays; the divergence US/CS side-gate is law (no CS election
+  existed — Davis's single term); the D113 `electionReliefBind` is a DIFFERENT shipped
+  bind (collision trap) AND the lever-shape template; recommended minimal shape =
+  `data/politics.json` cycles (1862 teaching-only + 1864 press-term) + CS mirror cards;
+  NO new lever class (D74 absolute); §17 direct-mutator parity if any decision UI ships.
+- **Gates (docs-only tier):** git diff --check clean · commit -F · push · BOTH plan probes
+  re-run POST-COMMIT green (their working-tree allowlist steps see a clean tree). No
+  runtime/data/count movement; counts hold 29/62/1,710/140; `_SAVE_VER=1`; frozen base
+  untouched; AD-7 head unmoved (docs are outside every tree hash).
+
+**Forward:** ARC 5 GM COMPLETION is now charterable per the D455 ladder (AI-GM persona
+choice · muster-roll UI · the election bind, buildable per the packet's §3). T4 brigade
+flag markers (Phase H1b) remains the ratified tail candidate; LANE-002 5b stays reserved
+for its own fresh-context opener; ARC 7/8/9 queue behind ARC 5/6.
+
 ## D487 — LANE-017 SLICE 9: THE ARC 4 RELEASE BATTERY IS COMPLETE AND GREEN — LANE-017 SHIPPED, ARC 4 CLOSED (+ THE D483-LATENT NaN-SCAN FALSE-POSITIVE ROOT-FIX, SWEPT TREE-WIDE) — [CLAUDE CODE (FABLE 5), LANE-017 DRIVE→SHIPPED] (2026-07-20)
 
 **THE BATTERY:** the full 140-row suite ran serialized/ALONE at battery SHA `fec05a3` across

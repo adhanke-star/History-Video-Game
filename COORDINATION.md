@@ -3084,6 +3084,14 @@ next green commit and confer through this ledger instead of permitting simultane
   unblocks ARC 5 GM completion (the election bind). T4 brigade flag markers (Phase
   H1b, Aaron-ratified for the tail) remains a candidate behind it. T3 GEA-01/S44
   was found ALREADY DISCHARGED (both rows FIXED IN D423) — recorded in the T1 sweep.
+  *(T2 DISCHARGED 2026-07-20, D488: the packet SHIPPED docs-only as
+  `docs/design/politics-election-research-packet.md` — 78 journal rows adjudicated
+  57C/16W/0R at the top loop, nine honest drops logged, READY_FOR_SPEC. The forward
+  pointer is now: charter ARC 5 GM COMPLETION per the D455 ladder — a ledger-only
+  lane charter with DRIVE taken in the charter commit (AI-GM persona choice ·
+  muster-roll UI · the 1864 election bind per the packet's §3/§3.5+§5); T4 brigade
+  flag markers stays the ratified tail candidate behind it; LANE-002 5b keeps its
+  S-04 fresh-context reservation.)*
 - **Last-touched commit:** the D487 battery-flip docs commit (this commit).
 - **Slice history:** SLICE 8 SHIPPED as D486 (2026-07-20, UNSPLIT — the P0 recon
   sized every sub-feature onto an existing seam): 4 possession-derived sets entering
