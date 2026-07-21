@@ -146,6 +146,53 @@ let conquestTerritoryCount = 0;
   conquestTerritoryCount = pack.territories.length;
 }
 
+// ---- 2a-2. D506 read-only conquest transport evidence gate ----
+// Closed row signatures make every D505 mapping/date/source/classification change
+// deliberate. This gate authorizes evidence injection only; it creates no service.
+let conquestTransportCounts = { rail:0, water:0, sea:0, interchanges:0, nonLinks:0 };
+{
+  const p = join(DATA, 'conquest-transport-evidence.json');
+  const tp = join(DATA, 'conquest-territories.json');
+  if (!existsSync(p)) die(5, 'conquest-transport-evidence: required D506 data owner is missing');
+  let pack, territoryPack;
+  try { pack = JSON.parse(readFileSync(p, 'utf8')); territoryPack = JSON.parse(readFileSync(tp, 'utf8')); }
+  catch (e) { die(5, 'conquest-transport-evidence: invalid JSON: ' + e.message); }
+  const plain = v => !!v && typeof v === 'object' && !Array.isArray(v);
+  const exact = (o, keys) => plain(o) && Object.keys(o).sort().join('|') === keys.slice().sort().join('|');
+  const stable = v => Array.isArray(v) ? '[' + v.map(stable).join(',') + ']'
+    : plain(v) ? '{' + Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+stable(v[k])).join(',') + '}' : JSON.stringify(v);
+  const sig = v => { const s=stable(v); let h=2166136261; for (let i=0;i<s.length;i++) { h^=s.charCodeAt(i); h=Math.imul(h,16777619); } return s.length+':'+(h>>>0).toString(16).padStart(8,'0'); };
+  const pins = {
+    railServices:["485:0c7a6344","478:0bc80c35","473:dcff2792","451:eb3a2a7a","464:5e2889af","510:12b1aea6","487:a3db1246","443:85c16ba7","511:91438176","462:ea0471b7","440:9cc136ac","531:390b0afe","503:62e077e3","484:baf855e9","523:23cc3b54","473:5666ec0c","479:a1f2a105","452:eb68ec70","503:091ff271","508:43657c68","529:822bab1e","486:024bdcdf","470:03bdb1e8","448:3d9b68f4","559:07a167d5","453:1d1a0f5e","504:8fb49da7"],
+    waterServices:["486:59059fa9","428:bb2ac36d","418:48f40d7b","471:a750161d","463:3a4dee8f","451:5b51ef44","427:1e17eed2","445:2c8a3d3f","468:6398dc87","475:6ed75d62","464:8cb66a95","452:bd942be3","460:c3b5ca0b","461:d4cf0c18","448:9f0a3dd0"],
+    seaServices:["515:d6c8e150","486:a900b783"],
+    interchanges:["555:ff92e1c2","471:f6520709","462:19387efa","489:d5688f6d"],
+    nonLinks:["359:df84ad9c","372:e8d50ef3","398:6e221c69","355:1881efaf","419:4797070c","357:89a878e8","373:0c705b34","362:05ddcefc","367:ff8797f8","368:7a4f0152","331:ab7002f7","363:6555f91f","401:264138df","358:06bd22e4","377:5d9142bd","346:03b7a588","369:eb63b349","389:40c03868"]
+  };
+  const rootKeys=['schema','version','enablement','sourcePackets','railServices','waterServices','seaServices','interchanges','nonLinks','roadStatus'];
+  const serviceKeys=['id','mode','evidenceRowIds','endpointAnchorIds','territoryRefs','direction','historicalEligibility','mayhemPhysicalEligibility','provenance','scope','sourceRefs','uncertainty','nonLinkRefs'];
+  const interchangeKeys=['id','modes','endpointAnchorIds','territoryRefs','evidenceRowIds','historicalEligibility','mayhemPhysicalEligibility','provenance','sourceRefs','handlingLimit'];
+  const nonLinkKeys=['id','modes','endpointAnchorIds','territoryRefs','evidenceRowIds','claim','provenance','sourceRefs','uncertainty'];
+  const errors=[];
+  if (!exact(pack,rootKeys) || pack.schema!=='cw_conquest_transport_evidence_v1' || pack.version!==1) errors.push('root schema/version/keys must be exact');
+  if (!exact(pack.enablement,['mode','enabled','status']) || pack.enablement.mode!=='read-only' || pack.enablement.enabled!==true || pack.enablement.status!=='read-only transport evidence; transport play not yet enabled') errors.push('enablement must be exact read-only authority');
+  if (JSON.stringify(pack.sourcePackets)!=='["D497","D499"]' || pack.roadStatus!=='ROAD_REQUIRES_BOUNDED_SOURCE_PASS') errors.push('source packets or road verdict mismatch');
+  for (const [key,want] of Object.entries(pins)) {
+    if (!Array.isArray(pack[key]) || pack[key].length!==want.length || pack[key].some((row,i)=>sig(row)!==want[i])) errors.push(key+' closed row signatures mismatch');
+  }
+  const anchors=new Set(territoryPack.territories.flatMap(r=>r.anchors)), territories=new Set(territoryPack.territories.map(r=>r.id));
+  const sources=new Set(['D497','D499',...Array.from({length:26},(_,i)=>'SR-'+String(i+1).padStart(2,'0')),...Array.from({length:32},(_,i)=>'SW-'+String(i+1).padStart(2,'0')),...territoryPack.sourceRegisters.map(s=>s.id)]);
+  const allRows=[...(pack.railServices||[]),...(pack.waterServices||[]),...(pack.seaServices||[])];
+  allRows.forEach((row,i)=>{
+    if (!exact(row,serviceKeys) || !exact(row.historicalEligibility,['status','dateText'])) errors.push('service row '+i+' keys malformed');
+    if (!row.endpointAnchorIds.every(a=>anchors.has(a)) || !row.territoryRefs.every(t=>territories.has(t)) || !row.sourceRefs.every(s=>sources.has(s))) errors.push('service row '+i+' unresolved reference');
+  });
+  (pack.interchanges||[]).forEach((row,i)=>{ if (!exact(row,interchangeKeys) || !exact(row.historicalEligibility,['status','dateText']) || !row.endpointAnchorIds.every(a=>anchors.has(a)) || !row.territoryRefs.every(t=>territories.has(t)) || !row.sourceRefs.every(s=>sources.has(s))) errors.push('interchange '+i+' malformed/unresolved'); });
+  (pack.nonLinks||[]).forEach((row,i)=>{ if (!exact(row,nonLinkKeys) || !row.endpointAnchorIds.every(a=>anchors.has(a)) || !row.territoryRefs.every(t=>territories.has(t)) || !row.sourceRefs.every(s=>sources.has(s))) errors.push('non-link '+i+' malformed/unresolved'); });
+  if (errors.length) die(5, 'conquest-transport-evidence: ' + errors.length + ' validation error(s):\n  ' + errors.join('\n  '));
+  conquestTransportCounts = {rail:pack.railServices.length,water:pack.waterServices.length,sea:pack.seaServices.length,interchanges:pack.interchanges.length,nonLinks:pack.nonLinks.length};
+}
+
 // ---- 2b. inject assets/embed/** as a single __ASSETS global (D71 H1 ingestion pipeline) ----
 // The OFFLINE tier: every file under assets/embed/<category>/ (the small, compressed,
 // licence-vetted PD media produced by tools/prep-embed-assets.mjs) is Base64-inlined as a
@@ -313,7 +360,7 @@ for (const rm of RATING_MODULES) {
 // un-erodable by the build itself).
 {
   const offenders = [];
-  const SRC_KEYS = ['sources', 'src'];
+  const SRC_KEYS = ['sources', 'src', 'sourceRefs'];
   const walk = (node, file, trail) => {
     if (Array.isArray(node)) { node.forEach((v, i) => walk(v, file, trail + '[' + i + ']')); return; }
     if (node && typeof node === 'object') {
@@ -384,7 +431,7 @@ for (const rm of RATING_MODULES) {
   //   THE MAP IS EMPTY: every descriptive-Verified object is structurally covered; any new one
   //   without own/ancestor sources fails the build (the blind spot is CLOSED, not just contained).
   const E74_BASELINE = {};
-  const SRC_KEYS2 = ['sources', 'src'];
+  const SRC_KEYS2 = ['sources', 'src', 'sourceRefs'];
   const norm2 = (v) => (typeof v === 'string' ? v.trim().toLowerCase() : '');
   const distinctCount = (arr) => {
     const seen = new Set();
@@ -630,7 +677,7 @@ for (const rm of RATING_MODULES) {
 const KB = (s) => (s.length / 1024).toFixed(1) + 'KB';
 console.log('GATE OK · parse ✓ · hex ✓ · collision ✓ · no-fudge ✓ · citations ✓ · women-in-war ✓ · save-shape ✓');
 console.log('  data:      GAME_DATA = {' + (dataKeys.join(', ') || '(none)') + '}');
-console.log('  schemas:   ' + dataKeys.length + ' data files; conquest territories: ' + conquestTerritoryCount + '/36');
+console.log('  schemas:   ' + dataKeys.length + ' data files; conquest territories: ' + conquestTerritoryCount + '/36; transport: ' + conquestTransportCounts.rail + '/' + conquestTransportCounts.water + '/' + conquestTransportCounts.sea + '/' + conquestTransportCounts.interchanges + '/' + conquestTransportCounts.nonLinks);
 console.log('  assets:    __ASSETS = ' + embedCount + ' embedded (' + (embedBytes / 1024).toFixed(0) + 'KB raw' + (embedCount ? '; ' + Object.keys(embedCats).map(c => c + ':' + embedCats[c]).join(', ') : '') + ')');
 console.log('  modules:   ' + modules.join(', '));
 console.log('  new fns:   ' + (newFns.map(x => x.name).join(', ') || '(none)'));

@@ -110,7 +110,8 @@
     "111-memory-chain.js",
     "112-session-packet.js",
     "113-teaching-companion.js",
-    "114-conquest-board.js"
+    "114-conquest-board.js",
+    "115-conquest-transport.js"
   ],
   "overrides": [
     "_t1InitAll",

@@ -3512,12 +3512,12 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **DRIVE (SLICE 2A READ-ONLY TRANSPORT EVIDENCE; CHATGPT/CODEX 5.6 SOL ULTRA TOP LOOP)**
+### LANE-019 · conquest-design-law — **CONTRACT (D506 SLICE 2A SHIPPED; ROAD SOURCE PASS NEXT; UNOWNED)**
 
-- **Owning tool:** current ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. No simultaneous
-  edits by Claude Code or another Codex task.
-- **State:** DRIVE for the D505 read-only transport-evidence substrate only, taken
-  from clean HEAD `53befb6741f496106fa2e754f0436212e943b2f3`. D504 Slice
+- **Owning tool:** none. A future ChatGPT/Codex 5.6 Sol Ultra TOP LOOP must take
+  DRIVE in a standalone committed ledger edit. No simultaneous edits.
+- **State:** CONTRACT after D506 ships the D505 read-only transport-evidence
+  substrate. D504 Slice
   1 shipped at `74237b9273f4640f031a8c46041a98e1d96809a3`. Transport gameplay/runtime,
   movement, and state remain prohibited.
 - **D504 shipped evidence:** exact 36/36 registry in D503 order; all 35 RN, 41 WN,
@@ -3602,9 +3602,12 @@ next green commit and confer through this ledger instead of permitting simultane
   unresolved and exactly normalization/integrity reds. Bind B promotes WE-25 or
   RE-29 to service or erases its non-link/provenance and exactly evidence integrity
   reds. All other teeth stay green; data and generated output restore byte-identically.
-- **Gate sequence and resume pointer:** DRIVE is taken in this standalone ledger
-  commit. Resume at Phase 2 by creating only `data/conquest-transport-evidence.json`,
-  then implement only the remaining allowed files; `node --check` all touched JS/probes; build
+- **Gate sequence and resume pointer:** D506's implementation commit containing
+  this entry completes Slice 2A. Exact next is D505's docs/research-only bounded
+  road source pass: take DRIVE in a standalone ledger commit, author the declared
+  source/node/edge/non-link/interchange registers and exactly one declared verdict,
+  and stop. No road data/runtime or transport gameplay is authorized. Any later
+  playable slice needs a separate full contract. For D506 verification, `node --check` all touched JS/probes; build
   `GATE OK` at 65 data, 36 territories, 111 modules, suite 140; run/read both focused
   artifacts; run board 13/13, accessibility 27/27, Mayhem 24/24, Custom Builder 16/16
   serialized under full access; execute both exact-red binds and prove MD5 restores;
@@ -3691,14 +3694,23 @@ next green commit and confer through this ledger instead of permitting simultane
   was 63 -> 64 plus accurate D504 history; Mayhem returned from 23/24 to 24/24.
   Custom Builder and both binds then passed their exact contracts. This authorization
   is exhausted and broadens no Mayhem or conquest runtime boundary.
+- **D506 shipped evidence:** immutable counts 27 rail / 15 inland water / 2 bounded
+  sea / 4 interchanges / 18 non-links; build 65 data, 36/36 territories, 111
+  modules with 115 last, suite 140; focused 11/11 + 11/11; adjacent 13/13,
+  27/27, 24/24, 16/16; all artifacts clean. Both exact-red binds isolated one
+  combined normalization/evidence-integrity tooth and restored data/game
+  `7138a61b6cfc152d1051850831a27e92` / `d278c30f4cbbe2179b10bc566a8a461b`.
+  Frozen base/save shape held; no UI/state/save/gameplay behavior shipped.
 - **Last-touched commits:** D503 standalone design-lock `a3403da`; D503 final-law
   commit `44ffac5`; Slice-1 DRIVE take `7a0ca42`; allowlist/gate HALT ledger
   `cb46f55`; D504 Slice-1 implementation `74237b9`; D505 docs-only contract ships in
-  the commit containing this entry.
+  `53befb6`; Slice-2A DRIVE take `af90db1`; D506 implementation ships in the
+  commit containing this entry.
 - **History:** D502 created the design-only contract. Aaron chose Package A. D503
   completed the final law. D504 shipped the read-only territory board. D505 audits
-  every rail/water evidence row, contracts the read-only substrate, and returns the
-  lane unowned; transport gameplay remains closed.
+  every rail/water evidence row, contracts the read-only substrate, and D506 ships
+  it. The lane is unowned for the bounded road source pass; transport gameplay
+  remains closed.
 
 ---
 

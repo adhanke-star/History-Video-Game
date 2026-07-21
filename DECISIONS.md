@@ -4,6 +4,57 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D506 — ARC 7 SLICE 2A SHIPS THE IMMUTABLE READ-ONLY TRANSPORT-EVIDENCE SUBSTRATE; TRANSPORT PLAY REMAINS CLOSED — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION + CONTRACT RELAY] (2026-07-21)
+
+LANE-019 Slice 2A ships in the implementation commit containing this entry. The
+new `data/conquest-transport-evidence.json` owner is schema
+`cw_conquest_transport_evidence_v1`, version 1, with exactly 27 rail services
+(`CTS-R-01`..`CTS-R-27` / RE-01..RE-27), 15 inland-water services
+(`CTS-W-01`..`CTS-W-15` over D505's retained WE rows), two bounded sea services
+(`CTS-S-01`=WE-24 and `CTS-S-02`=WE-26), four explicit interchanges
+(`CTI-01`..`CTI-04`), and 18 required non-links (`CTNL-01`..`CTNL-18`). Road
+status is exactly `ROAD_REQUIRES_BOUNDED_SOURCE_PASS`; no road-service array or
+row exists.
+
+`src/115-conquest-transport.js` is manifest module 111 and final. Its sole public
+surface, `conquestTransportNormalized`, reads the injected transport and D504
+territory registries, validates the exact closed row signatures, IDs, mappings,
+packet dates, provenance, source/evidence/anchor/territory references,
+Historical/Mayhem classifications, interchanges, and non-links, then returns a
+deeply cloned/frozen value. Any malformed or unsupported value returns `null`.
+It creates no UI and writes no `G`, `C`, settings, localStorage, save/import/
+export/undo, movement, adjacency, ownership/control/condition, capacity,
+economy, reinforcement, reward, AI, battle/result, Chronicle, War Career,
+Custom Builder, casualty, winner, score, surrender, or tactical output.
+
+Build is `GATE OK`: 65 data files, D504 territories 36/36, transport
+27/15/2/4/18, 111 modules with 115 last, and suite membership 140. Focused gates
+are transport plan 11/11 and transport runtime 11/11. Serialized adjacents are
+board 13/13, accessibility 27/27, Mayhem 24/24, and Custom Builder 16/16.
+Every fresh artifact is `ok:true` with zero failed steps, `pageerrors`,
+`realErrors`, or fatal harness errors; the board's desktop and 390px screenshots
+remain visually unchanged, readable, non-color-dependent, and free of horizontal
+overflow. Mayhem changed only its mechanically proved data count 64 -> 65 plus
+this accurate D506 history. Both planning probes carry the exact D506 hash/count
+chain; suite membership did not move.
+
+Bind A replaced one service endpoint with unresolved `RN-99`: exactly
+`SUBSTRATE NORMALIZATION / EVIDENCE INTEGRITY` red (1/11), with the other ten
+teeth green and zero browser errors. Bind B erased WE-25 from its required
+CTNL-14 evidence reference: the same evidence-integrity tooth alone red (1/11),
+with the other ten green and zero browser errors. Each restore returned data/game
+byte-identically to `7138a61b6cfc152d1051850831a27e92` /
+`d278c30f4cbbe2179b10bc566a8a461b`, and the focused probe reran 11/11.
+Frozen base remains `c9db83fa99230ffb95bdfdfe059f3fb9`; save-shape remains
+`862a6a1c00e556ef7f12cca25e70b975` and `_SAVE_VER=1`.
+
+LANE-019 returns to CONTRACT/unowned. The exact next bounded task is D505's
+docs/research-only road source pass: period road/wagon corridors, exact endpoints,
+dated military use, breaks, non-links, and explicit interchanges against the 36
+territories, ending in one of D505's three declared verdicts. It authorizes no
+road data/runtime and no transport gameplay. Any playable movement/state/save/UI
+slice still requires a new full contract and DRIVE transfer.
+
 ## D505 — ARC 7 SLICE 2A CONTRACTS A READ-ONLY RAIL/WATER/BOUNDED-SEA EVIDENCE SUBSTRATE; ROADS REQUIRE A SEPARATE SOURCE PASS — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS-ONLY LAW + CONTRACT] (2026-07-21)
 
 **BOUNDARY:** D504 shipped at `74237b9273f4640f031a8c46041a98e1d96809a3`.

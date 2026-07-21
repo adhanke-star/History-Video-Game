@@ -1,0 +1,1881 @@
+{
+  "schema": "cw_conquest_transport_evidence_v1",
+  "version": 1,
+  "enablement": {
+    "mode": "read-only",
+    "enabled": true,
+    "status": "read-only transport evidence; transport play not yet enabled"
+  },
+  "sourcePackets": [
+    "D497",
+    "D499"
+  ],
+  "railServices": [
+    {
+      "id": "CTS-R-01",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-01"
+      ],
+      "endpointAnchorIds": [
+        "RN-01",
+        "RN-05"
+      ],
+      "territoryRefs": [
+        "CT-01",
+        "CT-02"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "opening 1861-65, subject to wartime interruption"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-01",
+        "SR-11"
+      ],
+      "uncertainty": "Exact closure/reopening dates need B&O timetable/OR extraction.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-02",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-02"
+      ],
+      "endpointAnchorIds": [
+        "RN-02",
+        "RN-03"
+      ],
+      "territoryRefs": [
+        "CT-01",
+        "CT-03"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "eligible",
+        "dateText": "Union-controlled from 1861; USMRR baseline by Feb. 1862"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-01",
+        "SR-04"
+      ],
+      "uncertainty": "Exact 1861 bridge/boat transfer arrangement remains.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-03",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-03"
+      ],
+      "endpointAnchorIds": [
+        "RN-03",
+        "RN-04"
+      ],
+      "territoryRefs": [
+        "CT-03"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "1861-64; service repeatedly disrupted"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "node-segment",
+      "sourceRefs": [
+        "SR-01",
+        "SR-04",
+        "SR-12",
+        "SR-13"
+      ],
+      "uncertainty": "Build a dated damage ledger before any binary open/closed law.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-04",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-04"
+      ],
+      "endpointAnchorIds": [
+        "RN-04",
+        "RN-34"
+      ],
+      "territoryRefs": [
+        "CT-03",
+        "CT-04"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "eligible",
+        "dateText": "1861-64"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-01",
+        "SR-04"
+      ],
+      "uncertainty": "ARC 7 must not silently join Strasburg to Harpers Ferry by rail.",
+      "nonLinkRefs": [
+        "CTNL-01"
+      ]
+    },
+    {
+      "id": "CTS-R-05",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-05"
+      ],
+      "endpointAnchorIds": [
+        "RN-06",
+        "RN-07"
+      ],
+      "territoryRefs": [
+        "CT-05",
+        "CT-06"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "1861-Apr. 1865"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-01",
+        "SR-05",
+        "SR-26"
+      ],
+      "uncertainty": "Station/bridge vulnerability during evacuation needs primary detail.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-06",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-06"
+      ],
+      "endpointAnchorIds": [
+        "RN-07",
+        "RN-08"
+      ],
+      "territoryRefs": [
+        "CT-06"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "Confederate line damaged before June 1864; USMRR rebuilt and operated June 1864-Apr. 1865"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "node-segment",
+      "sourceRefs": [
+        "SR-05",
+        "SR-25"
+      ],
+      "uncertainty": "Construction-stage dates and branches need McCallum/USMRR maps.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-07",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-07"
+      ],
+      "endpointAnchorIds": [
+        "RN-07",
+        "RN-10"
+      ],
+      "territoryRefs": [
+        "CT-06",
+        "CT-09"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "1861-Aug. 1864 direct; degraded thereafter"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-05",
+        "SR-06"
+      ],
+      "uncertainty": "Exact railhead and wagon-bypass length must be sourced before modeling.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-08",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-08"
+      ],
+      "endpointAnchorIds": [
+        "RN-10",
+        "RN-11"
+      ],
+      "territoryRefs": [
+        "CT-09",
+        "CT-10"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "eligible",
+        "dateText": "1861-Feb. 1865"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-03",
+        "SR-05",
+        "SR-18"
+      ],
+      "uncertainty": "Through-car/gauge assumptions are not established.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-09",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-09"
+      ],
+      "endpointAnchorIds": [
+        "RN-07",
+        "RN-09"
+      ],
+      "territoryRefs": [
+        "CT-06",
+        "CT-07"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "eligible",
+        "dateText": "1861-Apr. 1865; sole Petersburg rail feeder by late Mar. 1865"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-05",
+        "SR-06",
+        "SR-25"
+      ],
+      "uncertainty": "“Sole” applies at the cited late-campaign moment, not the entire siege.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-10",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-10"
+      ],
+      "endpointAnchorIds": [
+        "RN-06",
+        "RN-35"
+      ],
+      "territoryRefs": [
+        "CT-05",
+        "CT-07"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "eligible",
+        "dateText": "1861-Apr. 1865"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-01",
+        "SR-02",
+        "SR-06"
+      ],
+      "uncertainty": "Amelia/Danville ration-routing failure requires its own event ledger.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-11",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-11"
+      ],
+      "endpointAnchorIds": [
+        "RN-12",
+        "RN-13"
+      ],
+      "territoryRefs": [
+        "CT-18",
+        "CT-20"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "eligible",
+        "dateText": "1861-65"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-01",
+        "SR-20"
+      ],
+      "uncertainty": "Exact military operating intervals and sabotage events remain.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-12",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-12"
+      ],
+      "endpointAnchorIds": [
+        "RN-13",
+        "RN-14"
+      ],
+      "territoryRefs": [
+        "CT-20",
+        "CT-21"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "Confederate opening use; Union supply line after Chattanooga campaign through 1865"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-01",
+        "SR-03",
+        "SR-24"
+      ],
+      "uncertainty": "The “Cracker Line” was not itself a railroad edge; do not conflate.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-13",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-13"
+      ],
+      "endpointAnchorIds": [
+        "RN-14",
+        "RN-15"
+      ],
+      "territoryRefs": [
+        "CT-21",
+        "CT-14"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "eligible",
+        "dateText": "1861-65; Union-controlled progressively southward in 1864"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-02",
+        "SR-03",
+        "SR-08",
+        "SR-09"
+      ],
+      "uncertainty": "Damage and repair were episodic; no fixed decay percentage.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-14",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-14"
+      ],
+      "endpointAnchorIds": [
+        "RN-15",
+        "RN-16"
+      ],
+      "territoryRefs": [
+        "CT-14",
+        "CT-13"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "1861-64; Atlanta endpoint lost Sept. 1864"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-02",
+        "SR-03",
+        "SR-09"
+      ],
+      "uncertainty": "Exact Augusta transfer/gauge procedure needs company records.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-15",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-15"
+      ],
+      "endpointAnchorIds": [
+        "RN-15",
+        "RN-17"
+      ],
+      "territoryRefs": [
+        "CT-14",
+        "CT-15"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "1861-Sept. 1864 direct into Atlanta; cut south of city during siege"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-02",
+        "SR-03",
+        "SR-09",
+        "SR-14"
+      ],
+      "uncertainty": "Reuse the battle packet; do not duplicate casualty/outcome claims.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-16",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-16"
+      ],
+      "endpointAnchorIds": [
+        "RN-17",
+        "RN-18"
+      ],
+      "territoryRefs": [
+        "CT-15",
+        "CT-12"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "1861-late 1864; disrupted during March to the Sea"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-02",
+        "SR-03",
+        "SR-14",
+        "SR-23"
+      ],
+      "uncertainty": "Damage extent is qualitative here.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-17",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-17"
+      ],
+      "endpointAnchorIds": [
+        "RN-15",
+        "RN-19"
+      ],
+      "territoryRefs": [
+        "CT-14",
+        "CT-16"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "1861-Sept. 1864 at Atlanta end"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-02",
+        "SR-03",
+        "SR-09"
+      ],
+      "uncertainty": "Through-service to Montgomery not established by this row.",
+      "nonLinkRefs": [
+        "CTNL-02"
+      ]
+    },
+    {
+      "id": "CTS-R-18",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-18"
+      ],
+      "endpointAnchorIds": [
+        "RN-19",
+        "RN-20"
+      ],
+      "territoryRefs": [
+        "CT-16"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "eligible",
+        "dateText": "1861-Apr. 1865"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Inferred",
+      "scope": "node-segment",
+      "sourceRefs": [
+        "SR-02",
+        "SR-03"
+      ],
+      "uncertainty": "Needs annual reports/timetables before ARC 7 treats RE-17+18 as one route.",
+      "nonLinkRefs": [
+        "CTNL-02"
+      ]
+    },
+    {
+      "id": "CTS-R-19",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-19"
+      ],
+      "endpointAnchorIds": [
+        "RN-22",
+        "RN-23"
+      ],
+      "territoryRefs": [
+        "CT-24",
+        "CT-23"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "1861-May 1862 Confederate; Union denial after Corinth/Memphis fell"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-01",
+        "SR-02",
+        "SR-07"
+      ],
+      "uncertainty": "Exact Union operating interval west of Corinth remains.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-20",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-20"
+      ],
+      "endpointAnchorIds": [
+        "RN-22",
+        "RN-14"
+      ],
+      "territoryRefs": [
+        "CT-24",
+        "CT-21"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "1861-May 1862 Confederate through corridor; fragmented afterward"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-01",
+        "SR-02",
+        "SR-07",
+        "SR-08"
+      ],
+      "uncertainty": "Later segment-by-segment control needs a dated ledger.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-21",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-21"
+      ],
+      "endpointAnchorIds": [
+        "RN-22",
+        "RN-21"
+      ],
+      "territoryRefs": [
+        "CT-24",
+        "CT-17"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "1861-65 in segments; Corinth unavailable to Confederacy after May 1862"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-01",
+        "SR-02",
+        "SR-07"
+      ],
+      "uncertainty": "Segment operation south of Corinth is not equivalent to through availability.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-22",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-22"
+      ],
+      "endpointAnchorIds": [
+        "RN-24",
+        "RN-25"
+      ],
+      "territoryRefs": [
+        "CT-25",
+        "CT-26"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "1861-May/July 1863; Union disruption during Vicksburg campaign"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-02",
+        "SR-03",
+        "SR-10"
+      ],
+      "uncertainty": "Exact repair/reopening after 1863 remains.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-23",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-23"
+      ],
+      "endpointAnchorIds": [
+        "RN-25",
+        "RN-26"
+      ],
+      "territoryRefs": [
+        "CT-26",
+        "CT-27"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "1861-65, interrupted by 1863-64 campaigns"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Inferred",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-02",
+        "SR-03",
+        "SR-18"
+      ],
+      "uncertainty": "Needs OR/company records for dated operability.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-24",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-24"
+      ],
+      "endpointAnchorIds": [
+        "RN-26",
+        "RN-21"
+      ],
+      "territoryRefs": [
+        "CT-27",
+        "CT-17"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "1861-65 in segments"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-02",
+        "SR-03",
+        "SR-18"
+      ],
+      "uncertainty": "Exact late-war service north of Mobile remains.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-25",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-25"
+      ],
+      "endpointAnchorIds": [
+        "RN-27",
+        "RN-25"
+      ],
+      "territoryRefs": [
+        "CT-28",
+        "CT-26"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "Confederate opening use; southern endpoint lost Apr. 1862; segments continued"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Inferred",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-02",
+        "SR-03",
+        "SR-18"
+      ],
+      "uncertainty": "Do not render this as uninterrupted New Orleans-Corinth through service without timetables.",
+      "nonLinkRefs": [
+        "CTNL-03"
+      ]
+    },
+    {
+      "id": "CTS-R-26",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-26"
+      ],
+      "endpointAnchorIds": [
+        "RN-31",
+        "RN-32"
+      ],
+      "territoryRefs": [
+        "CT-36"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "eligible",
+        "dateText": "1861-65; used in Jan. 1863 Galveston operation"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "node-segment",
+      "sourceRefs": [
+        "SR-02",
+        "SR-15"
+      ],
+      "uncertainty": "Exact bridge/ferry arrangement needs primary detail.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-R-27",
+      "mode": "rail",
+      "evidenceRowIds": [
+        "RE-27"
+      ],
+      "endpointAnchorIds": [
+        "RN-31",
+        "RN-33"
+      ],
+      "territoryRefs": [
+        "CT-36",
+        "CT-35"
+      ],
+      "direction": "bidirectional",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "scheduled 1862-mid-1863; irregular to early 1864"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Disputed",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SR-02",
+        "SR-15",
+        "SR-17"
+      ],
+      "uncertainty": "Preserve both accounts; never encode the removal as settled fact.",
+      "nonLinkRefs": [
+        "CTNL-04"
+      ]
+    }
+  ],
+  "waterServices": [
+    {
+      "id": "CTS-W-01",
+      "mode": "inland-water",
+      "evidenceRowIds": [
+        "WE-01"
+      ],
+      "endpointAnchorIds": [
+        "WN-01",
+        "WN-02",
+        "WN-05"
+      ],
+      "territoryRefs": [
+        "CT-19",
+        "CT-22"
+      ],
+      "direction": "one-way",
+      "historicalEligibility": {
+        "status": "operation-specific",
+        "dateText": "2-6 Feb. 1862"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "operation-specific",
+      "sourceRefs": [
+        "SW-03",
+        "SW-04"
+      ],
+      "uncertainty": "Cross-references Fort Henry strategic opening only; no tactical outcome or capacity.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-W-02",
+      "mode": "inland-water",
+      "evidenceRowIds": [
+        "WE-03"
+      ],
+      "endpointAnchorIds": [
+        "WN-06",
+        "WN-04"
+      ],
+      "territoryRefs": [
+        "CT-20"
+      ],
+      "direction": "one-way",
+      "historicalEligibility": {
+        "status": "eligible",
+        "dateText": "Feb. 1862 onward"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "node-segment",
+      "sourceRefs": [
+        "SW-03",
+        "SW-05",
+        "SW-11"
+      ],
+      "uncertainty": "Does not assign continuous year-round capacity.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-W-03",
+      "mode": "inland-water",
+      "evidenceRowIds": [
+        "WE-04"
+      ],
+      "endpointAnchorIds": [
+        "WN-01",
+        "WN-09"
+      ],
+      "territoryRefs": [
+        "CT-19"
+      ],
+      "direction": "one-way",
+      "historicalEligibility": {
+        "status": "operation-specific",
+        "dateText": "Mar. 1862"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Inferred",
+      "scope": "operation-specific",
+      "sourceRefs": [
+        "SW-02"
+      ],
+      "uncertainty": "One direct family; no persistent edge value.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-W-04",
+      "mode": "inland-water",
+      "evidenceRowIds": [
+        "WE-05"
+      ],
+      "endpointAnchorIds": [
+        "WN-09",
+        "WN-10"
+      ],
+      "territoryRefs": [
+        "CT-19"
+      ],
+      "direction": "one-way",
+      "historicalEligibility": {
+        "status": "operation-specific",
+        "dateText": "Mar.-8 Apr. 1862"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Inferred",
+      "scope": "operation-specific",
+      "sourceRefs": [
+        "SW-06"
+      ],
+      "uncertainty": "The 12-mile canal admitted steamboats/barges, not gunboats; do not collapse the two paths.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-W-05",
+      "mode": "inland-water",
+      "evidenceRowIds": [
+        "WE-06"
+      ],
+      "endpointAnchorIds": [
+        "WN-10",
+        "WN-11"
+      ],
+      "territoryRefs": [
+        "CT-19",
+        "CT-23"
+      ],
+      "direction": "one-way",
+      "historicalEligibility": {
+        "status": "operation-specific",
+        "dateText": "Apr.-June 1862"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Inferred",
+      "scope": "operation-specific",
+      "sourceRefs": [
+        "SW-02"
+      ],
+      "uncertainty": "One broad synthesis; Fort Pillow remains outside scored/spectacle treatment.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-W-06",
+      "mode": "inland-water",
+      "evidenceRowIds": [
+        "WE-07"
+      ],
+      "endpointAnchorIds": [
+        "WN-11",
+        "WN-12"
+      ],
+      "territoryRefs": [
+        "CT-23",
+        "CT-25"
+      ],
+      "direction": "one-way",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "June 1862-July 1863"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SW-07",
+        "SW-08"
+      ],
+      "uncertainty": "“Reached Vicksburg” is not “controlled the whole river.”",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-W-07",
+      "mode": "inland-water",
+      "evidenceRowIds": [
+        "WE-08"
+      ],
+      "endpointAnchorIds": [
+        "WN-33",
+        "WN-14"
+      ],
+      "territoryRefs": [
+        "CT-28"
+      ],
+      "direction": "one-way",
+      "historicalEligibility": {
+        "status": "operation-specific",
+        "dateText": "Apr.-May 1862"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "operation-specific",
+      "sourceRefs": [
+        "SW-09",
+        "SW-10"
+      ],
+      "uncertainty": "No generic deep-draft or all-vessel rule.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-W-08",
+      "mode": "inland-water",
+      "evidenceRowIds": [
+        "WE-09"
+      ],
+      "endpointAnchorIds": [
+        "WN-14",
+        "WN-13"
+      ],
+      "territoryRefs": [
+        "CT-28"
+      ],
+      "direction": "one-way",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "May 1862-July 1863"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "node-segment",
+      "sourceRefs": [
+        "SW-07",
+        "SW-09",
+        "SW-10"
+      ],
+      "uncertainty": "Local river use and strategic through control are distinct.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-W-09",
+      "mode": "inland-water",
+      "evidenceRowIds": [
+        "WE-10"
+      ],
+      "endpointAnchorIds": [
+        "WN-13",
+        "WN-12"
+      ],
+      "territoryRefs": [
+        "CT-28",
+        "CT-25"
+      ],
+      "direction": "one-way",
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "July 1862-July 1863"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "territory-connection",
+      "sourceRefs": [
+        "SW-07",
+        "SW-09"
+      ],
+      "uncertainty": "Reopening does not imply risk-free local passage for the rest of the war.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-W-10",
+      "mode": "inland-water",
+      "evidenceRowIds": [
+        "WE-11"
+      ],
+      "endpointAnchorIds": [
+        "WN-12",
+        "WN-15"
+      ],
+      "territoryRefs": [
+        "CT-25"
+      ],
+      "direction": "one-way",
+      "historicalEligibility": {
+        "status": "operation-specific",
+        "dateText": "16 Apr.-1 May 1863"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "operation-specific",
+      "sourceRefs": [
+        "SW-01",
+        "SW-07",
+        "SW-08"
+      ],
+      "uncertainty": "Exact vessel/troop counts remain evidence; this is not a generic ferry edge.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-W-11",
+      "mode": "inland-water",
+      "evidenceRowIds": [
+        "WE-12"
+      ],
+      "endpointAnchorIds": [
+        "WN-36",
+        "WN-16"
+      ],
+      "territoryRefs": [
+        "CT-31"
+      ],
+      "direction": "one-way",
+      "historicalEligibility": {
+        "status": "operation-specific",
+        "dateText": "9-11 Jan. 1863"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Inferred",
+      "scope": "operation-specific",
+      "sourceRefs": [
+        "SW-13",
+        "SW-14"
+      ],
+      "uncertainty": "Does not establish a general upper White River route or reach to Little Rock.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-W-12",
+      "mode": "inland-water",
+      "evidenceRowIds": [
+        "WE-14"
+      ],
+      "endpointAnchorIds": [
+        "WN-40",
+        "WN-18"
+      ],
+      "territoryRefs": [
+        "CT-33"
+      ],
+      "direction": "one-way",
+      "historicalEligibility": {
+        "status": "operation-specific",
+        "dateText": "Mar.-Apr. 1864"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "operation-specific",
+      "sourceRefs": [
+        "SW-15",
+        "SW-16"
+      ],
+      "uncertainty": "The unusually low 1864 season cannot become a permanent baseline.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-W-13",
+      "mode": "inland-water",
+      "evidenceRowIds": [
+        "WE-17"
+      ],
+      "endpointAnchorIds": [
+        "WN-41",
+        "WN-22"
+      ],
+      "territoryRefs": [
+        "CT-06"
+      ],
+      "direction": "one-way",
+      "historicalEligibility": {
+        "status": "operation-specific",
+        "dateText": "May-June 1864"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "operation-specific",
+      "sourceRefs": [
+        "SW-28",
+        "SW-29"
+      ],
+      "uncertainty": "No 1862 City Point/Bermuda Hundred state or standing capacity is inferred.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-W-14",
+      "mode": "inland-water",
+      "evidenceRowIds": [
+        "WE-21"
+      ],
+      "endpointAnchorIds": [
+        "WN-25",
+        "WN-26"
+      ],
+      "territoryRefs": [
+        "CT-09"
+      ],
+      "direction": "one-way",
+      "historicalEligibility": {
+        "status": "operation-specific",
+        "dateText": "Feb. 1862"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "operation-specific",
+      "sourceRefs": [
+        "SW-22",
+        "SW-23"
+      ],
+      "uncertainty": "The map corroborates route only; NPS supplies passage and limitations.",
+      "nonLinkRefs": [
+        "CTNL-13"
+      ]
+    },
+    {
+      "id": "CTS-W-15",
+      "mode": "inland-water",
+      "evidenceRowIds": [
+        "WE-22"
+      ],
+      "endpointAnchorIds": [
+        "WN-26",
+        "WN-27"
+      ],
+      "territoryRefs": [
+        "CT-09"
+      ],
+      "direction": "one-way",
+      "historicalEligibility": {
+        "status": "operation-specific",
+        "dateText": "Mar. 1862"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Inferred",
+      "scope": "operation-specific",
+      "sourceRefs": [
+        "SW-24"
+      ],
+      "uncertainty": "Do not generalize the entire sounds system from this one account.",
+      "nonLinkRefs": [
+        "CTNL-13"
+      ]
+    }
+  ],
+  "seaServices": [
+    {
+      "id": "CTS-S-01",
+      "mode": "sea",
+      "evidenceRowIds": [
+        "WE-24"
+      ],
+      "endpointAnchorIds": [
+        "WN-29",
+        "WN-28"
+      ],
+      "territoryRefs": [
+        "CT-12",
+        "CT-11"
+      ],
+      "direction": "one-way",
+      "historicalEligibility": {
+        "status": "operation-specific",
+        "dateText": "Jan. 1865 observation; Nov. 1861 context only"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Inferred",
+      "scope": "operation-specific",
+      "sourceRefs": [
+        "SW-21",
+        "SW-30"
+      ],
+      "uncertainty": "The 1861 intent and 1865 observation are distinct; no bidirectional or routine service is claimed.",
+      "nonLinkRefs": []
+    },
+    {
+      "id": "CTS-S-02",
+      "mode": "sea",
+      "evidenceRowIds": [
+        "WE-26"
+      ],
+      "endpointAnchorIds": [
+        "WN-38",
+        "WN-30"
+      ],
+      "territoryRefs": [
+        "CT-10"
+      ],
+      "direction": "one-way",
+      "historicalEligibility": {
+        "status": "operation-specific",
+        "dateText": "through 15 Jan. 1865; closed thereafter"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "scope": "operation-specific",
+      "sourceRefs": [
+        "SW-19",
+        "SW-20"
+      ],
+      "uncertainty": "Port closure, river approach, and Wilmington occupation are separate state changes.",
+      "nonLinkRefs": []
+    }
+  ],
+  "interchanges": [
+    {
+      "id": "CTI-01",
+      "modes": [
+        "rail",
+        "inland-water"
+      ],
+      "endpointAnchorIds": [
+        "RN-08",
+        "WN-22"
+      ],
+      "territoryRefs": [
+        "CT-06"
+      ],
+      "evidenceRowIds": [
+        "RE-06",
+        "WE-17"
+      ],
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "Confederate line damaged before June 1864; USMRR rebuilt and operated June 1864-Apr. 1865"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "sourceRefs": [
+        "SR-05",
+        "SR-25",
+        "SW-28",
+        "SW-29"
+      ],
+      "handlingLimit": "City Point requires distinct deepwater landing, wharf/depot handling, and rebuilt rail service; WN-41 remains operation evidence only."
+    },
+    {
+      "id": "CTI-02",
+      "modes": [
+        "rail",
+        "inland-water"
+      ],
+      "endpointAnchorIds": [
+        "RN-24",
+        "WN-12"
+      ],
+      "territoryRefs": [
+        "CT-25"
+      ],
+      "evidenceRowIds": [
+        "RE-22",
+        "WE-11"
+      ],
+      "historicalEligibility": {
+        "status": "operation-specific",
+        "dateText": "16 Apr.-1 May 1863"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "sourceRefs": [
+        "SR-02",
+        "SR-03",
+        "SR-10",
+        "SW-01",
+        "SW-07",
+        "SW-08"
+      ],
+      "handlingLimit": "Vicksburg river passage, landing, node control, and rail transfer remain separate evidence states."
+    },
+    {
+      "id": "CTI-03",
+      "modes": [
+        "rail",
+        "inland-water"
+      ],
+      "endpointAnchorIds": [
+        "RN-12",
+        "WN-03"
+      ],
+      "territoryRefs": [
+        "CT-18"
+      ],
+      "evidenceRowIds": [
+        "RE-11",
+        "WE-29"
+      ],
+      "historicalEligibility": {
+        "status": "eligible",
+        "dateText": "1861-65"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "sourceRefs": [
+        "SR-01",
+        "SR-20",
+        "SW-05",
+        "SW-11"
+      ],
+      "handlingLimit": "Louisville co-location supports only the explicit bounded feeder interchange; terminal handling and capacity are not supplied."
+    },
+    {
+      "id": "CTI-04",
+      "modes": [
+        "rail",
+        "inland-water"
+      ],
+      "endpointAnchorIds": [
+        "RN-13",
+        "WN-04"
+      ],
+      "territoryRefs": [
+        "CT-20"
+      ],
+      "evidenceRowIds": [
+        "RE-11",
+        "RE-12",
+        "WE-29"
+      ],
+      "historicalEligibility": {
+        "status": "conditional",
+        "dateText": "1861-65"
+      },
+      "mayhemPhysicalEligibility": true,
+      "provenance": "Verified",
+      "sourceRefs": [
+        "SR-01",
+        "SR-20",
+        "SR-03",
+        "SR-24",
+        "SW-05",
+        "SW-11"
+      ],
+      "handlingLimit": "Nashville rail and Cumberland feeder evidence supports only this explicit interchange; the Cracker Line is not this rail edge."
+    }
+  ],
+  "nonLinks": [
+    {
+      "id": "CTNL-01",
+      "modes": [
+        "rail"
+      ],
+      "endpointAnchorIds": [
+        "RN-34",
+        "RN-05"
+      ],
+      "territoryRefs": [
+        "CT-04",
+        "CT-02"
+      ],
+      "evidenceRowIds": [
+        "RE-04"
+      ],
+      "claim": "Strasburg-Harpers Ferry rail non-link.",
+      "provenance": "Verified",
+      "sourceRefs": [
+        "SR-01",
+        "SR-04"
+      ],
+      "uncertainty": "The Manassas Gap Railroad ended at Strasburg; no direct rail continuation to Harpers Ferry is established."
+    },
+    {
+      "id": "CTNL-02",
+      "modes": [
+        "rail"
+      ],
+      "endpointAnchorIds": [
+        "RN-15",
+        "RN-20"
+      ],
+      "territoryRefs": [
+        "CT-14",
+        "CT-16"
+      ],
+      "evidenceRowIds": [
+        "RE-17",
+        "RE-18"
+      ],
+      "claim": "RE-17 and RE-18 do not compose an Atlanta-Montgomery through route.",
+      "provenance": "Inferred",
+      "sourceRefs": [
+        "SR-02",
+        "SR-03",
+        "SR-09"
+      ],
+      "uncertainty": "The West Point transfer and gauge/through-car procedure remain unresolved."
+    },
+    {
+      "id": "CTNL-03",
+      "modes": [
+        "rail"
+      ],
+      "endpointAnchorIds": [
+        "RN-27",
+        "RN-22"
+      ],
+      "territoryRefs": [
+        "CT-28",
+        "CT-24"
+      ],
+      "evidenceRowIds": [
+        "RE-25"
+      ],
+      "claim": "RE-25 does not establish uninterrupted New Orleans-Corinth service.",
+      "provenance": "Inferred",
+      "sourceRefs": [
+        "SR-02",
+        "SR-03",
+        "SR-18"
+      ],
+      "uncertainty": "The mapped chain contains company and terminal-transfer limits and lost its southern endpoint in April 1862."
+    },
+    {
+      "id": "CTNL-04",
+      "modes": [
+        "rail"
+      ],
+      "endpointAnchorIds": [
+        "RN-31",
+        "RN-33"
+      ],
+      "territoryRefs": [
+        "CT-36",
+        "CT-35"
+      ],
+      "evidenceRowIds": [
+        "RE-27"
+      ],
+      "claim": "RE-27 creates no Louisiana through rail.",
+      "provenance": "Disputed",
+      "sourceRefs": [
+        "SR-02",
+        "SR-15",
+        "SR-17"
+      ],
+      "uncertainty": "The eastward connection was incomplete and the Neches-area removal account remains disputed."
+    },
+    {
+      "id": "CTNL-05",
+      "modes": [
+        "rail",
+        "inland-water",
+        "road"
+      ],
+      "endpointAnchorIds": [
+        "RN-30",
+        "RN-29"
+      ],
+      "territoryRefs": [
+        "CT-35",
+        "CT-34"
+      ],
+      "evidenceRowIds": [
+        "RE-28"
+      ],
+      "claim": "RE-28 creates no Marshall-Shreveport through train or proved interchange.",
+      "provenance": "Inferred",
+      "sourceRefs": [
+        "SR-02",
+        "SR-16",
+        "SR-18"
+      ],
+      "uncertainty": "The late-war approach remained a mixed short-rail, lake, and road transfer with no exact interchange."
+    },
+    {
+      "id": "CTNL-06",
+      "modes": [
+        "rail"
+      ],
+      "endpointAnchorIds": [
+        "RN-28",
+        "RN-23"
+      ],
+      "territoryRefs": [
+        "CT-32",
+        "CT-23"
+      ],
+      "evidenceRowIds": [
+        "RE-29"
+      ],
+      "claim": "RE-29 preserves the Memphis-Little Rock rail break.",
+      "provenance": "Inferred",
+      "sourceRefs": [
+        "SR-02",
+        "SR-03",
+        "SR-18"
+      ],
+      "uncertainty": "Separated wartime rail segments and major physical gaps do not establish adjacency."
+    },
+    {
+      "id": "CTNL-07",
+      "modes": [
+        "inland-water"
+      ],
+      "endpointAnchorIds": [
+        "WN-05",
+        "WN-08"
+      ],
+      "territoryRefs": [
+        "CT-22",
+        "CT-21"
+      ],
+      "evidenceRowIds": [
+        "WE-02"
+      ],
+      "claim": "WE-02 gunboat reach does not establish Muscle Shoals transport equivalence.",
+      "provenance": "Verified",
+      "sourceRefs": [
+        "SW-02",
+        "SW-04"
+      ],
+      "uncertainty": "Gunboat reach is not proof that transports could pass to the same endpoint."
+    },
+    {
+      "id": "CTNL-08",
+      "modes": [
+        "inland-water"
+      ],
+      "endpointAnchorIds": [
+        "WN-16",
+        "WN-17"
+      ],
+      "territoryRefs": [
+        "CT-31",
+        "CT-32"
+      ],
+      "evidenceRowIds": [
+        "WE-13"
+      ],
+      "claim": "WE-13 creates no Little Rock through passage.",
+      "provenance": "Inferred",
+      "sourceRefs": [
+        "SW-13"
+      ],
+      "uncertainty": "The cited operation found water too low; this is a bounded non-link, not a universal seasonal closure."
+    },
+    {
+      "id": "CTNL-09",
+      "modes": [
+        "inland-water"
+      ],
+      "endpointAnchorIds": [
+        "WN-18",
+        "WN-19"
+      ],
+      "territoryRefs": [
+        "CT-33",
+        "CT-34"
+      ],
+      "evidenceRowIds": [
+        "WE-15"
+      ],
+      "claim": "WE-15 creates no accomplished large-force Shreveport passage.",
+      "provenance": "Inferred",
+      "sourceRefs": [
+        "SW-15",
+        "SW-16"
+      ],
+      "uncertainty": "An intended objective and expected rise do not establish completed transport reach."
+    },
+    {
+      "id": "CTNL-10",
+      "modes": [
+        "sea",
+        "inland-water"
+      ],
+      "endpointAnchorIds": [
+        "WN-20",
+        "WN-21"
+      ],
+      "territoryRefs": [
+        "CT-08"
+      ],
+      "evidenceRowIds": [
+        "WE-16"
+      ],
+      "claim": "WE-16 creates no Fort Monroe-Yorktown transfer.",
+      "provenance": "Inferred",
+      "sourceRefs": [
+        "SW-25",
+        "SW-26",
+        "SW-27"
+      ],
+      "uncertainty": "Coastwise arrival and the separately controlled York River approach are distinct conditions."
+    },
+    {
+      "id": "CTNL-11",
+      "modes": [
+        "inland-water"
+      ],
+      "endpointAnchorIds": [
+        "WN-23",
+        "WN-35"
+      ],
+      "territoryRefs": [
+        "CT-08",
+        "CT-05"
+      ],
+      "evidenceRowIds": [
+        "WE-19"
+      ],
+      "claim": "WE-19 creates no Richmond through passage.",
+      "provenance": "Inferred",
+      "sourceRefs": [
+        "SW-27"
+      ],
+      "uncertainty": "Drewry's Bluff bounded the documented James River reach before April 1865."
+    },
+    {
+      "id": "CTNL-12",
+      "modes": [
+        "sea",
+        "inland-water"
+      ],
+      "endpointAnchorIds": [
+        "WN-20",
+        "WN-24"
+      ],
+      "territoryRefs": [
+        "CT-08",
+        "CT-01"
+      ],
+      "evidenceRowIds": [
+        "WE-20"
+      ],
+      "claim": "WE-20 creates no large-force Fort Monroe-Washington edge.",
+      "provenance": "Inferred",
+      "sourceRefs": [
+        "SW-31"
+      ],
+      "uncertainty": "Naval support evidence does not meet the territory-scale Army-transport source floor."
+    },
+    {
+      "id": "CTNL-13",
+      "modes": [
+        "inland-water"
+      ],
+      "endpointAnchorIds": [
+        "WN-25",
+        "WN-27"
+      ],
+      "territoryRefs": [
+        "CT-09"
+      ],
+      "evidenceRowIds": [
+        "WE-21",
+        "WE-22"
+      ],
+      "claim": "WE-21 and WE-22 create no complete North Carolina sounds graph.",
+      "provenance": "Inferred",
+      "sourceRefs": [
+        "SW-22",
+        "SW-23",
+        "SW-24"
+      ],
+      "uncertainty": "The source-backed Roanoke passage and one-family New Bern follow-on do not establish a full sounds network."
+    },
+    {
+      "id": "CTNL-14",
+      "modes": [
+        "sea"
+      ],
+      "endpointAnchorIds": [
+        "WN-28",
+        "WN-34"
+      ],
+      "territoryRefs": [
+        "CT-11"
+      ],
+      "evidenceRowIds": [
+        "WE-25"
+      ],
+      "claim": "WE-25 creates no Port Royal-Charleston army transfer or port closure.",
+      "provenance": "Inferred",
+      "sourceRefs": [
+        "SW-21"
+      ],
+      "uncertainty": "A blockade-support relationship is neither a routine army service nor total harbor closure."
+    },
+    {
+      "id": "CTNL-15",
+      "modes": [
+        "sea",
+        "inland-water"
+      ],
+      "endpointAnchorIds": [
+        "WN-31",
+        "WN-32"
+      ],
+      "territoryRefs": [
+        "CT-17"
+      ],
+      "evidenceRowIds": [
+        "WE-28"
+      ],
+      "claim": "WE-28 creates no routine Mobile-city transport before occupation.",
+      "provenance": "Inferred",
+      "sourceRefs": [
+        "SW-17",
+        "SW-18"
+      ],
+      "uncertainty": "Entrance control, runner closure, city occupation, and rail control remain separate states."
+    },
+    {
+      "id": "CTNL-16",
+      "modes": [
+        "sea"
+      ],
+      "endpointAnchorIds": [
+        "RN-31",
+        "RN-32"
+      ],
+      "territoryRefs": [
+        "CT-36"
+      ],
+      "evidenceRowIds": [],
+      "claim": "D499 authorizes no Texas-coast strategic-water edge.",
+      "provenance": "Inferred",
+      "sourceRefs": [
+        "D499"
+      ],
+      "uncertainty": "The packet's current research set does not meet the passage and control floor for a Texas-coast service."
+    },
+    {
+      "id": "CTNL-17",
+      "modes": [
+        "rail",
+        "inland-water"
+      ],
+      "endpointAnchorIds": [
+        "BATTLE-WILSONS-CREEK"
+      ],
+      "territoryRefs": [
+        "CT-29"
+      ],
+      "evidenceRowIds": [],
+      "claim": "CT-29 retains no packet-authorized rail or water service.",
+      "provenance": "Inferred",
+      "sourceRefs": [
+        "D503",
+        "MO-01",
+        "MO-02"
+      ],
+      "uncertainty": "The direct Missouri evidence does not create a packet-authorized transport service."
+    },
+    {
+      "id": "CTNL-18",
+      "modes": [
+        "rail",
+        "inland-water"
+      ],
+      "endpointAnchorIds": [
+        "BATTLE-ELKHORN-TAVERN"
+      ],
+      "territoryRefs": [
+        "CT-30"
+      ],
+      "evidenceRowIds": [],
+      "claim": "CT-30 retains no packet-authorized rail or water service.",
+      "provenance": "Inferred",
+      "sourceRefs": [
+        "D503",
+        "MO-01",
+        "MO-03"
+      ],
+      "uncertainty": "The direct Missouri and battle-library evidence does not create a packet-authorized transport service."
+    }
+  ],
+  "roadStatus": "ROAD_REQUIRES_BOUNDED_SOURCE_PASS"
+}
