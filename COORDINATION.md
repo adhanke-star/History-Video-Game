@@ -3070,8 +3070,12 @@ next green commit and confer through this ledger instead of permitting simultane
   8 GB Mac (TMPDIR, 2>/dev/null, shared :8765, artifact JSON read every run).
 - **Standing queue behind this lane:** ARC 5 GM completion (blocked on ARC 6
   politics for the election bind) · ARC 6 rail+naval packets (session-fillers,
-  chartered per D455 §7's interleave rule) · Mayhem Slice B (LANE-007) · C72 Shiloh
-  rewrite + GEA-01/S44 bundle (parked, Aaron reorder-only).
+  chartered per D455 §7's interleave rule). *(T1 stale-row sweep, 2026-07-20 with
+  D487: the other rows this block carried at charter are DISCHARGED — Mayhem Slice B
+  shipped in D419 and LANE-007 closed at the D420 public A-C bundle; the C72 Shiloh
+  rewrite shipped as D422 (LANE-008); the GEA-01 + S44 fallback bundle was FIXED IN
+  D423 — both REVIEW-QUEUE rows are struck through with probe teeth pinning the
+  fixes.)*
 - **Resume pointer:** NONE — the lane is closed. The forward pointer (the Aaron-
   ratified 2026-07-20 tail + the D455 ladder): T2 the ARC 6 POLITICS packet — the
   research workflow `wf_854e0760-ef2` is COMPLETE and banked (six default-refuted
