@@ -3512,12 +3512,13 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **LAW-DRAFT, DESIGN-ONLY, SLICE 2A TRANSPORT SUBSTRATE**
+### LANE-019 · conquest-design-law — **CONTRACT (SLICE 2A READ-ONLY TRANSPORT EVIDENCE; UNOWNED)**
 
-- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. No simultaneous edits.
-- **State:** Slice 1 ships in the D504 implementation commit containing this entry.
-  The same-session owner now holds only a docs-only LAW-DRAFT for Slice 2A. Transport
-  runtime remains prohibited. No simultaneous edits.
+- **Owning tool:** none. A future ChatGPT/Codex 5.6 Sol Ultra TOP LOOP must take
+  DRIVE in a standalone committed ledger edit. No simultaneous edits.
+- **State:** CONTRACT for the D505 read-only transport-evidence substrate. D504 Slice
+  1 shipped at `74237b9273f4640f031a8c46041a98e1d96809a3`. Transport gameplay/runtime,
+  movement, and state remain prohibited.
 - **D504 shipped evidence:** exact 36/36 registry in D503 order; all 35 RN, 41 WN,
   and two Missouri battle-library anchors assigned uniquely (78/78); resolved
   source/provenance/uncertainty/non-link data; CT-29/30 direct Missouri sources and
@@ -3535,19 +3536,82 @@ next green commit and confer through this ledger instead of permitting simultane
   `7dc40508ae2d7d68c96680cbeac42a6a` /
   `ba68ebfdb6ae778d355b3169fe70978d`. Frozen base remains
   `c9db83fa99230ffb95bdfdfe059f3fb9`; save shape is unchanged.
-- **Slice-2A docs-only resume pointer:** audit every D497 RE-01..RE-29 and D499
-  WE-01..WE-29 row against all CT-01..CT-36. For each row record endpoints/anchors,
-  supported territories, retained service versus explicit interchange/non-link/
-  evidence-context-only classification, provenance/uncertainty, current owner,
-  Historical dated eligibility, Mayhem physical-service eligibility, segment versus
-  complete connection, and apparent contacts that remain non-links. Decide a bounded
-  source-backed sea subset without importing blockade/naval ownership. Choose one
-  road verdict; prefer `ROAD_REQUIRES_BOUNDED_SOURCE_PASS` if exact road rows and
-  non-links are not already supported. Author D505 as either the smallest read-only,
-  fail-closed transport-evidence substrate CONTRACT or an exact bounded source-pass
-  CONTRACT. Do not change `src/**`, `data/**`, `tools/**`, assets, tactical, package,
-  generated output, save/schema, or frozen base; only closeout docs and a genuinely
-  necessary non-design-changing §8 clarification may move.
+- **D505 audited evidence, in full:** the authoritative row-by-row table is D505 in
+  `DECISIONS.md`. Rail primary totals are 27 retained (RE-01..RE-27), one context-only
+  mixed-mode approach (RE-28), one explicit non-link (RE-29), zero omitted; RE-06
+  and RE-22 also support separate interchanges. Water primary totals are 15 retained
+  inland rows (WE-01,03,04,05,06,07,08,09,10,11,12,14,17,21,22), two bounded sea
+  rows (WE-24, WE-26), one interchange row (WE-29), five non-link/omitted-service
+  rows (WE-13,15,16,19,28), and six context-only rows (WE-02,18,20,23,25,27).
+  `SEA_READY_BOUNDED_ROWS_WE_24_WE_26_ONLY`; blockade/base/fleet passage does not
+  become transport. `ROAD_REQUIRES_BOUNDED_SOURCE_PASS`; road service rows remain
+  zero and the complete bounded research contract is in D505. Every row retains its
+  packet date, provenance, uncertainty, CT mapping, segment/connection limit, and
+  Historical/Mayhem determination. D497/D499 own evidence; D159/src61, blockade,
+  naval/tactical, Western Theater, bridge/result, Chronicle, War Career, and Custom
+  Builder retain their existing authority.
+- **Slice-2A acceptance contract:** add exactly one immutable injected data owner,
+  `data/conquest-transport-evidence.json`, schema
+  `cw_conquest_transport_evidence_v1`, version 1, with exact root keys `schema`,
+  `version`, `enablement`, `sourcePackets`, `railServices`, `waterServices`,
+  `seaServices`, `interchanges`, `nonLinks`, and `roadStatus`. Enablement is read-only,
+  enabled, with exact status `read-only transport evidence; transport play not yet
+  enabled`. Add `src/115-conquest-transport.js` last as a no-UI, read/freeze-only
+  normalizer. It returns `null` for any malformed root/schema/enablement, duplicate or
+  unresolved ID/endpoint/CT/source/evidence row, bad provenance/mode/scope/date,
+  unsupported Mayhem eligibility, missing non-link, duplicate claim, or malformed
+  interchange. It writes nothing and creates no UI trace.
+- **Exact evidence IDs:** `CTS-R-01`..`CTS-R-27` map one-to-one to RE-01..RE-27.
+  `CTS-W-01`..`CTS-W-15` map in order to WE-01,03,04,05,06,07,08,09,10,11,12,14,
+  17,21,22. `CTS-S-01` is WE-24 and `CTS-S-02` is WE-26. Interchanges are exactly
+  `CTI-01` City Point (RE-06/WE-17), `CTI-02` Vicksburg (RE-22/WE-11), `CTI-03`
+  Louisville (RE-11/WE-29), and `CTI-04` Nashville (RE-11/RE-12/WE-29). Non-links
+  are exactly `CTNL-01`..`CTNL-18` as enumerated in D505: the six rail breaks/limits,
+  nine water/sea limits through Mobile, Texas-coast absence, and CT-29/30 packet-
+  transport absence. Road status is exactly `ROAD_REQUIRES_BOUNDED_SOURCE_PASS` and
+  contains zero service rows.
+- **Permitted fields only:** service rows: `id`, `mode`, `evidenceRowIds`,
+  `endpointAnchorIds`, `territoryRefs`, `direction`, `historicalEligibility`,
+  `mayhemPhysicalEligibility`, `provenance`, `scope`, `sourceRefs`, `uncertainty`,
+  `nonLinkRefs`; Historical eligibility is only status plus verbatim packet dateText,
+  and scope is only node-segment/territory-connection/operation-specific. Interchange
+  rows: `id`, `modes`, endpoints/territories/evidence rows, Historical/Mayhem
+  eligibility, provenance, sources, and `handlingLimit`. Non-links: `id`, `modes`,
+  endpoints/territories/evidence rows, `claim`, provenance, sources, uncertainty.
+  No adjacency follows from a territory pair.
+- **Allowed files:** new data/module; `src/00-manifest.json`; `tools/build.mjs`; new
+  `tools/probe-conquest-transport-plan.mjs` and `tools/probe-conquest-transport.mjs`;
+  mechanically proved count/hash pins in the two planning probes and Mayhem's data
+  pin only; generated `civil_war_generals.html`; closeout docs. Expect data/schema
+  65, manifest 111 modules with 115 last, and suite 140. Every other source/data/tool/
+  asset/tactical/package/save/schema/existing-owner/packet/frozen-base file is barred;
+  `tools/save-shape.json` and `build/base.html` cannot move.
+- **Prohibited behavior:** no `G`/`C`, settings/localStorage, save/undo/import/export,
+  movement, adjacency, ownership/control/condition, capacity, cut/repair/bypass,
+  economy/reinforcement/reward, Council, terrain/hex, AI, battle/result, Chronicle,
+  War Career, Custom Builder, casualty, winner, score, surrender, or tactical output.
+  No UI entry/presentation is authorized; any later presentation requires its own
+  full accessibility contract.
+- **Probe and bind design:** the plan probe asserts all 58 audit classifications,
+  exact IDs/counts/mappings, CT endpoint/source/date/provenance/uncertainty resolution,
+  mode/owner separation, Historical/Mayhem semantics, bounded sea and road verdicts,
+  allowed scope/counts/enrollment, and absence of later fields. The runtime probe
+  proves immutable normalization, fail-closed absent/malformed variants, zero writes/
+  UI trace, and byte-equivalent D504 board behavior. Bind A makes one endpoint/CT
+  unresolved and exactly normalization/integrity reds. Bind B promotes WE-25 or
+  RE-29 to service or erases its non-link/provenance and exactly evidence integrity
+  reds. All other teeth stay green; data and generated output restore byte-identically.
+- **Gate sequence and resume pointer:** take DRIVE in a standalone ledger commit;
+  implement only the allowed files; `node --check` all touched JS/probes; build
+  `GATE OK` at 65 data, 36 territories, 111 modules, suite 140; run/read both focused
+  artifacts; run board 13/13, accessibility 27/27, Mayhem 24/24, Custom Builder 16/16
+  serialized under full access; execute both exact-red binds and prove MD5 restores;
+  run `git diff --check`, scope/base/save-shape audit; commit `-F`, push; rerun/read
+  both planning probes at 13/13 and 24/24. HALT on invented service/adjacency/
+  interchange, road leakage, owner redesign, broader Mayhem work, collateral bind
+  reds, state/save/gameplay fields, or an out-of-scope file. Terminal condition is a
+  pushed, read-only, fail-closed evidence substrate and an unowned next contract;
+  transport gameplay remains closed.
 - **Design law:** `docs/design/unlocked-but-judged-design.md` §5 and §8, especially
   §§8.11-8.23; DECISIONS D455, D497, D499, D502, and D503; the rail and strategic-
   water packets. D503 records Aaron's exact answer: "execute option a."
@@ -3627,10 +3691,12 @@ next green commit and confer through this ledger instead of permitting simultane
   is exhausted and broadens no Mayhem or conquest runtime boundary.
 - **Last-touched commits:** D503 standalone design-lock `a3403da`; D503 final-law
   commit `44ffac5`; Slice-1 DRIVE take `7a0ca42`; allowlist/gate HALT ledger
-  `cb46f55`; Slice 1 ships in the D504 implementation commit containing this entry.
+  `cb46f55`; D504 Slice-1 implementation `74237b9`; D505 docs-only contract ships in
+  the commit containing this entry.
 - **History:** D502 created the design-only contract. Aaron chose Package A. D503
-  completed the final law and returned the lane unowned; no ARC 7 runtime/data/probe/
-  asset/generated/save work began.
+  completed the final law. D504 shipped the read-only territory board. D505 audits
+  every rail/water evidence row, contracts the read-only substrate, and returns the
+  lane unowned; transport gameplay remains closed.
 
 ---
 

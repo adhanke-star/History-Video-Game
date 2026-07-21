@@ -4,6 +4,224 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D505 — ARC 7 SLICE 2A CONTRACTS A READ-ONLY RAIL/WATER/BOUNDED-SEA EVIDENCE SUBSTRATE; ROADS REQUIRE A SEPARATE SOURCE PASS — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS-ONLY LAW + CONTRACT] (2026-07-21)
+
+**BOUNDARY:** D504 shipped at `74237b9273f4640f031a8c46041a98e1d96809a3`.
+This milestone audits every D497 rail edge, every D499 water edge, and all 36 D503
+territories. It changes documentation only. No source, data, tool, asset, package,
+tactical, generated, save/schema, or frozen-base byte moves; no transport runtime
+ships.
+
+### Complete rail classification — RE-01 through RE-29
+
+Primary classes are `R` retained rail-service evidence, `X` explicit non-link, and
+`C` evidence context only. `V/I/D` preserve Verified/Inferred/Disputed provenance.
+`H` retains the packet row's exact dated eligibility; `M yes` means Mayhem may expose
+only the row's source-supported physical segment from turn 1. It never completes a
+route, settles a dispute, or creates an interchange.
+
+| Row | Exact endpoints → D503 territories | Class | Dated eligibility and exact limit |
+|---|---|---|---|
+| RE-01 | RN-01→RN-05 · CT-01→CT-02 | R/V | H 1861-65; M yes; contested feeder, closure dates unresolved. |
+| RE-02 | RN-02→RN-03 · CT-01→CT-03 | R/V | H 1861-65; M yes; seven-mile segment only, bridge/boat transfer unresolved. |
+| RE-03 | RN-03→RN-04 · CT-03 internal | R/V | H 1861-64; M yes; segment/damage evidence, not a territory edge or timeless opening. |
+| RE-04 | RN-04→RN-34 · CT-03→CT-04 | R/V | H 1861-64; M yes; no Strasburg-Harpers Ferry completion. |
+| RE-05 | RN-06→RN-07 · CT-05→CT-06 | R/V | H Aug. 1861-Apr. 1865; M yes; the Aug. 1861 physical-connection date remains binding in Historical. |
+| RE-06 | RN-07→RN-08 · CT-06 internal | R/V | H rebuild/operation June 1864-Apr. 1865; M yes; segment only; supports CTI-01 City Point rail-water evidence. |
+| RE-07 | RN-07→RN-10 · CT-06→CT-09 | R/V | H direct to Aug. 1864, degraded thereafter; M yes; wagon bypass prevents a binary cut claim. |
+| RE-08 | RN-10→RN-11 · CT-09→CT-10 | R/V | H 1861-Feb. 1865; M yes; no through-car or gauge inference. |
+| RE-09 | RN-07→RN-09 · CT-06→CT-07 | R/V | H 1861-Apr. 1865; M yes; late-campaign sole-feeder claim is not war-long. |
+| RE-10 | RN-06→RN-35 · CT-05→CT-07 | R/V | H 1861-Apr. 1865; M yes; retreat/ration events remain context, not service outcomes. |
+| RE-11 | RN-12→RN-13 · CT-18→CT-20 | R/V | H 1861-65; M yes; operating intervals/sabotage unresolved; with WE-29 supports bounded CTI-03/04 evidence. |
+| RE-12 | RN-13→RN-14 · CT-20→CT-21 | R/V | H Confederate opening, Union after 1863; M yes; the Cracker Line is not this rail edge. |
+| RE-13 | RN-14→RN-15 · CT-21→CT-14 | R/V | H 1861-65; M yes; episodic cut/repair only, no decay scalar. |
+| RE-14 | RN-15→RN-16 · CT-14→CT-13 | R/V | H 1861-Sept. 1864 at Atlanta; M yes; Augusta transfer/gauge unresolved. |
+| RE-15 | RN-15→RN-17 · CT-14→CT-15 | R/V | H 1861-Sept. 1864; M yes; battle outcome/casualty claims remain outside. |
+| RE-16 | RN-17→RN-18 · CT-15→CT-12 | R/V | H 1861-late 1864; M yes; damage extent remains qualitative. |
+| RE-17 | RN-15→RN-19 · CT-14→CT-16 | R/V | H 1861-Sept. 1864; M yes; does not compose through to Montgomery. |
+| RE-18 | RN-19→RN-20 · CT-16 internal | R/I | H 1861-Apr. 1865; M yes; same-territory segment; RE-17+18 is not one through route. |
+| RE-19 | RN-22→RN-23 · CT-24→CT-23 | R/V | H Confederate to May 1862, fragmented after; M yes; later Union interval unresolved. |
+| RE-20 | RN-22→RN-14 · CT-24→CT-21 | R/V | H Confederate through to May 1862, fragmented after; M yes; segment control remains unresolved. |
+| RE-21 | RN-22→RN-21 · CT-24→CT-17 | R/V | H 1861-65 in segments; M yes; never complete north-south availability by default. |
+| RE-22 | RN-24→RN-25 · CT-25→CT-26 | R/V | H to 1863 disruption; M yes; repair interval unresolved; supports CTI-02 Vicksburg rail-water evidence. |
+| RE-23 | RN-25→RN-26 · CT-26→CT-27 | R/I | H 1861-65 with interruptions; M yes for depicted segment only; dated operability unresolved. |
+| RE-24 | RN-26→RN-21 · CT-27→CT-17 | R/V | H 1861-65 in segments; M yes; exact late-war service unresolved. |
+| RE-25 | RN-27→RN-25 · CT-28→CT-26 | R/I | H opening chain with southern endpoint lost Apr. 1862; M yes for supported segments only, never uninterrupted New Orleans-Corinth service. |
+| RE-26 | RN-31→RN-32 · CT-36 internal | R/V | H 1861-65; M yes; same-territory segment, bridge/ferry arrangement unresolved. |
+| RE-27 | RN-31→RN-33 · CT-36→CT-35 | R/D | H scheduled 1862-mid-1863, irregular to early 1864; M yes for the physical segment; disputed removal stays displayed and no Louisiana through rail exists. |
+| RE-28 | RN-30→RN-29 · CT-35→CT-34 | C/I | H late-war mixed short-rail/lake/road approach only; M no; no exact interchange and no through train. |
+| RE-29 | RN-28→RN-23 · CT-32→CT-23 | X/I | H incomplete separated segments; M no; explicit Memphis-Little Rock rail non-link. |
+
+Rail primary totals: **27 retained · 1 context-only · 1 non-link · 0 omitted**.
+Two retained rows carry separate explicit interchange evidence: RE-06 contributes to
+CTI-01 and RE-22 contributes to CTI-02. D497 remains the canonical evidence owner;
+D159 and `src/61-logistics-rail.js` remain the only aggregate rail/formula/runtime
+owners. The substrate may preserve evidence references but may not copy capacity,
+condition, cut, repair, bypass, economy, reinforcement, or reward behavior.
+
+### Complete water/sea classification — WE-01 through WE-29
+
+Primary classes are `W` retained inland-water transport/service evidence, `S`
+retained source-backed sea/coastal troop-transport evidence, `I` explicit interchange
+evidence, `X` non-link/omitted service, and `C` context-only naval/port/blockade
+evidence. Provenance and H/M semantics match the rail table.
+
+| Row | Exact endpoints → D503 territories | Class | Dated eligibility and exact limit |
+|---|---|---|---|
+| WE-01 | WN-01/WN-02→WN-05 · CT-19→CT-22 | W/V | H 2-6 Feb. 1862; M yes; named convoy/landing only, no capacity. |
+| WE-02 | WN-05→WN-08 · CT-22→CT-21 | C/V | H post-6 Feb. 1862 gunboat reach; M no transport service; Muscle Shoals remains a bound. |
+| WE-03 | WN-06→WN-04 · CT-20 internal | W/V | H Feb. 1862 onward; M yes; same-territory approach/supply evidence, no year-round capacity. |
+| WE-04 | WN-01→WN-09 · CT-19 internal | W/I | H Mar. 1862 operation; M yes for the named approach only. |
+| WE-05 | WN-09→WN-10 · CT-19 internal | W/I | H Mar.-8 Apr. 1862; M yes for the bounded passage; gunboat and transport paths remain separate. |
+| WE-06 | WN-10→WN-11 · CT-19→CT-23 | W/I | H Apr.-June 1862; M yes for the named movement; Fort Pillow remains outside scored treatment. |
+| WE-07 | WN-11→WN-12 · CT-23→CT-25 | W/V | H June 1862-July 1863 approach; M yes; reaching Vicksburg is not through-river control. |
+| WE-08 | WN-33→WN-14 · CT-28 internal | W/V | H Apr.-May 1862; M yes for the passage; fort passage, surrender, and occupation remain distinct. |
+| WE-09 | WN-14→WN-13 · CT-28 internal | W/V | H May 1862-July 1863; M yes; local use is not strategic through control. |
+| WE-10 | WN-13→WN-12 · CT-28→CT-25 | W/V | H through reopening July 1863; M yes; no risk-free universal passage. |
+| WE-11 | WN-12 rendezvous→WN-15 · CT-25 internal | W/V | H 16 Apr.-1 May 1863 operation; M yes; operation-specific passage/landing, not a ferry edge; contributes to CTI-02. |
+| WE-12 | WN-36→WN-16 · CT-31 internal | W/I | H 9-11 Jan. 1863; M yes for lower White-cutoff/Arkansas approach only. |
+| WE-13 | WN-16→WN-17 · CT-31→CT-32 | X/I | H Jan. 1863 negative finding; M no; explicit no Little Rock through edge. |
+| WE-14 | WN-40→WN-18 · CT-33 internal | W/V | H Mar.-Apr. 1864; M yes for actual reach; abnormal low water does not become a universal season rule. |
+| WE-15 | WN-18→WN-19 · CT-33→CT-34 | X/I | H 1864 conditional/incomplete; M no; no accomplished large-force Shreveport passage. |
+| WE-16 | WN-20→WN-21 · CT-08 internal | X/I | H 1862 separate conditions only; M no; Fort Monroe arrival does not create Yorktown transfer. |
+| WE-17 | WN-41→WN-22 · CT-06 internal | W/V | H May-June 1864; M yes for the operation-specific landing reach; contributes to CTI-01. |
+| WE-18 | WN-20→WN-23 · CT-08 internal | C/I | H May 1862 naval reach to a limit; M no transport service; Drewry's Bluff blocks completion. |
+| WE-19 | WN-23→WN-35 · CT-08→CT-05 | X/I | H bounded non-link May 1862-Apr. 1865; M no; no Richmond through passage. |
+| WE-20 | WN-20↔WN-24 · CT-08→CT-01 | C/I | H 1861-65 naval support; M no large-force transport edge; capacity/source floor insufficient. |
+| WE-21 | WN-25→WN-26 · CT-09 internal | W/V | H Feb. 1862; M yes for Burnside's passage/landing; no full sounds graph. |
+| WE-22 | WN-26→WN-27 · CT-09 internal | W/I | H Mar. 1862; M yes for the one-family follow-on only; no full sounds graph. |
+| WE-23 | WN-37→WN-28 · CT-11 internal | C/I | H Nov. 1861 fleet entry/base; M no troop-transport service; survey/draft evidence is operation-specific. |
+| WE-24 | WN-29→WN-28 · CT-12→CT-11 | S/I | H one-way Jan. 1865 arrangement; M yes only for the same one-way bounded physical service; not routine or bidirectional. |
+| WE-25 | WN-28↔WN-34 · CT-11 internal | C/I | H 1861-65 blockade-support relationship; M no; not closure or army transport. |
+| WE-26 | WN-38→WN-30 · CT-10 internal | S/V | H operation through 15 Jan. 1865; M yes only for the source-backed offshore-to-landing passage; port closure/city control stay outside. |
+| WE-27 | WN-39→WN-31 · CT-17 internal | C/V | H 5 Aug. 1864 naval battle passage; M no transport service; tactical/naval evidence remains outside. |
+| WE-28 | WN-31→WN-32 · CT-17 internal | X/I | H Aug. 1864-Apr. 1865 entrance/city distinction; M no; no routine pre-occupation transport into Mobile. |
+| WE-29 | WN-03→WN-04 · CT-18→CT-20 | I/V | H 1862-65 multimodal feeder; M yes only through explicit CTI-03/04 interchange evidence; never a direct all-water shortcut. |
+
+Water primary totals: **15 inland-water retained · 2 bounded sea retained · 1 explicit
+interchange · 5 non-link/omitted-service · 6 context-only**. D499 remains the
+canonical evidence owner. `src/60-blockade.js` retains blockade economics and port
+counts; existing naval/tactical owners retain battle passage; D159/Western Theater
+retain their aggregate readouts. The bounded sea verdict is therefore
+`SEA_READY_BOUNDED_ROWS_WE_24_WE_26_ONLY`. WE-23, WE-25, and WE-27 remain context;
+WE-16, WE-20, and WE-28 remain unavailable as transport edges. No other coastal,
+Charleston, Savannah, Mobile-city, Potomac, or Texas-coast service is inferred.
+
+### Road verdict and bounded source-pass law
+
+Verdict: `ROAD_REQUIRES_BOUNDED_SOURCE_PASS`. The packets contain road/depot/ferry
+context and bypass cautions, but no referentially complete road-edge register with
+exact endpoints, dated physical use, non-links, and source floors. Package A remains
+coherent at the evidence-substrate rung because mode registries fail closed
+independently; an absent road registry contributes zero services.
+
+Future road research is bounded to one docs/research packet covering exact road or
+wagon corridors between the 36 D503 catchments, with priority questions at
+Washington-Alexandria/Manassas, Shenandoah/Potomac crossings, Petersburg's Weldon
+wagon bypass, Carolinas/Georgia transfers, Louisville-Nashville-Chattanooga feeder
+roads, Mississippi/Vicksburg/Jackson, and the Arkansas/Red River/Marshall-Shreveport
+gaps. It must identify exact period endpoints, route identity, direction, dated army
+or military-supply use, bridge/ferry/depot breaks, season/surface limits, explicit
+non-links, rail/water interchanges, and whether evidence supports a segment or a full
+CT-to-CT connection. `Verified` requires two independent non-tertiary families;
+one-family rows remain `Inferred`; schematic contact and modern-road intuition are
+forbidden. Deliverable: source register, candidate road-node/edge/non-link/
+interchange registers, theater coverage, gaps, ownership boundary, and exactly one
+`READY_FOR_READ_ONLY_SUBSTRATE` / `NEEDS_MORE_RESEARCH` / `DO_NOT_MODEL` verdict.
+No road runtime, costs, capacity, repair time, movement bonus, AI, save, or terrain
+authority is permitted by that pass.
+
+### Smallest honest Slice-2A implementation CONTRACT
+
+The next slice is a **read-only transport-evidence substrate**, not movement. It adds
+one immutable injected owner, `data/conquest-transport-evidence.json`, schema
+`cw_conquest_transport_evidence_v1`, version 1, and one no-UI normalizer module
+`src/115-conquest-transport.js` enrolled last. Exact root keys are `schema`,
+`version`, `enablement`, `sourcePackets`, `railServices`, `waterServices`,
+`seaServices`, `interchanges`, `nonLinks`, and `roadStatus`. Enablement is exactly
+`mode: read-only`, `enabled: true`, status `read-only transport evidence; transport
+play not yet enabled`.
+
+Service rows use only: `id`, `mode`, `evidenceRowIds`, `endpointAnchorIds`,
+`territoryRefs`, `direction`, `historicalEligibility`,
+`mayhemPhysicalEligibility`, `provenance`, `scope`, `sourceRefs`, `uncertainty`, and
+`nonLinkRefs`. Historical eligibility contains only `status` (`eligible`,
+`conditional`, or `operation-specific`) and the packet's `dateText` verbatim. Scope
+is `node-segment`, `territory-connection`, or `operation-specific`; it never creates
+adjacency. Stable service IDs are one-to-one `CTS-R-01`..`CTS-R-27` for retained
+RE-01..RE-27; `CTS-W-01`..`CTS-W-15` in retained-row order WE-01,03,04,05,06,07,
+08,09,10,11,12,14,17,21,22; and `CTS-S-01`=WE-24,
+`CTS-S-02`=WE-26.
+
+Exactly four read-only interchange rows are authorized: `CTI-01` City Point
+(RN-08/WN-22, with WN-41 as operation evidence; RE-06/WE-17), `CTI-02` Vicksburg
+(RN-24/WN-12; RE-22/WE-11), `CTI-03` Louisville (RN-12/WN-03; RE-11/WE-29), and
+`CTI-04` Nashville (RN-13/WN-04; RE-11/RE-12/WE-29). Interchange fields are only
+`id`, `modes`, `endpointAnchorIds`, `territoryRefs`, `evidenceRowIds`,
+`historicalEligibility`, `mayhemPhysicalEligibility`, `provenance`, `sourceRefs`,
+and `handlingLimit`. Co-location creates nothing else.
+
+Non-link rows use only `id`, `modes`, `endpointAnchorIds`, `territoryRefs`,
+`evidenceRowIds`, `claim`, `provenance`, `sourceRefs`, and `uncertainty`. The exact
+minimum set is: `CTNL-01` Strasburg-Harpers Ferry; `CTNL-02` RE-17+18 no composed
+Atlanta-Montgomery through route; `CTNL-03` RE-25 no uninterrupted New Orleans-
+Corinth chain; `CTNL-04` RE-27 no Louisiana through rail; `CTNL-05` RE-28 no
+Marshall-Shreveport through train/interchange; `CTNL-06` RE-29 Memphis-Little Rock
+break; `CTNL-07` WE-02 no Muscle-Shoals transport equivalence; `CTNL-08` WE-13 no
+Little Rock through passage; `CTNL-09` WE-15 no large-force Shreveport passage;
+`CTNL-10` WE-16 no Fort Monroe-Yorktown transfer; `CTNL-11` WE-19 no Richmond
+through passage; `CTNL-12` WE-20 no large-force Fort Monroe-Washington edge;
+`CTNL-13` WE-21/22 no complete sounds graph; `CTNL-14` WE-25 no Port Royal-
+Charleston army transfer/closure; `CTNL-15` WE-28 no routine Mobile-city transport;
+`CTNL-16` D499's no Texas-coast strategic-water edge; and `CTNL-17/18` preserve
+CT-29/CT-30's packet-unsupported rail/water absence. `roadStatus` is exactly
+`ROAD_REQUIRES_BOUNDED_SOURCE_PASS` with zero road service rows.
+
+`src/115-conquest-transport.js` may read and deeply freeze only this evidence. Any
+bad root/schema/version/enablement, duplicate or unresolved ID, endpoint not present
+in the D504 territory registry, unknown packet row/source/provenance/mode/scope,
+unsupported Mayhem eligibility, missing declared non-link, duplicate claim, or
+malformed interchange fails the whole transport substrate closed to `null`. It
+writes no `G`, `C`, settings, localStorage, save/import/export/undo, movement,
+ownership/control/condition, capacity, economy, reinforcement, rewards, AI,
+battle/Chronicle/career/builder/tactical state. It adds no menu entry or presentation;
+the accessible D504 board remains unchanged. Any later UI requires its own contract
+for semantic completeness, keyboard/pointer parity, names/headings/regions, focus,
+390px, 200% zoom, contrast, reduced motion, and non-color provenance.
+
+Future allowed files only: the new data/module; `src/00-manifest.json`;
+`tools/build.mjs`; new `tools/probe-conquest-transport-plan.mjs` and
+`tools/probe-conquest-transport.mjs`; mechanically proved count/hash pins in the two
+planning probes and, solely for 64 -> 65 data count plus history, Mayhem; generated
+`civil_war_generals.html`; and closeout docs. Data/schema becomes 65, manifest module
+count becomes 111 with module 115 last, and suite stays 140. Every other source,
+data, tool, asset, tactical, package, save/schema (`tools/save-shape.json`), existing
+owner, historical packet, and frozen base remains prohibited.
+
+The plan probe must assert all 58 audit-row classifications, exact retained/service/
+interchange/non-link IDs, CT endpoint resolution, source/provenance/date/uncertainty,
+Historical versus Mayhem semantics, the road verdict, bounded sea verdict, owner
+separation, exact allowed scope, counts/enrollment, and absence of later fields. The
+runtime probe must prove immutable normalization, `null` on absent/malformed core,
+zero state/save writes, no UI trace, and byte-equivalent D504 board behavior. Adjacent
+gates are conquest board 13/13, accessibility 27/27, Mayhem 24/24 after its mechanical
+pin, Custom Builder 16/16, and both planning probes 13/13 and 24/24 post-commit.
+
+Predeclared binds: (A) replace one endpoint with an unresolved CT/anchor reference —
+exactly the substrate normalization/integrity tooth reds; (B) mark WE-25 or RE-29 as
+a service / erase its non-link or provenance — exactly the evidence-integrity tooth
+reds. All other teeth remain green and data/generated output restore byte-identically.
+Gates: checks on every touched JS/probe; build `GATE OK` with 65 data, 36 territories,
+111 modules, suite 140; both focused probes with fresh artifact readback; adjacent
+probes serialized under full access; both exact-red binds and MD5 restores;
+`git diff --check`; allowed-file audit; frozen-base/save-shape equality; commit `-F`,
+push, and post-commit planning probes. HALT on invented adjacency/service/interchange,
+road leakage, broader Mayhem changes, owner redesign, collateral bind reds, any
+state/save/gameplay field, or an out-of-scope file.
+
+LANE-019 is returned unowned in `CONTRACT`. A future ChatGPT/Codex 5.6 Sol Ultra TOP
+LOOP must take DRIVE in a standalone committed ledger edit before implementation.
+
 ## D504 — ARC 7 SLICE 1 SHIPS THE FAIL-CLOSED, READ-ONLY 36-TERRITORY BOARD; TRANSPORT REMAINS DESIGN-ONLY — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION + CONTRACT RELAY] (2026-07-21)
 
 LANE-019 Slice 1 ships in the D504 implementation commit containing this entry.
