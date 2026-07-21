@@ -4,6 +4,37 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D507 — ARC 7 ROAD SOURCE PASS SHIPS WITH NEEDS_MORE_RESEARCH; NO ROAD SUBSTRATE OR GAMEPLAY IS AUTHORIZED — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS/RESEARCH ONLY] (2026-07-21)
+
+The citation-grade road pass ships as
+`docs/design/strategic-road-transport-research-packet.md`. Its exact registers are
+22 sources, 26 candidate nodes, 11 candidate road/service-evidence rows, 11
+explicit non-links, and eight road/rail/water/ferry/depot interchange candidates.
+The edge provenance totals are **7 Verified · 4 Inferred · 0 Disputed**. Coverage
+addresses all seven D503 teaching theaters and records nine material evidence gaps.
+
+Supported evidence includes the Alexandria-Manassas turnpike and Winchester-
+Strasburg Valley Pike as bounded physical segments; the 1864 Boydton Plank Road
+wagon bypass as an endpoint-incomplete operation; Sherman’s Atlanta-Savannah and
+Savannah-Goldsboro marches as multi-route operations; Grant’s Bruinsburg-Jackson-
+Vicksburg campaign roads as dated operations; Camden-Pine Bluff wagon evidence;
+and the Alexandria-Mansfield Red River approach. Explicit non-links prevent these
+from becoming routine service, joined Potomac crossings, a parallel Louisville-
+Nashville-Chattanooga road, a completed Shreveport approach, a guessed Marshall-
+Shreveport corridor, or any CT-29/30 road row.
+
+The exact verdict is **NEEDS_MORE_RESEARCH**. The decisive blockers are an exact
+Petersburg off-load endpoint; unassigned Columbia/Goldsboro nodes; operation-
+specific rather than reusable Georgia, Mississippi, and Red River passages;
+one-family Arkansas evidence; the unproved Marshall-Shreveport route; and absent
+Missouri/Texas rows. `Verified` remains claim-level corroboration, not authorization
+for a service. A future source pass needs its own bounded contract and standalone
+DRIVE transfer; a read-only substrate or playable slice remains closed regardless.
+
+This milestone changes only the new packet and closeout documentation. No runtime,
+data, tool, generated, state, save, UI, movement, ownership/control, capacity,
+economy, AI, battle, result, terrain, or tactical byte or behavior changes.
+
 ## D506 — ARC 7 SLICE 2A SHIPS THE IMMUTABLE READ-ONLY TRANSPORT-EVIDENCE SUBSTRATE; TRANSPORT PLAY REMAINS CLOSED — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION + CONTRACT RELAY] (2026-07-21)
 
 LANE-019 Slice 2A ships in the implementation commit containing this entry. The

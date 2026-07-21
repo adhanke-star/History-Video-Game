@@ -3512,10 +3512,15 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **DRIVE (D506 SHIPPED; BOUNDED ROAD SOURCE PASS ONLY)**
+### LANE-019 · conquest-design-law — **CONTRACT (D507 ROAD PASS SHIPPED; NEEDS_MORE_RESEARCH; UNOWNED)**
 
-- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. No simultaneous edits.
-- **State:** DRIVE for D505's docs/research-only bounded road source pass. D506
+- **Owning tool:** none. Any future source pass requires a standalone committed
+  DRIVE transfer to a ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. No simultaneous edits.
+- **State:** CONTRACT after D507 ships the docs/research-only road source pass with
+  exact verdict `NEEDS_MORE_RESEARCH`. The packet records 22 sources, 26 nodes, 11
+  candidate rows (7 Verified, 4 Inferred, 0 Disputed), 11 non-links, eight
+  interchange candidates, seven-theater coverage, and nine material gaps. It
+  authorizes no read-only road substrate and no playable road slice. D506
   shipped the read-only transport-evidence substrate at
   `932fb89e7e2f3e47eaf87e88e99a740cab240062`. No road data, runtime, gameplay,
   movement, state, save, UI, cost, capacity, repair, bonus, AI, or terrain work is
@@ -3605,10 +3610,12 @@ next green commit and confer through this ledger instead of permitting simultane
   RE-29 to service or erases its non-link/provenance and exactly evidence integrity
   reds. All other teeth stay green; data and generated output restore byte-identically.
 - **Gate sequence and resume pointer:** D506's implementation commit containing
-  this entry completes Slice 2A. Exact next is to author one citation-grade road
-  packet with source/node/edge/non-link/interchange registers and exactly one
-  declared verdict, then stop. No road data/runtime or transport gameplay is
-  authorized. Any later
+  this entry completes Slice 2A, and D507 completes the first bounded road source
+  pass. No road data/runtime or transport gameplay is authorized. A future TOP LOOP
+  may resume only under a new docs/research contract limited to D507's nine named
+  evidence gaps, with a standalone DRIVE transfer; it may not infer endpoints,
+  compose operation-specific passages into routine service, or treat a later READY
+  verdict as playable authorization. Any later
   playable slice needs a separate full contract. For D506 verification, `node --check` all touched JS/probes; build
   `GATE OK` at 65 data, 36 territories, 111 modules, suite 140; run/read both focused
   artifacts; run board 13/13, accessibility 27/27, Mayhem 24/24, Custom Builder 16/16
