@@ -326,7 +326,7 @@ function fldCampaignOOB(C) {
    until scouting deepens it (opts.reveal: "fuzzy" [default] | "full"). "" when not ready / no
    next battle (graceful). NEVER reads a resolve-time path -> byte-identical.
    =========================================================================== */
-function _fldOOBBrigRow(br) {
+function _fldOOBBrigRow(br, musterHtml) {
   var g = _fldOOBGrade(br.ovr);
   var ps = (typeof fldProvenanceStyle === "function") ? fldProvenanceStyle(br.prov, g.color) : { fill: "background:" + g.color, glyph: "~", label: "derived", title: "" };
   var armLbl = br.arm === "art" ? "Artillery" : (br.arm === "cav" ? "Cavalry" : "Infantry");
@@ -340,9 +340,10 @@ function _fldOOBBrigRow(br) {
     +   '<span style="font-size:10px;opacity:.62"> &middot; ' + armLbl + ' &middot; ' + _fldOOBComma(br.men) + ' men</span>'
     + '</span>'
     + '<span style="flex:none;font-size:9px;opacity:.66" title="' + _fldOOBEsc(ps.title) + '">' + ps.glyph + ' ' + _fldOOBEsc(ps.label) + '</span>'
-    + '</div>';
+    + '</div>'
+    + (musterHtml || "");   /* T35 (D489): the PLAYER column's muster-roll disclosure; "" everywhere else */
 }
-function _fldOOBSideExact(o, accent) {
+function _fldOOBSideExact(o, accent, isPlayer) {
   var g = _fldOOBGrade(o.forceOVR);
   var head = ''
     + '<div style="display:flex;align-items:baseline;gap:7px;margin:1px 0 2px">'
@@ -369,7 +370,10 @@ function _fldOOBSideExact(o, accent) {
       +   '<span>' + _fldOOBEsc(co.label) + coCmdr + '</span>'
       +   '<span style="opacity:.9">OVR ' + co.ovr + ' &middot; <b>' + _fldOOBEsc(cg.letter) + '</b> &middot; ' + _fldOOBComma(co.menTotal) + ' men</span>' /* wcag-auditor: contrast fix opacity .8->.9 (#b3925e×0.8 on #2b2016 ≈4.25:1 fail → ×0.9 ≈4.83:1 AA pass) */
       + '</div>';
-    for (var b = 0; b < co.brigades.length; b++) body += _fldOOBBrigRow(co.brigades[b]);
+    /* T35 (D489): only the PLAYER column carries the muster disclosure — the flag is passed at exactly
+       one call site, so the enemy tree can never surface it, at ANY scout tier (the Q8b intel law). */
+    for (var b = 0; b < co.brigades.length; b++) body += _fldOOBBrigRow(co.brigades[b],
+      (isPlayer && typeof fldOOBMusterToggle === "function") ? fldOOBMusterToggle(co.brigades[b], o.side) : "");
     body += '</div>';
   }
   return '<div style="flex:1 1 280px;min-width:240px;border-left:4px solid ' + accent + ';padding:4px 0 4px 11px">' + head + body + '</div>';
@@ -469,7 +473,7 @@ function fldCampaignOOBHtml(C, opts) {
   var reconHtml = (typeof opts.reconHtml === "string") ? opts.reconHtml : "";   // the command-layer "Order a reconnaissance" control, embedded in the board (the WRITE lives in 35-command.js; T15 stays pure-read)
   var COL = { US: "#6c8ebf", CS: "#b77668" }, NAME = { US: "Union", CS: "Confederate" };
   var ps = data.playerSide, es = data.enemySide, bd = data.bd;
-  var playerCol = _fldOOBSideExact(data.player, COL[ps]);
+  var playerCol = _fldOOBSideExact(data.player, COL[ps], true);   /* T35 (D489): the ONLY player-flagged call */
   // Q8b bug-hunt (LOW): the "better"-tier posture must honor a pending alt-history attacker-flip (C.flipAtk),
   // the SAME swap the resolver applies — so "the enemy massing to attack" stays truthful when the player
   // refights in the reversed orientation (the alt-history pillar). Strength/edge are attacker-symmetric, so

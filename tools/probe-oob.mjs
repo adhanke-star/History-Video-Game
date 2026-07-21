@@ -309,6 +309,91 @@ const SETUP = `(() => {
       if(d.playerSide!=='CS'||d.enemySide!=='US') throw new Error('CS-player side wiring wrong');
       return { csPlayerOK:true, eForce:d.enemy.forceOVR }; });
 
+    step('D489 MUSTER-DESK (LANE-018 s1): the PLAYER column carries a native muster-roll disclosure per brigade row', function(){
+      if(typeof fldOOBMusterToggle!=='function') throw new Error('fldOOBMusterToggle missing (T35 not loaded)');
+      // walk the chain to a REAL multi-brigade board (idx 0 is the Sumter garrison — 1 brigade);
+      // the per-brigade equality below still binds on every board shape.
+      var C=mkC('US',1861,7), d=null;
+      for(var k=0;k<60;k++){ C.idx=k; d=fldCampaignOOB(C); if(d && d.player && d.player.n>=2) break; }
+      if(!d || !d.player || d.player.n<2) throw new Error('no multi-brigade player board found in the chain');
+      var html=fldCampaignOOBHtml(C);
+      function count(s, tok){ return s.split(tok).length - 1; }
+      var btns=count(html,'id="oobMrBtn_');
+      if(btns!==d.player.n) throw new Error('expected one muster button per player brigade ('+d.player.n+'), got '+btns);
+      if(btns<2) throw new Error('too few muster buttons to be a real board: '+btns);
+      if(count(html,'id="oobMrPanel_')!==btns) throw new Error('button/panel count mismatch');
+      if(count(html,'aria-controls="oobMrPanel_')!==btns) throw new Error('every button must aria-control its panel');
+      if(count(html,'aria-label="Muster roll:')!==btns) throw new Error('every panel must be a named region');
+      if(count(html,'Muster Roll')<btns) throw new Error('panels must carry the T14 muster panel content');
+      // closed by default: every panel carries the hidden attribute and every button reads collapsed
+      if(count(html,'aria-expanded="false"')!==btns) throw new Error('buttons must default collapsed');
+      return { brigades:d.player.n, buttons:btns }; });
+
+    step('D489 MUSTER-DESK ENEMY-ABSENCE: the enemy column NEVER gains the muster disclosure, at ANY scout tier', function(){
+      var C=mkC('US',1861,7);
+      var d=fldCampaignOOB(C);
+      var tiers={ light:fldCampaignOOBHtml(C), better:fldCampaignOOBHtml(C,{reveal:'better'}), full:fldCampaignOOBHtml(C,{reveal:'full'}) };
+      function count(s, tok){ return s.split(tok).length - 1; }
+      for(var k in tiers){ if(!tiers.hasOwnProperty(k)) continue;
+        var s=tiers[k];
+        // the enemy column + everything after it (the column header is the unique case-sensitive split point)
+        var parts=s.split('The enemy');
+        if(parts.length<2) throw new Error(k+': no enemy column marker');
+        if(parts[1].indexOf('oobMrBtn_')>=0 || parts[1].indexOf('oobMrPanel_')>=0)
+          throw new Error(k+': the ENEMY column carries a muster disclosure — the Q8b intel law is broken');
+        if(count(s,'id="oobMrBtn_')!==d.player.n)
+          throw new Error(k+': total muster buttons must stay player-only ('+d.player.n+'), got '+count(s,'id="oobMrBtn_'));
+      }
+      return { playerButtons:d.player.n, tiersChecked:3 }; });
+
+    step('D489 MUSTER-DESK FAIL-CLOSED: the toggle refuses malformed shapes; helper-absent leaves NO trace on the board', function(){
+      var good={ id:'auth_t_1', name:'Test Brigade', arm:'inf', men:2400, commander:'Test' };
+      if(fldOOBMusterToggle(null,'US')!=='') throw new Error('null node must return ""');
+      if(fldOOBMusterToggle({id:'x'},'US')!=='') throw new Error('a node missing name/arm/men must return ""');
+      if(fldOOBMusterToggle({id:'x',name:'X',arm:'inf',men:0},'US')!=='') throw new Error('men<=0 must return ""');
+      if(fldOOBMusterToggle({id:'x',name:'X',arm:'inf',men:NaN},'US')!=='') throw new Error('non-finite men must return ""');
+      if(fldOOBMusterToggle(good,'XX')!=='') throw new Error('an invalid side must return ""');
+      var ok=fldOOBMusterToggle(good,'US');
+      if(!ok || ok.indexOf('Muster Roll')<0 || ok.indexOf('aria-expanded="false"')<0) throw new Error('a vetted node must render the collapsed disclosure');
+      // the T15 seam is typeof-guarded: with the helper absent the board renders with ZERO muster trace
+      var C=mkC('US',1861,7);
+      var saved=window.fldOOBMusterToggle;
+      window.fldOOBMusterToggle=undefined;
+      var bare=fldCampaignOOBHtml(C);
+      window.fldOOBMusterToggle=saved;
+      if(bare.indexOf('oobMrBtn_')>=0 || bare.indexOf('oobMrPanel_')>=0) throw new Error('helper-absent board still carries muster markup (the guard is broken)');
+      return { malformedRefused:5, absentClean:true }; });
+
+    step('D489 MUSTER-DESK TOGGLE: in-place open/close (aria-expanded + hidden), state survives a rebuild, campaign untouched', function(){
+      var C=mkC('US',1861,7);
+      var host=document.createElement('div');
+      host.innerHTML=fldCampaignOOBHtml(C);
+      document.body.appendChild(host);
+      try {
+        var btn=host.querySelector('[data-oob-mr]');
+        if(!btn) throw new Error('no muster button in the rendered board');
+        if(String(btn.tagName).toLowerCase()!=='button' || btn.getAttribute('type')!=='button') throw new Error('the disclosure must be a native button');
+        var pid=btn.getAttribute('aria-controls');
+        var panel=host.querySelector('#'+pid);
+        if(!panel || !panel.hasAttribute('hidden')) throw new Error('panel must exist in the DOM and default hidden');
+        var beforeMode=G.mode;
+        var snap=JSON.stringify({idx:C.idx, stats:C.stats, clock:C.clock, cmd:C.president.command.fieldGeneral});
+        btn.click();
+        if(btn.getAttribute('aria-expanded')!=='true' || panel.hasAttribute('hidden')) throw new Error('activation must open in place');
+        // state survives an unrelated desk rebuild (the module map, not the DOM, is the truth)
+        var mrId=btn.getAttribute('data-oob-mr');
+        host.innerHTML=fldCampaignOOBHtml(C);
+        var btn2=host.querySelector('[data-oob-mr="'+mrId+'"]');
+        if(!btn2 || btn2.getAttribute('aria-expanded')!=='true') throw new Error('open state must survive a board rebuild');
+        var panel2=host.querySelector('#'+btn2.getAttribute('aria-controls'));
+        if(!panel2 || panel2.hasAttribute('hidden')) throw new Error('the rebuilt panel must render open');
+        btn2.click();
+        if(btn2.getAttribute('aria-expanded')!=='false' || !panel2.hasAttribute('hidden')) throw new Error('a second activation must close in place');
+        if(JSON.stringify({idx:C.idx, stats:C.stats, clock:C.clock, cmd:C.president.command.fieldGeneral})!==snap) throw new Error('the toggle mutated campaign state');
+        if(G.mode!==beforeMode) throw new Error('the toggle mutated G.mode');
+      } finally { if(host.parentNode) host.parentNode.removeChild(host); }
+      return { nativeButton:true, inPlace:true, rebuildCoherent:true, pure:true }; });
+
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }
   return JSON.stringify(R);
 })()`;

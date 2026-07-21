@@ -3383,10 +3383,27 @@ next green commit and confer through this ledger instead of permitting simultane
   runtime-drawn, zero embed bytes, its own ledger charter) — the ratified tail
   candidate; LANE-002 5b keeps its S-04 fresh-context reservation; ARC 6 rail/naval/
   medicine packets remain session-fillers; ARC 7/8/9 queue behind ARC 5/6.
-- **Resume pointer:** SLICE 1 (the muster-roll desk surface) per this contract — the
-  charter session continues same-chat under D171, or a fresh session re-takes DRIVE
-  with a committed ledger edit if this lock was released at a boundary.
-- **Last-touched commit:** this ledger-only charter commit.
+- **Resume pointer:** SLICE 2 (the AI-GM persona choice at setup + the Transfer
+  symmetry rider) per this contract — the charter session holds DRIVE same-chat
+  (D171); a fresh session re-takes DRIVE with a committed ledger edit if the lock
+  is released at a boundary. The full slice-2 clause + binds live in the acceptance
+  contract above; the HANDOFF top ⚡ block's D489 amendment carries the zero-context
+  EXACT-NEXT packet.
+- **Slice history:** SLICE 1 SHIPPED as D489 (2026-07-20, the charter session): the
+  muster-roll desk surface — T35 (`fldOOBMusterToggle` fail-closed + the delegated
+  in-place toggle; manifest 108 modules) + the T15 player-flagged guarded seam
+  (`_fldOOBBrigRow(br, musterHtml)` · `_fldOOBSideExact(o, accent, isPlayer)` · the
+  flag at EXACTLY ONE call site — the enemy column renders zero disclosure at every
+  scout tier). Teeth probe-oob 17→21 (presence per brigade · enemy absence ×3 tiers ·
+  fail-closed ×5 + helper-absent zero-trace · in-place toggle/rebuild coherence/
+  campaign purity) 21/21, 0 pageerrors; adjacents ratings 31/31 + command 94/94 +
+  accessibility 27/27; binds A (enemy call site flagged → the ENEMY-ABSENCE tooth red
+  EXACTLY) + B (shape guards killed → the FAIL-CLOSED tooth red EXACTLY) md5-proven
+  (T15 351aa60d · T35 93561497 · game 7b83d48b); two environment flakes re-run green
+  alone (a teardown hang after a green artifact; a wedged :8765 server). AD-7 game
+  67fbe534→7b83d48b · srcTree 8174d79d→3ce634af · manifest 9312db81→a6699981
+  (base/dataTree/journey/suite/focused/runtime/command/commandProbe hold).
+- **Last-touched commit:** the D489 slice-1 commit (charter: `358bf35`).
 - **History:** chartered 2026-07-20 immediately after the D488 politics-packet
   close, per the packet's READY_FOR_SPEC verdict and the LANE-017 resume pointer's
   T2-DISCHARGED forward addendum. Charter recon (read-only at `d8ca128`): T29

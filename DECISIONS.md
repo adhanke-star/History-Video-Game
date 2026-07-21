@@ -4,6 +4,74 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D489 — ARC 5 OPENED: LANE-018 `gm-completion` CHARTERED AT DRIVE (ledger-only, `358bf35`) + SLICE 1 SHIPPED — THE MUSTER-ROLL DESK SURFACE (T35 + the T15 player-flagged seam) — [CLAUDE CODE (FABLE 5), LANE-018 DRIVE] (2026-07-20)
+
+**P1 — THE CHARTER (`358bf35`, ledger-only, the LANE-014 `489cfc4`/LANE-017 `023ec91`
+precedent):** LANE-018 authored in COORDINATION.md as the complete ARC 5 acceptance
+contract per the D455 ladder, unblocked by the D488 politics packet. Twelve charter
+adjudications (headline: §4e.4's in-battle half ALREADY DISCHARGED by T29/D357 — the
+chartered half is the strategic-desk surface; the Transfer gap CONFIRMED AI-GM-side by
+recon — `cmdEnemyShadow` is theater-blind while the player pays the D354 friction, and
+the aiGm `_note`'s "no honest theater fields" blocker is stale since D322/D323; the
+election bind lands EXACTLY per the packet §3/§3.5 — `C.clock` the ONE owner, a src/*
+post-`clkOnResolve` interlink byte-identical at neutral-50/absent-config, NO new lever
+class, the D113 collision tooth owed; the packet §4 risk notes are law; the §6 traps
+gate exact-number rows; suite stays 140; AD-7 re-pins per slice; `_SAVE_VER=1`
+additive; scan hygiene; D488-ruling research routing; `MAYHEM_PUBLIC_READY` untouched)
++ a four-slice ladder with owners and predeclared binds (muster desk → persona choice +
+Transfer symmetry → the election bind → the release battery). Both plan probes re-ran
+green POST-COMMIT (24/24 · 13/13).
+
+**P2 — SLICE 1 SHIPPED (this commit): the muster-roll desk surface.** New
+`src/tactical/T35-muster-desk-ui.js` (manifest 107→108 modules, registered after T34):
+`fldOOBMusterToggle(br, side)` builds the vetted unit shape from the board node (the
+node lacks `side` — supplied from board context), renders the probe-vetted T14
+`fldMusterRollHtml` panel as a T29-idiom disclosure (native button · aria-expanded/
+controls · always-in-DOM hidden panel · delegated document-level listener · in-place
+DOM toggle so activation never rebuilds and focus never moves; the open-state map is
+module-local, session-only, nothing rides the save), FAIL-CLOSED: "" on missing
+machinery, malformed shape (no id/name, men≤0/non-finite), or invalid side.
+`src/tactical/T15-oob.js` gains the guarded seam: `_fldOOBBrigRow(br, musterHtml)` +
+`_fldOOBSideExact(o, accent, isPlayer)` with the player flag passed at EXACTLY ONE
+call site — the enemy column renders ZERO disclosure at every scout tier (light/
+better/full), the Q8b intel law.
+- **Teeth:** probe-oob 17→21 (player-column presence: one button per brigade,
+  aria-correct, collapsed default, panels as named regions · enemy ABSENCE across all
+  three tiers + the total-count wall · fail-closed: five malformed shapes refused +
+  the helper-absent board carries zero muster trace · in-place toggle: native button,
+  open/close, state survives a board rebuild, campaign JSON-snapshot + G.mode
+  untouched). 21/21 green, artifact read, 0 pageerrors. One authored-tooth root-fix
+  during drive: the presence tooth's first draft demanded ≥2 buttons on the DEFAULT
+  board, which is the 1-brigade Sumter garrison — the tooth now walks the chain to a
+  real multi-brigade board (9 buttons on the 9-brigade Bull Run board) while the
+  per-brigade equality conjunct still binds on every shape (strengthened, not
+  weakened).
+- **Adjacents:** probe-ratings 31/31 · probe-command 94/94 · probe-accessibility
+  27/27, all artifacts read, 0 pageerrors. Build GATE OK; node --check ×3; the cooked
+  SETUP preparsed (the S-03 #8 floor).
+- **Binds (md5-proven byte-identical restores):** A — the enemy full-reveal call site
+  flagged player-true → the ENEMY-ABSENCE tooth red EXACTLY ("full: the ENEMY column
+  carries a muster disclosure"), 20/21 others green; restore T15 `351aa60d` + game
+  `7b83d48b` proven. B — the fail-closed shape guards killed → the FAIL-CLOSED tooth
+  red EXACTLY ("a node missing name/arm/men must return ''"); restore T35 `93561497`
+  + game `7b83d48b` proven.
+- **Environment flakes (zero tree changes, the D454/D471/D487 class):** one probe-oob
+  teardown hang after a green artifact (fresh artifact read ok 21/21 — the D398
+  green-artifact-is-not-green-harness readback applied, re-run clean exit 0) and one
+  wedged shared `:8765` http.server stalling page.goto twice (server killed → 21/21
+  exit 0 at the byte-identical tree). Also one phantom-dirty episode (four untouched
+  files shown M with zero content diff — the standing stale-stat class, cleared by
+  `git update-index --refresh` + diff readback).
+- **AD-7 re-pins (documented chains at all four plan-probe sites):** game
+  67fbe534→`7b83d48b` · srcTree 8174d79d→`3ce634af` · manifest 9312db81→`a6699981`;
+  base `c9db83fa` · dataTree `5de65a85` · journey `214fb6e5` · suite `69681d6f` ·
+  focused `e2acf99a` · runtime/command/commandProbe HOLD. Counts hold 29/62/1,710/140;
+  `_SAVE_VER=1`; frozen base untouched; zero data movement; zero sim writes
+  (presentation-only — no A/B owed).
+
+**Forward:** LANE-018 SLICE 2 — the AI-GM persona choice at setup + the Transfer
+symmetry rider, per the committed charter clause IN FULL.
+
 ## D488 — THE ARC 6 POLITICS/ELECTION RESEARCH PACKET (T2, docs-only): `wf_854e0760-ef2` ADJUDICATED AT THE TOP LOOP AND THE PACKET AUTHORED — ARC 5 GM COMPLETION IS UNBLOCKED — [CLAUDE CODE (FABLE 5), no lane lock (docs-only)] (2026-07-20)
 
 **SHIPPED:** `docs/design/politics-election-research-packet.md` — the ARC 6 politics packet
