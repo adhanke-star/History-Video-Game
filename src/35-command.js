@@ -488,6 +488,13 @@ function cmdInit(C) {
   // native-fit, duplicate, or dead/off-date entries are dropped; valid entries are bounded to the next battle's
   // broad theater. This keeps Transfer player-visible and minimal, never an enemy shadow or hidden commission.
   if (typeof _cmdTransferClean === "function") _cmdTransferClean(C, true);
+  // D490 (LANE-018 slice 2): the campaign-setup AI-GM persona choice. ADDITIVE under the D149 law:
+  // an ABSENT field stays absent (legacy saves never gain it -> byte-identical), and a malformed
+  // stored value is DROPPED on load rather than normalized into a choice the player never made.
+  if (Object.prototype.hasOwnProperty.call(cmd, "aiGmPersona")
+      && cmd.aiGmPersona !== "historical" && cmd.aiGmPersona !== "competitive") {
+    try { delete cmd.aiGmPersona; } catch (ePer) { cmd.aiGmPersona = undefined; }
+  }
   // seed reputation for every general on this side, once (idempotent: only if absent). Q11 (D109): include any
   // COMMISSIONED officers so _cmdGenRating reads them once they are in the service — byte-identical when none
   // are commissioned (the commissioned set is empty -> the seed list is exactly the starting roster).
@@ -648,6 +655,38 @@ function _cmdAiGmStyle(C) {
     divisionSlots: Math.max(0, Math.min(24, Math.floor(_cmdNum(st.divisionSlots, 2))))
   };
 }
+/* D490 (LANE-018 slice 2): the player-facing AI-GM persona. PURE read of the D149-sanitized
+   campaign-setup choice; anything but the two explicit tokens reads null, so an absent, legacy,
+   or malformed record keeps today's tier-derived behavior byte-identical (the D486 fail-closed
+   normalization idiom). */
+function _cmdAiGmPersona(C) {
+  var cmd = C && C.president && C.president.command;
+  var p = cmd && cmd.aiGmPersona;
+  return (p === "historical" || p === "competitive") ? p : null;
+}
+/* The setter the campaign-setup seam calls AFTER base init (the D486 lootSetSurvival shape).
+   Fail-closed: a non-choice never creates the field, so declining the control at setup leaves
+   the save byte-identical to a legacy campaign. */
+function cmdSetAiGmPersona(C, persona) {
+  var p = (persona === "historical" || persona === "competitive") ? persona : null;
+  if (!C || !p) return;
+  cmdInit(C);
+  if (!C.president || !C.president.command) return;
+  C.president.command.aiGmPersona = p;
+}
+/* D490 (adjudication 2): the Transfer-symmetry friction — the SAME bounded malus the player
+   pays (through the one _cmdTransferMalus clamp) applied to a shadow candidate's effective role
+   rating when he stands outside the next battle's broad theater. 0 on missing theater data,
+   mirroring the player-side fail-safe (cmdTransferReadiness reads transferNeeded false there),
+   and 0 for a natural or Multi fit. Consumed ONLY under the Competitive-optimizer persona; the
+   Historical persona and the tier-derived default never pay it (the shipped player-side law:
+   the history-following command is never repriced). */
+function _cmdAiGmFriction(gen, battleTheater) {
+  if (!gen || !battleTheater) return 0;
+  var list = (typeof _cmdGeneralTheaters === "function") ? _cmdGeneralTheaters(gen) : [];
+  if (!list || !list.length) return 0;
+  return _cmdGeneralFitsTheater(gen, battleTheater) ? 0 : _cmdTransferMalus();
+}
 function _cmdAiGmBaseRating(gen) {
   if (!gen) return 64;
   var skill = _cmdEffectiveSkill(gen, null);
@@ -761,9 +800,29 @@ function cmdEnemyShadow(C) {
   if (C.flipAtk && (atk === "US" || atk === "CS")) atk = (atk === "US") ? "CS" : "US";
   var role = (atk === side) ? "attack" : "defend";
   var style = _cmdAiGmStyle(C);
-  var sorted = roster.slice().sort(_cmdAiGmSort(C, side, role, true));
+  /* D490 (LANE-018 slice 2): the campaign-setup persona overrides the tier-derived commander
+     mode — Historical follows the tenure record, Competitive is the role-scored optimizer under
+     the theater-fit symmetry. A null persona (absent / legacy / malformed) leaves every branch
+     below exactly as the tier derived it. */
+  var persona = _cmdAiGmPersona(C);
+  var mode = (persona === "historical") ? "historical"
+    : (persona === "competitive") ? "role" : style.commanderMode;
+  var bTheater = _cmdBattleTheater(C);
+  var sorted;
+  if (persona === "competitive") {
+    // The symmetry: each candidate's role score pays the same bounded cross-theater friction the
+    // player pays, so the optimizer prefers in-theater command; ties fall back to the shipped sort.
+    sorted = roster.slice().sort(function (a, b) {
+      var ar = _cmdAiGmRoleScore(a, role) - _cmdAiGmFriction(a, bTheater);
+      var br = _cmdAiGmRoleScore(b, role) - _cmdAiGmFriction(b, bTheater);
+      if (br !== ar) return br - ar;
+      return _cmdAiGmSort(C, side, role, true)(a, b);
+    });
+  } else {
+    sorted = roster.slice().sort(_cmdAiGmSort(C, side, role, true));
+  }
   var commander = sorted[0];
-  if (style.commanderMode === "historical") {
+  if (mode === "historical") {
     var hist = _cmdHistoricalDefault(side, date);
     if (hist && _cmdAlive(hist, date)) commander = hist;
   }
@@ -795,13 +854,17 @@ function cmdEnemyShadow(C) {
   }
   var cmdr = _cmdAiGmSnapshot(commander, side, "army");
   var lifts = _cmdAiGmStaffLift(corps, divisions);
-  var base = 64 + (_cmdNum(cmdr && cmdr.headline, 64) - 64) * 0.7 + lifts.total;
+  /* D490: under the Competitive optimizer the chosen commander still standing cross-theater pays
+     the same bounded malus on the shadow's leadership — the mirror of the player's E70 friction
+     on commandLeadership. 0 under the Historical persona and the tier-derived default. */
+  var fric = (persona === "competitive") ? _cmdAiGmFriction(commander, bTheater) : 0;
+  var base = 64 + (_cmdNum(cmdr && cmdr.headline, 64) - 64) * 0.7 + lifts.total - fric;
   var leadership = Math.max(42, Math.min(88, Math.round(base)));
-  return {
+  var out = {
     side: side,
     battleId: bd.id || null,
     battleName: bd.name || "",
-    battleTheater: _cmdBattleTheater(C),
+    battleTheater: bTheater,
     role: role,
     aiTier: style.tier,
     label: style.label,
@@ -812,6 +875,10 @@ function cmdEnemyShadow(C) {
     leadership: leadership,
     prov: "Inferred"
   };
+  // D490: the persona fields ride the snapshot ONLY when a persona was chosen, so the
+  // absent-choice snapshot stays JSON-equal to the pre-slice shape (the byte-identity tooth).
+  if (persona) { out.persona = persona; out.personaFriction = fric; }
+  return out;
 }
 function cmdEnemyLeadership(C) {
   var sh = cmdEnemyShadow(C);
@@ -844,6 +911,17 @@ function cmdEnemyShadowHTML(C) {
       + '</span>';
   }
   if (!corps) corps = '<span style="font-size:11px;opacity:.68">No staffed corps shadow at this AI level.</span>';
+  /* D490 (LANE-018 slice 2): the honest persona disclosure. The default line is byte-identical
+     to the shipped readout; a chosen persona replaces it with the truthful description of what
+     the shadow now pays or follows. */
+  var pureLine = 'Pure AI-GM readout; no hidden Transfer.';
+  if (sh.persona === "competitive") {
+    pureLine = sh.personaFriction
+      ? 'Competitive optimizer: this commander stands cross-theater and pays the same command friction you would (&minus;' + sh.personaFriction + ' leadership). No hidden Transfer.'
+      : 'Competitive optimizer: it pays the same cross-theater command friction you do, so it prefers in-theater command; none applies to this pick. No hidden Transfer.';
+  } else if (sh.persona === "historical") {
+    pureLine = 'Historical persona: command follows the documented tenure record and never pays theater friction &mdash; the same law as your history-following default.';
+  }
   return ''
     + '<div style="margin:12px 0 14px;padding:11px;border:1px solid var(--rule);border-radius:5px;background:rgba(0,0,0,.12)">'
     +   '<div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px">'
@@ -854,7 +932,7 @@ function cmdEnemyShadowHTML(C) {
     +   '<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap">'
     +     '<span style="font-weight:bold;font-size:14px">' + _cmdEsc(sh.commander.name) + '</span>'
     +     '<span style="font-size:11px;opacity:.75">Army OVR ' + sh.commander.headline + ' &middot; ATK ' + sh.commander.attack + ' / DEF ' + sh.commander.defend + th + '</span>'
-    +     '<span style="font-size:10px;opacity:.58">Pure AI-GM readout; no hidden Transfer.</span>'
+    +     '<span style="font-size:10px;opacity:.58">' + pureLine + '</span>'
     +   '</div>'
     +   '<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:8px">' + corps + '</div>'
     + '</div>';

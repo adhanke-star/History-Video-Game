@@ -4,6 +4,85 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D490 — LANE-018 SLICE 2 SHIPPED: THE AI-GM PERSONA CHOICE AT SETUP + THE TRANSFER SYMMETRY RIDER (§4e.1 + §4e.2, adjudication 2) — [CLAUDE CODE (FABLE 5), LANE-018 DRIVE] (2026-07-20)
+
+**SHIPPED (this commit): the campaign-setup Enemy-command-persona choice, per the committed
+charter clause verbatim.** `src/107-mayhem-rules.js`: the ruleset picker gains a labelled,
+natively keyboard-operable `<select>` (three options: the neutral default · Historical persona ·
+Competitive optimizer; NO `data-mh-mode` attribute, NO announce call, block-level full-width —
+the two picker-DOM count/announce pins and the 390px narrow-layout walls all hold) with teaching
+copy citing the roster's tenure record, threaded through `_mhGmPersona` fail-closed normalization
+at EVERY hop of the D486 token chain (`_mhOpenTerms`/`_mhArmTerms`/`_mhStartToken`/
+`_mhPendingStart`/the `startCampaign` wrapper/the `_t1InitAll` wrapper → `cmdSetAiGmPersona`
+applied AFTER base init). `src/35-command.js`: `cmd.aiGmPersona` is ADDITIVE under D149 —
+`cmdInit` DROPS a malformed stored value and NEVER creates the field (absent stays absent —
+legacy saves byte-identical); `_cmdAiGmPersona(C)` reads null on anything but the two tokens;
+`cmdEnemyShadow` honors the persona — **Historical** forces commanderMode=historical
+(`_cmdHistoricalDefault` tenure windows, ZERO friction — the shipped player-side law mirrored),
+**Competitive** forces the role-scored sort with each candidate's score paying
+`_cmdAiGmFriction(gen, battleTheater)` — 0 for a natural/Multi fit or missing theater data (the
+player-side fail-safe mirrored), else EXACTLY `_cmdTransferMalus()` (the ONE existing clamp,
+[0,6]) — and the chosen commander still standing cross-theater pays the same malus on the
+shadow's leadership inside its existing [42,88] clamp; the persona/personaFriction fields ride
+the snapshot ONLY when a persona was chosen. `cmdEnemyShadowHTML`'s "Pure AI-GM readout; no
+hidden Transfer." line is byte-identical at default and replaced under a chosen persona with the
+honest disclosure (competitive names the friction it pays; the existing `hidden Transfer`
+substring tooth stays satisfied). `data/ratings.json` aiGm `_note`: the stale "Transfer remains
+blocked until generals.json carries honest theater fields" sentence (adjudication 2 recorded it
+stale since D322/D323) replaced with the honest current law — free text only, schema 62/62.
+- **CHARTER ERRATUM (the D489-adjudication-1 half-stale class, recorded not silently rebuilt):**
+  the charter clause's illustrative phrase "Davis keeps Bragg through his documented tenure"
+  does not match the shipped data — `cs-bragg` carries `commandFrom: null` (his Army of
+  Tennessee tenure lives in his sourced bio text only); the D53 tenure chain is single-slot per
+  side (US Army-of-the-Potomac chain → Grant in March 1864; CS chain Johnston → Lee in June
+  1862). The clause's OPERATIVE mechanism (`_cmdHistoricalDefault` tenure windows) shipped
+  verbatim; the teaching copy cites what the tenure data ACTUALLY records (Grant March 1864 —
+  LoC commission + ABT/McPherson sourced rows; Johnston→Lee June 1862 — sourced rows). NO new
+  sourced claim was authored; adding a Bragg tenure row would have corrupted the shipped
+  single-slot CS chain and needed its own charter.
+- **Teeth (owner probe-command 94→99, all green, artifact read, 0 pageerrors):** absent-choice
+  byte-identity (no persona fields at default + set-then-remove JSON-equal round-trip + cmdInit
+  never creates the field + second-cmdInit byte-identity) · persona honored BOTH ways
+  (historical ⇒ tenure default at 1863-07 AND the 1861-08 early-war divergence fixture, zero
+  friction; competitive ⇒ the argmax under friction proven against the full alive roster +
+  leadership recomputed exactly + both readout disclosures) · the friction rides the ONE
+  `_cmdTransferMalus` clamp (fit/Multi/no-data ⇒ 0, cross-theater ⇒ exactly the malus, a
+  runaway config value 40 clamps at 6, the shadow ≤ cap) · save additive-sanitized (3 malformed
+  shapes dropped, valid survives, non-choice creates nothing, legacy byte-identical) · the
+  setup control labelled/keyboard (native select + label[for] + aria-describedby teaching copy
+  citing the tenure record + the full token thread e2e incl. a tampered token refused and the
+  Mayhem-start carry).
+- **Adjacents:** probe-oob 21/21 · probe-save-slots 16/16 · probe-accessibility 27/27 ·
+  probe-mayhem-mode 24/24 (src/107 owner), all artifacts read, 0 pageerrors. Build GATE OK ·
+  schema 62/62 · node --check ×3 · the cooked SETUP preparsed via the template-literal VM cook
+  (the S-03 #8 floor; raw extraction false-alarms on template escapes — cook first).
+- **Binds (md5-proven byte-identical restores):** A — the absent-choice default flipped at the
+  normalization seam (`_cmdAiGmPersona` null branch → "competitive") → the byte-identity tooth
+  red EXACTLY ("absent choice must normalize to null, got competitive"), 98/99 others green;
+  restore src/35 `a69d6249` + game `b2b23ed2` proven. B — the friction malus pushed past its cap
+  (the `_cmdTransferMalus` clamp 6 → 9999) → the cap tooth red EXACTLY ("the malus clamp must
+  cap a runaway config at 6, got 40"), 98/99 others green; restore md5-proven, final re-run
+  99/99 green.
+- **Honest A/B (enemy leadership is a bridge input):** at the ABSENT choice ZERO values moved —
+  the byte-identity tooth is the proof (default shadow at the 1863-07 fixture: cs-lee,
+  leadership 84, identical before/after; the D173 steps' recorded values unmoved). Under a
+  CHOSEN persona the movement is the player-opted feature, bounded by the malus cap ≤6 on a
+  leadership input clamped [42,88]: historical at 1863-07 → cs-lee/84 (friction 0); at 1861-08
+  → cs-johnston-j (the tenure record vs the optimizer's Lee — the honest divergence);
+  competitive at 1863-07 → cs-lee/84, friction 0 (in-theater already). No battle data touched;
+  no direction battery owed (the D481/D482 authority untriggered).
+- **AD-7 re-pins (documented chains at all four plan-probe sites, values computed by VERBATIM
+  EXTRACTION of the probe's own hash functions — the D489 lesson):** game 7b83d48b→`b2b23ed2` ·
+  dataTree 5de65a85→`fa4ce39d` · srcTree 3ce634af→`cfa7648d` · command f3ad1450→`a69d6249` ·
+  commandProbe 048bfed3→`d861722c`; base `c9db83fa` · manifest `a6699981` · journey `214fb6e5` ·
+  suite `69681d6f` · focused `e2acf99a` · runtime HOLD. Both plan probes re-run POST-COMMIT
+  (their allowlist steps read the working tree). Counts hold 29/62/1,710/140; `_SAVE_VER=1`;
+  frozen base untouched; `MAYHEM_PUBLIC_READY` untouched (adjudication 12); suite stays 140
+  (adjudication 7 — every tooth landed in existing owners).
+
+**Forward:** LANE-018 SLICE 3 — the 1864 ELECTION BIND (the load-bearing slice; the packet
+§3/§3.5 VERBATIM per charter adjudication 3), then SLICE 4 the ARC 5 release battery.
+
 ## D489 — ARC 5 OPENED: LANE-018 `gm-completion` CHARTERED AT DRIVE (ledger-only, `358bf35`) + SLICE 1 SHIPPED — THE MUSTER-ROLL DESK SURFACE (T35 + the T15 player-flagged seam) — [CLAUDE CODE (FABLE 5), LANE-018 DRIVE] (2026-07-20)
 
 **P1 — THE CHARTER (`358bf35`, ledger-only, the LANE-014 `489cfc4`/LANE-017 `023ec91`

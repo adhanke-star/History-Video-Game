@@ -1444,6 +1444,131 @@ const SETUP = `(() => {
       for(var i=0;i<forbidden.length;i++) if(d406Own(P,forbidden[i])) throw new Error('forbidden player-career alias under P.command: '+forbidden[i]);
       return {projection:projection,leadership:lead1,strategicId:strategic.id,npcOwner:active,separate:true}; });
 
+    step('D490: ABSENT persona choice — the shadow snapshot is JSON-equal at default (no persona fields), the normalization seam reads null, and set-then-remove round-trips byte-identically', function(){
+      if(typeof _cmdAiGmPersona!=='function'||typeof cmdSetAiGmPersona!=='function') throw new Error('persona seam missing');
+      var C=mkC('US',1863,7);
+      if(_cmdAiGmPersona(C)!==null) throw new Error('absent choice must normalize to null, got '+_cmdAiGmPersona(C));
+      var sh0=cmdEnemyShadow(C);
+      if(d406Own(sh0,'persona')||d406Own(sh0,'personaFriction')) throw new Error('default shadow must carry no persona fields');
+      var snap0=JSON.stringify(sh0);
+      var html0=cmdEnemyShadowHTML(C);
+      if(html0.indexOf('Pure AI-GM readout; no hidden Transfer.')<0) throw new Error('default readout line moved');
+      cmdSetAiGmPersona(C,'competitive');
+      var shC=cmdEnemyShadow(C);
+      if(!shC||shC.persona!=='competitive') throw new Error('competitive persona did not reach the shadow');
+      delete C.president.command.aiGmPersona;
+      var sh1=cmdEnemyShadow(C);
+      if(JSON.stringify(sh1)!==snap0) throw new Error('set-then-remove did not round-trip to the byte-identical default snapshot');
+      var C2=mkC('US',1863,7);
+      if(d406Own(C2.president.command,'aiGmPersona')) throw new Error('cmdInit must never create the field');
+      var j0=JSON.stringify(C2.president.command); cmdInit(C2);
+      if(JSON.stringify(C2.president.command)!==j0) throw new Error('a second cmdInit moved the legacy command bytes');
+      return { defaultNull:true, roundTrip:true, legacyClean:true }; });
+
+    step('D490: persona honored BOTH ways — historical follows the tenure default (zero friction, early war included), competitive is the role top pick under theater friction, and the readout discloses each honestly', function(){
+      var Ch=mkC('US',1863,7); cmdSetAiGmPersona(Ch,'historical');
+      var shH=cmdEnemyShadow(Ch), hist=_cmdHistoricalDefault('CS',Ch.president.date);
+      if(!shH||shH.persona!=='historical') throw new Error('historical persona missing from the shadow');
+      if(!hist||shH.commander.id!==hist.id) throw new Error('historical persona must seat the tenure default, got '+shH.commander.id+' vs '+(hist&&hist.id));
+      if(shH.personaFriction!==0) throw new Error('the Historical persona must never pay friction, got '+shH.personaFriction);
+      var Ce=mkC('US',1861,8); cmdSetAiGmPersona(Ce,'historical');
+      var shE=cmdEnemyShadow(Ce), histE=_cmdHistoricalDefault('CS',Ce.president.date);
+      if(!histE||!shE||shE.commander.id!==histE.id) throw new Error('early-war historical persona must follow the tenure record, got '+(shE&&shE.commander.id)+' vs '+(histE&&histE.id));
+      var htmlH=cmdEnemyShadowHTML(Ch);
+      if(htmlH.indexOf('Historical persona:')<0||htmlH.indexOf('tenure')<0) throw new Error('historical readout must disclose the tenure law');
+      var Cc=mkC('US',1863,7); cmdSetAiGmPersona(Cc,'competitive');
+      var shC=cmdEnemyShadow(Cc);
+      if(!shC||shC.persona!=='competitive') throw new Error('competitive persona missing from the shadow');
+      var roster=_cmdSideGenerals('CS'), date=Cc.president.date, best=-1e9;
+      var effOf=function(g){ return _cmdAiGmRoleScore(g,shC.role)-_cmdAiGmFriction(g,shC.battleTheater); };
+      for(var i=0;i<roster.length;i++){ var g=roster[i]; if(!g||!_cmdAlive(g,date)) continue;
+        var e=effOf(g); if(e>best) best=e; }
+      var eActual=effOf(_cmdById('CS',shC.commander.id));
+      if(!(eActual>=best-1e-9)) throw new Error('competitive pick is not the role top under friction: '+shC.commander.id+' eff '+eActual+' vs best '+best);
+      if(shC.personaFriction!==_cmdAiGmFriction(_cmdById('CS',shC.commander.id),shC.battleTheater)) throw new Error('shadow friction must equal the chosen commander friction');
+      var expLead=Math.max(42,Math.min(88,Math.round(64+(shC.commander.headline-64)*0.7+shC.lift.total-shC.personaFriction)));
+      if(shC.leadership!==expLead) throw new Error('competitive leadership must pay the friction: '+shC.leadership+' vs '+expLead);
+      var htmlC=cmdEnemyShadowHTML(Cc);
+      if(htmlC.indexOf('Competitive optimizer:')<0||htmlC.indexOf('hidden Transfer')<0) throw new Error('competitive readout must disclose the friction law');
+      return { historical:shH.commander.id, earlyHistorical:shE.commander.id, competitive:shC.commander.id, friction:shC.personaFriction, leadership:shC.leadership }; });
+
+    step('D490: the friction rides the ONE _cmdTransferMalus clamp — theater-fit and no-data candidates read 0, a cross-theater candidate pays exactly the malus, and a runaway config clamps at the cap', function(){
+      if(typeof _cmdAiGmFriction!=='function') throw new Error('friction helper missing');
+      var lee=_cmdById('CS','cs-lee'), bragg=_cmdById('CS','cs-bragg'), longstreet=_cmdById('CS','cs-longstreet');
+      if(!lee||!bragg||!longstreet) throw new Error('roster fixtures missing');
+      var malus=_cmdTransferMalus();
+      if(!(malus>0&&malus<=6)) throw new Error('live malus must sit inside the clamp, got '+malus);
+      if(_cmdAiGmFriction(lee,'Eastern')!==0) throw new Error('a natural fit must pay 0');
+      if(_cmdAiGmFriction(longstreet,'Eastern')!==0||_cmdAiGmFriction(longstreet,'Western')!==0) throw new Error('a Multi fit must pay 0');
+      if(_cmdAiGmFriction(bragg,'Eastern')!==malus) throw new Error('a cross-theater candidate must pay exactly the malus');
+      if(_cmdAiGmFriction(bragg,'')!==0||_cmdAiGmFriction(null,'Eastern')!==0) throw new Error('missing theater data must fail safe to 0');
+      var d=gameData('ratings'); if(!d||!d.transfer) throw new Error('ratings.transfer missing');
+      var old=d.transfer.unreadyLeadershipMalus, hadOwn=d406Own(d.transfer,'unreadyLeadershipMalus');
+      try{
+        d.transfer.unreadyLeadershipMalus=40;
+        if(_cmdTransferMalus()!==6) throw new Error('the malus clamp must cap a runaway config at 6, got '+_cmdTransferMalus());
+        if(_cmdAiGmFriction(bragg,'Eastern')!==6) throw new Error('the shadow friction must ride the same cap, got '+_cmdAiGmFriction(bragg,'Eastern'));
+        var C=mkC('US',1863,7); cmdSetAiGmPersona(C,'competitive');
+        var sh=cmdEnemyShadow(C);
+        if(!(sh.personaFriction<=6)) throw new Error('shadow friction escaped the cap: '+sh.personaFriction);
+        if(!(sh.leadership>=42&&sh.leadership<=88)) throw new Error('leadership escaped its clamp under the capped friction');
+      } finally { if(hadOwn) d.transfer.unreadyLeadershipMalus=old; else delete d.transfer.unreadyLeadershipMalus; }
+      return { malus:malus, cap:6 }; });
+
+    step('D490: the persona save field is ADDITIVE under D149 sanitation — malformed values are DROPPED on load, valid choices survive, a non-choice never creates the field, and legacy saves stay byte-identical', function(){
+      var C=mkC('US',1863,7), cmd=C.president.command;
+      cmd.aiGmPersona='banana'; cmdInit(C);
+      if(d406Own(cmd,'aiGmPersona')) throw new Error('a malformed string must be dropped on load');
+      cmd.aiGmPersona={evil:1}; cmdInit(C);
+      if(d406Own(cmd,'aiGmPersona')) throw new Error('a malformed object must be dropped on load');
+      cmd.aiGmPersona=['competitive']; cmdInit(C);
+      if(d406Own(cmd,'aiGmPersona')) throw new Error('a malformed array must be dropped on load');
+      cmdSetAiGmPersona(C,'historical'); cmdInit(C);
+      if(cmd.aiGmPersona!=='historical') throw new Error('a valid choice must survive load sanitation');
+      cmdSetAiGmPersona(C,'competitive');
+      if(cmd.aiGmPersona!=='competitive') throw new Error('the setter must honor a fresh valid choice');
+      var C2=mkC('US',1863,7);
+      cmdSetAiGmPersona(C2,'nonsense');
+      if(d406Own(C2.president.command,'aiGmPersona')) throw new Error('a non-choice must never create the field');
+      var j0=JSON.stringify(C2.president.command); cmdInit(C2);
+      if(JSON.stringify(C2.president.command)!==j0||d406Own(C2.president.command,'aiGmPersona')) throw new Error('legacy sanitation must stay byte-identical with the field absent');
+      return { drops:3, survives:true, legacyClean:true }; });
+
+    step('D490: the campaign-setup persona control is a labelled keyboard-operable select whose token thread lands the choice after init — and the absent default creates nothing', function(){
+      if(typeof _mhPickerHTML!=='function'||typeof _mhGmPersona!=='function') throw new Error('setup picker seam missing');
+      var div=document.createElement('div'); div.innerHTML=_mhPickerHTML('US');
+      var sel=div.querySelector('#mhGmPersonaOpt');
+      if(!sel||sel.tagName!=='SELECT') throw new Error('the persona control must be a native select');
+      if(sel.value!=='') throw new Error('the control must default to the neutral choice, got '+sel.value);
+      var opts=sel.querySelectorAll('option');
+      if(opts.length!==3||opts[0].value!==''||opts[1].value!=='historical'||opts[2].value!=='competitive') throw new Error('the control must offer exactly the neutral/historical/competitive choices');
+      var lab=div.querySelector('label[for="mhGmPersonaOpt"]');
+      if(!lab||!String(lab.textContent||'').trim()) throw new Error('the control must carry an associated visible label');
+      var hintId=sel.getAttribute('aria-describedby'), hint=hintId?div.querySelector('#'+hintId):null;
+      var hintText=String(hint&&hint.textContent||'');
+      if(!hint||hintText.indexOf('Grant')<0||hintText.indexOf('March 1864')<0||hintText.indexOf('Johnston')<0) throw new Error('the teaching copy must cite the tenure record');
+      if(_mhGmPersona('historical')!=='historical'||_mhGmPersona('competitive')!=='competitive'||_mhGmPersona('')!==null||_mhGmPersona('banana')!==null||_mhGmPersona(undefined)!==null) throw new Error('the token normalizer must fail closed');
+      var keepMode=G.mode, keepCampaign=G.campaign;
+      try{
+        _mhStartToken={side:'US',id:'historical'};
+        startCampaign('US',false);
+        var C0=G.campaign;
+        if(d406Own(C0.president.command,'aiGmPersona')) throw new Error('an absent token choice must create nothing');
+        _mhStartToken={side:'US',id:'historical',aiGmPersona:'competitive'};
+        startCampaign('US',false);
+        var C1=G.campaign;
+        if(C1.president.command.aiGmPersona!=='competitive') throw new Error('the token thread must land the competitive choice after init');
+        _mhStartToken={side:'US',id:'historical',aiGmPersona:'banana'};
+        startCampaign('US',false);
+        var C2=G.campaign;
+        if(d406Own(C2.president.command,'aiGmPersona')) throw new Error('a tampered token must be refused at the normalization seam');
+        _mhStartToken={side:'US',id:'mayhem',aiGmPersona:'historical'};
+        startCampaign('US',false);
+        var C3=G.campaign;
+        if(!mayhemIsActive(C3)||C3.president.command.aiGmPersona!=='historical') throw new Error('the choice must ride a Mayhem start too');
+      } finally { _mhStartToken=null; G.campaign=keepCampaign; G.mode=keepMode; }
+      return { labelled:true, keyboard:'native-select', thread:true }; });
+
     // helper: read a general's current reputation
     function C0rep(C,id){ return (C.president&&C.president.command&&typeof C.president.command.reputation[id]==='number')?C.president.command.reputation[id]:60; }
   } catch(e){ R.ok=false; R.errors.push('FATAL '+String(e&&e.message||e)); }

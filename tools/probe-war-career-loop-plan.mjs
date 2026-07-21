@@ -962,7 +962,12 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // disclosure enrolls after T34; T15 gains the player-flagged guarded seam — presentation-
     // only, the journey/war-career logic surfaces untouched, proven by this probe's own
     // runtime steps; both binds md5-proven; runtime/command/focused hold).
-srcTree:"3ce634afb5d4312b6c21d039dd906b12",
+    // D490 re-pin (LANE-018 slice 2): srcTree 3ce634af -> cfa7648d (src/35 gains the
+    // campaign-setup AI-GM persona seams — cmdSetAiGmPersona, the friction helper, and the
+    // shadow disclosure; src/107 threads the picker token; the war-career logic surfaces are
+    // untouched, proven by this probe's own runtime steps; both binds md5-proven;
+    // runtime/focused hold).
+srcTree:"cfa7648df7b11c2026bd3991279ff1df",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
@@ -979,7 +984,12 @@ srcTree:"3ce634afb5d4312b6c21d039dd906b12",
     // EXISTING devTraits assignment consumed only by _cmdPoolHTML. The war-career political/
     // command seams src/35 carries (D413 Matters-of-State reads, relief/appoint state) are
     // untouched, proven by this probe's own runtime steps + probe-command 94/94 at D480.
-    command:"f3ad1450f13dfe54ac7668035062c8fb",
+    // D490 re-pin (LANE-018 slice 2): command f3ad1450 -> a69d6249 (the campaign-setup persona
+    // choice + the Transfer-symmetry rider — an additive D149-sanitized save field with the
+    // absent-choice shadow byte-identity probed at probe-command 99/99; the D413
+    // Matters-of-State reads and the commandLeadership consumer/clamp seams are untouched,
+    // proven by the exact-count scans below).
+    command:"a69d624958badd9569f0607725436bf9",
     // D487 re-pin: commandProbe 5ffd40fd -> 048bfed34ee90e8c1c5c4227d5e9ac13 (the four NaN/undefined render teeth
     // now scan with opaque data-URI payloads STRIPPED - the D483 flag-card canvas-PNG base64
     // false-positive class, surfaced by the first full battery after D483; the teeth are
@@ -1000,7 +1010,10 @@ srcTree:"3ce634afb5d4312b6c21d039dd906b12",
     // tooth (138 -> 140) missed by the D469/D470 sweeps, fixed at its exact label (the
     // D443 AD-6 precedent); the war-career runtime surface held.
     focused:"e2acf99a9f7a1c639563030c91cf58a7",
-    commandProbe:"048bfed34ee90e8c1c5c4227d5e9ac13"
+    // D490 re-pin (LANE-018 slice 2): commandProbe 048bfed3 -> d861722c (probe-command grows
+    // 94 -> 99 with the five persona/friction/save/setup teeth; the four D406 tooth names this
+    // probe scans are unmoved).
+    commandProbe:"d861722c756981a62a3cd5ce160b4fa1"
   };
   for (const key of Object.keys(expected)) {
     if (locks[key] !== expected[key]) throw new Error(key + " D411-complete lock moved: " + locks[key]);
@@ -1325,13 +1338,16 @@ step("BASELINES + LANE", () => {
     // D485 re-pin (LANE-017 slice 7, named legendary artifacts SS4c.1): game e99e6ac5 -> 27e73f38 · dataTree c3c28fd6 -> dcf6da5b (data/loot-survival.json gains the artifact tier + four Verified named artifacts + _artifactNote; src/37 mode-split drops in the build — the full chain is documented at this file's srcTree pin sites). base/manifest/suite hold.
     // D486 re-pin (LANE-017 slice 8): game 27e73f38 -> 67fbe534 · dataTree dcf6da5b -> 5de65a85 (data/loot-survival.json gains 4 sets + 9 Inferred variety items + the salvage/economyHooks blocks; src/37 + src/107 in the build — the full chain is documented at this file's srcTree pin sites). base/manifest/suite hold.
     // D489 re-pin (LANE-018 slice 1, the muster desk surface): game 67fbe534 -> 7b83d48b · manifest 9312db81 -> a6699981 (T35 registered after T34; T15 player-flagged seam in the build; presentation-only, zero data movement — the full chain is documented at this file's srcTree pin sites). base/dataTree/suite hold.
-    game:"7b83d48baf7e624940ff3d5fd5fe2435",
+    // D490 re-pin (LANE-018 slice 2): game 7b83d48b -> b2b23ed2 (the persona seams in src/35 + src/107 in the build; the full chain is documented at this file's srcTree pin sites). base/manifest/suite hold.
+    game:"b2b23ed22f92be4b0078c90b15e89529",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     // D478 re-pin: dataTree 4bbdebe5 -> b3b323fa (LANE-017 slice 1: rarity glyphs + reserved tier
     // hexes + rungTiers in data/loot-survival.json — presentation data only, no war-career data).
     // D486 re-pin: dataTree dcf6da5b -> 5de65a85 (LANE-017 slice 8: sets + variety items +
     // salvage/economyHooks blocks in data/loot-survival.json — no war-career data).
-    dataTree:"5de65a85d15c5c22a749c65ec401084c",
+    // D490 re-pin: dataTree 5de65a85 -> fa4ce39d (LANE-018 slice 2: the aiGm _note honesty
+    // amendment in data/ratings.json — free text only, no numeric movement, no war-career data).
+    dataTree:"fa4ce39dec16fe52af184823d3da64b3",
     manifest:"a6699981697a57c26e48cc501b12ad5e",
     suite:"69681d6f2216fe1dcfd594ffc4a757b7"
   };
@@ -1789,8 +1805,12 @@ step("REACHABILITY BASELINES", () => {
     // T15 gains the player-flagged guarded seam — enemy columns render zero disclosure at every
     // scout tier, probed; presentation-only, zero data movement). dataTree/runtime/journey/
     // focused hold; both binds md5-proven.
-    game:"7b83d48baf7e624940ff3d5fd5fe2435",
-    dataTree:"5de65a85d15c5c22a749c65ec401084c",
+    // D490 re-pin (LANE-018 slice 2, the persona choice + Transfer symmetry): game 7b83d48b ->
+    // b2b23ed2 · dataTree 5de65a85 -> fa4ce39d (src/35 persona seams + src/107 picker token in
+    // the build; the ratings aiGm _note honesty amendment — free text only, no numeric
+    // movement). runtime/journey/focused hold; both binds md5-proven.
+    game:"b2b23ed22f92be4b0078c90b15e89529",
+    dataTree:"fa4ce39dec16fe52af184823d3da64b3",
         // D484 re-pin (LANE-017 slice 6, soldier-tier badges SS4d.3): game e7ff100e -> e99e6ac5 · dataTree 00f8c1fe -> c3c28fd6 (data/ratings.json gains soldierBadgeDefs 14 + soldierBadges 48 rows on 39 Verified carriers + _soldierBadgeNote) · srcTree 15570ebc -> d79696ce (T14 soldier-badge accessors + the fldSoldierBadgeFactor capped gateway; src/37 cwCareerBadges/cwSoldierBadgeRows/_ssSoldierBadgesHTML register/journey chips; the src/22 comment-token reword — the D482 class, fifth instance) · journey 1689c4a2 -> 9655bfff (src/37) · focused 65e9c873 -> e2acf99a (probe-war-career gains the D484 career-badge step; the stale 138 suite.expected DISPLAY fields aligned to the 140 teeth). Presentation + data + the capped gateway only — no combat line consumes the keys, sim inputs did not move; both binds md5-proven; base/manifest/suite/runtime/command hold.
     // D486 re-pin (LANE-017 slice 8): srcTree b7648a67 -> 8174d79d (src/37 sets/salvage/
     // requisition/captured-arms/economy-read + UI; src/107 the picker opt-in token thread).
@@ -1798,7 +1818,10 @@ step("REACHABILITY BASELINES", () => {
     // disclosure enrolls after T34; T15 gains the player-flagged guarded seam — the
     // war-career/journey logic surfaces are untouched, proven by this probe's own
     // runtime steps; both binds md5-proven).
-srcTree:"3ce634afb5d4312b6c21d039dd906b12",
+    // D490 re-pin (LANE-018 slice 2): srcTree 3ce634af -> cfa7648d (the src/35 persona
+    // seams + the src/107 picker token thread; the war-career/journey logic surfaces are
+    // untouched, proven by this probe's own runtime steps; both binds md5-proven).
+srcTree:"cfa7648df7b11c2026bd3991279ff1df",
     runtime:"ee83045eaaa20c96c3c09579599614c8",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;

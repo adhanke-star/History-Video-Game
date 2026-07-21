@@ -517,6 +517,10 @@ var _mhKeyHandler = null;
 var _mhReturnFocusId = "";
 
 function _mhSide(side) { return side === "CS" ? "CS" : "US"; }
+/* D490 (LANE-018 slice 2): the AI-GM persona token normalizer — fail-closed at EVERY hop
+   (the D486 survival idiom): only the two explicit choice tokens survive; absent, malformed,
+   or tampered values read null and the campaign keeps today's tier-derived behavior. */
+function _mhGmPersona(v) { return (v === "historical" || v === "competitive") ? v : null; }
 function _mhEsc(v) {
   if (typeof htmlEsc === "function") return htmlEsc(v);
   return String(v == null ? "" : v).replace(/&/g, "&amp;").replace(/</g, "&lt;")
@@ -561,13 +565,14 @@ function _mhInstallEscape() {
   document.addEventListener("keydown", _mhKeyHandler, true);
 }
 
-function _mhArmTerms(side, id, surv) {
+function _mhArmTerms(side, id, surv, gmPersona) {
   side = _mhSide(side);
   id = _mhValidId(id) ? id : "historical";
+  var gmP = _mhGmPersona(gmPersona);
   var arm = function (btn) {
     if (!btn) return;
     btn.addEventListener("click", function () {
-      _mhStartToken = { side:side, id:id, survival: surv === true };
+      _mhStartToken = { side:side, id:id, survival: surv === true, aiGmPersona: gmP };
     }, true);
   };
   arm(document.getElementById("msMuster"));
@@ -580,14 +585,15 @@ function _mhArmTerms(side, id, surv) {
     }, 0);
   }, true);
 }
-function _mhOpenTerms(side, id, surv) {
+function _mhOpenTerms(side, id, surv, gmPersona) {
   if (typeof _MH_BASE_MUSTER !== "function") return;
   side = _mhSide(side);
   id = _mhValidId(id) ? id : "historical";
-  _mhPendingStart = { side:side, id:id, survival: surv === true };
+  var gmP = _mhGmPersona(gmPersona);
+  _mhPendingStart = { side:side, id:id, survival: surv === true, aiGmPersona: gmP };
   _mhStartToken = null;
   _MH_BASE_MUSTER(side);
-  _mhArmTerms(side, id, surv === true);
+  _mhArmTerms(side, id, surv === true, gmP);
   _mhInstallEscape();
   try { var first = document.getElementById("msMuster"); if (first) first.focus(); } catch (e) {}
 }
@@ -618,6 +624,15 @@ function _mhPickerHTML(side) {
     + '<label style="display:flex;gap:8px;align-items:flex-start;margin:10px 0 14px;font-size:13px;line-height:1.5;color:#e9dcc0;cursor:pointer">'
     + '<input type="checkbox" id="mhSurvivalOpt" style="margin-top:3px">'
     + '<span><b style="color:#fff4d4">Campaign Kit survival march</b> &mdash; begin with rations, exposure, disease, and fatigue in play from the first turn. You can toggle this later from the Campaign Kit tab.</span></label>'
+    + '<div style="margin:0 0 14px;font-size:13px;line-height:1.5;color:#e9dcc0">'
+    + '<label for="mhGmPersonaOpt" style="display:block;margin-bottom:4px"><b style="color:#fff4d4">Enemy command persona</b> &mdash; how the opposing government runs its army command.</label>'
+    + '<select id="mhGmPersonaOpt" aria-describedby="mhGmPersonaHint" style="display:block;width:100%;max-width:100%;min-height:44px;padding:6px 8px;font-size:13px;background:#17120c;color:#f2e8d5;border:2px solid #8c724e;border-radius:6px">'
+    + '<option value="" selected>By difficulty (the default)</option>'
+    + '<option value="historical">Historical persona &mdash; follow the documented command tenures</option>'
+    + '<option value="competitive">Competitive optimizer &mdash; best role fit, pays theater friction</option>'
+    + '</select>'
+    + '<div id="mhGmPersonaHint" style="margin-top:4px;font-size:11.5px;line-height:1.5;color:#e9dcc0">Historical follows each side&rsquo;s documented principal-army tenure record: Lincoln&rsquo;s chain cycles to Grant in March 1864; Davis&rsquo;s passes from Johnston to Lee in June 1862. Competitive picks the strongest available commander for the role, but pays the same cross-theater command friction you do &mdash; so it prefers in-theater men. Leave the default to keep the difficulty-derived behavior.</div>'
+    + '</div>'
     + '<div class="mh-picker-actions">'
     + '<button type="button" class="bigbtn" id="mhStart" disabled aria-disabled="true">Choose a ruleset</button>'
     + '<button type="button" class="ghostbtn" id="mhBack">Back</button>'
@@ -668,7 +683,8 @@ function _mhOpenRulesetPicker(side) {
     if (!selected) return;
     _mhClearKeyHandler();
     var survOpt = document.getElementById("mhSurvivalOpt");
-    _mhOpenTerms(side, selected, !!(survOpt && survOpt.checked));
+    var gmOpt = document.getElementById("mhGmPersonaOpt");
+    _mhOpenTerms(side, selected, !!(survOpt && survOpt.checked), _mhGmPersona(gmOpt && gmOpt.value));
   });
   var back = document.getElementById("mhBack");
   if (back) back.addEventListener("click", _mhBackToMenu);
@@ -691,7 +707,9 @@ function _mhOpenRulesetPicker(side) {
     side = _mhSide(side);
     var token = _mhStartToken;
     var requested = token && token.side === side && _mhValidId(token.id) ? token.id : "historical";
-    _mhPendingStart = { side:side, id:requested, survival: !!(token && token.side === side && token.survival === true) };
+    _mhPendingStart = { side:side, id:requested,
+      survival: !!(token && token.side === side && token.survival === true),
+      aiGmPersona: (token && token.side === side) ? _mhGmPersona(token.aiGmPersona) : null };
     try {
       return _MH_BASE_START.apply(this, arguments);
     } finally {
@@ -709,6 +727,14 @@ function _mhOpenRulesetPicker(side) {
        default untouched (survival stays off exactly as before this seam). */
     if (pending && pending.survival === true && C && typeof lootSetSurvival === "function") {
       try { lootSetSurvival(C, true); } catch (e) {}
+    }
+    /* D490 (LANE-018 slice 2): the campaign-setup AI-GM persona choice - applied ONLY on an
+       explicit choice carried by the start token (the same D486 seam, normalized fail-closed
+       at every hop); absent or invalid leaves the campaign byte-identical - the field is
+       never created for a player who left the control on its default. */
+    var gmP = pending ? _mhGmPersona(pending.aiGmPersona) : null;
+    if (gmP && C && typeof cmdSetAiGmPersona === "function") {
+      try { cmdSetAiGmPersona(C, gmP); } catch (e2) {}
     }
     return out;
   };

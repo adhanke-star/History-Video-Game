@@ -3383,13 +3383,41 @@ next green commit and confer through this ledger instead of permitting simultane
   runtime-drawn, zero embed bytes, its own ledger charter) — the ratified tail
   candidate; LANE-002 5b keeps its S-04 fresh-context reservation; ARC 6 rail/naval/
   medicine packets remain session-fillers; ARC 7/8/9 queue behind ARC 5/6.
-- **Resume pointer:** SLICE 2 (the AI-GM persona choice at setup + the Transfer
-  symmetry rider) per this contract — the charter session holds DRIVE same-chat
-  (D171); a fresh session re-takes DRIVE with a committed ledger edit if the lock
-  is released at a boundary. The full slice-2 clause + binds live in the acceptance
-  contract above; the HANDOFF top ⚡ block's D489 amendment carries the zero-context
-  EXACT-NEXT packet.
-- **Slice history:** SLICE 1 SHIPPED as D489 (2026-07-20, the charter session): the
+- **Resume pointer:** SLICE 3 (the 1864 election bind — the load-bearing slice; the
+  packet §3/§3.5 VERBATIM per adjudication 3, the packet §5 ten teeth the basis) per
+  this contract — DRIVE is HELD by the Claude Code (Fable 5) slice-2 session
+  mid-ladder (the D481/D484 held-DRIVE precedent); a fresh session re-takes DRIVE
+  with a committed ledger edit if the lock is released at a boundary. The full
+  slice-3 clause + binds live in the acceptance contract above; the HANDOFF top ⚡
+  block's D490 amendment carries the zero-context EXACT-NEXT packet.
+- **Slice history:** SLICE 2 SHIPPED as D490 (2026-07-20, the slice-1 session
+  continuing the held DRIVE): the AI-GM persona choice at setup + the Transfer
+  symmetry rider — the picker's labelled native select (no data-mh-mode, no
+  announce; the D486 token chain gains `aiGmPersona` with `_mhGmPersona` fail-closed
+  normalization at every hop → `cmdSetAiGmPersona` after base init); `cmd.aiGmPersona`
+  additive under D149 (malformed DROPPED, absent never created); `cmdEnemyShadow`
+  honors the persona (Historical ⇒ `_cmdHistoricalDefault` tenure windows, zero
+  friction; Competitive ⇒ the role sort with each candidate paying
+  `_cmdAiGmFriction` — 0 fit/Multi/no-data, else exactly `_cmdTransferMalus()` [0,6]
+  — and the chosen cross-theater commander paying the same malus on leadership);
+  the readout line replaced ONLY under a chosen persona (the `hidden Transfer`
+  substring tooth holds); the aiGm `_note` stale-blocker sentence replaced
+  (adjudication 2). **CHARTER ERRATUM recorded (the D489-adjudication-1 class):**
+  "Davis keeps Bragg through his documented tenure" is half-stale — `cs-bragg`
+  carries `commandFrom: null`; the shipped single-slot tenure chains are US
+  chain→Grant (March 1864) and CS Johnston→Lee (June 1862); the operative mechanism
+  shipped verbatim and the teaching copy cites what the data records. Teeth
+  probe-command 94→99 (absent-choice byte-identity · persona both ways incl. the
+  1861-08 tenure-divergence fixture · the friction cap clamp · save
+  additive-sanitized · setup control labelled/keyboard + token thread e2e) 99/99,
+  0 pageerrors; adjacents oob 21/21 + save-slots 16/16 + accessibility 27/27 +
+  mayhem-mode 24/24; binds A (normalization-seam default flip → the byte-identity
+  tooth red EXACTLY) + B (the malus clamp 6→9999 → the cap tooth red EXACTLY)
+  md5-proven (src/35 `a69d6249` · game `b2b23ed2`), final 99/99. AD-7 game
+  7b83d48b→b2b23ed2 · dataTree 5de65a85→fa4ce39d · srcTree 3ce634af→cfa7648d ·
+  command f3ad1450→a69d6249 · commandProbe 048bfed3→d861722c
+  (base/manifest/journey/suite/focused/runtime hold). SLICE 1 SHIPPED as D489
+  (2026-07-20, the charter session): the
   muster-roll desk surface — T35 (`fldOOBMusterToggle` fail-closed + the delegated
   in-place toggle; manifest 108 modules) + the T15 player-flagged guarded seam
   (`_fldOOBBrigRow(br, musterHtml)` · `_fldOOBSideExact(o, accent, isPlayer)` · the
@@ -3403,7 +3431,7 @@ next green commit and confer through this ledger instead of permitting simultane
   alone (a teardown hang after a green artifact; a wedged :8765 server). AD-7 game
   67fbe534→7b83d48b · srcTree 8174d79d→3ce634af · manifest 9312db81→a6699981
   (base/dataTree/journey/suite/focused/runtime/command/commandProbe hold).
-- **Last-touched commit:** the D489 slice-1 commit (charter: `358bf35`).
+- **Last-touched commit:** the D490 slice-2 commit (slice 1: `32051dd`; charter: `358bf35`).
 - **History:** chartered 2026-07-20 immediately after the D488 politics-packet
   close, per the packet's READY_FOR_SPEC verdict and the LANE-017 resume pointer's
   T2-DISCHARGED forward addendum. Charter recon (read-only at `d8ca128`): T29
