@@ -2,6 +2,41 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-20 — D488: THE ARC 6 POLITICS/ELECTION RESEARCH PACKET (T2, docs-only) — THE BANKED WORKFLOW ADJUDICATED, READY_FOR_SPEC, ARC 5 GM COMPLETION UNBLOCKED
+
+A fresh Fable 5 session opened at the clean pushed c8d1e9c (D487 closeout) boundary and
+ran the Aaron-ratified tail's T2 with NO lane lock (docs-only). P1 adjudication (the
+D481/D482 banked-workflow practice): `wf_854e0760-ef2`'s journal was the sole record —
+78 verdict rows across six default-refuted topics landed 57 CONFIRMED / 16 WEAK /
+0 REFUTED; one gather row the refute layer never processed (the cs-politics
+dissent-drivers synthesis) was adjudicated Inferred at the top loop; the two-source floor
+was applied STRICTER than the refuters (Wikipedia = relay corroboration only, repo
+registers corroborate but never count, the Lincoln Institute's sites = one family); NINE
+drops/corrections logged (the Foote 1862→1864 quote weld, the McClellan-newspaper
+misattribution, the 13th-Amendment switcher arithmetic, the unsupported six-state
+soldier-vote margin attribution, et al.). Top-loop spot re-verification: 9 fetch
+attempts, 6 landed (Miller Center · Wikipedia 1862-63 House · NARA 1864 Electoral
+College · Wikipedia 1863 CS House · NPS Voting at Cedar Creek · APP National Union
+platform), all faithful to the refuters' readings; ONE refuter overclaim caught and
+closed (Miller Center never prints 212-21 or the LA/TN exclusion — re-anchored on the
+NARA official record); two bot-403/404s logged honestly. P2: the packet authored at
+`docs/design/politics-election-research-packet.md` (deliberately OUTSIDE the
+probe-pinned battle-build-research/ folder) in the packet idiom — source register with
+independence families · the adjudicated 1862/1864 + weariness + emancipation +
+soldier-vote + CS-politics scope · the ARC 5 election bind's exact data needs from the
+banked repo inventory (C.clock the ONE owner, press.sentiment the missing input via a
+src/* post-clkOnResolve interlink byte-identical at neutral, the divergence US/CS
+side-gate law, the D113 collision trap + lever template, the data/politics.json minimal
+shape, NO new lever class) · D74/anti-Lost-Cause risk notes · ten probe-teeth
+recommendations · READY_FOR_SPEC with 8 remaining traps (Dubin/Martis, Benton, Neely,
+Mitchell pins et al.). Gates (docs-only tier): git diff --check clean · commit -F ·
+push (`526b01f`) · BOTH plan probes re-run POST-COMMIT green (war-career 24/24 ·
+mayhem 13/13, ALL OK). Counts hold 29/62/1,710/140; `_SAVE_VER=1`; frozen base
+untouched; AD-7 head unmoved. T4 brigade flag markers was assessed and HANDED FORWARD
+(the heaviest tail item — a serialized-browser-probe runtime slice is not "real room"
+at this boundary; the half-vetted-milestone law controls). NEXT: charter ARC 5 GM
+COMPLETION per the D455 ladder (ledger-only charter, DRIVE in the charter commit).
+
 ## 2026-07-20 — D486+D487: LANE-017 SLICES 8+9 — SETS/VARIETY/SALVAGE/ECONOMY/SETUP SHIPPED UNSPLIT, THE ARC 4 RELEASE BATTERY GREEN, LANE-017 SHIPPED, ARC 4 CLOSED
 
 A fresh Fable 5 session continued the held DRIVE from the clean pushed d0e4490 (D485
