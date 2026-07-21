@@ -461,3 +461,421 @@ session that resolves §8.4 through explicit questions, extends this section int
 complete ARC 7 design law, and updates LANE-019 to a Slice-1 implementation contract.
 It stops before runtime. If Aaron declines or defers any dependency, record the held
 choice and keep the corresponding slice closed rather than inventing a default.
+
+### 8.11 D503 final adjudication — Package A is Aaron-locked
+
+Aaron answered **"execute option a"** on 2026-07-21. ARC 7 therefore adopts
+**Package A: 36 operational catchments, a two-month hybrid campaign clock, and a
+shared evidence envelope over separate transport-mode registries.** The Why lines
+are binding:
+
+1. Thirty-six territories preserve eastern, western, coastal, border-state, and
+   Trans-Mississippi teaching without making keyboard/list navigation or the target
+   viewport carry the 43-territory package's node density.
+2. A two-month turn preserves operational sequence and a playable Risk-like cadence
+   better than 48 monthly turns, while exact source dates remain visible and never
+   become predetermined outcomes.
+3. Hybrid authority separates sourced physical availability from player-authored
+   control/service receipts. Canonical history remains true; `Your Timeline` remains
+   genuinely authored.
+4. Separate rail, water, road, and sea registries preserve mode-specific evidence
+   and failure modes. A shared evidence envelope plus explicit interchange rows gives
+   consumers one validation vocabulary without manufacturing a joined historical
+   claim.
+5. Territory control, node operation, and service condition remain different facts.
+   This is required by Petersburg's wagon bypass, Vicksburg's passage/control split,
+   Mobile Bay's entrance/city split, and the packets' explicit non-links.
+6. List-first presentation and a schematic enhancement are more honest and more
+   accessible than implying survey-grade geographic boundaries the evidence has not
+   established.
+
+Package B's monthly event-ledger architecture and Package C's seasonal territory-only
+architecture remain rejected alternatives for ARC 7 v1. Reconsidering either is a
+new Aaron decision, not an implementation convenience.
+
+### 8.12 Exact territory registry and boundary law
+
+A conquest **territory is an operational catchment**, not a state, county, transport
+node, tactical site, port state, or decorative polygon. Its exact strategic boundary
+is the closed set of source anchors assigned below. Every anchor belongs to exactly
+one territory. A rendered shape is an illustrative locator only and must say so; its
+pixels never confer control, adjacency, service, source confidence, or tactical-site
+authority. No county, road, rail, river, or sea connection is implied merely because
+two shapes touch.
+
+| ID | Territory | Exact assigned source anchors / boundary |
+|---|---|---|
+| CT-01 | Baltimore-Washington Corridor | Rail RN-01, RN-02; water WN-24. |
+| CT-02 | Upper Potomac-Harpers Ferry | Rail RN-05. |
+| CT-03 | Northern Virginia-Manassas | Rail RN-03, RN-04. |
+| CT-04 | Shenandoah Valley-Strasburg | Rail RN-34. Strasburg-Harpers Ferry remains an explicit rail non-link. |
+| CT-05 | Richmond Capital District | Rail RN-06; water WN-35. Drewry's Bluff remains outside this endpoint as CT-08's bounded approach. |
+| CT-06 | Petersburg-City Point | Rail RN-07, RN-08; water WN-22, WN-41. Landing, railhead, and city control remain distinct. |
+| CT-07 | Virginia Southside-Lynchburg | Rail RN-09, RN-35. |
+| CT-08 | Hampton Roads-Peninsula | Water WN-20, WN-21, WN-23. Fort Monroe arrival does not create a Yorktown transport edge. |
+| CT-09 | North Carolina Sounds-Weldon | Rail RN-10; water WN-25, WN-26, WN-27. No complete sounds graph is implied. |
+| CT-10 | Cape Fear-Wilmington | Rail RN-11; water WN-30, WN-38. Fort Fisher approach closure and city capture stay separate. |
+| CT-11 | Charleston-Port Royal Lowcountry | Water WN-28, WN-34, WN-37. Port Royal does not create a Charleston or Savannah army-transfer edge. |
+| CT-12 | Savannah-Coastal Georgia | Rail RN-18; water WN-29. The one-family Beaufort transfer remains bounded. |
+| CT-13 | Augusta-Upper Savannah | Rail RN-16. No seamless Charleston/Carolinas interchange is implied. |
+| CT-14 | Atlanta-North Georgia | Rail RN-15. |
+| CT-15 | Macon-Central Georgia | Rail RN-17. |
+| CT-16 | Montgomery-Central Alabama | Rail RN-19, RN-20. West Point transfer/gauge uncertainty remains visible. |
+| CT-17 | Mobile Bay-Lower Alabama | Rail RN-21; water WN-31, WN-32, WN-39. Entrance, runner closure, city, and rail states remain separate. |
+| CT-18 | Louisville-Ohio Falls | Rail RN-12; water WN-03. |
+| CT-19 | Cairo-Paducah-Western Kentucky | Water WN-01, WN-02, WN-09, WN-10. Island No. 10's two passage paths may not be collapsed. |
+| CT-20 | Nashville-Middle Tennessee | Rail RN-13; water WN-04, WN-06. |
+| CT-21 | Chattanooga-East Tennessee | Rail RN-14; water WN-08. Muscle Shoals is a bounded reach, not a through edge. |
+| CT-22 | Tennessee River-Shiloh | Water WN-05, WN-07. |
+| CT-23 | Memphis-West Tennessee | Rail RN-23; water WN-11. |
+| CT-24 | Corinth-North Mississippi | Rail RN-22. |
+| CT-25 | Vicksburg-Mississippi Bend | Rail RN-24; water WN-12, WN-15. Battery passage, landing, and control are distinct. |
+| CT-26 | Jackson-Central Mississippi | Rail RN-25. Exact repair/reopening intervals remain unresolved. |
+| CT-27 | Meridian-East Mississippi | Rail RN-26. |
+| CT-28 | Lower Mississippi-New Orleans | Rail RN-27; water WN-13, WN-14, WN-33. Fort passage, surrender, occupation, Port Hudson, and through navigation retain separate dates. |
+| CT-29 | Missouri River-St. Louis | Territory presence is sourced through the existing Missouri/border-war battle and historical library. No rail/water service is authorized by the two conquest packets. |
+| CT-30 | Missouri Ozarks | Territory presence is sourced through the Wilson's Creek/Elkhorn battle and research family. No packet-unsupported service is implied. |
+| CT-31 | Lower Arkansas-Arkansas Post | Water WN-16, WN-36. No upper White or Little Rock through edge. |
+| CT-32 | Little Rock-Central Arkansas | Rail RN-28; water WN-17. The cited low-water failure remains an explicit bounded non-link. |
+| CT-33 | Alexandria-Lower Red River | Water WN-18, WN-40. Low-water failure and Bailey-dam withdrawal do not become routine seasonal or repair rules. |
+| CT-34 | Shreveport-North Louisiana | Rail RN-29; water WN-19. No accomplished large-force upper Red edge. |
+| CT-35 | Marshall-East Texas | Rail RN-30, RN-33. The Louisiana gap and disputed Neches removal remain explicit. |
+| CT-36 | Houston-Galveston | Rail RN-31, RN-32. No Texas-coast strategic-water edge is authorized. |
+
+The initial registry may contain these territories, anchor references, teaching
+region, display order, provenance, source references, uncertainty, and explicit
+non-link references only. It may not contain movement points, capacity, ownership,
+economy, reinforcement, objective, AI, save, battle-result, casualty, winner, score,
+or tactical-output fields. CT-29 and CT-30 must cite their existing battle/research
+sources directly; their lack of packet transport coverage must be displayed, not
+filled for geographic symmetry.
+
+### 8.13 Campaign clock, canonical availability, and `Your Timeline` control
+
+- The main campaign has **24 two-month turns**: Jan-Feb 1861 through Nov-Dec
+  1864. A single bounded **Jan-Apr 1865 endgame interval** permits historically
+  late closure without creating a fifth full campaign year.
+- Exact historical dates remain on evidence and teaching rows. A gameplay action
+  resolves at the next two-month boundary, but the UI must never rewrite an exact
+  source date to that boundary.
+- **Physical availability** means a sourced line, connection, channel, fort,
+  approach, or built interchange exists in the historical evidence window. Sourced
+  construction dates may make physical infrastructure eligible automatically.
+- **Canonical control/closure events never seize, open, close, or repair the
+  player's map automatically.** They update only the labelled `In history...`
+  comparison. Player territory, node, and service state changes only through valid
+  `Your Timeline` receipts.
+- Control is mixed: territories have a controlling side; nodes have an operational
+  side or contested/unavailable state; services have condition, not ownership.
+  Condition vocabulary is closed to `open`, `degraded`, `cut`, `closed`, and
+  `conditional`. A future runtime may not infer one state from a differently named
+  historical event without an explicit rule and receipt.
+- Every capture, cut, repair, bypass, reopening, or interchange receipt carries its
+  campaign turn and retains its underlying exact-date evidence separately. A receipt
+  may change `Your Timeline`; it may never mutate the canonical source row.
+
+This is the selected hybrid model. The coarse turn-owned model is rejected because it
+collapses port/approach/node distinctions. A universal event replay ledger is rejected
+for v1 because its save/UI/AI surface is disproportionate to the 36-territory board.
+
+### 8.14 Transport evidence and future runtime interface
+
+Rail, navigable river, road, and sea remain **four separate registries**. They share
+only a validation/evidence envelope: stable ID; mode; endpoints; applicable date or
+bounded interval; provenance; claim/source references; qualitative availability;
+control/change evidence; caution; and explicit non-link references. This list defines
+law, not a runtime JSON schema.
+
+Rules:
+
+1. Every endpoint resolves within its own mode registry. An interchange is a separate
+   row that names both existing endpoint IDs, its evidence, applicable dates, and its
+   handling limit. Shared city text is never an interchange.
+2. A non-link is explicit and mode-specific. It remains unavailable in both rulesets;
+   Mayhem cannot turn an absent bridge, unsupported river reach, or unproved harbor
+   transfer into geography.
+3. An absent or malformed mode registry contributes no services. An invalid edge or
+   interchange is dropped individually. If the territory core, ID uniqueness, source
+   resolution, or enablement declaration fails, the whole conquest entry point is
+   absent.
+4. One movement order selects exactly one primary service. An interchange ends that
+   order unless a later law names a source-backed through-service exception. This
+   prevents rail-water co-location from counting twice.
+5. Duplicate mode/endpoints/date-window/claim combinations are invalid rather than
+   additive. Bidirectionality must be explicit; a one-way historical passage does not
+   become routine two-way service.
+6. Road rows require their own period-map or operational provenance. Territory shape
+   contact is not road evidence. Sea rows require actual transport/passage evidence;
+   blockade presence is not transport availability.
+7. D159 and blockade/Real Diplomacy remain authoritative for their existing aggregate
+   readiness and political-economic state. Conquest may later consume one guarded,
+   zero-default read; it may not copy their formulas or ledgers into its registries.
+
+### 8.15 Historical and Mayhem plausibility
+
+Immutable `C.ruleset` remains the sole ruleset authority.
+
+- **Historical conquest:** sourced physical dates and mode-specific limitations are
+  enforced. Player action may diverge control and service condition, but unsupported
+  links, source uncertainty, and geography remain binding. `In history...` and `Your
+  Timeline` are always distinct and visible.
+- **Mayhem conquest:** all source-supported physical services may be eligible from
+  turn 1, regardless of historical opening date or historical side, but control,
+  cuts, lift, and player action still govern use. Mayhem removes plausibility timing;
+  it does not invent a connection, erase an explicit non-link, falsify provenance, or
+  turn moral harm into a reward.
+- Missing/malformed `C.ruleset` fails to Historical under the shipped D418 contract.
+  Settings and localStorage never select conquest plausibility.
+
+### 8.16 Movement, attacks, cuts, repairs, economy, theaters, and objectives
+
+- Each field army receives **one movement order and one attack opportunity per
+  turn**. Road movement reaches one lawfully adjacent territory. A rail, river, or sea
+  order may traverse at most two validated service edges without changing mode.
+- Each side receives **one heavy-transport order per turn**. A second exists only
+  when a future guarded, zero-default read from the relevant current owner explicitly
+  reports readiness. Until that read is separately contracted and green, the value is
+  one. Capacity counts army orders, never people as cargo or historical troop counts.
+- An amphibious movement consumes the moving army's attack opportunity. No army may
+  attack twice, attack after an invalid transfer, or chain a failed service into road
+  movement.
+- A cut consumes that army's attack opportunity and requires lawful presence at the
+  affected endpoint/corridor. Repair requires control of the relevant endpoint, an
+  authorized engineering commitment through the existing owner, and one full turn.
+  A bypass exists only as its own sourced edge. Reopening changes the player's service
+  receipt, not the canonical event.
+- Conquest creates **no currency**. Every three controlled territories produce one
+  muster claim, capped at three per turn. A completely controlled theater may add one
+  further claim, capped at one theater claim per turn. Spending a claim authorizes a
+  transaction through existing manpower/supply/economy owners and their caps; it does
+  not create free troops or mutate tactical OOBs.
+- The seven intentionally uneven teaching theaters are: Chesapeake Approaches
+  (CT-01-04, CT-08); Virginia Heartland (CT-05-07); Atlantic Coast (CT-09-13);
+  Georgia-Alabama Interior (CT-14-17); Ohio-Tennessee (CT-18-24); Mississippi Spine
+  (CT-25-28); and Trans-Mississippi (CT-29-36). Unevenness teaches geography and is
+  not normalized for board symmetry.
+- Three public War Department directives are visible at once. Each is one-shot and
+  source/side/ruleset eligible. Completion grants exactly one existing political-
+  capital point and one directive-symbol receipt. A set of three different symbols
+  may be turned in for one muster claim plus one draw through the shipped loot owner.
+  A directive may never reward casualties, no-quarter conduct, slavery, civilian
+  harm, spectacle, a predetermined winner, or a D74 output.
+
+Exact balance values above are design-law values and remain subject to the eventual
+focused A/B battery before public release. They cannot be silently copied from packet
+historical quantities.
+
+### 8.17 Council of War, terrain pipeline, hex zoom, and tactical-site boundary
+
+After a lawful attack is declared, Council of War may choose a curated site, troop
+commitment, existing-owner equipment, and doctrine. It cannot create an attack,
+change territory/node/service control, invent an OOB, choose a winner, write losses,
+or bypass side choice. Its eventual output is a bounded, zero-default engagement
+receipt consumed through existing owners and `bridgeArmy` only.
+
+Hex zoom is **operational site selection**, not a second campaign graph. It may show
+approach, ridge, ford, road, landing, railhead, and deployment-region choices inside
+the selected engagement. It cannot move strategic armies, redraw territory
+boundaries, create transport services, or apply battle output. The initial terrain
+ladder permits one primary curated site per territory; any second site is a separate
+source/media-budget increment.
+
+Every site requires: USGS public-domain DEM provenance; LoC/NPS period-map or other
+public-domain surface evidence; source locator and license; horizontal CRS and
+vertical-datum record; build-time transform into local battlefield coordinates;
+transform checksum; a 256x256 master height grid with derived 128x128 and 64x64 LODs;
+a palette-indexed 512x512 maximum period-surface layer; land-cover inference labelled
+as inference; and a textual terrain summary naming elevations, slopes, cover,
+crossings, uncertainty, and source limits. If provenance, transform, LOD generation,
+or textual fallback fails, the site is omitted. Google Maps remains barred.
+
+Terrain media receives no independent budget. It must enroll under the existing
+media-budget ledger and its class caps. Slice 1 adds **zero media/assets bytes**; a
+later terrain slice that cannot fit the existing offline single-file budget must HALT
+for a separate Aaron decision rather than raising the cap.
+
+### 8.18 AI, battle bridge, results, Chronicle, War Career, and Custom Builder
+
+- Conquest AI is a later slice. It must issue the same validated orders available to
+  the player, consume only public/same-side information, and create the same receipts.
+  Difficulty may rank legal choices; it may not receive hidden services, extra
+  actions, direct battle results, or a second resolver.
+- `bridgeArmy` remains the sole strategy-to-tactical input seam. A future conquest
+  engagement may supply only zero-default site/commitment/equipment/doctrine inputs
+  already authorized by Council of War law. No conquest field may set casualties,
+  winner, score, firepower, morale outcome, surrender, or tactical AI output.
+- Fought and delegated engagements both use the existing conditioned battle, headless
+  simulation, `fldCampaignComputeOutcome`, and `fldCampaignApplyOutcome` truth path.
+  Conquest consumes a normalized result receipt after that path; it never resolves a
+  battle independently.
+- Chronicle/divergence owns presentation of canonical history beside `Your Timeline`.
+  It may read immutable conquest action/result receipts in a later slice and writes no
+  conquest state. Divergence distance remains not-a-score.
+- War Career remains ladder-only and consequence-only. No conquest territory,
+  aggregate loss, army, or receipt can infer named participation, fate, advancement,
+  billet, or relationship. Its frozen ladder adapters are prohibited throughout ARC
+  7 unless Aaron separately expands the mode.
+- Custom Battle Builder remains local, single-phase, and noncanonical. It may later
+  reuse validated site/terrain selectors as copied inputs. Missing conquest data or
+  machinery yields no selector; builder saves never become conquest saves or topology.
+
+### 8.19 State, save, offline, and failure authority
+
+Slice 1 is immutable injected data plus transient read-only UI. It writes nothing to
+`G`, `C`, settings, localStorage, undo, save slots, exports, or imports.
+
+The first playable conquest campaign, in a later separately chartered slice, is a
+fresh start with immutable campaign kind `conquest` and immutable existing
+`C.ruleset`. Its future state owner is one `C.conquest` namespace; current ladder
+state remains outside it. Existing saves are neither migrated nor converted and must
+continue to load as ladder campaigns. A later conquest save must use its own versioned
+shape/discriminator and must update `tools/save-shape.json` in the same authorized
+commit if `applySave` changes. `_SAVE_VER=1` does not move merely because conquest is
+planned.
+
+All authoritative data, provenance, accessibility copy, and later terrain assets are
+embedded at build time. No network, account, map service, CDN, or online lookup is
+required. Missing or malformed core data or lawful enablement removes the entry point
+and leaves the current game byte-equivalent except for the compiled dormant module.
+
+### 8.20 Exact phased implementation ladder and release points
+
+ARC 7 proceeds only in this order:
+
+1. **Territory board:** the 36-row validated registry and read-only accessible shell.
+2. **Transport movement:** separate sourced mode registries, interchanges, control/
+   service receipts, movement/cuts/repairs, economy/theater/directive integration,
+   fresh-start conquest state/save, and legal-order AI only as separately sliced.
+3. **Council of War:** site, commitment, equipment, and doctrine through existing
+   owners and the D74-safe bridge.
+4. **Terrain pipeline:** provenance, transform, LOD, period surface, offline budget,
+   and textual fallback before site assets.
+5. **Hex zoom:** operational site interaction without strategic or tactical ownership
+   leakage.
+6. **Chronicle tree:** read-only canonical/`Your Timeline` receipt comparison.
+
+Each rung requires its own CONTRACT/DRIVE transfer and focused gates. The first full
+serialized 140-row release battery occurs after the transport-movement rung produces
+the first playable conquest loop, and again at final ARC 7 release. Slice 1 itself is
+not a public playable-conquest release.
+
+### 8.21 Slice 1 — exact implementation contract
+
+Slice 1 is only:
+
+- `data/conquest-territories.json`: the 36 final-law territories, anchor/source/
+  provenance/uncertainty/non-link references, display order, teaching region, and an
+  explicit dormant/read-only enablement declaration;
+- `src/114-conquest-board.js`: fail-closed normalization plus semantic list-first and
+  enhanced schematic read-only presentation;
+- an entry control in `src/98-h0-main-menu.js` that appears only when the normalized
+  registry and explicit enablement are lawful;
+- manifest/build validation, focused probes, generated output, and docs/ledger sync.
+
+The shell displays all 36 territories, source confidence and cautions without color
+alone, anchor details, explicit non-links, `In history...` evidence, and a clear
+"read-only foundation; conquest play not yet enabled" status. It provides no start-
+campaign action.
+
+**Allowed implementation files only:**
+
+- `data/conquest-territories.json` (new);
+- `src/114-conquest-board.js` (new), `src/00-manifest.json`, and
+  `src/98-h0-main-menu.js`;
+- `tools/build.mjs`, `tools/probe-conquest-layer-plan.mjs` (new), and
+  `tools/probe-conquest-board.mjs` (new);
+- planning-probe pin updates in `tools/probe-open-history-mayhem-plan.mjs` and
+  `tools/probe-war-career-loop-plan.mjs` only where verbatim extraction proves the
+  new data/module/build/probe chain moved their hashes/counts;
+- generated `civil_war_generals.html` through `node tools/build.mjs` only; and
+- `COORDINATION.md`, `DECISIONS.md`, and `HANDOFF.md` for implementation closeout.
+
+The new data owner intentionally moves the build's data/schema count **63 -> 64**;
+that chain must be pinned at every existing count owner. The no-regression suite
+remains 140 because Slice 1's two focused probes are not enrolled into the release
+battery until the later playable-loop release contract explicitly does so.
+
+**Prohibited:** every other `src/**`, `data/**`, `tools/**`, `assets/**`, package,
+schema/save surface, `tools/save-shape.json`, `build/base.html`, tactical file,
+current owner, and historical packet. No movement/control write, army, capacity,
+economy, reinforcement, theater reward, directive reward, Council of War, terrain
+asset, hex action, battle/auto-resolve routing, AI, Chronicle receipt, War Career
+effect, save field, casualty, winner, score, surrender, or tactical-output behavior.
+
+Accessibility is contractual: pointer and keyboard reach the same entry and territory
+details; the semantic list is complete without the schematic; programmatic names,
+headings, regions, focus order, visible focus, escape/return focus, 390px reflow,
+200% zoom, high contrast, non-color provenance/uncertainty, and reduced-motion safety
+must be verified. The board introduces no automatic motion at all.
+
+### 8.22 Slice-1 probes, negative binds, and gates
+
+The implementation commit creates and greens both new probes; no red tooth lands
+before the implementation.
+
+`tools/probe-conquest-layer-plan.mjs` is filesystem-first and must assert:
+
+1. D455, D502, and D503/Aaron locks occur exactly once in the live law/decision/lane
+   surfaces;
+2. exactly 36 unique `CT-*` IDs and exact names/order; every RN/WN/battle-library
+   anchor, source, provenance, uncertainty, and non-link reference resolves;
+3. no duplicate anchor assignment, inferred interchange, unsupported connection, or
+   later-slice field;
+4. source registries remain mode-specific and all current strategic/tactical owners
+   remain structurally separate;
+5. allowed-file scope, dormant/read-only enablement, manifest/build enrollment, and
+   the absence of save/state/mechanic fields; and
+6. planning-probe pin chains are documented by verbatim extraction.
+
+`tools/probe-conquest-board.mjs` must drive the real menu and assert: 36-row list and
+schematic parity; pointer/keyboard activation; stable focus and return; accessible
+names/headings/regions; non-color provenance/uncertainty; explicit non-link copy;
+390px/200%-zoom legibility; high-contrast and reduced-motion behavior; no campaign-
+start action; and zero entry-point trace under absent data, malformed data, missing
+enablement, or helper absence. JSON must report `ok:true`, zero failed steps, zero
+pageerrors, and zero realErrors.
+
+Predeclared binds:
+
+- **Bind A — fail closed:** remove the normalization/enablement guard so absent or
+  malformed data exposes the control. Exactly the board probe's fail-closed tooth must
+  red; all other teeth remain green. Restore source and generated output byte-for-byte
+  with recorded MD5s.
+- **Bind B — provenance integrity:** erase one edge/non-link claim or source reference
+  in the fixture. Exactly the plan probe's integrity/provenance tooth must red; all
+  other teeth remain green. Restore data and generated output byte-for-byte with
+  recorded MD5s.
+
+Required gate sequence:
+
+1. `node tools/build.mjs` — `GATE OK`; inspect schema/data/module counts and generated
+   output; require data/schema 64 and suite 140.
+2. `node --check` on every touched/new JS and probe file; cook/parse any embedded
+   template literal if raw extraction would misread escapes.
+3. Run the build's relevant schema/import validation, then
+   `node tools/probe-conquest-layer-plan.mjs` and read its fresh JSON.
+4. In full access with `CODEX_SANDBOX != seatbelt`, one shared foreground server and
+   `TMPDIR="$PWD/.tmp"`, run `node tools/probe-conquest-board.mjs 2>/dev/null`; read
+   its fresh JSON/screenshots.
+5. Run unchanged adjacent owners:
+   `node tools/probe-accessibility.mjs 2>/dev/null`,
+   `node tools/probe-mayhem-mode.mjs 2>/dev/null`, and
+   `node tools/probe-custom-battle-builder.mjs 2>/dev/null`; read every fresh JSON and
+   require `ok:true`, zero failed steps/pageerrors/realErrors.
+6. Execute Bind A and Bind B separately; record exact-red isolation and byte-identical
+   restore hashes; rerun both focused probes green.
+7. `git diff --check`; verify only allowed files; MD5 `build/base.html` remains
+   `c9db83fa99230ffb95bdfdfe059f3fb9`; generated output changes only through build.
+8. Commit with `git commit -F <message-file>`, push, then rerun both planning probes
+   and read 13/13 and 24/24 fresh JSON.
+
+The full serialized 140-row battery is deferred to the playable transport-loop
+release checkpoint in §8.20 unless a shared-surface regression or explicit Aaron
+instruction requires it earlier.
+
+### 8.23 Final-law boundary
+
+D503 authorizes only the later Slice-1 charter above. It does not itself take runtime
+DRIVE or authorize implementation. LANE-019 returns to unowned CONTRACT. The next
+runtime session must take DRIVE in a standalone committed ledger edit, then implement
+exactly Slice 1 and stop at its clean boundary. No simultaneous edits.

@@ -4,6 +4,75 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D503 — AARON LOCKS ARC 7 PACKAGE A: 36 OPERATIONAL CATCHMENTS, TWO-MONTH HYBRID AUTHORITY, AND A READ-ONLY TERRITORY BOARD AS SLICE 1 — [AARON + CHATGPT/CODEX 5.6 SOL ULTRA, FINAL DESIGN LAW] (2026-07-21)
+
+**AARON:** "execute option a." The selected architecture is Package A. Its Why
+lines are locked: 36 territories preserve eastern, western, coastal, border-state,
+and Trans-Mississippi teaching while remaining legible by keyboard, screen reader,
+and ordinary viewport; a two-month turn gives operational sequence without the
+monthly package's 48-turn ledger/UI burden; and hybrid authority keeps sourced
+physical availability separate from player-authored territory/node/service receipts,
+so canonical history is never rewritten and the player's result is never preordained.
+
+The exact 36 `CT-*` operational catchments and their packet/battle-library anchor
+assignments now live in `docs/design/unlocked-but-judged-design.md` §8.12. Territory
+authority is topological anchor membership, not decorative pixels, counties,
+transport nodes, tactical sites, or port states. CT-29 Missouri River-St. Louis and
+CT-30 Missouri Ozarks are admitted from the existing border-war battle/research
+family with no invented packet transport. Every packet anchor is assigned exactly
+once; explicit non-links and weak/Disputed rows remain visible.
+
+The campaign clock is 24 two-month turns from Jan-Feb 1861 through Nov-Dec 1864 plus
+one bounded Jan-Apr 1865 endgame interval. Sourced construction/physical eligibility
+may follow its exact dates. Historical captures, closures, repairs, and outcomes are
+comparison evidence only; actual control/service changes require `Your Timeline`
+receipts. Territories have control, nodes have operation, and services have condition
+(`open`, `degraded`, `cut`, `closed`, or `conditional`) rather than ownership.
+
+Rail, navigable river, road, and sea remain separate registries joined only by
+explicit source-backed interchange rows. They share a validation/evidence envelope,
+not a historical or persisted schema. Shared place text never proves interchange;
+non-links remain non-links; malformed rows fail closed; duplicate underlying
+claim/mode/date combinations are invalid; and one order cannot double-count modes.
+Historical enforces sourced dates/limits. Mayhem may make source-supported physical
+services eligible from turn 1 but cannot invent geography or erase provenance.
+Immutable `C.ruleset` remains sole authority.
+
+Package A's campaign values are law: one movement order and one attack opportunity
+per army/turn; one road territory or at most two same-mode transport edges; one
+heavy-transport order per side, with a second only through a later guarded existing-
+owner readiness read; amphibious movement consumes attack; cuts consume attack;
+source-backed repairs consume one full turn; and bypasses require their own edge.
+Conquest creates no currency. Every three territories produce one muster claim
+(three-per-turn cap), with at most one extra fully-held-theater claim. Three public
+directives grant one existing political-capital point and a symbol on completion; a
+three-symbol set grants one muster claim plus one existing-law loot draw. No reward
+may depend on casualties, atrocity, slavery, civilian harm, winner, score, or D74
+output.
+
+Council of War, terrain, hex, AI, battle, Chronicle, War Career, and Custom Builder
+boundaries are final. Hex is curated-site operational selection, never strategic
+movement or tactical truth. Terrain is later, public-domain, build-time, provenance/
+transform/LOD/text-fallback gated, and remains inside the existing media-budget
+owner. `bridgeArmy` and the existing shared fought/headless result path remain sole
+battle seams. Chronicle reads future receipts; War Career stays ladder-only; Custom
+Builder remains local/noncanonical. Fresh-start conquest later owns only a versioned
+`C.conquest` namespace; current saves are neither migrated nor converted.
+
+**Slice 1 is narrower than playable conquest:** exactly the source-backed 36-row
+registry, fail-closed normalization, and a read-only list-first/schematic board with
+provenance, uncertainty, and explicit non-links. It writes no state/save/localStorage,
+offers no campaign start, and contains no movement, economy, control, rewards, AI,
+battle, terrain assets, Chronicle, career, casualty, winner, score, or tactical
+output. The exact allowed files, two new same-commit probes, accessibility contract,
+Bind A fail-closed and Bind B provenance-integrity teeth, focused/adjacent gates, and
+transport-loop 140-row release point are in law §§8.21-8.22.
+
+LANE-019 returns to unowned CONTRACT for this Slice 1. Runtime remains closed until a
+fresh ChatGPT/Codex 5.6 Sol Ultra TOP LOOP takes DRIVE through a standalone committed
+ledger edit. No ARC 7 runtime, data, source, probe, asset, generated, schema, or save
+change occurred in D503.
+
 ## D502 — ARC 6 RESEARCH IS COMPLETE; ARC 7 REQUIRES A DEDICATED AARON-LOCKED CONQUEST LAW BEFORE RUNTIME — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS-ONLY RELEASE RECONCILIATION + CONTRACT RELAY] (2026-07-21)
 
 **ADJUDICATIONS:** `ARC_6_RESEARCH_COMPLETE` ·

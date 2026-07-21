@@ -3512,128 +3512,94 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **DRIVE (DESIGN-ONLY; PACKAGE A AARON-LOCKED; NO RUNTIME)**
+### LANE-019 · conquest-design-law — **CONTRACT (SLICE 1; PACKAGE A FINAL LAW; UNOWNED)**
 
-- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. This lock covers only the
-  final-law/docs milestone; it confers no runtime ownership.
-- **State:** DRIVE for design-law completion only. Runtime remains closed. The lane
-  returns to unowned CONTRACT for Slice 1 in the final-law commit; any later runtime
-  session must take DRIVE through a separate committed ledger edit.
-- **Design law:** `docs/design/unlocked-but-judged-design.md` §5 and §8 (D455 +
-  D502); `docs/design/strategic-rail-conquest-research-packet.md`;
-  `docs/design/strategic-water-transport-research-packet.md`; DECISIONS D455, D497,
-  D499, and D502. Politics/election and medicine are completed ARC 6 feeders but do
-  not authorize ARC 7 mechanics.
-- **Release boundary:** D502 adjudicates `ARC_6_RESEARCH_COMPLETE`,
-  `ARC_7_REQUIRES_DEDICATED_DESIGN_LAW`, and `ARC_7_RUNTIME_CLOSED`. The four D455
-  packet families are shipped; no additional packet is required before design. This
-  is not a territory graph, schema, runtime, or release authorization.
-- **Aaron lock (2026-07-21): PACKAGE A — 36 operational catchments / two-month
-  hybrid.** Aaron explicitly answered "execute option a." The final law must carry
-  Package A's exact territory list; 24 two-month turns plus a bounded 1865 endgame;
-  sourced physical-availability dates plus player-authored control/service receipts;
-  territory control with distinct node operation and unowned service-state edges;
-  a common evidence envelope with separate rail/water/road/sea registries joined by
-  explicit interchanges; one army order and one attack opportunity per turn; one
-  default heavy-transport order with a second only through a guarded existing-owner
-  readiness signal; cuts consuming attack, repair consuming one full turn, and
-  source-backed bypasses only; existing-economy muster claims/theater/objective
-  rewards with no new currency or D74 output lever; curated-site hex zoom separated
-  from strategy control; fresh-start conquest saves in a future separate namespace;
-  same-legal-order AI; `bridgeArmy`/shared-result/Chronicle ownership; accessible
-  list-first presentation; and fail-closed offline behavior. Package B/C are rejected
-  for this law milestone, not erased as design history.
-- **Acceptance criteria — the next design-law milestone, in full:**
-  1. Extend only `docs/design/unlocked-but-judged-design.md` §8; do not create a
-     second conquest plan, roadmap, schema, or design-law file.
-  2. Preserve D455's Aaron-locked envelope: both rulesets; an optional conquest
-     campaign beside the ladder; roughly 30-45 named territories plus hex zoom;
-     transport-real rail/river/road/sea movement; the four Risk lever families;
-     optional tactical/auto-resolved engagements; Council of War; public-domain
-     pre-baked real-ground/period-surface sites; sourced canonical-history / `Your
-     Timeline` juxtaposition.
-  3. Present Aaron 2-3 coherent architecture packages with recommendation and reasons
-     covering exact territory grain/boundaries; campaign turn scale; dated
-     availability and divergent control; node/edge/service ownership; separate versus
-     common transport interface; cuts/repairs/bypasses/reopening; movement/capacity;
-     reinforcements/theater/economy/objectives; hex interaction; save/fresh-start;
-     and any AI/bridge/result coupling. Do not decide one merely to advance the lane.
-  4. Every candidate territory map stays inside the approximate 30-45 envelope and is
-     evaluated against packet coverage/non-links, eastern/western/coastal/border/
-     Trans-Mississippi teaching, keyboard/screen-reader legibility, strategic-node vs
-     tactical-site separation, offline/public-domain asset budget, and fail-closed
-     state/save cost.
-  5. Compare at least coarse turn-owned state, event/delta ledger, and hybrid dated-
-     availability/player-control time models. Each comparison must address opening,
-     closure, cut, repair, capture, bypass, seasonal/conditional reach, and historical
-     versus `Your Timeline` authority without preordaining an outcome.
-  6. Decide whether transport modes share only an evidence envelope or also a runtime
-     interface. Before any schema, define referential integrity, mode-specific facts,
-     explicit non-links, date/control authority, absent/malformed fallback,
-     interchange, and double-count prevention. Packet compatibility alone is not a
-     joined-schema decision.
-  7. Preserve current owners: D159 aggregate logistics; blockade cotton/import/port/
-     recognition state; Real Diplomacy; Western Theater readout; `bridgeArmy` as the
-     sole bounded strategy→battle seam under D74; the existing auto-resolve/result
-     path; Chronicle/divergence as pure canonical/`Your Timeline` comparison; War
-     Career as ladder-based consequence-only; tactical terrain as battle-local; and
-     the Custom Builder as local/noncanonical.
-  8. Bound Council of War to pre-battle site/commitment/equipment/doctrine choices
-     through existing owners; no parallel battle resolver, outcome write, OOB
-     invention, or D74 output lever. Bound builder inheritance to reusable site/
-     terrain selectors that fail closed without conquest machinery.
-  9. Define the terrain pipeline before asset work: USGS elevation plus LoC/NPS
-     period-map evidence, pre-baked candidate sites, license/provenance, geographic
-     transform, resolution/LOD, land-cover inference, offline/embed budget,
-     accessibility fallback, and site-selection honesty. Google Maps remains barred.
-  10. Ratify the first smallest runtime slice as the territory-board substrate or
-      narrow it further. The present candidate is final-law registry + read-only,
-      keyboard-operable board shell only: no movement/control writes, economy,
-      reinforcement, objectives, Council of War, terrain assets, resolver routing,
-      AI, Chronicle receipts, War Career effects, or saves.
-  11. Specify Historical/Mayhem plausibility and fail-closed authority explicitly.
-      `MAYHEM_PUBLIC_READY=true` does not make settings/localStorage the owner;
-      immutable `C.ruleset` and the shipped picker contract remain authoritative.
-  12. Finish with exact Slice-1 allowed/do-not-touch files, negative binds, focused and
-      adjacent gates, artifact readback, release battery point, and provider/lock
-      state. Stop before runtime and commit/push the completed law separately.
-- **Aaron decision/HALT gates:** Package A resolves the D502 architecture gates for
-  the final law. HALT if writing it exposes a new consequential fork, unsupported
-  topology, owner collision, or need for runtime/data/probe/asset/generated edits;
-  never invent a substitute merely to complete the docs milestone.
-- **First-runtime boundary after law:** the territory-board substrate in §8.8 is the
-  maximum candidate Slice 1. It must be no-op/fail-closed when data/enablement is
-  absent or malformed and must leave the ladder, both rulesets, saves, bridge,
-  battles, canonical history, and generated output byte-identical.
-- **Probe design before implementation:** Slice 1 must author and green a new
-  filesystem-first `tools/probe-conquest-layer-plan.mjs` in the same commit as the
-  implementation; no red tooth lands earlier. It must assert D455/D502 locks, stable
-  and referentially valid IDs, source/provenance resolution, explicit non-links,
-  malformed/absent fail-closed behavior, ownership separation, no later-slice fields,
-  accessible board reachability/text fallback, and zero entry-point trace without
-  lawful enablement. Predeclare at least two binds: remove fail-closed normalization →
-  exactly its tooth red; erase a topology claim/source ref → exactly provenance/
-  integrity red; restore both byte-identically. Build, node/schema/importer, focused
-  plan/UI/accessibility, 1-3 adjacent owner probes, JSON/error readback, diff check,
-  post-commit planning probes, and the full serialized 140-row release battery in a
-  full-access non-Seatbelt session remain mandatory.
-- **Protected surfaces during the next milestone:** docs only. No `src/**`, `data/**`,
-  `tools/**`, `assets/**`, package, manifest, schema, save, probe, generated HTML, or
-  `build/base.html` change. Suite 140, schema 63, `_SAVE_VER=1`,
-  `MAYHEM_PUBLIC_READY=true`, frozen base MD5
-  `c9db83fa99230ffb95bdfdfe059f3fb9`, and D74 hold.
-- **Resume pointer:** continue docs-only from the standalone Package-A lock commit.
-  Extend only `docs/design/unlocked-but-judged-design.md` §8 into the final ARC 7
-  law; add the next DECISIONS entry and HANDOFF top amendment; replace this design
-  DRIVE with the complete unowned Slice-1 CONTRACT; run the prescribed build/base/
-  generated/diff/manual-inspection gates; commit/push docs only; rerun and read both
-  planning probes post-commit; prove clean `HEAD == origin/main`; STOP before
-  runtime. No simultaneous edits.
-- **Last-touched commit:** standalone docs-only Package-A design-lock commit
-  containing this entry.
-- **History:** created after all four ARC 6 feeders shipped; no runtime/data/probe/
-  asset/generated work began. D455's stale ARC-number mapping labels were corrected
-  against its own canonical arc list; no product choice changed.
+- **Owning tool:** none. Runtime DRIVE requires a fresh standalone committed ledger
+  edit by ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. No simultaneous edits.
+- **State:** CONTRACT for Slice 1 only. D503 completes the design law; it authorizes
+  no runtime until the separate DRIVE take.
+- **Design law:** `docs/design/unlocked-but-judged-design.md` §5 and §8, especially
+  §§8.11-8.23; DECISIONS D455, D497, D499, D502, and D503; the rail and strategic-
+  water packets. D503 records Aaron's exact answer: "execute option a."
+- **Package-A locks:** exactly 36 `CT-*` operational catchments and exact anchor
+  assignments; 24 two-month turns plus Jan-Apr 1865 endgame; sourced physical
+  eligibility separated from player-authored territory/node/service receipts;
+  territory control, node operation, and service condition; separate rail/water/
+  road/sea registries under one evidence envelope with explicit interchanges and
+  non-links; Historical dated plausibility versus Mayhem turn-1 eligibility for only
+  source-supported services; one army movement/attack, bounded heavy transport,
+  cuts/repairs/bypasses; existing-owner economy/theater/directive rewards; curated-
+  site hex; fresh-start future conquest state; same-order AI; D74-safe bridge/shared
+  result; Chronicle read-only; War Career ladder-only; Custom Builder local; and
+  list-first/offline/fail-closed presentation.
+- **Slice-1 acceptance criteria, in full:**
+  1. Add exactly one data owner, `data/conquest-territories.json`, containing the 36
+     law rows in exact ID/name/order with anchor, source, provenance, uncertainty,
+     explicit non-link, teaching-region, display-order, and dormant/read-only
+     enablement data only.
+  2. Add `src/114-conquest-board.js` and enroll it after current modules. Normalize
+     without mutation. Duplicate/missing IDs, names, anchors, sources, provenance,
+     core enablement, or malformed structure fail the whole registry closed.
+  3. Add one `src/98-h0-main-menu.js` entry control only when the normalized registry
+     and enablement are lawful. Under missing/malformed data, missing enablement, or
+     helper absence, there is zero control/label/handler trace.
+  4. Render a read-only semantic list as authority plus a schematic enhancement.
+     Show all 36 territories, provenance/uncertainty/non-links without color alone,
+     exact anchor evidence, and "read-only foundation; conquest play not yet enabled."
+     No start-campaign action exists.
+  5. Pointer and keyboard parity; programmatic names/headings/regions; logical focus,
+     visible focus, escape/return focus; 390px reflow; 200% zoom; high contrast;
+     reduced-motion safety; complete text fallback; no automatic motion.
+  6. No state or mechanic: no `G`/`C`, settings/localStorage, save/undo/import/export,
+     movement/control write, army/capacity, economy/reinforcement/theater/directive
+     reward, Council, terrain asset, hex action, resolver/AI/Chronicle/career, casualty,
+     winner, score, surrender, or tactical output.
+  7. Preserve D159, blockade, Real Diplomacy, Western Theater, `bridgeArmy`, shared
+     auto-resolve/result, Chronicle/divergence, War Career, tactical terrain, Custom
+     Builder, immutable `C.ruleset`, D74, and every current ladder/save behavior.
+- **Allowed files only:** new `data/conquest-territories.json`, new
+  `src/114-conquest-board.js`, `src/00-manifest.json`, `src/98-h0-main-menu.js`,
+  `tools/build.mjs`, new `tools/probe-conquest-layer-plan.mjs`, new
+  `tools/probe-conquest-board.mjs`, mechanically proved pin updates in both planning
+  probes, generated `civil_war_generals.html`, and `COORDINATION.md`/`DECISIONS.md`/
+  `HANDOFF.md` closeout. Every other source/data/tool/asset/package/save/schema/
+  tactical/generated/frozen-base surface is prohibited; `build/base.html` and
+  `tools/save-shape.json` cannot move.
+- **Probe design:** both probes land and green with implementation; no red tooth lands
+  beforehand. `probe-conquest-layer-plan` asserts the single D455/D502/D503 locks,
+  exact 36 IDs/names/order, unique anchor assignment, source/provenance/non-link
+  resolution, separate current owners/mode evidence, no later fields, exact allowed
+  scope, manifest/build enrollment, and documented planning-pin chains.
+  `probe-conquest-board` drives the real menu for 36-row list/schematic parity,
+  pointer/keyboard, focus/return, names/headings/regions, non-color cues, explicit
+  non-links, 390px/200%/contrast/reduced-motion behavior, no start action, and zero
+  trace under every absent/malformed/disabled/helper-absent variant. Fresh JSON:
+  `ok:true`, zero failed steps/pageerrors/realErrors.
+- **Negative binds:** A removes the fail-closed normalization/enablement guard and
+  exactly the board fail-closed tooth reds. B erases one claim/source reference and
+  exactly the plan integrity/provenance tooth reds. All other teeth stay green; source,
+  data, and generated output restore byte-identically with recorded MD5s.
+- **Gates:** build `GATE OK`; build schema/data/module readback; `node --check` every
+  touched/new JS/probe; focused plan + board probes and fresh JSON/screenshots;
+  unchanged adjacent accessibility, Mayhem-mode, and Custom Builder probes with fresh
+  JSON; both binds exact-red and byte-restored; `git diff --check`; allowed-file audit;
+  frozen base MD5 `c9db83fa99230ffb95bdfdfe059f3fb9`; commit `-F`; push; both
+  planning probes post-commit at 13/13 and 24/24 with zero errors. Browser work must
+  run full-access with `CODEX_SANDBOX != seatbelt`. The serialized 140-row battery is
+  due at the first playable transport-loop checkpoint unless a shared-surface red or
+  Aaron instruction moves it earlier. The new data owner must move data/schema
+  63 -> 64 with every count pin documented; suite membership remains 140 in Slice 1.
+- **Resume pointer:** fetch/status/HEAD/origin and pull only when clean; read
+  START-HERE, COORDINATION §1-§4 + this lane, HANDOFF D503, law §§8.11-8.23, both
+  conquest packet verdict/limits, then allowed owner seams. Take DRIVE in a standalone
+  committed ledger edit; run both planning probes post-lock; implement exactly Slice
+  1; verify every gate/artifact/bind; docs sync; commit/push; release the lock; prove
+  clean sync; STOP before transport movement.
+- **Last-touched commits:** D503 standalone design-lock `a3403da`; D503 final-law
+  commit containing this entry.
+- **History:** D502 created the design-only contract. Aaron chose Package A. D503
+  completed the final law and returned the lane unowned; no ARC 7 runtime/data/probe/
+  asset/generated/save work began.
 
 ---
 
