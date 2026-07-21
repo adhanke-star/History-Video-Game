@@ -4,6 +4,68 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D499 — STRATEGIC WATER-TRANSPORT RESEARCH IS READY FOR CONQUEST-LAW INPUT, WITH CONDITIONAL REACH AND PORT STATES KEPT DISTINCT — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS/RESEARCH] (2026-07-21)
+
+The D498 packet is complete at
+`docs/design/strategic-water-transport-research-packet.md` with the single verdict
+`READY_FOR_CONQUEST_LAW`. Its 32 historical source records support 95 claim rows:
+41 candidate water nodes, 29 candidate water edges, 13 chokepoint/closure/reopening
+rows, and 12 amphibious/riverine transfer cases. The provenance breakdown is 54
+Verified, 41 Inferred, and 0 Disputed. Seven transfer cases meet the two-independent-
+family floor and span the required early western opening, Mississippi passage/
+interchange, coastwise/amphibious transfer, port closure, and late-war chokepoint/
+port families.
+
+**DECISION: accept the packet as evidence input for a future ARC 7 conquest law, not
+as a gameplay graph.** The verified core includes the Fort Henry opening with a
+bounded Muscle Shoals reach; staged lower/middle Mississippi changes; the Vicksburg
+battery-run/Bruinsburg transfer; Red River reach, low-water stranding, and engineered
+withdrawal; the Roanoke amphibious route; and the distinct Fort Fisher and Mobile Bay
+port-state sequences. Exact troop, ship, draft, and water-level quantities remain
+historical evidence only.
+
+Material corrections/refutations are binding:
+
+- Actual passage, navigable water, port control, transport availability, blockade
+  status, and rail-water interchange are six different claims. A successful battery
+  run does not open a river; capture of an entrance does not necessarily capture its
+  city.
+- Mobile Bay entrance control closed the port to runners while Mobile city remained
+  Confederate-held. Fort Fisher's fall closed Wilmington's approach before the city
+  itself fell. Apparent date differences describe separate state changes, so no row
+  was falsely classified Disputed.
+- Port Royal became a base after a channel survey, but that did not itself close
+  Charleston or Savannah. Dahlgren's one-family Savannah-to-Beaufort observation
+  proves bounded late-war lift, not routine or instantaneous coastwise service.
+- The Peninsula evidence proves Army arrival at Fort Monroe and separately
+  conditional York/James reach; it does not prove a Fort Monroe-to-Yorktown Army
+  transport edge. The 1862 Drewry's Bluff advance is kept separate from the 1864
+  City Point/Bermuda Hundred operation.
+- The lower White-cutoff/Arkansas Post operation is retained Inferred because only
+  one family directly supplies that route. The cited reconnaissance could not reach
+  Little Rock in low water. The 1864 combined force did not establish an accomplished
+  large-force water edge to Shreveport. Potomac transport capacity, a complete North
+  Carolina sounds graph, Charleston/Savannah routine transfer, and Texas/Galveston
+  water edges remain below the source floor.
+
+The D497 boundary holds. Water and rail packets expose compatible dated endpoint,
+mode/interchange, control/change, break/limit, qualitative-availability, provenance,
+and case-reference categories, but their IDs remain packet-local. A city appearing
+in both registers does not prove wharf/depot/track transfer. No joined schema,
+territory graph, time model, movement/capacity value, ownership rule, repair action,
+save shape, runtime, data, probe, asset, or generated change is authorized.
+
+**Exact next: D500, a docs-only medicine/hospitals/disease scope adjudication.** Read
+D169; the shipped disease-medical data/module/probe; the relevant historical-medical,
+human-cost, codex, and women-in-war records; D455 §§4f/6/7; both shipped conquest
+research packets; and LANE-002's Soldier's Story contract read-only. Choose exactly
+one `PACKET_JUSTIFIED`, `EXISTING_RESEARCH_SUFFICIENT`, or
+`NEEDS_PRELIMINARY_SOURCE_INVENTORY`; record the existing-surface crosswalk, ARC 8
+consumer/gap, source floor, dignity law, forbidden deterministic outcome formulas,
+external-research authority, protected surfaces, and precise next task. Do not author
+a medicine packet in D500 and do not mutate runtime/data/probes/assets/generated
+output. LANE-018 remains SHIPPED; no LANE-019 exists.
+
 ## D498 — ARC 6 NEEDS ONE STRATEGIC WATER-TRANSPORT PACKET; BLOCKADE ECONOMICS AND NAVAL COMBAT STAY OUT — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS-ONLY SCOPE ADJUDICATION] (2026-07-21)
 
 The post-D497 water candidate is justified, but not under the broad label “naval /

@@ -3397,16 +3397,24 @@ next green commit and confer through this ledger instead of permitting simultane
   control/closure/reopening, amphibious transfer, limitations, and rail interchange.
   Blockade economics and naval combat remain cross-references/exclusions. D498's full
   charter is binding; compatible rail/water evidence fields do not authorize a joined
-  schema.
-- **Resume pointer:** LANE-018 is closed. Exact next is a fresh-session,
-  research-only authorship of
-  `docs/design/strategic-water-transport-research-packet.md` under D498's complete
-  geography/date, source-family, output-schema, acceptance, exclusion, validation,
-  dignity, rail-interface, and HALT charter. External historical research is
-  authorized only for that packet. Do not design naval combat or ARC 7 mechanics;
-  do not mutate runtime/data/probes/assets/saves/generated output. No new lane is
-  required for one session; commit a Contract Relay lane first if work must cross a
-  session or provider boundary.
+  schema. **D499 water-packet completion:**
+  `docs/design/strategic-water-transport-research-packet.md` is shipped
+  `READY_FOR_CONQUEST_LAW` with 32 historical source records and 95 claim rows (41
+  nodes · 29 edges · 13 chokepoint/closure/reopening rows · 12 transfer cases; 54
+  Verified · 41 Inferred · 0 Disputed). Seven transfer cases meet the independent-
+  family floor. Conditional/failed reach stays explicit; no joined rail/water schema,
+  territory graph, mechanic, value, or protected-surface change is authorized.
+- **Resume pointer:** LANE-018 is closed. Exact next is D500, a separate docs-only
+  medicine/hospitals/disease scope adjudication. Reconcile D169, the shipped disease-
+  medical and human-cost systems, historical medical/codex/women-in-war records,
+  D455 §§4f/6/7, both shipped conquest packets, and LANE-002's Soldier's Story
+  contract read-only; choose exactly one `PACKET_JUSTIFIED`,
+  `EXISTING_RESEARCH_SUFFICIENT`, or `NEEDS_PRELIMINARY_SOURCE_INVENTORY`. Record a
+  complete next contract if needed, but do not author the medicine packet in D500.
+  External historical research is not yet authorized. Do not mutate runtime/data/
+  probes/assets/saves/generated output. No new lane is required for one session;
+  commit a Contract Relay lane first if unfinished work must cross a session or
+  provider boundary.
 - **Slice history:** SLICE 4 SHIPPED as D494 (2026-07-21, ChatGPT/Codex 5.6 Sol
   Ultra): the complete serialized battery is green at `fc8ccc2`. D492 and D493 were
   the two real root fixes. Antietam's 360s timeout produced no fresh artifact and was
@@ -3480,7 +3488,7 @@ next green commit and confer through this ledger instead of permitting simultane
   alone (a teardown hang after a green artifact; a wedged :8765 server). AD-7 game
   67fbe534→7b83d48b · srcTree 8174d79d→3ce634af · manifest 9312db81→a6699981
   (base/dataTree/journey/suite/focused/runtime/command/commandProbe hold).
-- **Last-touched commit:** D498 docs-only strategic-water packet scope adjudication (LANE-018 remains closed; D494 release SHA `fc8ccc2`; slice 3: D491; slice 2: D490; slice 1: `32051dd`; charter: `358bf35`).
+- **Last-touched commit:** D499 docs/research strategic-water packet completion (LANE-018 remains closed; D494 release SHA `fc8ccc2`; slice 3: D491; slice 2: D490; slice 1: `32051dd`; charter: `358bf35`).
 - **History:** chartered 2026-07-20 immediately after the D488 politics-packet
   close, per the packet's READY_FOR_SPEC verdict and the LANE-017 resume pointer's
   T2-DISCHARGED forward addendum. Charter recon (read-only at `d8ca128`): T29
