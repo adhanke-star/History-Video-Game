@@ -4,6 +4,37 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D495 — THE T4 BRIGADE FLAG-MARKER TAIL IS STALE AND STRUCK: D131/D197 ALREADY SHIP THE PROCEDURAL FIELD-MARKER CONTRACT — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS-ONLY ADJUDICATION] (2026-07-21)
+
+The post-D494 standing T4 candidate is not a new slice. Live recon confirms that T10
+already renders battle/date/theater/army-aware colours on every visible brigade in 2D
+and 3D, adds CVD-safe shape+label corps cues and the selected-unit HUD treatment,
+fog-gates enemy identity, re-skins reinforcements and fresh phase groups, and disposes
+its texture/mesh resources. D197 already deepened the HUD readability. T21/T24 deepen
+the same marker presentation without creating an uncovered flag-marker capability, and
+`probe-flags` owns the historical selection, render, fog, purity, CVD/HUD, lifecycle,
+and coexistence teeth. Rebuilding a separate T4 marker system would violate D91's
+deepen-not-replace rule and duplicate D131/D197.
+
+The only genuinely distinct flag-related candidate is surviving-colours imagery. It is
+not a procedural-marker increment and remains closed until a separate charter names each
+asset's source, license, provenance, dignity treatment, accessibility fallback, and
+media-budget effect. No image is authorized by this adjudication. Flagship-unit state is
+also rejected as a tactical-marker selector: `src/67-flagship-units.js` is strategic
+stewardship/readout state with capped bridge effects, while T10 derives tactical identity
+from the battle roster. Coupling them would risk strategic-state leakage into tactical
+identity and hidden-enemy disclosure; a future presentation-only cross-reference, if
+wanted, must remain read-only and cannot choose or reveal a field marker.
+
+Therefore the T4 standing queue row is discharged with no LANE-019. Runtime, probes,
+data, assets, generated HTML, suite 140, `_SAVE_VER=1`, and media counts do not move.
+No safe replacement implementation is fully contracted. The exact next bounded task is
+a fresh docs-only scope adjudication for the ARC 6 strategic rail research packet, the
+first remaining packet in D455 §7's rail-before-naval dependency order. It must reconcile
+the existing logistics/rail system and battle-build research before deciding whether a
+new packet is non-duplicative; implementation remains closed until that adjudication
+produces a committed law/contract.
+
 ## D494 — ARC 5 RELEASED: LANE-018 IS SHIPPED AFTER THE 140-ROW NO-REGRESSION BATTERY — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-018 VERIFY] (2026-07-21)
 
 The serialized ARC 5 release checkpoint is fully green. The first complete run exposed

@@ -3377,13 +3377,19 @@ next green commit and confer through this ledger instead of permitting simultane
   ride the 140-row suite; adjacents per slice as named. Browser probes SERIALIZED
   foreground `2>/dev/null` on the 8 GB Mac (TMPDIR set, shared :8765, artifact JSON
   read every run), or a full-access non-Seatbelt cloud session.
-- **Standing queue behind this lane:** T4 brigade flag markers (Phase H1b, CVD-safe
-  runtime-drawn, zero embed bytes, its own ledger charter) — the ratified tail
-  candidate; LANE-002 5b keeps its S-04 fresh-context reservation; ARC 6 rail/naval/
-  medicine packets remain session-fillers; ARC 7/8/9 queue behind ARC 5/6.
-- **Resume pointer:** LANE-018 is closed. Exact next is a fresh ledger-only charter
-  for T4 brigade flag markers (Phase H1b; CVD-safe runtime-drawn; zero embed bytes).
-  Do not implement before that lane and its acceptance contract are committed.
+- **Standing queue behind this lane:** **D495 stale-candidate adjudication:** the T4
+  brigade flag-marker tail is STRUCK as already discharged by D131/D197. T10 already
+  owns the battle-aware, CVD-safe, fog-gated, lifecycle-safe 2D/3D field-marker system;
+  no LANE-019 exists. Surviving-colours imagery remains a separate closed media
+  candidate requiring its own source/license/provenance/dignity/accessibility/budget
+  charter. Flagship stewardship state cannot select or reveal tactical identity.
+  LANE-002 5b keeps its S-04 fresh-context reservation; ARC 6 rail/naval/medicine
+  packets remain the roadmap candidates; ARC 7/8/9 queue behind ARC 6.
+- **Resume pointer:** LANE-018 is closed. Exact next is a fresh docs-only scope
+  adjudication for the ARC 6 strategic rail research packet, first in D455 §7's
+  rail-before-naval order. Reconcile the shipped logistics/rail system and existing
+  battle-build research before deciding whether a new packet is non-duplicative.
+  Runtime and a new lane remain closed until that adjudication yields a contract.
 - **Slice history:** SLICE 4 SHIPPED as D494 (2026-07-21, ChatGPT/Codex 5.6 Sol
   Ultra): the complete serialized battery is green at `fc8ccc2`. D492 and D493 were
   the two real root fixes. Antietam's 360s timeout produced no fresh artifact and was
@@ -3457,7 +3463,7 @@ next green commit and confer through this ledger instead of permitting simultane
   alone (a teardown hang after a green artifact; a wedged :8765 server). AD-7 game
   67fbe534→7b83d48b · srcTree 8174d79d→3ce634af · manifest 9312db81→a6699981
   (base/dataTree/journey/suite/focused/runtime/command/commandProbe hold).
-- **Last-touched commit:** D491 Slice 3 (this commit; slice 2: D490; slice 1: `32051dd`; charter: `358bf35`).
+- **Last-touched commit:** D495 docs-only stale-candidate adjudication (LANE-018 remains closed; D494 release SHA `fc8ccc2`; slice 3: D491; slice 2: D490; slice 1: `32051dd`; charter: `358bf35`).
 - **History:** chartered 2026-07-20 immediately after the D488 politics-packet
   close, per the packet's READY_FOR_SPEC verdict and the LANE-017 resume pointer's
   T2-DISCHARGED forward addendum. Charter recon (read-only at `d8ca128`): T29
