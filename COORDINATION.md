@@ -3204,6 +3204,200 @@ next green commit and confer through this ledger instead of permitting simultane
   flagship markers render in src/67; R-7's exact provenance is the T14 bug-hunt
   deferred-log ("per-situation gating of the R-3 static triggers").
 
+### LANE-018 · gm-completion — **DRIVE (chartered ledger-only; ARC 5 per the D455 ladder, unblocked by the D488 politics packet)** (§4e: AI-GM persona choice · muster-roll desk surface · the 1864 election bind · the Transfer AI-GM rider)
+
+- **Owning tool:** Claude Code (Fable 5) — DRIVE taken IN this ledger-only charter
+  commit (the LANE-014 `489cfc4` / LANE-017 `023ec91` precedent). The §4 TOP-LOOP
+  resolution: TOP LOOP = Claude Code / Fable 5 (xhigh, the session model); helpers
+  Sonnet low/med mechanical · Haiku pure reads · Opus high default-refute/reasoning,
+  model+effort explicit per call. No simultaneous edits by any provider.
+- **State:** DRIVE — this entry IS the acceptance contract. Charter recon was
+  read-only against the clean pushed D488 boundary (`d8ca128`).
+- **Design law:** DECISIONS D455 §7's ARC 5 row (`unlocked-but-judged-design.md` §4e +
+  §7: "AI-GM (player-choice persona) + the muster-roll UI + the election bind") ·
+  **`docs/design/politics-election-research-packet.md` (D488) — §3 the bind's exact
+  data needs and §3.5 the design recommendation are VERBATIM LAW for slice 3; §4's
+  seven risk notes are law for every slice; §5's ten probe-teeth recommendations are
+  the teeth basis; §6's traps gate exact-number data rows** ·
+  `docs/design/war-career-loop-design.md` §17 (direct-mutator parity, IF any
+  decision-card UI ships — none is chartered) · RATING-SYSTEM-DESIGN.md §12/§15 (the
+  D173 AI-GM shadow + D113 election-relief law) · D74 (capped inputs, never output
+  gates; politics READS battles, never writes combat) · the D149 restored-save
+  sanitation law · `_SAVE_VER=1` · frozen `build/base.html` (NEVER edited — the
+  temptation is a HALT needing Aaron's explicit override) · the D412 docs law.
+- **CHARTER ADJUDICATIONS (recorded at charter; do not re-litigate):**
+  1. **§4e.4's in-battle half is ALREADY DISCHARGED** (T29 `T29-muster-roll-ui.js`
+     shipped the HUD inspect-expand as LANE-002 slice 5a, D357). The half chartered
+     here is the STRATEGIC-DESK surface the V1-CHECKLIST deferral also named ("the
+     full muster-roll inspect-expand / 'Army Register' UI") — the D455 packet row is
+     half-stale (the T1-sweep class), recorded here rather than silently rebuilt.
+  2. **Transfer's remaining gap is CONFIRMED as the AI-GM side** (charter recon:
+     `cmdEnemyShadow` selects with zero theater friction while the player pays the
+     D354 readiness malus; `data/ratings.json` aiGm.`_note`'s "Transfer remains
+     blocked until generals.json carries honest theater fields" is STALE — D322/D323
+     shipped the fields and `_cmdAiGmSnapshot` already carries
+     theater/theaters/theaterProvenance). The symmetry ships INSIDE the
+     Competitive-optimizer persona (slice 2); the persona-absent default stays
+     byte-identical.
+  3. **The election bind lands EXACTLY per the packet §3/§3.5:** `C.clock` stays the
+     ONE owner of `elected`/`resolved1864` (the one-shot support≥60 resolve in frozen
+     base.html is never edited); the extension seam is a NEW src/* politics interlink
+     registered post-`clkOnResolve` in src/90's `_t1Resolve` chain (the
+     econOnResolve/csFinance idiom — ONE guarded typeof call added), reading
+     `press.sentiment` and nudging ONLY channels the formula already reads
+     (weariness; the bounded 1862 capital nudge), capped, ZERO delta at neutral 50,
+     module INERT byte-identical when `data/politics.json` is absent. NO new lever
+     class (D74 absolute). The D113 `electionReliefBind` is a DIFFERENT SHIPPED bind
+     — the collision tooth is owed — and its SHAPE (config-driven pure function · one
+     named consumer · zero-by-construction outside its window/side · relaxes on the
+     existing flag) is the lever template.
+  4. **The packet's §4 risk notes are law:** the election is capped-input never
+     output-gated (losing Atlanta/the Valley CAN lose the election — that alt-history
+     IS the teaching; divergence/Chronicle already handles it); US flaws stay in
+     frame; CS dissent is conscription/impressment/inflation/habeas inside a polity
+     committed to slavery, NEVER proto-abolitionism; no CS election invention (Davis
+     served one six-year term — the CS mirror renders home-front pressure through the
+     src/81 side-gate ONLY); quote hygiene (attributed/legend-flagged rows stay so);
+     disputed numbers ship as ranges/Disputed display.
+  5. **The §6 traps GATE exact-number data rows** (Dubin/Martis seat counts · Martis
+     CS classification · Benton's soldier-vote table · Neely's arrest totals ·
+     Mitchell's gold-285 · the Feb 1865 LA/TN resolution · the Douglass date; §7
+     dropped rows stay dropped) — any row wanting those numbers ships the range or
+     the Disputed stamp until the named authority is fetched and verified.
+  6. **Teaching-first politics:** soldier-vote/emancipation/13th-Amendment enter as
+     sourced cards + endings hooks ONLY. A MECHANICAL soldier-vote term is a HALT —
+     it needs its own chartered A/B evidence plan (packet §3.5/§2e: the lean is
+     Verified 75-80% but the aggregate count is Disputed, exactly what D74/D92 forbid
+     hard-coding).
+  7. **Suite stays 140.** Teeth land in existing owners (probe-oob · probe-command ·
+     probe-divergence · probe-endings · probe-economy · probe-save-slots ·
+     probe-ratings · probe-accessibility as each slice names); a genuinely new row
+     needs its own D### with the append-at-END pin-chain inventory (the D463 way);
+     none is expected.
+  8. **AD-7 plan-probe re-pins ride every runtime slice**; BOTH plan probes re-run
+     post-commit (war-career 24/24 · mayhem 13/13) — the standing LANE-013/014/017
+     adjudication carried verbatim.
+  9. **`_SAVE_VER` stays 1** — every new save field additive with D149 sanitation;
+     absent fields ⇒ byte-identical legacy behavior, probed. One writer path for
+     `clock.elected`/`clock.resolved1864` (the single-writer scan is a standing
+     tooth); `press.sentiment`'s writer stays src/34.
+  10. **Scan hygiene:** no probe names its scanned tokens in comments (the D482/D484
+     comment-token class, five instances by D484); any new `step(` in
+     war-career-adjacent probes re-pins the plan probes' step-count/md5 teeth with
+     documented chains.
+  11. **Citation-grade research routing:** helpers GATHER (Sonnet/Haiku), the top
+     loop verifies every claim against ≥2 independent NON-TERTIARY families before it
+     enters data (Wikipedia relay-only; repo registers corroborate but never count —
+     the D488 hygiene rulings).
+  12. **`MAYHEM_PUBLIC_READY` (true since D420) is untouched by this lane.**
+- **Acceptance contract (the ARC 5 slice ladder — each slice its own D### + focused
+  gates + ≥2 predeclared binds md5-proven byte-identical restores + commit -F + push +
+  HANDOFF EXACT-NEXT amendment in the same commit; loop rule between slices:
+  clean/committed/pushed · both plan probes re-run post-commit · context/usage check ·
+  orphan-Chrome kill):**
+
+  **SLICE 1 — THE MUSTER-ROLL DESK SURFACE (§4e.4, the remaining half; the natural
+  smallest slice).** The probe-vetted muster machinery (fldMusterRollHtml or its pure
+  sub-parts fldMenMeanOVR/fldBrigadeMuster — drive decides against the D106 node
+  shape) surfaces on the Command desk's Order-of-Battle board (T15
+  `fldCampaignOOBHtml`), PLAYER side only, as a T29-idiom disclosure per brigade row
+  (native button · aria-expanded/controls · always-in-DOM panel · delegated listener ·
+  S22 focus preservation). The enemy tree NEVER gains it (the Q8b scout law stands —
+  no intelligence leak through the muster panel). Fail-closed: a node lacking the
+  vetted shape ⇒ "" ⇒ byte-identical board; presentation-only, zero sim writes (the
+  D74 purity sweep extends over the new render path). — **Teeth (owner probe-oob;
+  adjacents probe-ratings + probe-command + probe-accessibility):** player-side
+  presence + disclosure aria/keyboard · fail-closed byte-identity (helper absent or
+  shape missing) · enemy-side ABSENCE · zero-sim-writes purity. **Binds:** (a) the
+  muster disclosure rendered on the ENEMY tree → the enemy-absence tooth red EXACTLY;
+  (b) the fail-closed conjunct killed (panel renders for a malformed node) → the
+  fail-closed tooth red EXACTLY.
+
+  **SLICE 2 — THE AI-GM PERSONA CHOICE AT SETUP (§4e.1) + THE TRANSFER SYMMETRY
+  RIDER (§4e.2, adjudication 2).** A campaign-setup control (the D486 src/107
+  normalized-token idiom, or the setup surface drive recon confirms; keyboard-operable
+  and labelled) offering the player-facing choice: **Historical persona** (the shadow
+  runs commanderMode=historical — `_cmdHistoricalDefault` tenure windows, so Davis
+  keeps Bragg through his documented tenure and Lincoln's chain cycles to Grant in
+  March 1864; teaching copy cites the tenure data) vs **Competitive optimizer** (the
+  role-scored selection PLUS the theater-fit symmetry: the shadow's effective ratings
+  pay the SAME bounded cross-theater friction the player pays, through the existing
+  `_cmdTransferMalus`-class caps, so the optimizer prefers in-theater command; the
+  "no hidden Transfer" readout line updates to disclose the friction honestly).
+  ABSENT choice ⇒ today's tier-derived behavior BYTE-IDENTICAL (fail-closed
+  normalization, the D486 precedent); the Historical persona never pays friction (the
+  shipped player-side "historical default command never pays it" law mirrored).
+  Enemy leadership is a bridge input: every moved value ships the honest A/B log with
+  both values, and the touched battles' own probes are the direction authority (the
+  D481/D482 practice). — **Teeth (owner probe-command; adjacents probe-oob +
+  probe-save-slots + probe-accessibility):** absent-choice byte-identity (shadow
+  snapshot JSON-equal at default) · persona honored BOTH ways (historical ⇒ tenure
+  default; competitive ⇒ role top pick under friction) · friction exact-cap clamp ·
+  save additive-sanitized · setup control keyboard/labelled. **Binds:** (a) the
+  absent-choice default flipped at the normalization seam → the byte-identity tooth
+  red EXACTLY; (b) the friction malus pushed past its cap → the cap tooth red
+  EXACTLY.
+
+  **SLICE 3 — THE 1864 ELECTION BIND (§4e.3, the load-bearing slice; packet §3/§3.5
+  VERBATIM per adjudication 3).** NEW `data/politics.json` (press.json conventions):
+  `cycles.1862-midterm` — teaching-only card + at most a bounded capital nudge, NO
+  game-state gate, teaching BOTH halves (opposition surges AND the administration
+  keeps the gavel; the seat swing displayed as the 28-31 range per adjudication 5);
+  `cycles.1864-presidential` — documents the shipped support formula, adds the
+  bounded press term via the interlink, carries the §2b Verified teaching anchors
+  (the referendum framing · the August nadir → Mobile Bay/Atlanta/the Valley
+  reversal · 212-21/~55% from the NARA record · the close pivotal states); the CS
+  mirror rows (§2f) rendered ONLY through the src/81-divergence.js:162-175 side-gate
+  (a CS campaign NEVER renders election language). The NEW src/* politics interlink
+  module per adjudication 3 (post-clkOnResolve · press.sentiment → bounded capped
+  weariness delta · zero at neutral 50 · inert byte-identical absent config · writes
+  NEITHER clock.elected NOR clock.resolved1864). Sourced soldier-vote/emancipation/
+  13th-Amendment cards + endings hooks per adjudication 6 (teaching-first; every row
+  ≥2 sources or Inferred/Disputed displayed). — **Teeth: the packet §5's TEN
+  recommendations ARE the basis** (formula-neutrality/fail-closed · one-shot ·
+  single-writer scan · side-gate both ways · D74 output-wall extension · D113
+  collision · teaching-honesty direction guards · source-floor gate-4e sibling · §17
+  parity IF a decision UI ships (none chartered) · legacy-save byte-identity),
+  landing in existing owners per adjudication 7 (probe-divergence the side-gate/cards
+  · probe-endings the accessor/hooks · probe-command the D113 collision ·
+  probe-economy/probe-save-slots the interlink neutrality + legacy-save — exact
+  placement at drive). **Binds:** (a) the neutrality conjunct killed (neutral-50 or
+  absent-config still injects a delta) → the formula-neutrality tooth red EXACTLY;
+  (b) the side-gate inverted (a CS campaign renders election language) → the
+  side-gate tooth red EXACTLY.
+
+  **SLICE 4 — the ARC 5 release checkpoint.** The full serialized battery (suite at
+  its then-pinned count; `export TMPDIR="$PWD/.tmp"`; `npm run vet:noreg` ALONE on
+  the machine — NOTHING concurrent, not even browser-free helper workflows (the D487
+  lesson); war-career 900s; visual-fidelity 600s; every artifact JSON read ok +
+  0 pageerrors; reds root-fixed at exact labels, slow-Mac flakes re-run alone first
+  per the D454/D471/D477/D487 precedent) → on green flip this lane SHIPPED with the
+  battery SHA.
+- **Probe design (owners; how to run):** probe-oob (slice 1 owner) · probe-command
+  (slice 2 owner; D113/politics-tell teeth) · probe-divergence + probe-endings +
+  probe-economy/probe-save-slots (slice 3 teeth per adjudication 7) — all already
+  ride the 140-row suite; adjacents per slice as named. Browser probes SERIALIZED
+  foreground `2>/dev/null` on the 8 GB Mac (TMPDIR set, shared :8765, artifact JSON
+  read every run), or a full-access non-Seatbelt cloud session.
+- **Standing queue behind this lane:** T4 brigade flag markers (Phase H1b, CVD-safe
+  runtime-drawn, zero embed bytes, its own ledger charter) — the ratified tail
+  candidate; LANE-002 5b keeps its S-04 fresh-context reservation; ARC 6 rail/naval/
+  medicine packets remain session-fillers; ARC 7/8/9 queue behind ARC 5/6.
+- **Resume pointer:** SLICE 1 (the muster-roll desk surface) per this contract — the
+  charter session continues same-chat under D171, or a fresh session re-takes DRIVE
+  with a committed ledger edit if this lock was released at a boundary.
+- **Last-touched commit:** this ledger-only charter commit.
+- **History:** chartered 2026-07-20 immediately after the D488 politics-packet
+  close, per the packet's READY_FOR_SPEC verdict and the LANE-017 resume pointer's
+  T2-DISCHARGED forward addendum. Charter recon (read-only at `d8ca128`): T29
+  discharged the in-battle muster half (adjudication 1); cmdEnemyShadow theater-blind
+  vs the player's D354 friction (adjudication 2); the packet §3 seams verified live
+  (the src/90 `_t1Resolve` post-clkOnResolve chain · press.sentiment neutral-50 in
+  src/34 · the src/81:162-175 side-gate · `_endElected` at src/83 · the D113
+  electionReliefBind in data/ratings.json); `data/politics.json` does not yet exist;
+  the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
+  count, so an APPENDED LANE-018 entry is tooth-safe by construction.
+
 ---
 
 ## 6 · JOINT STRATEGY BOARD — Fable ⇄ Sol (cross-tool planning, not just locks)
