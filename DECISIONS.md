@@ -4,6 +4,142 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D500 — ARC 8 REQUIRES A CITATION-GRADE MEDICINE/HOSPITALS/DISEASE PACKET; D169 REMAINS THE SOLE STRATEGIC MEDICAL SYSTEM — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS-ONLY SCOPE ADJUDICATION] (2026-07-21)
+
+**ADJUDICATION: `PACKET_JUSTIFIED`.** D455 already charters medicine / hospitals /
+disease research and names its nonduplicative consumer: ARC 8 individual-soldier
+depth, specifically primary-source daily-life beats and person-safe wounding/medicine
+narratives after the War Career participation guard is satisfied. D169 proves the
+subject can be taught responsibly, but it was intentionally scoped as an aggregate
+War Effort pressure ledger, "not a hospital minigame." Its broad sources do not form
+the dated, claim-indexed corpus needed to distinguish historical care pathways,
+individual testimony, recovery outcomes, and unequal access without inventing a
+person's fate. A separate preliminary-source-inventory milestone is unnecessary:
+the authorized packet is itself the bounded evidence test, and its verdict must fall
+back to `NEEDS_MORE_RESEARCH` if the core source floor is not met.
+
+The existing-surface ownership boundary is binding:
+
+- D169 alone owns `C.medical`, aggregate sick/wounded/treated/disease-death pressure,
+  the medical-relief priority and its capped bridge, Campaign Kit disease teaching,
+  save sanitation, UI, and every current medical formula/value. The packet may
+  explain historical context but may not restate those values as a new model.
+- Human Cost alone owns aggregate death-scale, disease-share, mourning, names, and
+  readout-only moral accounting. It cannot become a treatment resource or reward.
+- `data/women-in-war.json` is the canonical rich record for Clara Barton, Dorothea
+  Dix, Mary Edwards Walker, Harriet Tubman, Susie King Taylor, and other support
+  figures; short codex entries are cross-references, not authority to make a third
+  copy. Their `canMap:false` / civilian or support status holds.
+- LANE-002 5b alone owns citation-grade Soldier's Story replacement overlays. This
+  packet cannot select a 5b batch, change the live counts, create `ss:` rows, or use
+  a nurse, surgeon, civilian, relief worker, prisoner, or other support figure as a
+  combatant replacement.
+- War Career owns the participation and fate boundary. Before a proved person-to-unit
+  participation link, only generic pressure/risk teaching is eligible. Aggregate
+  casualties never establish a named wound, illness, survival, disability, return,
+  capture, or death. Canonical historical record and `Your Timeline` must remain
+  visibly separate.
+- The rail and water packets may supply dated transport context only. They do not
+  authorize hospital movement mechanics, a joined transport/care schema, or an ARC 7
+  design decision.
+
+**Authorized packet:** one docs/research artifact at
+`docs/design/medicine-hospitals-disease-research-packet.md`. External historical
+research is expressly authorized for that packet only. The scope is 1861–1865 and
+is evidentiary rather than mechanical: dated field aid, dressing-station, ambulance,
+field-hospital, general-hospital, rail/water evacuation, institutional-care, illness,
+wounding, convalescence, disability, discharge, return-to-duty, and death categories;
+Union, Confederate, USCT, civilian-relief, contraband/refugee-camp, women, and Black
+medical-labor perspectives where the surviving record supports them; and case
+evidence suitable for generic teaching, a named historical record, or a future
+`Your Timeline` narrative category. Symmetry must not be forced, and systemic
+disparity must not be converted into a racial or sectional competence stereotype.
+
+The packet contract is:
+
+1. Title, date, status, governing D500 decision, and one final verdict.
+2. Purpose; scope; and explicit exclusions.
+3. Existing-surface crosswalk covering D169, Campaign Kit, Human Cost, codex,
+   women-in-war, primary sources, War Career, LANE-002 5b, and rail/water context.
+4. Research method and source-independence law.
+5. Stable source register with family, type, repository, coverage, durable locator,
+   access note, and confidence.
+6. Stable claim register resolving every source ID and separating exact clinical or
+   quantitative claims from contextual claims.
+7. Historical care-chain category register, with dates, side/theater limits,
+   evidence bounds, and no implied universal sequence.
+8. Disease- and wound-narrative category register, including what can be taught
+   without diagnosis, treatment, outcome, immunity, or probability invention.
+9. Dated hospital, evacuation, ambulance, relief, prison/camp, and institutional
+   case table.
+10. Individual evidence cases suitable for Soldier's Story design-law input, each
+    carrying identity/service/participation limits, provenance, sources, caution, and
+    `consumerEligibility` (`genericTeaching`, `namedHistoricalRecord`, and/or
+    `yourTimelineCategory`). Eligibility is evidence metadata, not runtime authority.
+11. Convalescence, disability, discharge, return-to-duty, and death evidence
+    boundaries.
+12. Women, Black medical labor, USCT unequal-care, civilian relief, and contraband /
+    refugee-camp coverage, including missing-record and institutional-power limits.
+13. Opening-, mid-, and late-war plus Union/Confederate/theater limitations.
+14. ARC 8 inputs versus architecture choices left open.
+15. Dignity, anti-spectacle, anti-Lost-Cause, race/gender, and source-integrity risks.
+16. Validation recommendations; remaining traps/source gaps; exactly one
+    `READY_FOR_SOLDIER_DEPTH_LAW`, `NEEDS_MORE_RESEARCH`, or `DO_NOT_MODEL` verdict;
+    and one precise next bounded task.
+
+Required coverage is at least six independently sourced case families spanning:
+(1) an early ad-hoc care/evacuation limit and the later Letterman/ambulance-system
+transition; (2) a documented battlefield-to-field/general-hospital or evacuation
+path; (3) camp disease/exposure without deterministic individual fate; (4) a
+documented convalescence, return, disability, discharge, or death boundary; (5)
+women's nursing/relief/institutional labor; and (6) Black medical labor, USCT unequal
+care, or contraband/refugee-camp care. At least one Confederate and one western or
+Trans-Mississippi limitation must be researched, but neither may be filled by
+analogy if evidence fails. Prisoner-camp material is eligible only where a dated
+witness or institutional record supports the claim; Barton grave-identification and
+Walker's imprisonment do not generalize Andersonville, Elmira, or prison medicine.
+
+**Source floor:** prioritize Army/Navy Official Records; the *Medical and Surgical
+History of the War of the Rebellion* and Surgeon General / hospital / ambulance
+records; Sanitary Commission and relief-organization reports; service, pension,
+casualty, hospital, and prison records; letters, diaries, memoirs, and newspapers with
+archival provenance; NARA, LOC, NLM, NPS, state archives, university special
+collections, and institutional medical museums; and specialist medical, disability,
+USCT, refugee-camp, gender, and social-history scholarship. Tertiary pages are
+discovery aids only. `Verified` requires two independent non-tertiary source
+families; one credible family is `Inferred`; credible conflict is `Disputed` with the
+disagreement stated. Mirrors or summaries of the same underlying record count once.
+A named individual claim cannot be `Verified` merely because two modern pages repeat
+one service record. Exact diagnoses, operations, medicines, quantities, causal
+claims, and outcomes require claim-specific support.
+
+**Dignity and deterministic-outcome prohibition:** illness, pain, amputation,
+disability, death, bodies, race, gender, captivity, and civilian care are teaching
+contexts, never collectibles, rewards, spectacle, or optimization inputs. The packet
+may identify narrative/state categories; it may not create a wound table, disease or
+death chance, immunity rule, treatment probability, recovery timer, capacity,
+medical bonus, cure, triage choice, player treatment action, forced outcome, or any
+other formula. It may not change casualty, winner, OOB, score, AI, tactical output,
+or D74 behavior, and it may not infer an individual fate from an aggregate rate.
+
+**Protected surfaces:** no `src/**`, `data/**`, `tools/**`, `assets/**`, package,
+manifest, schema, save, probe, suite, `build/base.html`, or generated-HTML change.
+Suite 140, schema 63, `_SAVE_VER=1`, `MAYHEM_PUBLIC_READY=true`, and frozen base MD5
+`c9db83fa99230ffb95bdfdfe059f3fb9` hold. No ARC 7/8/9 runtime, LANE-002 work, joined
+transport/care schema, medical mechanic, or new lane is authorized.
+
+**HALT** if the research only repackages D169/Human Cost/women-in-war; the core
+care-chain or unequal-care claims cannot meet their stated provenance; a named fate
+lacks identity/service/participation evidence; clinical spectacle or deterministic
+outcomes are needed to make the material usable; support figures must be laundered
+into `ss:` records; or completion requires architecture, runtime, data, probes,
+saves, assets, or generated changes.
+
+**Exact next:** author the authorized medicine packet as D501 in a separate
+docs/research commit, under this contract. Run the standard build/diff/manual-
+inspection gates, push, rerun both planning probes, and prove a clean synchronized
+boundary. Do not begin ARC 8 design law or implementation inside that packet.
+
 ## D499 — STRATEGIC WATER-TRANSPORT RESEARCH IS READY FOR CONQUEST-LAW INPUT, WITH CONDITIONAL REACH AND PORT STATES KEPT DISTINCT — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS/RESEARCH] (2026-07-21)
 
 The D498 packet is complete at
