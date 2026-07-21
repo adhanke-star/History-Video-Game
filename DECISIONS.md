@@ -4,6 +4,20 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D493 — LANE-018 SLICE-4 BATTERY ROOT-FIX 2: MAYHEM'S FROZEN BASELINE ACKNOWLEDGES THE D491 DATA COUNT AND ADDITIVE SAVE SIGNATURE — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-018 VERIFY] (2026-07-21)
+
+The restarted ARC 5 battery reached `mayhem mode` after every prior row passed, then
+stopped at exactly `EXCLUSIONS + BASELINES + SUITE` (23/24; zero pageerrors/realErrors).
+The tooth still pinned the pre-D491 data count (62) and pre-D491 enrolled `applySave`
+signature (`201fa746ea8e8755`), while its live evidence correctly read 63 and
+`820f02da7a3e6341`. The narrow root fix re-pins only those two D491-owned values and
+records their chain in the tooth; base md5, `_SAVE_VER`, roster/builder counts, suite
+count and row placement remain independently binding and unchanged. Node check and build
+GATE OK passed; mayhem reran 24/24 and adjacent save-slots 17/17, both with zero
+pageerrors. The planning probe's pre-commit dirty-scope guard correctly went red because
+this fix was uncommitted; it must rerun green post-commit. Exact next: resume the battery
+at `mayhem mode` and run through the remaining rows alone.
+
 ## D492 — LANE-018 SLICE-4 BATTERY ROOT-FIX 1: `politics.json` IS ENROLLED IN THE CLOSED-WORLD DATA-SCHEMA MAP — [CHATGPT/CODEX 5.6 SOL ULTRA, LANE-018 VERIFY] (2026-07-21)
 
 The ARC 5 release battery stopped at its exact `data schemas` label: 62/63 passed because

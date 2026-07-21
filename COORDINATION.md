@@ -3386,7 +3386,14 @@ next green commit and confer through this ledger instead of permitting simultane
   read every artifact JSON for current mtime, `ok:true`, zero failed steps and zero
   pageerrors, root-fix any real red at its exact label, then flip LANE-018 SHIPPED
   with the battery SHA. No provider may edit concurrently.
-- **Slice history:** SLICE-4 battery root-fix 1 shipped as D492 (2026-07-21,
+- **Slice history:** SLICE-4 battery root-fix 2 shipped as D493 (2026-07-21,
+  ChatGPT/Codex 5.6 Sol Ultra): the restarted battery passed through save-slots,
+  then mayhem's frozen-baseline tooth caught the two stale pre-D491 values: data
+  count 62→63 and the additive `applySave` signature `201fa746ea8e8755`→
+  `820f02da7a3e6341`. Only those pins moved; all other baseline conjuncts hold.
+  Mayhem reran 24/24 and save-slots 17/17 with zero pageerrors; build GATE OK.
+  Resume the battery at mayhem mode after the post-commit planning probe. SLICE-4
+  battery root-fix 1 shipped as D492 (2026-07-21,
   ChatGPT/Codex 5.6 Sol Ultra): the first battery stopped at `data schemas` because
   D491's new `politics.json` was absent from the validator's closed-world map (62/63,
   correctly fail-closed as unclassified). The narrow tooling fix enrolls `_meta`,

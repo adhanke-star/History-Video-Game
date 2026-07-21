@@ -2,6 +2,16 @@
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
+## 2026-07-21 — D493: LANE-018 BATTERY ROOT-FIX 2 — MAYHEM BASELINE RE-PIN
+
+The restarted battery passed every row through save-slots, then `mayhem mode` stopped
+at its one frozen-baseline tooth (23/24): D491 had moved data count 62→63 and the enrolled
+additive `applySave` signature `201fa746ea8e8755`→`820f02da7a3e6341`. The tooth now pins
+those live D491 values while preserving every other exclusion, base, `_SAVE_VER`, roster,
+suite-count, and placement conjunct. Mayhem reran 24/24 and save-slots 17/17 with zero
+pageerrors; node check and build GATE OK passed. Exact next: resume the battery at mayhem
+mode through row 140, serialized and alone.
+
 ## 2026-07-21 — D492: LANE-018 BATTERY ROOT-FIX 1 — POLITICS SCHEMA ENROLLMENT
 
 The ARC 5 battery stopped at `data schemas`: `politics.json` parsed but correctly failed
