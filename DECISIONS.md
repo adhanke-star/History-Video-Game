@@ -4,6 +4,96 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D498 — ARC 6 NEEDS ONE STRATEGIC WATER-TRANSPORT PACKET; BLOCKADE ECONOMICS AND NAVAL COMBAT STAY OUT — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS-ONLY SCOPE ADJUDICATION] (2026-07-21)
+
+The post-D497 water candidate is justified, but not under the broad label “naval /
+river / blockade.” Existing surfaces discharge three large parts of that phrase.
+The battle-build naval/river packet answers tactical buildability: Fort Donelson is a
+land battle, while Hampton Roads, Fort Henry, Mobile Bay, Island No. 10's decisive
+passage, and Vicksburg's ship/battery passages require a naval engine and remain
+teaching-only. `src/60-blockade.js` and its focused probe already own the blockade's
+economic/diplomatic progression, runner/capture teaching, ports-by-year readout,
+source corrections, save/UI behavior, and bounded strategic bridge. Real Diplomacy
+owns recognition, legal-neutrality, Laird-rams, King Wheat, and foreign-pressure
+interactions. D159 and the Western Theater readout own aggregate `N`-theater and
+river/rail teaching. None of those surfaces contains dated navigable-water links,
+port/river junctions, passage chokepoints, amphibious-transfer reach, control changes,
+or the railhead interfaces ARC 7 needs.
+
+**DECISION: authorize one bounded packet at
+`docs/design/strategic-water-transport-research-packet.md`.** Its subject is
+strategic water transport and reach. Blockade economics remains a cross-reference;
+blockade status enters only when it changes whether a port or coastal link can
+support transport. Naval combat, fleet construction, ship statistics, commerce
+raiding, foreign procurement, and blockade formulas remain closed.
+
+The packet's binding charter is:
+
+- **Geography/date:** 1861-1865; the Mississippi system and major tributary war
+  corridors (Ohio feeders only where material, Mississippi, Tennessee, Cumberland,
+  Arkansas/White/Red where evidence supports reach); Chesapeake/James/Potomac and
+  North Carolina sounds; Atlantic and Gulf coastwise links; major military ports,
+  river landings, rail-water junctions, and immediately relevant offshore approaches.
+  Cover eastern, western, Gulf/Atlantic, border-feeder, and Trans-Mississippi limits.
+- **Research questions:** dated navigable links and endpoints; direction or seasonal/
+  water-level limits where sourced; transfer points; forts, batteries, bars, bends,
+  canals, and geographic chokepoints affecting passage; capture/closure/reopening;
+  blockade control only where it changes transport reach; amphibious and riverine
+  concentration cases; fleet/transport availability as historical evidence only;
+  and interfaces with D497 rail nodes/edges. Distinguish navigable water, military
+  passage, port control, transport availability, and blockade status.
+- **Source families:** Navy and Army Official Records; Secretary of the Navy/War
+  Department reports; vessel/transport logs and period charts/maps; NARA, LOC, NHHC,
+  NPS, USACE and state archives; institutional port/river histories; and specialist
+  scholarship such as McPherson, Symonds, Browning, Hearn, Bearss, and corridor-
+  specific studies. Tertiary sources are discovery aids only. Verified requires two
+  independent non-tertiary families; one-family claims are Inferred and conflicts are
+  Disputed.
+- **Required output:** purpose/scope/exclusions; existing-surface crosswalk; method;
+  source register; stable candidate water-node and water-edge tables with dated
+  endpoints, mode, navigability/passage limit, control/change, provenance and sources;
+  a chokepoint/closure/reopening table; an amphibious/riverine transfer case table;
+  opening/mid/late-war summaries; theater and Trans-Mississippi limitations; rail-
+  interface categories; ARC 7 inputs versus choices left open; D74/source/dignity
+  risks; validation recommendations; remaining traps; exactly one
+  `READY_FOR_CONQUEST_LAW` / `NEEDS_MORE_RESEARCH` / `DO_NOT_MODEL` verdict; and a
+  precise next task.
+- **Required cases:** at least five independently sourced cases spanning (1) an early
+  western river opening, (2) a Mississippi passage/interchange, (3) a coastwise or
+  amphibious army transfer such as the Peninsula/NC coast family, (4) a port closure
+  or reopening, and (5) a late-war chokepoint/port case. Fort Donelson/Vicksburg may
+  be cross-referenced but their land-battle findings are not re-authored. Do not force
+  a candidate if it misses the source floor.
+- **Acceptance:** every proposed link resolves to evidence, endpoints, and dates; no
+  line on a hydrographic map silently proves year-round navigation or military
+  passage; forts/batteries influence a historical passage record but never become a
+  combat formula; rail and water share compatible evidence categories without a
+  joined schema; exact quantities remain evidence; no final territories, movement
+  costs, capacities, turns, bonuses, combat effects, ownership rules, or historical
+  outcomes are selected; and the packet states what ARC 7 law must decide.
+- **Exclusions:** no ship-vs-ship or fleet tactical engine; no ship classes/stats for
+  gameplay; no naval AI; no blockade/economy/diplomacy rewrite; no territory graph;
+  no runtime/data/probe/save/asset/generated change; no Fort Pillow spectacle or
+  scored atrocity treatment; no D74 output gate.
+- **Validation concept:** a future docs guard may check headings, source floor, unique
+  IDs, endpoint/source referential integrity, provenance tokens, date order, nonempty
+  passage cautions, rail-interface fields, remaining traps, one verdict, and forbidden
+  gameplay fields. It must not force navigability, outcomes, boundaries, or a runtime
+  schema. No probe is authorized now.
+- **HALT:** stop if the work only repeats blockade economics, D159, or tactical battle
+  research; if water reach cannot be separated from naval-combat design; if a map is
+  the sole proof of navigability/passage; if the source floor fails for core links;
+  if dignity-protected history would be gamified; or if completing the packet requires
+  mechanics, a territory graph, values, runtime, data, probes, saves, assets, or
+  generated output.
+
+The D497 rail interface is binding: compatible historical categories are dated
+endpoint, mode/interchange, control/change, break/limit, provenance, qualitative
+availability, and case reference. Water IDs remain packet-local research IDs; no
+joined runtime schema is chosen. **Exact next:** author the water packet in a separate
+docs/research commit under this charter, then run the standard build/diff/planning-
+probe/clean-boundary gates. Medicine adjudication remains behind that clean boundary.
+
 ## D497 — ARC 6 STRATEGIC RAIL CONQUEST RESEARCH IS READY FOR LAW-DRAFT INPUT, WITH EXPLICIT BREAKS AND NO GAMEPLAY GRAPH — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS/RESEARCH] (2026-07-21)
 
 The D496 packet is complete at
