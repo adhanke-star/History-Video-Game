@@ -1239,3 +1239,30 @@ coherence, the focused state probe, conquest plan/board/transport (including tra
 proof), Mayhem mode/plan, save-slots serialization-adjacent proof, War Career plan, fresh
 artifacts, Bind A, allowlist audit, and `git diff --check`. After D523's clean push and parity,
 release LANE-019 to CONTRACT/unowned; D524 must separately adjudicate the next dependency.
+
+### 8.27 D523 detached conquest identity/state foundation shipment
+
+D523 implements §8.26 without opening a campaign lifecycle. New sole owner
+`src/116-conquest-state.js` exposes only the strict detached factory and view. The factory's
+exact four-field result carries side, immutable conquest/version-1 identity, the existing
+Mayhem-owned immutable Historical/Mayhem ruleset, and one empty factory namespace that is
+locked at the root but remains extensible. A disposable local `mayhemInit` carrier preserves
+ruleset ownership; only its verified frozen ruleset descriptor/value transfers, and every
+incidental receipt is discarded.
+
+Validation is prototype/name/symbol/descriptor-first and fail-closed for inherited, hidden,
+accessor, proxy, mixed-descriptor, legacy, operational, and invalid-version authority. The view
+requires an extensible ordinary root in one exact factory-locked or ordinary JSON-round-trip
+mode and returns only a new deeply frozen snapshot. Independent review found and closed one
+frozen-factory-namespace acceptance escape before shipment; a permanent negative tooth now
+binds that meta-state alongside non-extensible-root and locked-but-extensible-nested negatives.
+
+The focused gate is 10/10. Bind A removes only version-1 view validation and isolates exactly
+the invalid-discriminator tooth at 9/10 before byte-identical restoration and a clean 10/10
+rerun. Build is `GATE OK` at data 65, manifest 112 with 116 last, and suite 140; all declared
+conquest, Mayhem, save-slot, and War Career adjacency remains green. Save version/shape, frozen
+base, data/build source, existing owners, and every live start/load/save/UI and operational
+surface remain unchanged. LANE-019 releases to CONTRACT/unowned. D524 must separately
+adjudicate and contract the next dependency; no opening control, node/service condition, army,
+Historical window, migration, topology, movement, or live entry/load/save acceptance follows
+from this detached representation.

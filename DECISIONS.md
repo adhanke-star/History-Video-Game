@@ -4,6 +4,48 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D523 — SHIPPED_DETACHED_CONQUEST_IDENTITY_FOUNDATION: STRICT FACTORY/VIEW SHIP WITHOUT LIVE ENTRY, SAVE ACCEPTANCE, OR OPERATIONAL STATE — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION/ADVERSARIAL VERIFY] (2026-07-22)
+
+**VERDICT: `SHIPPED_DETACHED_CONQUEST_IDENTITY_FOUNDATION`.** D522's exact representation
+is implemented in new sole owner `src/116-conquest-state.js`, enrolled last as module 116.
+`conquestCampaignFoundation(startView)` accepts only strict own-data `side` plus Historical/
+Mayhem version-1 ruleset views and returns exact ordered `side`, immutable versioned
+`campaignKind`, existing immutable `ruleset`, and an empty locked-root but extensible
+`conquest` namespace. `conquestCampaignFoundationView(candidate)` accepts only one coherent
+factory-locked or ordinary JSON-round-trip descriptor mode and emits a new deeply frozen exact
+snapshot. Neither API attaches to a live campaign or save path.
+
+**Ownership and fail-closed decision:** preserve `mayhemInit` as the sole ruleset owner by
+initializing only a disposable local carrier, verifying and transferring its exact frozen
+ruleset descriptor/value, and discarding every incidental receipt; never call it on the final
+root. Both APIs check prototypes, own names/symbols, and descriptors before values. Custom or
+inherited authority, accessors, hidden/symbol extras, malformed/revoked proxies, mixed modes,
+non-extensible roots, locked-but-extensible nested identity values, frozen/non-extensible
+factory namespaces, legacy fields, and unsupported discriminators fail `null` without mutation.
+Independent review found that the first view accepted a frozen factory namespace; that escape
+was fixed and retained as a permanent negative tooth before final evidence.
+
+**Proof and bind:** the suite-excluded focused proof is exactly 10/10 with `ok:true` and zero
+failed/errors/pageerrors/realErrors. Bind A removed only the unique version-1 view validation and
+produced exactly 9/10: only the invalid-discriminator rejection tooth red, exit 1, with zero
+browser/runtime errors. Byte restoration returned source/game MD5 to
+`6e43ecb55961f4d85682212f1565670c` / `c2a7b0cbeb5b93c2b786b094f5047d0c`
+and SHA-256 to `49f7261b6c0df3d2f36698ac7d37a5e8c1a4d04e155a4d00d4ec63c1c558b41a` /
+`9e26cac19265cf9d6d686bd88802faf13211c4361d8e9997d0bfbcb565232107`, followed by a clean
+10/10 rerun. Manifest MD5/SHA-256 is `4cc094911506cf5af9929cf79d25dc6c` /
+`d85bc76c5e582638f8837db297f1e643e886880d5a1b6a2680e35f59996e05f2`; source-tree MD5 is
+`45aea5f83596828491b711f72e82e7eb`.
+
+**Protected boundary and release:** build is `GATE OK` at data 65, territories 36, transport
+27/15/2/4/18, manifest 112/116-last, suite 140. Planning/focused adjacency is 11/11 transport
+plan, 8/8 conquest plan, 13/13 open-history Mayhem plan, 24/24 War Career plan, 10/10 state,
+18/18 transport, 13/13 board, 24/24 Mayhem mode, and 17/17 save slots with clean artifacts.
+`_SAVE_VER=1`, save shape, frozen base, data, build source, all existing owners, and every live
+UI/save/runtime surface hold. No full 140-row battery is owed before the first playable conquest
+loop. LANE-019 returns to `CONTRACT` / `none`; D524 must separately adjudicate and contract the
+next dependency without inferring opening control, node/service condition, armies, Historical
+windows, migration, topology, movement, or live start/load/save acceptance.
+
 ## D522 — CONTRACT_DETACHED_CONQUEST_IDENTITY_FOUNDATION: LANE-019 TAKES DRIVE FOR ONE DETACHED FRESH-START CONQUEST IDENTITY/STATE SERIALIZATION FOUNDATION — [CHATGPT/CODEX 5.6 SOL ULTRA, ARCHITECTURE/CONTRACT] (2026-07-22)
 
 **VERDICT: `CONTRACT_DETACHED_CONQUEST_IDENTITY_FOUNDATION`.** From clean, pushed D521

@@ -1,12 +1,12 @@
 # V1 CHECKLIST — current approved roadmap
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D522 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D522, 2026-07-22):** LANE-019 is under ChatGPT/Codex DRIVE for one detached fresh-start conquest identity/state serialization foundation in a new sole state owner after the shipped board and transport owners.
+<!-- LIVE-HEAD decision=D523 next-lane=LANE-019 state=CONTRACT owner=none -->
+> **Live status (D523, 2026-07-22):** the detached fresh-start conquest identity/state serialization foundation is shipped, focused-green, and released; LANE-019 is `CONTRACT` / `none` for separate next-dependency adjudication.
 >
-> **Boundary:** D522 changes only routing/law plus the transport plan's live-boundary tooth; D521 remains the runtime head. The contracted factory is detached and may establish only exact immutable `C.campaignKind`, existing immutable `C.ruleset`, and one empty `C.conquest` namespace—no live start/load/UI, migration, topology, control, service condition, army, order, movement, or operational default.
+> **Boundary:** new sole owner `src/116-conquest-state.js` exposes only strict detached factory/view globals for exact `side`, immutable versioned `campaignKind`, existing immutable `ruleset`, and an empty factory `conquest` namespace. No live start/load/save acceptance, migration, UI, topology, control, service condition, army, order, movement, or operational default shipped.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D522 exact contract own the slice. D514's work-conserving loop remains binding; LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D523 delivery record own the boundary. D514's work-conserving loop remains binding; D524 must separately adjudicate and contract the next dependency before any operational conquest state or live integration.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 ## How to read this checklist
@@ -39,7 +39,7 @@ Under D514, every unchecked item in this file—outstanding, formerly parked, or
   - [x] Read-only 36-territory board.
   - [x] Immutable read-only rail/water/sea transport-evidence substrate.
   - [ ] Road evidence remains unsatisfied after D511: RD-E11/RD-E15/RD-E17/RD-E18 and two Sherman handling rows retain material source gaps; no New Orleans-origin or CT-36 row qualifies. D514 authorizes further claim-specific research, but unsupported roads remain unavailable and no source floor may be lowered.
-  - [ ] Transport movement: D514 unblocks implementation for the already Verified rail, inland-water, and two bounded sea registries while preserving explicit non-links and no road service. It requires control/service receipts; movement, cuts, and repairs; economy/theater/directive integration; fresh-start conquest state and save; legal-order AI; then the first playable-loop 140-row release checkpoint. *(D521 shipped the first separately sliced pure immutable physical-service evidence query in existing `src/115` at focused 18/18 with isolated Bind 2B. D522 puts LANE-019 in DRIVE/ChatGPT/Codex for only a detached `src/116` factory/view: immutable versioned `C.campaignKind`, preserved immutable `C.ruleset`, and exact empty future-expandable `C.conquest`. All live integration and operational defaults remain excluded—no start/load/UI, migration, topology, control/service condition, army, order, movement, or save-pipeline broadening.)*
+  - [ ] Transport movement: D514 unblocks implementation for the already Verified rail, inland-water, and two bounded sea registries while preserving explicit non-links and no road service. It requires control/service receipts; movement, cuts, and repairs; economy/theater/directive integration; fresh-start conquest state and save; legal-order AI; then the first playable-loop 140-row release checkpoint. *(D521 shipped the pure immutable physical-service evidence query in existing `src/115` at focused 18/18 with isolated Bind 2B. D523 now ships the separately sliced detached `src/116` factory/view at focused 10/10 with isolated Bind A: immutable versioned `C.campaignKind`, preserved immutable `C.ruleset`, and exact empty future-expandable factory `C.conquest`. LANE-019 is CONTRACT/unowned for D524's separate next-dependency adjudication. All live integration and operational defaults remain excluded—no start/load/save acceptance/UI, migration, topology, control/service condition, army, order, or movement.)*
   - [ ] Council of War through existing site, commitment, equipment, doctrine, bridge, and D74 owners.
   - [ ] Terrain pipeline with provenance, transforms, LOD, period surfaces, offline budgets, and textual fallback.
   - [ ] Operational hex zoom without strategic/tactical ownership leakage.

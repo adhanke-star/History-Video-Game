@@ -1,12 +1,12 @@
 # AUTONOMOUS-RUN.md — the 12-hour max-productivity build plan ("The Civil War")
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D522 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D522, 2026-07-22):** LANE-019 is under ChatGPT/Codex DRIVE for one detached fresh-start conquest identity/state serialization foundation in a new sole state owner after the shipped board and transport owners.
+<!-- LIVE-HEAD decision=D523 next-lane=LANE-019 state=CONTRACT owner=none -->
+> **Live status (D523, 2026-07-22):** the detached fresh-start conquest identity/state serialization foundation is shipped, focused-green, and released; LANE-019 is `CONTRACT` / `none` for separate next-dependency adjudication.
 >
-> **Boundary:** D522 changes only routing/law plus the transport plan's live-boundary tooth; D521 remains the runtime head. The contracted factory is detached and may establish only exact immutable `C.campaignKind`, existing immutable `C.ruleset`, and one empty `C.conquest` namespace—no live start/load/UI, migration, topology, control, service condition, army, order, movement, or operational default.
+> **Boundary:** new sole owner `src/116-conquest-state.js` exposes only strict detached factory/view globals for exact `side`, immutable versioned `campaignKind`, existing immutable `ruleset`, and an empty factory `conquest` namespace. No live start/load/save acceptance, migration, UI, topology, control, service condition, army, order, movement, or operational default shipped.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D522 exact contract own the slice. D514's work-conserving loop remains binding; LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D523 delivery record own the boundary. D514's work-conserving loop remains binding; D524 must separately adjudicate and contract the next dependency before any operational conquest state or live integration.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **D514 completion rule:** `HANDOFF.md` owns the work-conserving loop and terminal condition. This manual executes the whole live ledger, not one bundle; each slice remains independently contracted, gated, documented, committed, and pushed.

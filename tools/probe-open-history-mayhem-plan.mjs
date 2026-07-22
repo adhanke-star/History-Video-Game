@@ -127,9 +127,10 @@ const PIN = {
 // D515 re-pin: ARC 9 Slice 1 adds only ephemeral resolver timing and the honest long-work Desk status; game 4c775fd1 -> 09cc00e6. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
 // D516 re-pin: ARC 9 Slice 2 adds only the pure, live-tab-validated Chief next action, including stale-after-wire demotion; game 09cc00e6 -> 593d03fe. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
 // D521 re-pin: ARC 7 Slice 2B adds only the pure ruleset-filtered physical-service evidence reader in existing src/115; game 2249daa3 -> 345772de. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
-game: "345772de75bb0f59f9b24947796398bb",
+// D523 re-pin: the detached conquest identity/state foundation enrolls src/116 only; game 345772de -> c2a7b0cb and manifest 309a7bc1 -> 4cc09491. Base, data, suite, Mayhem authority, and public readiness hold.
+game: "c2a7b0cbeb5b93c2b786b094f5047d0c",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
-  manifest: "309a7bc1eb43407f405e12323af7638d",
+  manifest: "4cc094911506cf5af9929cf79d25dc6c",
   suite: "69681d6f2216fe1dcfd594ffc4a757b7",
   scenarios: 29,   // D436: 24 -> 25 atlanta; D442: 25 -> 26 coldHarbor; D463: 26 -> 27 fortPillow (LANE-013 P4, the D455 SS3 row 6 unlock); D469: 27 -> 28 crater at rank 71.5 (LANE-015); D470: 28 -> 29 olustee at rank 65.5 between chattanooga (65) and fortPillow (66) (LANE-016)
   schemas: 65,   // D418: 54 -> 55 mayhem-rules.json; D436: 55 -> 56 atlanta.json; D442: 56 -> 57 cold-harbor.json; D445: 57 -> 58 chief-of-staff.json; D446: 58 -> 59 concept-links.json; D463: 59 -> 60 fort-pillow.json; D469: 60 -> 61 crater.json (LANE-015); D470: 61 -> 62 olustee.json (LANE-016); LANE-018 Slice 3: 62 -> 63 politics.json; D504: 63 -> 64 conquest-territories.json; D506: 64 -> 65 conquest-transport-evidence.json

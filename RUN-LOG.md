@@ -1,17 +1,41 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D522 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D522, 2026-07-22):** LANE-019 is under ChatGPT/Codex DRIVE for one detached fresh-start conquest identity/state serialization foundation in a new sole state owner after the shipped board and transport owners.
+<!-- LIVE-HEAD decision=D523 next-lane=LANE-019 state=CONTRACT owner=none -->
+> **Live status (D523, 2026-07-22):** the detached fresh-start conquest identity/state serialization foundation is shipped, focused-green, and released; LANE-019 is `CONTRACT` / `none` for separate next-dependency adjudication.
 >
-> **Boundary:** D522 changes only routing/law plus the transport plan's live-boundary tooth; D521 remains the runtime head. The contracted factory is detached and may establish only exact immutable `C.campaignKind`, existing immutable `C.ruleset`, and one empty `C.conquest` namespace—no live start/load/UI, migration, topology, control, service condition, army, order, movement, or operational default.
+> **Boundary:** new sole owner `src/116-conquest-state.js` exposes only strict detached factory/view globals for exact `side`, immutable versioned `campaignKind`, existing immutable `ruleset`, and an empty factory `conquest` namespace. No live start/load/save acceptance, migration, UI, topology, control, service condition, army, order, movement, or operational default shipped.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D522 exact contract own the slice. D514's work-conserving loop remains binding; LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D523 delivery record own the boundary. D514's work-conserving loop remains binding; D524 must separately adjudicate and contract the next dependency before any operational conquest state or live integration.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-22 — D523: DETACHED CONQUEST IDENTITY/STATE FOUNDATION SHIPPED
+
+New sole owner `src/116-conquest-state.js` ships strict detached
+`conquestCampaignFoundation` and `conquestCampaignFoundationView` globals. The exact root is
+side, immutable conquest/version-1 campaign identity, the existing Mayhem-owned immutable
+Historical/Mayhem ruleset, and one exact empty factory namespace that remains extensible behind
+a locked root descriptor. Prototype/name/symbol/descriptor-first validation rejects inherited,
+hidden, accessor, proxy, mixed-mode, meta-state, legacy, and operational authority without
+mutation. A disposable local `mayhemInit` carrier preserves exact ruleset ownership while every
+incidental receipt is discarded.
+
+Independent review found and closed one frozen-namespace acceptance escape before final proof.
+The focused gate is 10/10. Bind A removes only the version-1 view guard and isolates exactly the
+invalid-discriminator tooth at 9/10, then restores source/game bytes and reruns 10/10. Build is
+`GATE OK` at data 65, manifest 112 with 116 last, and suite 140. Transport/conquest/Mayhem/War
+Career plans are 11/11, 8/8, 13/13, and 24/24; browser adjacency is state 10/10, transport
+18/18, board 13/13, Mayhem mode 24/24, and save slots 17/17 with clean fresh artifacts. Save
+version/shape, frozen base, data/build source, existing owners, and every live UI/runtime path
+hold; the full battery remains deferred to the first playable conquest loop.
+
+LANE-019 releases to CONTRACT/unowned. D524 is a separate next-dependency adjudication under
+D514, not permission to infer control, node/service condition, armies, Historical windows,
+migration, topology, movement, or live start/load/save acceptance.
 
 ## 2026-07-22 — D522: DETACHED CONQUEST IDENTITY/STATE FOUNDATION ROUTED
 

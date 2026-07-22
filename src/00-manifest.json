@@ -111,7 +111,8 @@
     "112-session-packet.js",
     "113-teaching-companion.js",
     "114-conquest-board.js",
-    "115-conquest-transport.js"
+    "115-conquest-transport.js",
+    "116-conquest-state.js"
   ],
   "overrides": [
     "_t1InitAll",

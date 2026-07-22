@@ -3684,15 +3684,14 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **DRIVE (D522 DETACHED CONQUEST IDENTITY/STATE SERIALIZATION FOUNDATION; CHATGPT/CODEX)**
+### LANE-019 · conquest-design-law — **CONTRACT (D523 DETACHED CONQUEST IDENTITY/STATE FOUNDATION SHIPPED; UNOWNED)**
 
-- **Owning tool:** ChatGPT/Codex. D522 takes DRIVE from the clean D521 head
-  `ef85725b2e7ea55fba96b4c7996a0d70abb6a56f` for only the detached Slice-3A foundation below.
-  No simultaneous edits by any provider.
-- **State:** DRIVE/ChatGPT-Codex. D522 authorizes only a new sole state owner, exact campaign
-  identity/ruleset serialization, and a detached factory/view; it authorizes no live campaign
-  start, load, UI, migration, topology, control, service condition, army, date, order, movement,
-  or operational default. D521 remains the shipped pure physical-service reader. D511 completed the fourth road-evidence pass and retained exact
+- **Owning tool:** none. D523 ships the detached Slice-3A foundation and releases the lane;
+  any D524 work requires its own committed owner/contract transfer. No simultaneous edits.
+- **State:** CONTRACT/unowned. D523 ships only a new sole state owner, exact campaign
+  identity/ruleset serialization, and detached factory/view; no live campaign start, load, save
+  acceptance, UI, migration, topology, control, service condition, army, date, order, movement,
+  or operational default exists. D521 remains the shipped pure physical-service reader. D511 completed the fourth road-evidence pass and retained exact
   verdict `NEEDS_MORE_RESEARCH`.
   The packet now records 65 sources, 37 nodes, 18 candidate rows (14 Verified,
   4 Inferred, 0 Disputed), six Potomac rows, 13 Sherman interval rows (11 Verified,
@@ -4038,11 +4037,35 @@ next green commit and confer through this ledger instead of permitting simultane
   doc coherence, focused state probe, conquest plan/board/transport (including 18-step transport),
   Mayhem mode/plan, save-slots as serialization-adjacent proof, War Career plan, fresh artifacts,
   Bind A exact-red/restore, allowlist audit, and `git diff --check`.
-- **Resume pointer:** implement only D523 Slice-3A under the exact contract above; after its
-  clean focused evidence, documentation, commit, push, fetch, and HEAD/origin parity, release
-  this lane to CONTRACT/unowned. D524 must separately adjudicate any next
-  dependency; it may not infer opening control, node operation, service condition, armies,
-  Historical availability windows, migration, topology, or movement.
+- **D523 delivery record — detached conquest identity/state foundation:** new sole owner
+  `src/116-conquest-state.js` exposes exactly `conquestCampaignFoundation(startView)` and
+  `conquestCampaignFoundationView(candidate)`. The factory/view implement the exact D522
+  descriptor-first shape, preserve ruleset ownership through a disposable local
+  `mayhemInit(carrier,id,"new")` carrier, and transfer only the verified frozen ruleset
+  descriptor/value. Custom/inherited prototypes, hidden/symbol extras, accessors, malformed or
+  revoked proxies, mixed modes, non-extensible roots, locked-but-extensible nested identity
+  values, frozen/non-extensible factory namespaces, legacy/operational fields, and invalid
+  versions fail `null` without accessor invocation or input mutation. Independent review found
+  and closed the initial frozen-namespace acceptance escape before shipment.
+- **D523 evidence and protected pins:** focused state proof is 10/10 with `ok:true`, zero
+  failed/errors/pageerrors/realErrors. Bind A removes only the unique version-1 view validation
+  and returns exactly 9/10 with only invalid-discriminator rejection red; source/game bytes then
+  restore exactly and the clean proof returns 10/10. Restored source/game MD5 is
+  `6e43ecb55961f4d85682212f1565670c` / `c2a7b0cbeb5b93c2b786b094f5047d0c`;
+  source-tree MD5 is `45aea5f83596828491b711f72e82e7eb`; manifest MD5 is
+  `4cc094911506cf5af9929cf79d25dc6c`. Build is `GATE OK` at data 65, territories 36,
+  transport 27/15/2/4/18, manifest 112 with 116 last, and suite 140. Final planning/focused
+  adjacency is transport plan 11/11, conquest plan 8/8, open-history Mayhem plan 13/13, War
+  Career plan 24/24, state 10/10, transport 18/18, board 13/13, Mayhem mode 24/24, and save slots
+  17/17 with clean fresh artifacts. `_SAVE_VER=1`, save shape, frozen base, data/build source,
+  all existing owners, and every live start/load/save/UI and operational surface hold. The full
+  140-row battery remains deferred until the first playable conquest loop.
+- **Resume pointer:** D523 releases this lane to CONTRACT/unowned. Under D514, D524 must first
+  re-read Package A, this full lane, the current sole owners, and the shipped detached shape;
+  separately adjudicate the smallest dependency-ready state/integration prerequisite and either
+  commit a precise owner-safe contract/DRIVE take or record a bounded prerequisite. D524 may not
+  infer opening control, node operation, service condition, armies, Historical availability
+  windows, migration, topology, movement, or a live start/load/save-acceptance path.
 - **Last-touched commits:** D503 standalone design-lock `a3403da`; D503 final-law
   commit `44ffac5`; Slice-1 DRIVE take `7a0ca42`; allowlist/gate HALT ledger
   `cb46f55`; D504 Slice-1 implementation `74237b9`; D505 docs-only contract ships in
@@ -4055,7 +4078,8 @@ next green commit and confer through this ledger instead of permitting simultane
   and lane release ship in the commit containing that entry; D519 cleared the ARC 9 dependency
   reorder at `9cea762`; D520 pure-query DRIVE take is `685c1f6`; D521 pure-query shipment and
   CONTRACT/unowned release precede the D522 detached-state DRIVE take from
-  `ef85725b2e7ea55fba96b4c7996a0d70abb6a56f`.
+  `ef85725b2e7ea55fba96b4c7996a0d70abb6a56f`; D522 routing/contract is `bfbe64b`; D523
+  implementation and CONTRACT/unowned release ship in the commit containing this entry.
 - **History:** D502 created the design-only contract. Aaron chose Package A. D503
   completed the final law. D504 shipped the read-only territory board. D505 audits
   every rail/water evidence row, contracts the read-only substrate, and D506 ships
@@ -4072,10 +4096,10 @@ next green commit and confer through this ledger instead of permitting simultane
   authorizing non-road conquest and further adjudication; it changes no D511 evidence classification.
   D519 releases blocked ARC 9 and selects this lane. D520 takes DRIVE only for the state-free
   physical-service evidence query and repairs the obsolete pre-D514 plan-boundary assertion.
-  D521 ships that query under its exact 18-step proof and releases the lane to CONTRACT/unowned
-  before any conquest identity, state, save, topology, legal-now, order, or movement work. D522
-  then takes DRIVE for only the detached exact campaign identity/ruleset/empty-namespace factory
-  and view, with controlled serialization proof but no live save or campaign path.
+  D521 ships that query under its exact 18-step proof and releases the lane to CONTRACT/unowned.
+  D522 separately contracts the detached conquest identity/state representation. D523 ships its
+  strict factory/view under the exact ten-step proof and releases the lane to CONTRACT/unowned
+  before any live entry, save acceptance, or operational state.
 
 ### LANE-020 · desk-to-battle-pacing — **CONTRACT (D519 SLICE-5 DEPENDENCY; UNOWNED)**
 
