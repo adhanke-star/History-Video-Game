@@ -768,11 +768,39 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **CONTRACT (unowned; War Career through Slice F shipped D438)**
+### LANE-005 · war-career-loop — **DRIVE (D512 ARC 8 MEDICINE-TO-SOLDIER-DEPTH LAW; DOCS ONLY)**
 
-- **Owning tool:** none. No simultaneous edits by any provider.
-- **State:** CONTRACT/unowned. The War Career spine through Slice F is shipped through D438; later ARC 5 GM/election integrations also shipped. No War Career slice is queued.
-- **Current resume pointer:** none. A new War Career capability requires a new contract; the D413 §17 State/Owner and acceptance material below are retained history.
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra. No simultaneous edits by any provider.
+- **State:** DRIVE for one docs-only D512 law adjudication. The shipped War Career spine through Slice F remains unchanged; no runtime slice is authorized in this take.
+- **D512 DRIVE contract (2026-07-22):** The overlap check selects existing
+  `docs/design/unlocked-but-judged-design.md` §4f as the sole ARC 8 design-law owner and this
+  existing lane as the coordination carrier because the smallest consumer is the lane-owned pure
+  `warCareerReportHTML` After Action report. A new ARC 8 plan or LANE-020 would duplicate the
+  master-law/War-Career ownership split. LANE-002 remains only the citation-grade `ss:` replacement
+  feeder, at 42 Verified overlays and 1,437 open generated rows; no batch or candidate is selected.
+  D169 remains the sole `C.medical`, formula, relief-priority, Campaign Kit, save, and War Effort UI
+  owner. Human Cost remains the aggregate moral-accounting owner; the primary-source reader remains
+  the document/excerpt owner; canonical people and Women in War remain their existing record owners.
+- **D512 acceptance boundary:** write one unambiguous D512 adjudication into §4f and the canonical
+  ledgers; select the existing War Career report as the first consumer; keep Slice 1 read-only and
+  nonpersistent; derive any future presentation only from an exact matching qualifying current-person
+  event/credit participation receipt and existing `Your Timeline` fate; require source authority and
+  fail closed when identity, service, participation, receipt pairing, source, or report authority is
+  absent. Historical person claims additionally require identity + service + participation +
+  claim-specific medical/disposition evidence. Eligibility labels are never state. Historical and
+  `Your Timeline` remain visibly separate. Contract exact future allowed/prohibited files, focused
+  probe teeth, at least two byte-restored negative binds, gates, and release point, then return this
+  lane to CONTRACT/unowned without implementation.
+- **D512 prohibited scope:** no runtime, data, tool, probe, generated-output, state, save, UI,
+  mechanic, economy, AI, battle, terrain, tactical, person-record, `ss:`, named-case, relationship,
+  archive, or historical-fate change. No deterministic diagnosis, wound/disease probability,
+  treatment, recovery clock, capacity, medical resource, outcome formula, spectacle, disability
+  debuff, racial susceptibility rule, false symmetry, Lost Cause framing, or D74 output lever.
+- **D512 resume pointer:** extend only `docs/design/unlocked-but-judged-design.md` §4f, prepend D512
+  to DECISIONS/HANDOFF, archive D510 byte-verbatim under the D510 archival law, sync the six canonical
+  live summaries and routing docs, release this lane to CONTRACT/unowned with the future Slice-1
+  contract, run the authorized static/importer gates, commit/push, and stop before implementation.
+- **Prior current resume pointer (retained history):** none. A new War Career capability required a new contract; the D413 §17 State/Owner and acceptance material below are retained history.
 - **Retained D413 history:**
 - **State:** CONTRACT — released from ledger take
   `a3aec520c3f8e4e823d453011488a7447906c040`, based on clean D412 boundary
