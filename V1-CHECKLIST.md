@@ -1,12 +1,12 @@
 # V1 CHECKLIST — current approved roadmap
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D515 next-lane=LANE-020 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D515, 2026-07-22):** ARC 9 Slice 1 ships measured, outcome-inert resolver timing plus an honest long-work Desk status. The clean baseline stayed below 50 ms at both p95s, so optimization is `NOT_NEEDED`; focused proof is 8/8 and LANE-020 remains DRIVE under ChatGPT/Codex.
+<!-- LIVE-HEAD decision=D516 next-lane=LANE-020 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D516, 2026-07-22):** ARC 9 Slice 2 ships one pure Chief-of-Staff next action from the unique top live priority. Lower facts stay plain, ambiguous or stale authority fails neutral, focused proof is 14/14, and LANE-020 remains DRIVE under ChatGPT/Codex.
 >
-> **Boundary:** Exact next is Slice 2: extend the existing pure Chief-of-Staff brief into at most one validated live Desk-tab action, with neutral failure for missing, ambiguous, or stale authority. No queue, state mutation, spending, time advance, hidden-state prediction, or simultaneous edits.
+> **Boundary:** Exact next is Slice 3 in `src/99-h0-president-desk.js`: validate one remembered Desk-tab preference against the live H0 registry and collapse the existing Desk-plus-tab return path to one click. Persist only `G.settings.arc9DeskTab` through the existing settings envelope; old, invalid, or stale values use the current default, and pre-onboarded campaign/save authority must remain identical.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block owns D515's evidence and exact next; D514's work-conserving completion loop remains binding. `V1-CHECKLIST.md` is the ledger and `COORDINATION.md` owns the Slice 2 contract and lock.
+> **Authority:** `HANDOFF.md`'s first ⚡ block owns D516's evidence and exact next; D514's work-conserving completion loop remains binding. `V1-CHECKLIST.md` is the ledger and `COORDINATION.md` owns the Slice 3 contract and lock.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 ## How to read this checklist
@@ -55,7 +55,7 @@ Under D514, every unchecked item in this file—outstanding, formerly parked, or
 
 - [ ] **ARC 9 — desk-to-battle pacing.**
   - [x] Profile turn-processing latency and add honest progress feedback. *(D515: 60 fresh + 36 sequential samples; p95 25.2/15.4 ms, optimization `NOT_NEEDED`; honest ≥50 ms completion status.)*
-  - [ ] Extend Chief of Staff into the live next-action pointer.
+  - [x] Extend Chief of Staff into the live next-action pointer. *(D516: unique-top pure derivation; mounted H0-tab validation; neutral tie/invalid/stale fallback; focused 14/14 and isolated Bind S2.)*
   - [ ] Collapse repeated click paths, add one-click re-engagement, and remember safe preferences.
   - [ ] Add session bookmarks.
   - [ ] Add bounded batch turn processing without hiding decisions or historical consequences.

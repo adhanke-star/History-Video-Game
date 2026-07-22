@@ -926,7 +926,8 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
 // D506 re-pin: srcTree 06345336 -> 8928865a for final no-UI src/115 only; no War Career owner moved.
 // D512 re-pin: srcTree 8928865a -> 9711d3d7, runtime ee83045e -> dfee8d9c, and focused e2acf99a -> a4be754c for the pure care-context reader and its one table-driven row; journey/command/data/manifest/suite hold.
 // D515 re-pin: ARC 9 Slice 1 moves srcTree 9711d3d7 -> f6d83f59 for src/90 ephemeral timing and src/99 honest status only; War Career runtime/journey/command/focused/data/manifest/suite hold.
-srcTree:"f6d83f59e05a07308e37fdc6e27e55d4",
+// D516 re-pin: ARC 9 Slice 2 moves srcTree f6d83f59 -> 899a4408 for src/109's pure, live-tab-validated Chief next action plus stale-after-wire demotion only; War Career runtime/journey/command/focused/data/manifest/suite hold.
+srcTree:"899a4408faa3309917df0e0957819106",
     runtime:"dfee8d9c3a6b8c8caa414366302214a7",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
@@ -1311,7 +1312,8 @@ step("BASELINES + LANE", () => {
     // D506 re-pin: game ba68ebfd -> d278c30f; dataTree 24773ac8 -> 2e9e4df4; manifest 8e9d8987 -> 309a7bc1. Read-only transport evidence/module/build/probes; base/suite hold; schema 65.
     // D512 re-pin: game d278c30f -> 4c775fd1 for the pure care-context reader and rebuilt artifact; base/data/manifest/suite hold.
     // D515 re-pin: game 4c775fd1 -> 09cc00e6 for ARC 9 Slice 1's ephemeral timings and honest Desk status; base/data/manifest/suite hold.
-    game:"09cc00e6c639c52627edfc3cfeb01d9a",
+    // D516 re-pin: game 09cc00e6 -> 593d03fe for ARC 9 Slice 2 only; protected War Career owners hold.
+    game:"593d03fe24410047bfd880fc8a1c4813",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     // D478 re-pin: dataTree 4bbdebe5 -> b3b323fa (LANE-017 slice 1: rarity glyphs + reserved tier
     // hexes + rungTiers in data/loot-survival.json — presentation data only, no war-career data).
@@ -1785,7 +1787,8 @@ step("REACHABILITY BASELINES", () => {
     // D504 re-pin: game 19489898 -> ba68ebfd; dataTree 9b2da5bc -> 24773ac8 for the territory registry and read-only shell; runtime/journey/focused hold.
     // D506 re-pin: game ba68ebfd -> d278c30f; dataTree 24773ac8 -> 2e9e4df4 for read-only transport evidence; runtime/journey/focused hold.
     // D515 re-pin: game 4c775fd1 -> 09cc00e6; ARC 9 Slice 1 does not move War Career authority.
-    game:"09cc00e6c639c52627edfc3cfeb01d9a",
+    // D516 re-pin: game 09cc00e6 -> 593d03fe for ARC 9 Slice 2 only; protected War Career owners hold.
+    game:"593d03fe24410047bfd880fc8a1c4813",
     dataTree:"2e9e4df430eaaaeca4ce6f58f51a3b2e",
         // D484 re-pin (LANE-017 slice 6, soldier-tier badges SS4d.3): game e7ff100e -> e99e6ac5 · dataTree 00f8c1fe -> c3c28fd6 (data/ratings.json gains soldierBadgeDefs 14 + soldierBadges 48 rows on 39 Verified carriers + _soldierBadgeNote) · srcTree 15570ebc -> d79696ce (T14 soldier-badge accessors + the fldSoldierBadgeFactor capped gateway; src/37 cwCareerBadges/cwSoldierBadgeRows/_ssSoldierBadgesHTML register/journey chips; the src/22 comment-token reword — the D482 class, fifth instance) · journey 1689c4a2 -> 9655bfff (src/37) · focused 65e9c873 -> e2acf99a (probe-war-career gains the D484 career-badge step; the stale 138 suite.expected DISPLAY fields aligned to the 140 teeth). Presentation + data + the capped gateway only — no combat line consumes the keys, sim inputs did not move; both binds md5-proven; base/manifest/suite/runtime/command hold.
     // D486 re-pin (LANE-017 slice 8): srcTree b7648a67 -> 8174d79d (src/37 sets/salvage/
@@ -1802,7 +1805,8 @@ step("REACHABILITY BASELINES", () => {
 // D506 re-pin: srcTree 06345336 -> 8928865a for final no-UI src/115 only; no war-career runtime surface moved.
 // D512 re-pin: game d278c30f -> 4c775fd1, srcTree 8928865a -> 9711d3d7, runtime ee83045e -> dfee8d9c, focused e2acf99a -> a4be754c; the pure report seam moves no data, save, manifest, suite, journey, or command owner.
 // D515 re-pin: game 4c775fd1 -> 09cc00e6 and srcTree 9711d3d7 -> f6d83f59 for ARC 9 Slice 1 only; War Career runtime/journey/focused remain exact.
-srcTree:"f6d83f59e05a07308e37fdc6e27e55d4",
+// D516 re-pin: game 09cc00e6 -> 593d03fe and srcTree f6d83f59 -> 899a4408 for ARC 9 Slice 2 only; War Career runtime/journey/focused remain exact.
+srcTree:"899a4408faa3309917df0e0957819106",
     runtime:"dfee8d9c3a6b8c8caa414366302214a7",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;

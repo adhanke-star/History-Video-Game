@@ -5,8 +5,10 @@
    panel at the top of the President's Desk composing AT MOST three priority
    lines per turn from a deterministic severity ordering DECLARED IN DATA
    (data/chief-of-staff.json: rule id -> reader id -> threshold -> copy template
-   -> target tab). Each line deep-links to its owning desk tab. The panel WRITES
-   NOTHING and computes NO new aggregates.
+   -> target tab). D516 / ARC 9 Slice 2 may upgrade ONLY the unique top-priority
+   line to one native action, and only after its target is proven in the mounted
+   H0 Desk tab row; all lower facts remain plain text. The panel WRITES NOTHING
+   and computes NO new aggregates.
 
    THE PURITY LAW (the D443 §19 lesson, applied at design time): the desk tabs'
    own render functions lazy-init their domain blocks onto the LIVE campaign
@@ -99,29 +101,72 @@ function cosBriefLines(C) {
   return out;
 }
 
+/* ARC 9 Slice 2: derive at most one recommendation from the ALREADY ordered
+   brief. Equal top severity is deliberately ambiguous and therefore neutral.
+   Return a copy so no caller can obtain authority over the brief row. */
+function cosNextAction(C) {
+  try {
+    var lines = cosBriefLines(C);
+    if (!lines || !lines.length) return null;
+    var top = lines[0];
+    if (!top || typeof top.id !== "string" || !top.id ||
+        typeof top.severity !== "number" || !isFinite(top.severity) ||
+        typeof top.tab !== "string" || !/^[a-z]+$/.test(top.tab) ||
+        typeof top.label !== "string" || !top.label ||
+        typeof top.copy !== "string" || !top.copy) return null;
+    if (lines.length > 1 && lines[1] && typeof lines[1].severity === "number" &&
+        lines[1].severity === top.severity) return null;
+    return { id: top.id, severity: top.severity, tab: top.tab,
+      label: top.label, copy: top.copy };
+  } catch (e) { return null; }
+}
+
+function _cosEsc(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+/* The H0 registry is intentionally private to src/99. Its mounted native tab
+   row is the one live authority available here; do not duplicate its 20 ids. */
+function _cosLiveDeskTab(tab) {
+  try {
+    if (typeof document === "undefined" || typeof tab !== "string" || !/^[a-z]+$/.test(tab)) return false;
+    var tabs = document.getElementById("wdTabs");
+    var btn = document.getElementById("wdTab_" + tab);
+    return !!(tabs && tabs.getAttribute("role") === "group" && btn &&
+      btn.tagName === "BUTTON" && tabs.contains(btn));
+  } catch (e) { return false; }
+}
+
 /* The panel html — "" when the module's data is absent (byte-identical desk);
-   the honest all-quiet line when no rule fires. Plain-text copy only (the data
-   law forbids markup in templates); the tab id is schema-constrained [a-z]+ so
-   the data-costab attribute interpolation is safe; label/copy are escaped for
-   the aria-label anyway (the B-6 attribute lesson). */
+   the honest all-quiet line when no rule fires. Every fact is inert at render
+   time. The unique top row carries only a candidate marker; cosWireBrief may
+   upgrade it after live-tab validation. Plain-text data is escaped for both
+   markup and attributes (the B-6 lesson). */
 function cosBriefHtml(C) {
   try {
     if (!C) return "";
     var d = cosData(); if (!d) return "";
     var lines = cosBriefLines(C);
+    var action = cosNextAction(C);
     var quiet = (d.config && typeof d.config.allQuiet === "string" && d.config.allQuiet) ? d.config.allQuiet
       : "All quiet — no office demands your immediate attention.";
-    var esc = function (s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); };
+    var neutral = "Review the briefing below; no single live office is available as the next action.";
     var body = "";
     if (!lines.length) {
-      body = '<div style="font-size:12.5px;opacity:.75;font-style:italic;">' + esc(quiet) + '</div>';
+      body = '<div style="font-size:12.5px;opacity:.75;font-style:italic;">' + _cosEsc(quiet) + '</div>';
     } else {
+      body = '<p class="cos-brief-orientation" data-cos-orientation="1"'
+        + (action ? ' hidden' : '')
+        + ' style="margin:6px 0 0;font-size:12.5px;opacity:.8;font-style:italic;">'
+        + _cosEsc(neutral) + '</p>';
       for (var i = 0; i < lines.length; i++) {
         var li = lines[i];
-        body += '<button type="button" class="upg" data-costab="' + li.tab + '" '
-          + 'aria-label="' + esc(li.copy) + ' Open ' + esc(li.label) + '." '
-          + 'style="display:block;width:100%;text-align:left;margin-top:5px;padding:6px 9px;font-size:12.5px;line-height:1.45;cursor:pointer;">'
-          + '<b style="color:#d8c87a;">' + esc(li.label) + ':</b> ' + esc(li.copy) + '</button>';
+        var candidate = action && action.id === li.id && action.tab === li.tab;
+        body += '<div class="cos-brief-line" data-cos-rule="' + _cosEsc(li.id) + '"'
+          + (candidate ? ' data-cos-candidate="' + li.tab + '"' : '')
+          + ' style="display:block;width:100%;box-sizing:border-box;text-align:left;margin-top:5px;padding:6px 9px;font-size:12.5px;line-height:1.45;">'
+          + '<b style="color:#d8c87a;">' + _cosEsc(li.label) + ':</b> ' + _cosEsc(li.copy) + '</div>';
       }
     }
     return '<div id="cosBrief" role="region" aria-label="Chief of Staff morning brief" '
@@ -132,21 +177,58 @@ function cosBriefHtml(C) {
   } catch (e) { return ""; }
 }
 
-/* Wire the deep links: clicking a line opens its owning desk tab via the same
-   _wdTab/_wdRefresh path the tab buttons use. The panel sits OUTSIDE wdContent,
-   so it survives the refresh; focus stays on the clicked line (the tab change
-   is announced by the aria-pressed flip the shell already performs). */
+/* Materialize exactly one native action only after the mounted H0 tab proves
+   the target is live. Route through the existing _wdTab/_wdRefresh path only.
+   The panel sits outside wdContent, so a valid refresh retains button focus and
+   the shell's existing aria-pressed state announces the destination. */
 function cosWireBrief(C) {
   try {
     var root = document.getElementById("cosBrief"); if (!root) return;
-    var btns = root.querySelectorAll("[data-costab]");
-    for (var i = 0; i < btns.length; i++) {
-      (function (b) {
-        b.addEventListener("click", function () {
-          var t = b.getAttribute("data-costab");
-          if (typeof _wdRefresh === "function" && t) { _wdTab = t; _wdRefresh(); }
-        });
-      })(btns[i]);
+    var orientation = root.querySelector("[data-cos-orientation]");
+    var candidate = root.querySelector("[data-cos-candidate]");
+    var action = cosNextAction(C);
+    var valid = !!(action && candidate &&
+      candidate.getAttribute("data-cos-rule") === action.id &&
+      candidate.getAttribute("data-cos-candidate") === action.tab &&
+      _cosLiveDeskTab(action.tab));
+    if (!valid) {
+      if (orientation) orientation.hidden = false;
+      if (candidate) candidate.removeAttribute("data-cos-candidate");
+      return;
     }
+
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "upg cos-brief-line cos-brief-action";
+    btn.setAttribute("data-cos-rule", action.id);
+    btn.setAttribute("data-costab", action.tab);
+    /* WCAG 2.5.3: retain the visible label and fact first in the accessible
+       name, then state the action, so voice control can match what is shown. */
+    btn.setAttribute("aria-label", action.label + ": " + action.copy + ". Open this office.");
+    btn.style.cssText = candidate.style.cssText + "cursor:pointer;";
+    while (candidate.firstChild) btn.appendChild(candidate.firstChild);
+    candidate.parentNode.replaceChild(btn, candidate);
+    if (orientation) orientation.hidden = true;
+
+    function neutralizeStaleAction() {
+      if (orientation) orientation.hidden = false;
+      if (!btn.parentNode) return;
+      var fact = document.createElement("div");
+      fact.className = "cos-brief-line";
+      fact.setAttribute("data-cos-rule", action.id);
+      fact.style.cssText = btn.style.cssText;
+      fact.style.cursor = "";
+      while (btn.firstChild) fact.appendChild(btn.firstChild);
+      btn.parentNode.replaceChild(fact, btn);
+    }
+
+    btn.addEventListener("click", function () {
+      var t = btn.getAttribute("data-costab");
+      if (!_cosLiveDeskTab(t)) {
+        neutralizeStaleAction();
+        return;
+      }
+      if (typeof _wdRefresh === "function") { _wdTab = t; _wdRefresh(); }
+    });
   } catch (e) {}
 }

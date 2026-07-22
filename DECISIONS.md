@@ -4,6 +4,74 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D516 — ARC 9 SLICE 2 SHIPS ONE PURE, LIVE-TAB-VALIDATED CHIEF-OF-STAFF NEXT ACTION; LOWER FACTS REMAIN NON-ACTIONABLE — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION/VERIFY] (2026-07-22)
+
+**VERDICT: `SHIPPED_ONE_PURE_LIVE_NEXT_ACTION`.** The existing deterministic
+`cosBriefLines(C)` remains the sole priority source and its three-line cap does not move.
+`cosNextAction(C)` may return a copied candidate only when the first line is structurally
+valid and has a severity strictly above the second line. No fact, an equal top severity,
+or malformed authority returns `null`; stable rule-id ordering never breaks an action tie.
+
+### One live action, no parallel registry
+
+`H0_DESK_TABS` remains lexical and single-owned in `src/99-h0-president-desk.js`, which is
+frozen for this slice. `src/109-chief-of-staff.js` duplicates none of its twenty ids. All
+brief facts render inert first, and only the unique candidate receives a noninteractive
+marker. After the H0 shell mounts, the Chief validates that `#wdTabs[role=group]` actually
+contains the corresponding native `#wdTab_<id>` button. Only then does it materialize one
+native `type=button` action. Lower facts remain plain text. Missing, tied, invalid, absent,
+or stale authority reveals a neutral orientation and creates no live action. If a target
+disappears after wiring, the click guard demotes the stale button back to an inert fact,
+removes its action attribute, and does not manufacture or force a replacement focus target.
+
+The valid route is exactly the existing `_wdTab` assignment plus `_wdRefresh()`. It does
+not call a domain renderer while deriving and adds no campaign/save state, setting,
+storage key, queue, decision mutation, spending, time advance, hidden-state prediction,
+RNG draw, receipt, auto-action, focus move, or alternate renderer. The brief remains
+outside `#wdContent`, so native pointer, Enter, and Space activation retain action focus
+while the destination tab exposes its existing `aria-pressed=true` state.
+
+### Accessibility and adversarial proof
+
+The proactive WCAG 2.2 AA audit corrected one 2.5.3 Label-in-Name defect before shipment:
+the accessible name now begins with the visible `Label: fact` in the same order and adds
+the action phrase afterward. Native focus indication, 11.16:1 label contrast, 3.02:1
+boundary contrast, semantic region/button structure, non-color meaning, and absence of
+focus theft pass.
+
+The focused probe grows exactly 8→14 and is green 14/14 with `ok:true`, empty
+failed/page/real-error arrays, and an inspected 1366×850 PNG. The six new teeth prove
+unique-top exactness, deterministic tie/invalid/all-quiet fallback, deep campaign/save/
+settings/storage/RNG purity with zero domain calls, the sole valid route, initial and
+post-wiring stale-target demotion without forced replacement focus, and native
+pointer/Enter/Space/name/focus parity. Bind S2 weakens only
+the live-tab predicate and produces the required 13/14 expected red: only `Chief stale
+target fails neutral with no action`; page/real errors remain empty. An initial collateral
+keyboard red proved only that failing fixtures must clean up in `finally`; the harness was
+root-fixed without weakening the stale assertion. A bounded browser-close pattern also
+prevents a vanished Chrome process from hanging result serialization.
+
+Source and generated HTML restore byte-for-byte after the bind at SHA-256
+`352a326661a3ee1b21db863357a5da794a7a913a512f88b306ac17e274a32b38` and
+`604521531913701c4ed26b0b5c9e497a237a9b5725f29bdcc26ead7fff0a507f`;
+their MD5 values are `50512d2471de7d22fbf40704599d7285` and
+`593d03fe24410047bfd880fc8a1c4813`. Adjacent Chief, Desk, H0 Desk, and accessibility
+browser gates pass 10/10, 13/13, 3/3 viewports, and 27/27 with fresh artifacts and empty
+exposed error/pageerror arrays. Mechanical plan pins move only generated game
+`09cc00e6`→`593d03fe` and source tree `f6d83f59`→`899a4408`. Data 65, modules 111,
+suite 140, three named slots, twenty Desk tabs, Chief cap three, manifest, frozen base,
+save shape, `_SAVE_VER=1`, and Historical/Mayhem authority hold; the focused probe stays
+suite-excluded. Normal build, syntax, diff, and post-restore 14/14 gates are green.
+
+**EXACT NEXT:** LANE-020 remains ChatGPT/Codex DRIVE. Slice 3 changes only
+`src/99-h0-president-desk.js` plus the growing focused probe, generated build, declared
+mechanical pins, and milestone documents. Persist only a live-registry-validated
+`G.settings.arc9DeskTab` through the existing settings envelope and collapse the existing
+Desk-plus-tab return to one click. Old, absent, invalid, or stale values use the current
+`psDefaultDeskTab()` path. Pre-onboarded A/B fixtures must preserve campaign and save
+authority exactly. Grow focused proof 14→21, isolate Bind S3 to the invalid-preference
+tooth, restore bytes, document/commit/push/clean-parity, and continue Slice 4 under D514.
+
 ## D515 — ARC 9 SLICE 1 SHIPS MEASURED, OUTCOME-INERT RESOLVER TIMING AND AN HONEST LONG-WORK DESK STATUS; OPTIMIZATION IS NOT NEEDED — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION/VERIFY] (2026-07-22)
 
 **VERDICT: `SHIPPED_PROFILE_STATUS_OPTIMIZATION_NOT_NEEDED`.** The filesystem-first
