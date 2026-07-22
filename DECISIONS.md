@@ -4,6 +4,35 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D508 — THE NINE-GAP ROAD EVIDENCE PASS RETAINS NEEDS_MORE_RESEARCH; LANE-019 RETURNS TO CONTRACT/UNOWNED — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS/RESEARCH ONLY] (2026-07-21)
+
+The second citation-grade pass expands
+`docs/design/strategic-road-transport-research-packet.md` to 42 sources, 33 nodes,
+15 candidate rows (**13 Verified · 2 Inferred · 0 Disputed**), 11 explicit
+non-links, and nine interchange candidates across all seven D503 theaters.
+
+Four D507 questions resolve without changing law: Stony Creek Station is the exact
+Weldon-line off-load point with wagons through Dinwiddie Court House and Boydton
+Plank Road; D503's closed anchors require Columbia and Goldsboro to remain omitted;
+the real Louisville-Nashville turnpike plus a proposed Nicholasville-Chattanooga
+road do not prove a Louisville-Nashville-Chattanooga through road; and Little
+Rock-Camden plus Camden-Pine Bluff are two exact dated Arkansas operations, not one
+routine service. Exact new operation evidence also covers Winchester-Martinsburg-
+Williamsport, Vicksburg-Jackson-Meridian, and bounded CT-30 roads.
+
+The remaining five evidence families are Potomac-crossing completeness, Sherman's
+road/bridge/ferry intervals, a New Orleans road row outside May 1863, exact
+Marshall-Shreveport passage, and exact CT-29/CT-36 rows. Rejected inferences remain
+binding: Williamsport is not Harpers Ferry; Stony Creek is not RN-10 Weldon or a
+CT-09 anchor; separate dated operations do not compose into service; rail transfer
+does not become a road; and modern highways or proximity cannot fill a row.
+
+The exact verdict remains **NEEDS_MORE_RESEARCH**. LANE-019 returns to
+CONTRACT/unowned. No road data, substrate, runtime, gameplay, movement, state, save,
+UI, cost, capacity, repair, bonus, AI, terrain, tool, or generated file is authorized
+or changed. D503 owns territory boundaries; D497/D499 own rail/water evidence; D506
+owns the immutable read-only transport substrate; all existing gameplay owners hold.
+
 ## D507 — ARC 7 ROAD SOURCE PASS SHIPS WITH NEEDS_MORE_RESEARCH; NO ROAD SUBSTRATE OR GAMEPLAY IS AUTHORIZED — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS/RESEARCH ONLY] (2026-07-21)
 
 The citation-grade road pass ships as
