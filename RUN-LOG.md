@@ -1,17 +1,33 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D523 next-lane=LANE-019 state=CONTRACT owner=none -->
-> **Live status (D523, 2026-07-22):** the detached fresh-start conquest identity/state serialization foundation is shipped, focused-green, and released; LANE-019 is `CONTRACT` / `none` for separate next-dependency adjudication.
+<!-- LIVE-HEAD decision=D524 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D524, 2026-07-22):** LANE-019 is under ChatGPT/Codex DRIVE for one pure detached campaign-calendar query in the existing sole conquest-state owner.
 >
-> **Boundary:** new sole owner `src/116-conquest-state.js` exposes only strict detached factory/view globals for exact `side`, immutable versioned `campaignKind`, existing immutable `ruleset`, and an empty factory `conquest` namespace. No live start/load/save acceptance, migration, UI, topology, control, service condition, army, order, movement, or operational default shipped.
+> **Boundary:** D523 remains the runtime head; D524 changes routing/law plus the transport-plan current-contract tooth only. D525 may add one zero-argument immutable 25-interval schedule query to `src/116`; it adds no `C.conquest` field, current/default turn, live start/load/save/UI, eligibility, control, service, army, order, movement, or operational behavior.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D523 delivery record own the boundary. D514's work-conserving loop remains binding; D524 must separately adjudicate and contract the next dependency before any operational conquest state or live integration.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D524 exact contract own the slice. D514's work-conserving loop remains binding; LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-22 — D524: PURE DETACHED CONQUEST CALENDAR CONTRACT TAKEN
+
+From clean D523, LANE-019 takes ChatGPT/Codex DRIVE for the only fully law-fixed next
+prerequisite: a pure immutable query over the 24 two-month 1861-64 intervals plus the bounded
+Jan-Apr 1865 endgame. Existing `src/116` remains the sole owner; no module, `C.conquest` field,
+or ladder/Clock/President/save owner is added or reused. Operational state, receipts, and live
+save/entry remain premature because their initial values and transition grammar are not fixed.
+
+D525 is constrained to one strict zero-argument `conquestCampaignCalendar()` global returning
+fresh deeply frozen exact 25-row values. Ordinals are display order only; no current/default
+turn, action, eligibility, ruleset branch, source-date rounding, availability, or mutation
+exists. The focused proof grows 10→15 and Bind B changes only the uniquely anchored endgame end
+month 4→3 for an exact one-tooth 14/15 red before byte restoration. Data 65, manifest
+112/116-last, suite 140, save version/shape, frozen base, and the first playable-loop battery
+boundary hold.
 
 ## 2026-07-22 — D523: DETACHED CONQUEST IDENTITY/STATE FOUNDATION SHIPPED
 

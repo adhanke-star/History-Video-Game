@@ -1,12 +1,12 @@
 # START HERE — "The Civil War" (master index)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D523 next-lane=LANE-019 state=CONTRACT owner=none -->
-> **Live status (D523, 2026-07-22):** the detached fresh-start conquest identity/state serialization foundation is shipped, focused-green, and released; LANE-019 is `CONTRACT` / `none` for separate next-dependency adjudication.
+<!-- LIVE-HEAD decision=D524 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D524, 2026-07-22):** LANE-019 is under ChatGPT/Codex DRIVE for one pure detached campaign-calendar query in the existing sole conquest-state owner.
 >
-> **Boundary:** new sole owner `src/116-conquest-state.js` exposes only strict detached factory/view globals for exact `side`, immutable versioned `campaignKind`, existing immutable `ruleset`, and an empty factory `conquest` namespace. No live start/load/save acceptance, migration, UI, topology, control, service condition, army, order, movement, or operational default shipped.
+> **Boundary:** D523 remains the runtime head; D524 changes routing/law plus the transport-plan current-contract tooth only. D525 may add one zero-argument immutable 25-interval schedule query to `src/116`; it adds no `C.conquest` field, current/default turn, live start/load/save/UI, eligibility, control, service, army, order, movement, or operational behavior.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D523 delivery record own the boundary. D514's work-conserving loop remains binding; D524 must separately adjudicate and contract the next dependency before any operational conquest state or live integration.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D524 exact contract own the slice. D514's work-conserving loop remains binding; LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **D514 completion rule:** the project now runs a work-conserving completion loop. `HANDOFF.md` owns the algorithm and terminal condition; `V1-CHECKLIST.md` owns every live item; ordinary milestone/phase/browser boundaries do not stop a healthy run.

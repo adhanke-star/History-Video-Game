@@ -1266,3 +1266,37 @@ surface remain unchanged. LANE-019 releases to CONTRACT/unowned. D524 must separ
 adjudicate and contract the next dependency; no opening control, node/service condition, army,
 Historical window, migration, topology, movement, or live entry/load/save acceptance follows
 from this detached representation.
+
+### 8.28 D524 detached conquest campaign-calendar contract
+
+D524 takes LANE-019 DRIVE from clean D523 for the only next prerequisite whose domain values
+are fully fixed by Package A: the 24 two-month intervals from Jan-Feb 1861 through Nov-Dec
+1864 plus the bounded Jan-Apr 1865 endgame. This is static campaign law, not mutable campaign
+state. Extend existing sole owner `src/116-conquest-state.js`; do not create a new module, reuse
+the battle-derived ladder `C.clock`/President date/`CHAINS` index, or attach duplicated calendar
+configuration to `C.conquest`. D523's factory/view and empty namespace remain exact.
+
+Add only `conquestCampaignCalendar()` with declared arity zero. Any argument returns `null`
+without coercion, throw, or effect. Every valid call returns a fresh deeply frozen Array of
+exactly 25 distinct ordinary records with ordered own-data keys `ordinal`, `start`, `end`,
+`kind`. Every `start`/`end` is a distinct ordinary object with ordered own-data `year`, `month`.
+All arrays, records, and date pairs are frozen; no hidden/symbol/accessor extra or shared nested
+identity exists within or across calls.
+
+Months are inclusive 1-based integers. Ordinals 1-24 are `kind:"regular"`; row `n` has year
+`1861 + floor((n-1)/6)`, start month `1 + 2*((n-1)%6)`, and end month `start+1`. Ordinal 25 is
+`kind:"endgame"`, start `{year:1865,month:1}`, end `{year:1865,month:4}`. Ordinal is only
+schedule/display order: 25 is not a normal twenty-fifth turn, grants no action or resolution
+boundary, and creates no current/default/next/legal-now meaning. The query has no labels/ids,
+source-date transformation, ruleset branch, Historical/service window, eligibility,
+availability, or resolution function.
+
+It reads or writes no `G`, `C`, settings, storage, DOM/UI, board, transport, save, or alternate
+authority and creates no state, start/load/continue path, migration, control, node/service
+condition, army, order, movement, topology, cut/repair, economy, AI, battle, Chronicle, career,
+builder, or tactical behavior. D525 changes only existing `src/116`, grows its existing focused
+probe exactly 10→15, rebuilds generated HTML, applies only proved mechanical planning pins, and
+syncs closeout docs. Data 65, manifest 112/116-last, suite 140, `_SAVE_VER=1`, save shape, frozen
+base, build/data/current owners hold. Bind B changes only the unique endgame end-month anchor
+4→3, producing exactly 14/15 with only the endgame tooth red before byte restoration and clean
+15/15. No full battery is owed before the first playable conquest loop.
