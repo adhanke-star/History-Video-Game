@@ -2434,6 +2434,207 @@ const SETUP = `(() => {
       return { legacy:true, v1:true, headings:host.querySelectorAll('h3').length, listItems:host.querySelectorAll('ul > li').length };
     });
 
+    step('D512 CARE CONTEXT: exact wounded receipt, source-honest Letterman context, fail-closed purity', function() {
+      function need(ok, message) { if (!ok) throw new Error(message); }
+      function pairFor(C, result) {
+        var J = C.loot.journey, event = null, credit = null;
+        for (var i = 0; i < J.events.length; i++) if (J.events[i] && J.events[i].eventId === result.eventId) event = J.events[i];
+        for (var ci = 0; ci < J.creditLedger.length; ci++) if (J.creditLedger[ci] && J.creditLedger[ci].creditKey === result.creditKey) credit = J.creditLedger[ci];
+        need(event && credit && credit.eventId === event.eventId, 'D512 exact event/credit pair missing');
+        return { event:event, credit:credit };
+      }
+      function woundAtSource(side, predicate, label) {
+        var C = mkC(side, false), people = ssPersonRegistry(C).people, selected = null, index = -1, year = null;
+        for (var i = 0; i < people.length && !selected; i++) {
+          var p = people[i], ref = p && p.unitRef, chainIndex = ref && CHAINS[side].indexOf(ref.battleId);
+          var battleYear = ref && _wcCanonicalBattleYear(ref.battleId);
+          if (p && p.side === side && ref && ref.side === side && chainIndex >= 0 && _wcAllowedStartRank(p.rank) &&
+              _wcTeamAnchor(p) && predicate(p, battleYear)) {
+            selected = p; index = chainIndex; year = battleYear;
+          }
+        }
+        need(selected && index >= 0, 'D512 no eligible ' + label + ' source person');
+        var runId = '', key = '', participation = null;
+        for (var attempt = 0; attempt < 2000; attempt++) {
+          runId = 'run-d512-' + label + '-' + attempt;
+          key = [runId, side, index, selected.unitRef.battleId].join('|');
+          participation = {
+            runId:runId, creditKey:key, personId:selected.pid,
+            battleId:selected.unitRef.battleId, side:selected.unitRef.side, unitId:selected.unitRef.unitId,
+            slot:selected.unitRef.slot, slotPid:selected.unitRef.slotPid
+          };
+          if (warCareerDeterministicFate(participation, 'victory', 'win') === 'wounded') break;
+        }
+        need(warCareerDeterministicFate(participation, 'victory', 'win') === 'wounded', 'D512 no deterministic wound run for ' + label);
+        C.idx = index; C.runId = runId;
+        need(warCareerStart(C, selected.pid).ok, 'D512 start failed for ' + label);
+        var B = mkB(C, true); participantEvidence(C, B, 'classic');
+        var preflight = warCareerPreflightFate(C, B, side, 'win');
+        need(preflight.qualifying && preflight.fate === 'wounded', 'D512 wound preflight failed for ' + label + ': ' + bytes(preflight));
+        var result = resolveResult(C, B, side, 'win');
+        need(result && result.qualifying && result.fate === 'wounded', 'D512 wound commit failed for ' + label + ': ' + bytes(result));
+        return { C:C, B:B, result:result, pair:pairFor(C, result), person:selected, year:year };
+      }
+      function aopWound() {
+        var fixture = haleyTimelineFixture({ fate:'wounded', outcome:'defeat', type:'win' });
+        var preflight = warCareerPreflightFate(fixture.C, fixture.B, 'CS', 'win');
+        need(preflight.qualifying && preflight.fate === 'wounded', 'D512 AOP v2 wound preflight failed: ' + bytes(preflight));
+        var result = resolveResult(fixture.C, fixture.B, 'CS', 'win');
+        need(result && result.qualifying && result.fate === 'wounded', 'D512 AOP v2 wound commit failed: ' + bytes(result));
+        return { C:fixture.C, B:fixture.B, result:result, pair:pairFor(fixture.C, result), person:fixture.person, year:preflight.participation.battleYear };
+      }
+      function careSection(html) {
+        var div = document.createElement('div'); div.innerHTML = html;
+        return { host:div, care:div.querySelector('[data-war-career-care-context="1"]'), historical:div.querySelector('[data-war-career-historical-context="1"]') };
+      }
+      function personalOnly(C, label) {
+        var dom = careSection(warCareerReportHTML(C, { compact:true }));
+        need(dom.care && !dom.historical, label + ' did not render personal-only context');
+        need(/Your Timeline/.test(dom.care.textContent) && /classified/.test(dom.care.textContent) && /wounded/.test(dom.care.textContent), label + ' personal classification missing');
+        return dom;
+      }
+      function absent(C, label) {
+        var html = warCareerReportHTML(C, { compact:true });
+        need(html.indexOf('data-war-career-care-context="1"') < 0, label + ' fabricated care context');
+        return html;
+      }
+      function withRegistry(C, mutator, fn) {
+        var prior = window.ssPersonRegistry, modified = mutator(clone(prior(C)));
+        window.ssPersonRegistry = function(value) { return value === C ? modified : prior(value); };
+        try { return fn(); } finally { window.ssPersonRegistry = prior; }
+      }
+      function withMedical(mutator, fn) {
+        var prior = window.gameData, original = clone(prior('disease-medical'));
+        window.gameData = function(key) { return key === 'disease-medical' ? mutator(clone(original)) : prior(key); };
+        try { return fn(); } finally { window.gameData = prior; }
+      }
+      function normalizedSave(C) {
+        G.campaign = C;
+        var saved = clone(serializeSave());
+        if (saved && typeof saved === 'object') delete saved.when;
+        return bytes(saved);
+      }
+
+      var aop = aopWound(), aopPerson = exactPerson(aop.C, aop.C.loot.journey.personId);
+      need(aop.C.side === 'US' && aop.year >= 1862 && aopPerson.team && aopPerson.team.army === 'Army of the Potomac', 'D512 AOP control authority moved');
+      aarRenderReport(aop.C, { compact:true }); // Normalize unrelated pre-existing AAR lazy readers before the D512 purity snapshot.
+      var beforeSave = normalizedSave(aop.C), beforeMedical = bytes(gameData('disease-medical'));
+      var beforeRegistry = bytes(ssPersonRegistry(aop.C)), beforeRelationships = bytes(aop.C.loot.journey.relationships || {}), before = bytes(aop.C);
+      var directOne = warCareerReportHTML(aop.C, { compact:true }), directTwo = warCareerReportHTML(aop.C, { compact:true });
+      var composedOne = aarRenderReport(aop.C, { compact:true }), composedTwo = aarRenderReport(aop.C, { compact:true });
+      need(directOne === directTwo && composedOne === composedTwo, 'D512 report bytes changed across repeated reads');
+      var purity = {
+        campaign:bytes(aop.C) === before,
+        save:normalizedSave(aop.C) === beforeSave,
+        data:bytes(gameData('disease-medical')) === beforeMedical,
+        registry:bytes(ssPersonRegistry(aop.C)) === beforeRegistry,
+        relationships:bytes(aop.C.loot.journey.relationships || {}) === beforeRelationships
+      };
+      need(purity.campaign && purity.save && purity.data && purity.registry && purity.relationships,
+        'D512 read changed campaign, save, data, registry, or relationship state: ' + bytes(purity));
+      var dom = careSection(directOne), care = dom.care;
+      need(care && dom.host.querySelectorAll('[data-war-career-care-context="1"]').length === 1 &&
+        composedOne.split('data-war-career-care-context="1"').length - 1 === 1, 'D512 care subsection count moved');
+      need(care.getAttribute('aria-labelledby') === 'wcCareContextHead' && care.querySelector('#wcCareContextHead') &&
+        care.querySelectorAll('h4').length === 1 && care.querySelectorAll('h5').length === 2 && !care.querySelector('button,input,select,textarea'),
+        'D512 semantic read-only subsection structure missing');
+      need(/Care context/.test(care.querySelector('h4').textContent) && /Your Timeline/.test(care.querySelectorAll('h5')[0].textContent) &&
+        /Historical context/.test(care.querySelectorAll('h5')[1].textContent), 'D512 care labels moved');
+      need(dom.historical && /Verified/.test(dom.historical.textContent) && /Letterman|evacuation|ambulance/i.test(dom.historical.textContent) &&
+        dom.historical.querySelectorAll('li').length >= 2 &&
+        dom.historical.textContent.indexOf('does not prove this person’s aid, ambulance, hospital, transfer, or treatment path') >= 0,
+        'D512 verified generic context, sources, or no-path disclaimer missing');
+
+      var controls = [
+        { label:'Confederate', value:woundAtSource('CS', function(p, year) { return year >= 1862; }, 'cs'), historical:false },
+        { label:'pre-1862 Union', value:woundAtSource('US', function(p, year) { return year < 1862; }, 'pre1862'), historical:false },
+        { label:'non-AOP Union', value:woundAtSource('US', function(p, year) { return year >= 1862 && (!p.team || p.team.army !== 'Army of the Potomac'); }, 'non-aop'), historical:false }
+      ];
+      for (var controlIndex = 0; controlIndex < controls.length; controlIndex++) personalOnly(controls[controlIndex].value.C, controls[controlIndex].label);
+
+      var invalidRows = [
+        { label:'non-wounded fate', mutate:function(C, pair) { pair.event.status = pair.event.fate = pair.credit.fate = 'alive'; } },
+        { label:'mismatched participation copies', mutate:function(C, pair) { pair.event.participation.rankAtResult += ' forged'; } },
+        { label:'missing credit', mutate:function(C, pair) { C.loot.journey.creditLedger = C.loot.journey.creditLedger.filter(function(row) { return row !== pair.credit; }); } },
+        { label:'duplicate credit', mutate:function(C, pair) { C.loot.journey.creditLedger.push(clone(pair.credit)); } },
+        { label:'duplicate event', mutate:function(C, pair) { C.loot.journey.events.push(clone(pair.event)); } },
+        { label:'wrong event person', mutate:function(C, pair) { pair.event.personId += ':other'; } },
+        { label:'wrong credit run', mutate:function(C, pair) { pair.credit.runId += ':stale'; } },
+        { label:'wrong event scenario', mutate:function(C, pair) { pair.event.scenarioId += ':other'; } },
+        { label:'wrong outcome rank', mutate:function(C, pair) { pair.credit.outcomeRank += 1; } },
+        { label:'malformed participation', mutate:function(C, pair) { delete pair.credit.participation.resultId; pair.event.participation = clone(pair.credit.participation); } }
+      ];
+      for (var invalidIndex = 0; invalidIndex < invalidRows.length; invalidIndex++) {
+        var invalidC = clone(aop.C), invalidPair = pairFor(invalidC, aop.result);
+        invalidRows[invalidIndex].mutate(invalidC, invalidPair);
+        absent(invalidC, invalidRows[invalidIndex].label);
+      }
+      var wrongCurrent = clone(aop.C); wrongCurrent.loot.journey.personId += ':other';
+      absent(wrongCurrent, 'wrong current identity');
+
+      var registryRows = [
+        { label:'missing canonical identity', mutate:function(reg, pid) { reg.people = reg.people.filter(function(p) { return p.pid !== pid; }); return reg; } },
+        { label:'duplicate canonical identity', mutate:function(reg, pid) { var person = reg.people.filter(function(p) { return p.pid === pid; })[0]; reg.people.push(clone(person)); return reg; } },
+        { label:'invalid canonical service year', mutate:function(reg, pid) { var person = reg.people.filter(function(p) { return p.pid === pid; })[0]; person.serviceYear = 1862; return reg; } }
+      ];
+      for (var registryIndex = 0; registryIndex < registryRows.length; registryIndex++) {
+        var registryC = clone(aop.C), registryPid = registryC.loot.journey.personId, registryRow = registryRows[registryIndex];
+        withRegistry(registryC, function(reg) { return registryRow.mutate(reg, registryPid); }, function() { absent(registryC, registryRow.label); });
+      }
+
+      var medicalRows = [
+        { label:'missing medical dataset', mutate:function() { return null; } },
+        { label:'missing practice row', mutate:function(data) { data.practices = data.practices.filter(function(row) { return row.id !== 'letterman-system'; }); return data; } },
+        { label:'duplicate practice row', mutate:function(data) { var row = data.practices.filter(function(item) { return item.id === 'letterman-system'; })[0]; data.practices.push(clone(row)); return data; } },
+        { label:'unverified practice', mutate:function(data) { data.practices.filter(function(row) { return row.id === 'letterman-system'; })[0].provenance = 'Inferred'; return data; } },
+        { label:'one-source practice', mutate:function(data) { data.practices.filter(function(row) { return row.id === 'letterman-system'; })[0].sources.length = 1; return data; } },
+        { label:'empty-source practice', mutate:function(data) { data.practices.filter(function(row) { return row.id === 'letterman-system'; })[0].sources[1] = ' '; return data; } },
+        { label:'duplicate-source practice', mutate:function(data) { var row = data.practices.filter(function(item) { return item.id === 'letterman-system'; })[0]; row.sources[1] = row.sources[0]; return data; } },
+        { label:'irrelevant practice text', mutate:function(data) { data.practices.filter(function(row) { return row.id === 'letterman-system'; })[0].summary = 'No relevant practice text.'; return data; } }
+      ];
+      for (var medicalIndex = 0; medicalIndex < medicalRows.length; medicalIndex++) {
+        var medicalRow = medicalRows[medicalIndex];
+        withMedical(medicalRow.mutate, function() { personalOnly(aop.C, medicalRow.label); });
+      }
+
+      var newest = clone(aop.C), originalBattle = aop.pair.event.battleName;
+      newest.loot.journey.events.push({ eventId:newest.runId + ':event:newer-invalid', kind:'result', creditKey:'invalid-newer',
+        personId:newest.loot.journey.personId, scenarioId:'invalid-newer', battleName:'Later invalid observation', outcome:'defeat', type:'win',
+        status:'alive', fate:null, qualifying:false, merit:0, reputation:0, note:'newer but not authoritative' });
+      var newestCare = careSection(warCareerReportHTML(newest, { compact:true })).care;
+      need(newestCare && newestCare.textContent.indexOf(originalBattle) >= 0 && newestCare.textContent.indexOf('Later invalid observation') < 0,
+        'D512 newest-valid wounded selection moved');
+
+      var hostileC = clone(aop.C), hostilePair = pairFor(hostileC, aop.result), hostilePid = hostileC.loot.journey.personId;
+      hostilePair.event.battleName = '<script>window.__d512Battle=1</script> ambulance field';
+      var hostileHtml = withRegistry(hostileC, function(reg) {
+        reg.people.filter(function(p) { return p.pid === hostilePid; })[0].name = '<img src=x onerror=window.__d512Person=1>';
+        return reg;
+      }, function() {
+        return withMedical(function(data) {
+          var row = data.practices.filter(function(item) { return item.id === 'letterman-system'; })[0];
+          row.summary = '<svg onload=window.__d512Medical=1> ambulance hospital context';
+          row.sources = ['<img src=x onerror=window.__d512Source=1> source A', '<script>window.__d512Source=2</script> source B'];
+          return data;
+        }, function() { return warCareerReportHTML(hostileC, { compact:true }); });
+      });
+      var hostileDom = careSection(hostileHtml);
+      need(hostileDom.care && !hostileDom.care.querySelector('img,script,svg') && hostileHtml.indexOf('<script>') < 0 && hostileHtml.indexOf('<img') < 0 && hostileHtml.indexOf('<svg') < 0 &&
+        hostileHtml.indexOf('&lt;script&gt;') >= 0 && hostileHtml.indexOf('&lt;img') >= 0 && hostileHtml.indexOf('&lt;svg') >= 0,
+        'D512 hostile derived text was not escaped');
+
+      var noWound = mkC('US', false); startCurrent(noWound, 'Private', 'pvt');
+      var actualNoWound = warCareerReportHTML(noWound, { compact:true }), priorCare = window._wcCareContextHTML, baselineNoWound;
+      window._wcCareContextHTML = function() { return ''; };
+      try { baselineNoWound = warCareerReportHTML(noWound, { compact:true }); } finally { window._wcCareContextHTML = priorCare; }
+      need(actualNoWound === baselineNoWound && actualNoWound.indexOf('data-war-career-care-context="1"') < 0,
+        'D512 ineligible report bytes changed');
+      window.__wcAarCampaign = aop.C;
+      return { exactPair:true, personalCases:4, historicalCases:1, receiptRejects:invalidRows.length,
+        registryRejects:registryRows.length, dataSuppressions:medicalRows.length, newestValid:true,
+        escaped:true, deterministic:true, saveShape:true, relationshipsUnchanged:true, semantic:true };
+    });
+
     step('D407 HANDOFF MEMORY + OWNER ISOLATION + AAR', function() {
       var fixture = d406Fixture({ runId:'run-d406-handoff-27', fallenAt:2 }), C = fixture.C, J = C.loot.journey;
       d407StripSignals(J);

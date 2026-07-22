@@ -123,7 +123,8 @@ const PIN = {
 // D491 re-pin: game b2b23ed2 -> 19489898, manifest a6699981 -> d686e44e; politics data/module, guarded post-clock consumer, pure teaching hooks, additive save sanitation, and owner teeth. Base/suite hold; schema 62 -> 63.
 // D504 re-pin: game 19489898 -> ba68ebfd, manifest d686e44e -> 8e9d8987; the 36-row conquest territory data owner, read-only board/H0 entry, build validator, and focused probes. Base/suite hold; schema 63 -> 64.
 // D506 re-pin: game ba68ebfd -> d278c30f, manifest 8e9d8987 -> 309a7bc1; the read-only transport evidence owner, final no-UI module, exact build validator, and focused probes. Base/suite hold; schema 64 -> 65.
-game: "d278c30f4cbbe2179b10bc566a8a461b",
+// D513 re-pin (Aaron-authorized one-file cross-plan exception): the pure source-106 care-context reader and normal rebuild move only generated-game MD5 d278c30f -> 4c775fd1; base, data, manifest, suite, scenario/schema counts, save version, Mayhem authority, and public readiness remain unchanged.
+game: "4c775fd1881ff9763efb42bcd2258a2d",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "309a7bc1eb43407f405e12323af7638d",
   suite: "69681d6f2216fe1dcfd594ffc4a757b7",

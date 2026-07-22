@@ -924,8 +924,9 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
 // D491 re-pin: srcTree cfa7648d -> 8bbf47b8 for src/74 plus the guarded register, teaching hooks, and additive save sanitation.
 // D504 re-pin: srcTree 8bbf47b8 -> 06345336 for the read-only conquest module plus its guarded H0 entry; no War Career owner moved.
 // D506 re-pin: srcTree 06345336 -> 8928865a for final no-UI src/115 only; no War Career owner moved.
-srcTree:"8928865aa355e27532b4318fcab3ff23",
-    runtime:"ee83045eaaa20c96c3c09579599614c8",
+// D512 re-pin: srcTree 8928865a -> 9711d3d7, runtime ee83045e -> dfee8d9c, and focused e2acf99a -> a4be754c for the pure care-context reader and its one table-driven row; journey/command/data/manifest/suite hold.
+srcTree:"9711d3d79d667d9d96404066258110eb",
+    runtime:"dfee8d9c3a6b8c8caa414366302214a7",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
     // the journey/war-career logic surfaces are untouched, proven by this probe's own runtime steps).
@@ -966,7 +967,7 @@ srcTree:"8928865aa355e27532b4318fcab3ff23",
     // D470 battery root-fix re-pin: focused 78633570 -> 65e9c8730dfa6cb0250feddd3adabf6f — the probe's own suite-count
     // tooth (138 -> 140) missed by the D469/D470 sweeps, fixed at its exact label (the
     // D443 AD-6 precedent); the war-career runtime surface held.
-    focused:"e2acf99a9f7a1c639563030c91cf58a7",
+    focused:"a4be754c3338ee5776e98a92d74a3e54",
     // D490 re-pin (LANE-018 slice 2): commandProbe 048bfed3 -> d861722c (probe-command grows
     // 94 -> 99 with the five persona/friction/save/setup teeth; the four D406 tooth names this
     // probe scans are unmoved).
@@ -993,7 +994,14 @@ srcTree:"8928865aa355e27532b4318fcab3ff23",
     "function warCareerRelationshipSignal(C, J, event)",
     "function warCareerRelationshipSignalClean(row, C, owner)",
     "function _wcRelationshipReduce(transitions, J)",
-    "function warCareerRebuildRelationships(C, J)"
+    "function warCareerRebuildRelationships(C, J)",
+    "function _wcCareAuthority(C, J)",
+    "function _wcCareHistoricalContext(C, authority)",
+    "function _wcCareContextHTML(C, J)",
+    "JSON.stringify(event.participation) !== JSON.stringify(credit.participation)",
+    "authority.person.team.army !== \"Army of the Potomac\"",
+    "letterman-system",
+    "This generic context does not prove this person’s aid, ambulance, hospital, transfer, or treatment path."
   ]) {
     if (!runtimeText.includes(token)) throw new Error("Slice-D runtime missing: " + token);
   }
@@ -1101,8 +1109,13 @@ srcTree:"8928865aa355e27532b4318fcab3ff23",
   // cwCareerBadges pure derivation + hatched-never-solid render + zero save shape; the
   // war-career runtime surface itself did NOT move (this probe's own runtime steps prove
   // it). check( walls stayed 31.
-  if ((focusedText.match(/\bstep\('/g) || []).length !== 45 || (focusedText.match(/\bcheck\(/g) || []).length !== 31) {
-    throw new Error("focused source row/static structure moved from 45 literal steps + 31 checks");
+  // D512: one table-driven care-context row joins (45 -> 46 literal steps, 47/47
+  // including static registration); the 30 static checks and 31 source check( tokens hold.
+  if ((focusedText.match(/\bstep\('/g) || []).length !== 46 || (focusedText.match(/\bcheck\(/g) || []).length !== 31) {
+    throw new Error("focused source row/static structure moved from 46 literal steps + 31 checks");
+  }
+  if (occurrences(focusedText, "step('D512 CARE CONTEXT: exact wounded receipt, source-honest Letterman context, fail-closed purity'") !== 1) {
+    throw new Error("focused D512 care-context row moved");
   }
   if (occurrences(focusedText, "step('D411 REACHABILITY + SOURCE-BOUNDED SERVICE'") !== 1) {
     throw new Error("focused D411 reachability row moved");
@@ -1295,7 +1308,8 @@ step("BASELINES + LANE", () => {
     // D491 re-pin: game b2b23ed2 -> 19489898; dataTree fa4ce39d -> 9b2da5bc; manifest a6699981 -> d686e44e. Politics data/module + owner teeth; base/suite hold; schema 63.
     // D504 re-pin: game 19489898 -> ba68ebfd; dataTree 9b2da5bc -> 24773ac8; manifest d686e44e -> 8e9d8987. Territory data/read-only board/build/probes; base/suite hold; schema 64.
     // D506 re-pin: game ba68ebfd -> d278c30f; dataTree 24773ac8 -> 2e9e4df4; manifest 8e9d8987 -> 309a7bc1. Read-only transport evidence/module/build/probes; base/suite hold; schema 65.
-    game:"d278c30f4cbbe2179b10bc566a8a461b",
+    // D512 re-pin: game d278c30f -> 4c775fd1 for the pure care-context reader and rebuilt artifact; base/data/manifest/suite hold.
+    game:"4c775fd1881ff9763efb42bcd2258a2d",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     // D478 re-pin: dataTree 4bbdebe5 -> b3b323fa (LANE-017 slice 1: rarity glyphs + reserved tier
     // hexes + rungTiers in data/loot-survival.json — presentation data only, no war-career data).
@@ -1768,7 +1782,7 @@ step("REACHABILITY BASELINES", () => {
     // D491 re-pin: the same politics chain at the reachability baseline; runtime/journey/focused hold.
     // D504 re-pin: game 19489898 -> ba68ebfd; dataTree 9b2da5bc -> 24773ac8 for the territory registry and read-only shell; runtime/journey/focused hold.
     // D506 re-pin: game ba68ebfd -> d278c30f; dataTree 24773ac8 -> 2e9e4df4 for read-only transport evidence; runtime/journey/focused hold.
-    game:"d278c30f4cbbe2179b10bc566a8a461b",
+    game:"4c775fd1881ff9763efb42bcd2258a2d",
     dataTree:"2e9e4df430eaaaeca4ce6f58f51a3b2e",
         // D484 re-pin (LANE-017 slice 6, soldier-tier badges SS4d.3): game e7ff100e -> e99e6ac5 · dataTree 00f8c1fe -> c3c28fd6 (data/ratings.json gains soldierBadgeDefs 14 + soldierBadges 48 rows on 39 Verified carriers + _soldierBadgeNote) · srcTree 15570ebc -> d79696ce (T14 soldier-badge accessors + the fldSoldierBadgeFactor capped gateway; src/37 cwCareerBadges/cwSoldierBadgeRows/_ssSoldierBadgesHTML register/journey chips; the src/22 comment-token reword — the D482 class, fifth instance) · journey 1689c4a2 -> 9655bfff (src/37) · focused 65e9c873 -> e2acf99a (probe-war-career gains the D484 career-badge step; the stale 138 suite.expected DISPLAY fields aligned to the 140 teeth). Presentation + data + the capped gateway only — no combat line consumes the keys, sim inputs did not move; both binds md5-proven; base/manifest/suite/runtime/command hold.
     // D486 re-pin (LANE-017 slice 8): srcTree b7648a67 -> 8174d79d (src/37 sets/salvage/
@@ -1783,8 +1797,9 @@ step("REACHABILITY BASELINES", () => {
 // D491 re-pin: srcTree cfa7648d -> 8bbf47b8; no war-career runtime surface moved.
 // D504 re-pin: srcTree 8bbf47b8 -> 06345336 for the board/H0 shell; no war-career runtime surface moved.
 // D506 re-pin: srcTree 06345336 -> 8928865a for final no-UI src/115 only; no war-career runtime surface moved.
-srcTree:"8928865aa355e27532b4318fcab3ff23",
-    runtime:"ee83045eaaa20c96c3c09579599614c8",
+// D512 re-pin: game d278c30f -> 4c775fd1, srcTree 8928865a -> 9711d3d7, runtime ee83045e -> dfee8d9c, focused e2acf99a -> a4be754c; the pure report seam moves no data, save, manifest, suite, journey, or command owner.
+srcTree:"9711d3d79d667d9d96404066258110eb",
+    runtime:"dfee8d9c3a6b8c8caa414366302214a7",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
     // the journey/war-career logic surfaces are untouched, proven by this probe's own runtime steps).
@@ -1800,7 +1815,7 @@ srcTree:"8928865aa355e27532b4318fcab3ff23",
     // D469 re-pin: focused 3da0dbc0 -> bb7a1bc9 (the 1632 -> 1671 Crater register chain).
     // D470 re-pin: focused bb7a1bc9 -> 78633570 (the 1671 -> 1710 Olustee register chain).
     // D470 battery root-fix: focused 78633570 -> 65e9c8730dfa6cb0250feddd3adabf6f (the suite-count tooth 138 -> 140 AND its silent list.length conjunct in result.ok).
-    focused:"e2acf99a9f7a1c639563030c91cf58a7"
+    focused:"a4be754c3338ee5776e98a92d74a3e54"
   };
   for (const key of Object.keys(expected)) {
     if (hashes[key] !== expected[key]) throw new Error("D411 shipped baseline moved: " + key + " " + hashes[key]);

@@ -1,10 +1,10 @@
 # V1 CHECKLIST — current approved roadmap
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D512 next-lane=LANE-005 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D512, 2026-07-22):** ARC 8 medicine-to-soldier-depth law is adjudicated in the existing §4f; LANE-005 is DRIVE under ChatGPT/Codex for the one read-only War Career report slice, with implementation not yet begun. LANE-019 remains CONTRACT/unowned with road transport blocked at `NEEDS_MORE_RESEARCH`.
+<!-- LIVE-HEAD decision=D513 next-lane=LANE-005 state=CONTRACT owner=none -->
+> **Live status (D513, 2026-07-22):** ARC 8 Future Slice 1 is shipped as a pure War Career care-context reader; LANE-005 is CONTRACT/unowned with no deeper medicine slice authorized. LANE-019 remains CONTRACT/unowned with road transport blocked at `NEEDS_MORE_RESEARCH`.
 >
-> **Boundary:** The first consumer is only the pure `warCareerReportHTML` After Action report. Its authority is an exact qualifying current-person wounded event/credit pair plus existing `Your Timeline` fate; the existing Verified Letterman-system row may supply separately labeled generic Army of the Potomac context, never a personal treatment claim. No new state, persistence, medical mechanic, person claim, relationship, or LANE-002 batch is authorized. No simultaneous edits.
+> **Boundary:** The existing `warCareerReportHTML` After Action report now derives one optional subsection from an exact qualifying current-person wounded event/credit pair. `Your Timeline` states only the playthrough classification; separately labeled generic historical context requires the existing Verified, two-source Letterman-system row plus US, 1862+, and canonical Army of the Potomac authority. No state, persistence, medical mechanic, personal treatment claim, relationship, score, or LANE-002 batch moved. No simultaneous edits.
 >
 > **Authority:** `HANDOFF.md`'s first ⚡ block owns the full live boundary. This exact summary is build-checked across the routing docs; historical `NEXT` language records an old boundary and is never current authority.
 <!-- LIVE-HEAD-SUMMARY:END -->
@@ -39,10 +39,10 @@ Only unchecked boxes under **Outstanding approved roadmap** are authorized roadm
 
 - [ ] **ARC 8 — soldier depth.**
   - [x] D512 docs-only medicine-to-soldier-depth law adjudication: §4f now selects the existing pure War Career After Action report, exact current-person wounded receipt authority, separate generic Letterman context, and no new state/owner.
-  - [ ] Implement the contracted D512 future Slice 1 under the active standalone LANE-005 DRIVE lock held by ChatGPT/Codex; the slice is read-only/nonpersistent, 46 browser rows plus unchanged 30/30 static targeted, and still unimplemented at this routing boundary.
+  - [x] D513 ships D512 Future Slice 1: the existing War Career report derives one optional care-context subsection from an exact qualifying current-person wounded event/credit pair; generic Letterman context remains separately labeled, source-disclosed, and limited to Verified/two-source US Army of the Potomac receipts dated 1862 or later. The reader is pure and nonpersistent; Aaron's explicit one-file cross-plan exception moves only the Mayhem-plan game pin `d278c30f`→`4c775fd1` plus history, restoring 13/13 within the exact 14-path HANDOFF scope; LANE-005 is released.
   - [ ] Continue bounded LANE-002 5b replacement batches when a citation-grade candidate set is selected. The live inventory is 42 Verified overlays and 1,437 open generated rows; the open count is a feeder pool, not a mandate to fill every row.
   - [ ] Add primary-source daily-life beats and relationship depth beyond the shipped D407 spine.
-  - [ ] After Slice 1, adjudicate any deeper wounding, hospital, disease, or recovery narrative separately without duplicating D169 or turning generic evidence into a personal claim.
+  - [ ] Adjudicate any deeper wounding, hospital, disease, or recovery narrative separately before implementation; no deeper medicine slice is currently authorized, and any future contract must not duplicate D169 or turn generic evidence into a personal claim.
   - [ ] Carry soldier point of view into owner-mode battle receipts and consequences.
 
 - [ ] **ARC 9 — desk-to-battle pacing.**

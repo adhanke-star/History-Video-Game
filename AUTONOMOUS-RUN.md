@@ -1,13 +1,15 @@
 # AUTONOMOUS-RUN.md — the 12-hour max-productivity build plan ("The Civil War")
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D512 next-lane=LANE-005 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D512, 2026-07-22):** ARC 8 medicine-to-soldier-depth law is adjudicated in the existing §4f; LANE-005 is DRIVE under ChatGPT/Codex for the one read-only War Career report slice, with implementation not yet begun. LANE-019 remains CONTRACT/unowned with road transport blocked at `NEEDS_MORE_RESEARCH`.
+<!-- LIVE-HEAD decision=D513 next-lane=LANE-005 state=CONTRACT owner=none -->
+> **Live status (D513, 2026-07-22):** ARC 8 Future Slice 1 is shipped as a pure War Career care-context reader; LANE-005 is CONTRACT/unowned with no deeper medicine slice authorized. LANE-019 remains CONTRACT/unowned with road transport blocked at `NEEDS_MORE_RESEARCH`.
 >
-> **Boundary:** The first consumer is only the pure `warCareerReportHTML` After Action report. Its authority is an exact qualifying current-person wounded event/credit pair plus existing `Your Timeline` fate; the existing Verified Letterman-system row may supply separately labeled generic Army of the Potomac context, never a personal treatment claim. No new state, persistence, medical mechanic, person claim, relationship, or LANE-002 batch is authorized. No simultaneous edits.
+> **Boundary:** The existing `warCareerReportHTML` After Action report now derives one optional subsection from an exact qualifying current-person wounded event/credit pair. `Your Timeline` states only the playthrough classification; separately labeled generic historical context requires the existing Verified, two-source Letterman-system row plus US, 1862+, and canonical Army of the Potomac authority. No state, persistence, medical mechanic, personal treatment claim, relationship, score, or LANE-002 batch moved. No simultaneous edits.
 >
 > **Authority:** `HANDOFF.md`'s first ⚡ block owns the full live boundary. This exact summary is build-checked across the routing docs; historical `NEXT` language records an old boundary and is never current authority.
 <!-- LIVE-HEAD-SUMMARY:END -->
+
+**D513 closeout scope:** Aaron explicitly authorized the sole one-file Mayhem-plan game-pin exception (`d278c30f`→`4c775fd1` plus adjacent history) needed to restore 13/13. `HANDOFF.md` enumerates the exact 14-path final scope; no Mayhem authority/runtime/data or LANE-019 road boundary moved.
 
 **Written run i (2026-06-13). This is the operating manual for a long, unsupervised, self-perpetuating autonomous build run.** Aaron is away ~12 hours and wants the strategic Owner-Mode war built as far as possible, ship-quality, content-complete, fully self-verified. Personal project — NOT MJI. Ultracode on. $0/single-file. Build bar **200/100 — go above and beyond.**
 

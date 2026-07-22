@@ -1931,6 +1931,91 @@ function _wcRelationshipReportHTML(C, J) {
       : '<p style="font-size:11px;line-height:1.45;margin:5px 0 0">No qualifying high-command relationship memory has been recorded.</p>')
     + '</section>';
 }
+function _wcCareAuthority(C, J) {
+  var side = C && (C.side === "CS" ? "CS" : (C.side === "US" ? "US" : ""));
+  if (!C || !J || !J.enabled || J.careerVersion !== 1 || !J.person || J.personId !== J.person.pid ||
+      !side || !warCareerRunIdValid(C.runId) || !Array.isArray(J.events) || !Array.isArray(J.creditLedger)) return null;
+  var canonical = _wcCanonicalCareerPerson(C, J.personId);
+  var source = canonical && _wcValidateCanonicalSource(C, J.personId, side, canonical.sourceRef);
+  var currentRef = _wcUnitRef(J.person.unitRef);
+  if (!canonical || !source || source.person.pid !== canonical.person.pid || !currentRef ||
+      !_wcSameUnitRef(currentRef, canonical.sourceRef)) return null;
+  var events = J.events, credits = J.creditLedger;
+  for (var ei = events.length - 1; ei >= 0; ei--) {
+    var event = events[ei], eventId = event && _wcSafeId(event.eventId, 180);
+    var eventCount = 0, creditEventCount = 0, credit = null, ci;
+    if (!eventId || event.kind !== "result") continue;
+    for (ci = 0; ci < events.length; ci++) if (events[ci] && events[ci].eventId === eventId) eventCount++;
+    for (ci = 0; ci < credits.length; ci++) if (credits[ci] && credits[ci].eventId === eventId) {
+      credit = credits[ci]; creditEventCount++;
+    }
+    if (eventCount !== 1 || creditEventCount !== 1 || !credit) continue;
+    var creditKey = _wcSafeId(credit.creditKey, 220), creditKeyCount = 0;
+    for (ci = 0; ci < credits.length; ci++) if (credits[ci] && credits[ci].creditKey === creditKey) creditKeyCount++;
+    var chainIndex = Number(credit.chainIndex), scenarioId = _wcSafeId(credit.scenarioId, 120);
+    var chain = typeof CHAINS !== "undefined" && CHAINS && Array.isArray(CHAINS[side]) ? CHAINS[side] : null;
+    if (!creditKey || creditKeyCount !== 1 || !scenarioId || !isFinite(chainIndex) || Math.floor(chainIndex) !== chainIndex ||
+        chainIndex < 0 || !chain || chainIndex >= chain.length || chain[chainIndex] !== scenarioId ||
+        creditKey !== [C.runId, side, chainIndex, scenarioId].join("|") ||
+        credit.runId !== C.runId || credit.side !== side || credit.eventId !== eventId ||
+        event.creditKey !== creditKey || event.personId !== J.personId || credit.personId !== J.personId ||
+        event.scenarioId !== scenarioId || event.outcome !== credit.outcome || event.type !== credit.type ||
+        event.qualifying !== true || credit.qualifying !== true || event.status !== "wounded" ||
+        event.fate !== "wounded" || credit.fate !== "wounded" ||
+        Number(credit.outcomeRank) !== _wcOutcomeRank(credit.outcome, credit.type) ||
+        !event.participation || !credit.participation ||
+        JSON.stringify(event.participation) !== JSON.stringify(credit.participation)) continue;
+    var participation = typeof _ssCareerParticipation === "function" ? _ssCareerParticipation(credit.participation, C) : null;
+    var resultRef = participation && _wcParticipationResultRef(participation);
+    var battleYear = Number(participation && participation.battleYear);
+    if (!participation || JSON.stringify(participation) !== JSON.stringify(credit.participation) ||
+        participation.personId !== J.personId || participation.runId !== C.runId || participation.creditKey !== creditKey ||
+        participation.side !== side || participation.chainIndex !== chainIndex || participation.battleId !== scenarioId ||
+        !resultRef || resultRef.side !== side || resultRef.battleId !== scenarioId ||
+        !isFinite(battleYear) || Math.floor(battleYear) !== battleYear ||
+        !_wcServiceWindowValid(canonical.sourceRef, battleYear)) continue;
+    return {
+      person:canonical.person, event:event, credit:credit, participation:participation,
+      battleYear:battleYear, battleName:_wcText(event.battleName || scenarioId, 120), status:"wounded"
+    };
+  }
+  return null;
+}
+function _wcCareHistoricalContext(C, authority) {
+  if (!C || C.side !== "US" || !authority || !authority.person ||
+      !isFinite(authority.battleYear) || Math.floor(authority.battleYear) !== authority.battleYear || authority.battleYear < 1862 ||
+      !authority.person.team || authority.person.team.army !== "Army of the Potomac") return null;
+  var data = null;
+  try { data = typeof gameData === "function" ? gameData("disease-medical") : null; } catch (e) { data = null; }
+  var practices = data && Array.isArray(data.practices) ? data.practices : [], matches = [];
+  for (var i = 0; i < practices.length; i++) if (practices[i] && practices[i].id === "letterman-system") matches.push(practices[i]);
+  if (matches.length !== 1) return null;
+  var row = matches[0], summary = _wcText(row.summary || "", 1200), sources = Array.isArray(row.sources) ? row.sources : [];
+  if (row.provenance !== "Verified" || !summary || !/(evacuat|triage|ambulance|aid station|hospital)/i.test(summary) || sources.length < 2) return null;
+  var cleanSources = [], seen = {};
+  for (var si = 0; si < sources.length; si++) {
+    if (typeof sources[si] !== "string" || !sources[si].trim()) return null;
+    var sourceText = _wcText(sources[si], 800);
+    if (!sourceText || seen[sourceText]) return null;
+    seen[sourceText] = true; cleanSources.push(sourceText);
+  }
+  return { summary:summary, provenance:"Verified", sources:cleanSources };
+}
+function _wcCareContextHTML(C, J) {
+  var authority = _wcCareAuthority(C, J);
+  if (!authority) return "";
+  var historical = _wcCareHistoricalContext(C, authority), sourceRows = "";
+  if (historical) for (var i = 0; i < historical.sources.length; i++) sourceRows += '<li>' + _wcEsc(historical.sources[i]) + '</li>';
+  return '<section data-war-career-care-context="1" aria-labelledby="wcCareContextHead" style="margin-top:8px;padding-top:7px;border-top:1px solid var(--rule);overflow-wrap:anywhere">'
+    + '<h4 id="wcCareContextHead" style="font-size:11.5px;margin:0 0 4px">Care context</h4>'
+    + '<div data-war-career-care-timeline="1"><h5 style="font-size:11px;margin:0 0 3px">Your Timeline</h5>'
+    + '<p style="font-size:11px;line-height:1.45;margin:0">This playthrough classified ' + _wcEsc(authority.person.name || authority.person.pid) + ' as ' + _wcEsc(authority.status) + ' in the result for ' + _wcEsc(authority.battleName) + '.</p></div>'
+    + (historical ? '<div data-war-career-historical-context="1" style="margin-top:6px"><h5 style="font-size:11px;margin:0 0 3px">Historical context</h5>'
+      + '<p style="font-size:11px;line-height:1.45;margin:0"><b>' + _wcEsc(historical.provenance) + ':</b> ' + _wcEsc(historical.summary) + '</p>'
+      + '<ul style="font-size:10.5px;line-height:1.4;margin:4px 0 0;padding-left:18px">' + sourceRows + '</ul>'
+      + '<p style="font-size:10.5px;line-height:1.4;margin:4px 0 0;opacity:.82">This generic context does not prove this person’s aid, ambulance, hospital, transfer, or treatment path.</p></div>' : '')
+    + '</section>';
+}
 function warCareerReportHTML(C, opts) {
   var J = C && C.loot && C.loot.journey;
   if (!J || !J.enabled || J.careerVersion !== 1 || !J.person) return "";
@@ -1946,7 +2031,7 @@ function warCareerReportHTML(C, opts) {
     + '<li>Your Timeline totals: merit ' + _wcEsc(J.merit || 0) + '; reputation ' + _wcEsc(J.reputation || 0) + '; promotions ' + _wcEsc(J.promotionCount || 0) + '. Unproved or excluded-life entries score zero.</li>'
     + '<li>Nonqualifying observations grant no merit, no reputation, no promotion, no billet, and no command authority.</li>'
     + '<li>Personal fate: ' + _wcEsc(typeof _ssStatus === "function" ? _ssStatus(J.status) : "alive") + '; lineage hand-offs ' + _wcEsc((J.lineage || []).length) + '.</li>'
-    + '</ul>' + _wcRelationshipReportHTML(C, J) + warCareerHandoffHTML(C) + '</section>';
+    + '</ul>' + _wcCareContextHTML(C, J) + _wcRelationshipReportHTML(C, J) + warCareerHandoffHTML(C) + '</section>';
 }
 
 function warCareerIsTerminalLoss(C, B, winnerSide) {

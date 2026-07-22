@@ -4,6 +4,98 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D513 — ARC 8 FUTURE SLICE 1 SHIPS AS A PURE WAR CAREER CARE-CONTEXT READER; PERSONAL RECEIPT EVIDENCE STAYS SEPARATE FROM GENERIC HISTORY — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION/VERIFY] (2026-07-22)
+
+**VERDICT: `SHIPPED_PURE_READER_LANE_RELEASED`.** The D512 contract fit the live
+War Career structures without widening an owner. The standalone LANE-005 take shipped
+at `13fe2d9ab66a622054db1da9399b10cfe1125b45`; D513 implements the bounded reader,
+ships its probe teeth with the fix, and releases LANE-005 to CONTRACT/unowned. No
+deeper medicine slice is implied or authorized.
+
+### Exact authority and copy boundary
+
+`_wcCareAuthority(C, J)` scans result events newest-to-oldest and returns only one
+uniquely matched current-person wounded event/credit pair. Event id, credit key,
+person, outcome, type, qualification, fate/status, and participation must agree
+exactly; receipt run, person, side, chain, scenario, and result authority must agree
+with campaign and credit; and the existing War Career validators independently
+re-prove unique identity, service in the receipt year, and exact participation. A
+newer invalid row does not suppress an older valid row. Ambiguity, stale or foreign
+receipts, duplicate credits, mismatched copies, other fates, and malformed registry
+authority all fail closed. When authority is absent, the pre-D513 report bytes remain
+exact.
+
+The personal prose is labeled **Your Timeline** and states only that this playthrough
+classified the selected person as wounded. Separately labeled **Historical context**
+requires a US receipt dated 1862 or later, a unique canonical person whose exact
+`team.army` is `Army of the Potomac`, and exactly one relevant `letterman-system`
+practice that remains `Verified` with at least two distinct nonempty sources. Sources
+are disclosed. The exact disclaimer is: “This generic context does not prove this
+person’s aid, ambulance, hospital, transfer, or treatment path.” CS, pre-1862, and
+non-AOP cases may render only the personal classification. The generic paragraph is
+not evidence of this person's diagnosis, severity, mechanism, care, hospital,
+transfer, treatment, prognosis, recovery, disability, discharge, death, or named
+historical biography.
+
+### Purity, ownership, and accessibility
+
+The subsection is derived on every render and writes nothing. Repeated rendering is
+deterministic; campaign, journey, event/credit receipts, relationships, game data,
+save serialization, `_SAVE_VER=1`, merit, reputation, promotion, score, combat,
+economy, AI, and D74 outputs remain exact. D169 retains aggregate medicine and its UI;
+Human Cost, primary sources, canonical people, Women in War, D407, and LANE-002 retain
+their owners. No state, schema, save field, relationship edge, medical mechanic,
+control, modal, disclosure, live region, animation, focus move, data row, quotation,
+or named medical claim is added. Output is escaped semantic text with visible
+provenance and non-color labels; existing wrapping, text fallback, contrast, focus,
+reduced-motion, dignity, and anti-Lost-Cause rules remain binding.
+
+### Verification and release evidence
+
+The focused source table moves exactly 45→46 browser rows while static preflight stays
+30/30 and the plan stays 24/24 with names/order unchanged. The harness reports 47/47
+total steps. Its D512 payload proves 4 personal cases, 1 historical case, 10 receipt
+rejections, 3 registry rejections, 8 data suppressions, newest-valid selection,
+escaping, deterministic rendering, save identity, relationship identity, and semantic
+output. Fresh JSON is `ok:true` with empty failure, pageerror, and real-error arrays.
+Adjacent probes are green at After Action 19/19, disease-medical 8/8, and Command
+100/100.
+
+Bind A weakened event/credit participation equality and produced 46/47 with only
+`mismatched participation copies fabricated care context`. Bind B weakened the AOP
+guard and produced 46/47 with only `non-AOP Union did not render personal-only
+context`. Each restored source and generated HTML byte-for-byte at SHA-256
+`fdc4bcbe735cc126c3079c0f61fea69a19dcddfdf7da8632deae4b9b699b43d7` and
+`aab9552aad87f88ef4cea23ad86c11f2305cd6f7ed52f41c3609fa43c3ec8b53`, followed by
+a fresh 47/47 pass. Syntax checks, both importers (42/42/0 and 11/9/2), normal build
+`GATE OK`, plan, and diff checks pass.
+
+Aaron explicitly authorized one cross-plan exception: in
+`tools/probe-open-history-mayhem-plan.mjs`, only `PIN.game` moves
+`d278c30f`→`4c775fd1` with one adjacent D513 history comment. No probe logic, other
+pin, count, Mayhem authority, runtime/data, or public-readiness byte moves; the plan
+returns 13/13. Final scope is exactly the 14 paths named in the D513 HANDOFF amendment.
+
+Protected objects remain data tree `c4ededdd664036b72806d007184223ddf86ddf08`,
+manifest `3f35ac1abe5de8d75e62bac503dbb33595813a57`, suite
+`d1650af5f0e118b9f1869375a50c8397e1841ff6`, frozen base
+`fda24be7f1470dde129a73d6b1c1106eaaf6df76`, and save shape
+`e5834a96bd4b076f68f92153748382e37ad0a2c7`. The source tree moves only for source
+106, `6c7abffee1be95c41edbb52d292852df6b0651ac`→
+`0bd64a21f359b78dbc6063e85e4b11cedb8e4546`; generated HTML moves only through the
+build, `6f8558dd8afec6fab5ac87885ff714ce9559f091`→
+`d6402c0c2fe1f78ebdd2c4b928ac61532fb54f53`. The mechanical MD5 transitions are
+recorded in the War Career plan. D511 compares byte-for-byte with its new archive
+region at SHA-256 `9010dd929168aee787bcdb573df9be49550dd7be35ec8871ac004ee5b25373eb`.
+The full 140-row battery is not owed because no shared surface or suite membership
+moved.
+
+**NEXT BOUNDARY:** LANE-005 is CONTRACT/unowned and no deeper medicine work may begin
+without a new adjudicated contract. LANE-019 remains CONTRACT/unowned and road work
+remains blocked at `NEEDS_MORE_RESEARCH`. A fresh top loop must choose an unambiguous
+approved item from V1 against current lane ownership and commit its routing transfer
+before implementation; if none is uniquely bounded, stop with a recommendation.
+
 ## D512 — ARC 8 MEDICINE-TO-SOLDIER-DEPTH LAW USES THE EXISTING WAR CAREER REPORT; FUTURE SLICE 1 IS PURE, CONTRACTED, AND UNIMPLEMENTED — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS/ARCHITECTURE ONLY] (2026-07-22)
 
 **VERDICT: `CONTRACT_READY_NO_IMPLEMENTATION`.** The required architectural-overlap

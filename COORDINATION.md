@@ -768,12 +768,11 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **DRIVE (D512 FUTURE SLICE 1; CHATGPT/CODEX OWNED)**
+### LANE-005 · war-career-loop — **CONTRACT (D513 FUTURE SLICE 1 SHIPPED; UNOWNED)**
 
-- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra, sole top loop. No simultaneous edits by any provider.
-- **State:** DRIVE from clean D512 boundary `f255cc4fdbb09ccbc5a7e69ace1a0c74b373f5ed`
-  for the read-only care-context report slice. This standalone take is routing-only; implementation
-  begins only after the take is committed, pushed, fetched, and confirmed clean.
+- **Owning tool:** none after the D513 clean release; ChatGPT/Codex 5.6 Sol Ultra drove Future Slice 1.
+- **State:** CONTRACT/unowned — D513 shipped the read-only care-context report slice and its green
+  teeth. No deeper medicine slice is authorized by this retained contract.
 - **Design law:** `docs/design/unlocked-but-judged-design.md` §4f, D512; D501 is the historical
   research feeder; D169, D407, Human Cost, canonical people, primary sources, Women in War, and
   LANE-002 retain their existing owners.
@@ -837,16 +836,23 @@ next green commit and confer through this ledger instead of permitting simultane
   and command probes; both binds; scope/protected-hash/save-shape/diff checks; docs sync; commit/push;
   rerun from clean pushed HEAD; release to CONTRACT/unowned. Full 140-row battery is not owed unless
   a shared surface moves or a release checkpoint is selected.
-- **Resume pointer (authoritative, D512 DRIVE):** ChatGPT/Codex 5.6 Sol Ultra must confirm this
-  standalone seven-routing-file take is clean and pushed, then implement future Slice 1 exactly
-  above. Stop and HALT if live code/data contradict the law, an owner boundary must move, or the
-  subsection cannot stay pure, source-honest, and fail-closed. No simultaneous edits.
+- **Resume pointer (authoritative, D513 release):** none for medicine implementation. Future Slice 1
+  is closed. Any deeper wound, disease, hospital, care, or recovery work requires a separately
+  adjudicated contract and a fresh committed DRIVE take; do not infer one from this acceptance
+  history. Select a different approved owner-safe V1 item or HALT with a recommendation. No
+  simultaneous edits.
 - **D512 Slice-1 take history:** ChatGPT/Codex took DRIVE from clean D512 at
-  `f255cc4fdbb09ccbc5a7e69ace1a0c74b373f5ed`; this commit carries only the routing transfer and no
-  implementation byte.
+  `f255cc4fdbb09ccbc5a7e69ace1a0c74b373f5ed` in routing-only commit
+  `13fe2d9ab66a622054db1da9399b10cfe1125b45`; no implementation byte moved in that take.
+- **D513 release history:** ChatGPT/Codex implemented the pure reader, shipped the focused teeth,
+  completed both isolated negative binds and focused/adjacent verification, and used Aaron's explicit
+  one-file cross-plan exception to move only the Mayhem-plan game pin `d278c30f`→`4c775fd1` plus its
+  adjacent history comment, restoring 13/13. Exact final scope is the 14 paths enumerated in the D513
+  HANDOFF amendment; no Mayhem authority/runtime/data or road boundary moved. The lane then returned
+  to CONTRACT/unowned in D513.
 - **D512 docs history:** ChatGPT/Codex took DRIVE at `d59cd351d3ff47b96049c441e172fd861afa9a9b`,
   adjudicated the contract without implementation, and released it in D512.
-- **Last-touched commit:** standalone D512 Slice-1 DRIVE take (this commit).
+- **Last-touched commit:** D513 release (this commit).
 - **Prior current resume pointer (retained history):** none. A new War Career capability required a new contract; the D413 §17 State/Owner and acceptance material below are retained history.
 - **Retained D413 history:**
 - **State:** CONTRACT — released from ledger take
