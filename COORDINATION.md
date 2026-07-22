@@ -1432,10 +1432,62 @@ next green commit and confer through this ledger instead of permitting simultane
   Slice D relationship memory is unstarted and requires its own DRIVE take; every later exclusion
   remains locked.
 
-### LANE-006 · docs-hygiene — **CONTRACT (D412 shipped; unowned)**
+### LANE-006 · docs-hygiene — **DRIVE (D510 canonical-doc coherence repair; ChatGPT/Codex)**
 
-- **Owning tool:** none. Owner: none. No simultaneous edits by any provider.
-- **State:** CONTRACT — released from ledger take `d9ed229a66625b5359926182650c0c9c0fcb3c9b`,
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra top loop. No simultaneous edits by any provider.
+- **State:** DRIVE — taken from clean pushed D509 boundary
+  `61c26df740aa2cc29fd0b61bb2b35d9f90ee2fd3` on Aaron's 2026-07-21 request to determine why
+  the canonical docs disagree, establish the live truth, repair them, and prevent recurrence.
+- **D510 root-cause finding:** D412 made `HANDOFF.md` the single live-boundary owner and required
+  short mirrors plus archival at every closeout, but it shipped no executable coherence gate.
+  D468-D509 therefore advanced the live boundary in `HANDOFF.md`/`DECISIONS.md`/`COORDINATION.md`
+  while `START-HERE.md` and `WAKE-UP.md` stopped at D467, `V1-CHECKLIST.md` stopped at D454,
+  `AUTONOMOUS-RUN.md` stopped at D431, and `RUN-LOG.md` stopped at D494. `HANDOFF.md` also
+  accumulated nineteen amendment heads despite the latest-plus-one rule. The stale D506-only
+  lane assertion in `tools/probe-conquest-transport-plan.mjs` now fails 10/11 at clean D509,
+  proving the drift escaped both closeout practice and the existing gates.
+- **D510 acceptance contract:**
+  1. Preserve D509 as the pre-repair product truth: LANE-019 is CONTRACT/unowned; road runtime,
+     data, and gameplay remain closed; only the named fourth docs/research pass may be chartered.
+  2. Add one bounded, byte-identical live-summary marker owned by `HANDOFF.md`; mirror that exact
+     block in `START-HERE.md`, `WAKE-UP.md`, `AUTONOMOUS-RUN.md`, `V1-CHECKLIST.md`, and
+     `RUN-LOG.md`. Historical `NEXT` text must be labeled non-actionable or archived.
+  3. Restore the D412 archive invariant: `HANDOFF.md` keeps D510 plus D509 only; older current-file
+     heads move byte-verbatim, newest first, to `legacy/HANDOFF-ARCHIVE.md` after a complete
+     `tools/probe-*.mjs` anchor inventory. Replace the stale WAKE-UP heads with the live summary and
+     preserve their exact bytes in `legacy/WAKE-UP-ARCHIVE.md`. Preserve superseded V1 content
+     byte-verbatim in `legacy/V1-CHECKLIST-ARCHIVE.md` before replacing it with the reconciled map.
+  4. Reconcile the current roadmap: ARCs 0-6 are shipped; ARC 7 has only the read-only territory
+     board and transport-evidence substrate, with road research still below implementation; ARC 7
+     playable movement/Council/terrain/hex/Chronicle, ARC 8 soldier depth, and ARC 9 pacing remain.
+     Parked REVIEW-QUEUE proposals and explicit v2/deferred work stay distinct from approved work.
+  5. Correct the first current State/Owner fields in every lane whose SHIPPED header conflicts with
+     retained DRIVE/VERIFY history, and remove stale current pointers from LANE-003/LANE-005 without
+     rewriting their historical contracts.
+  6. Add `tools/probe-doc-coherence.mjs` and invoke it from `tools/build.mjs`. It must fail when the
+     six live-summary blocks differ, their D-number disagrees with the top HANDOFF/DECISIONS entry,
+     HANDOFF has other than two live amendment heads, the declared next lane disagrees with that
+     lane's first State/Owner fields, or any lane header disagrees with its first State field.
+  7. Repair `tools/probe-conquest-transport-plan.mjs` so its D505/D506 historical substrate proof
+     does not require the live lane to remain frozen at D506 or inspect unrelated dirty scope.
+  8. Prove the new gate with two isolated byte-restored binds: one mirror-marker mismatch and one
+     current-lane State mismatch. Each must exit nonzero for the named reason; final reruns green.
+- **D510 allowlist:** `START-HERE.md`, `HANDOFF.md`, `WAKE-UP.md`, `AUTONOMOUS-RUN.md`,
+  `RUN-LOG.md`, `V1-CHECKLIST.md`, `COORDINATION.md`, append-only `DECISIONS.md`, the corresponding
+  existing `legacy/*-ARCHIVE.md` files, new `tools/probe-doc-coherence.mjs`, `tools/build.mjs`, and
+  `tools/probe-conquest-transport-plan.mjs`; generated HTML may be rewritten only byte-identically
+  by the build. No `src/`, `data/`, manifest, save, gameplay, balance, historical claim, asset, UI,
+  or other probe may move.
+- **D510 gate sequence:** complete the probe-anchor inventory; `node --check` all touched tools;
+  run the doc-coherence probe and both negative binds; run all 21 `tools/probe-*-plan.mjs` guards;
+  run `node tools/build.mjs --check` and require `GATE OK`; prove generated HTML, `src/`, `data/`,
+  manifest, suite, frozen base, and save-shape bytes unchanged; run `git diff --check`; inspect every
+  failure/readback rather than accepting exit code alone. Full browser `npm run vet:noreg` is not
+  owed because this slice changes no runtime or suite membership.
+- **D510 resume pointer:** continue only inside this docs-coherence contract; on green release,
+  append D510, add the D510 HANDOFF/RUN-LOG head, return this lane to CONTRACT/unowned, commit/push,
+  and leave LANE-019's D509 research boundary as the exact next product work.
+- **Prior D412 release state:** CONTRACT — released from ledger take `d9ed229a66625b5359926182650c0c9c0fcb3c9b`,
   based on clean D411 boundary `aebc8f228af1424e15b2b1fc5556bfb2c7bcc7b2`. D412 shipped the
   docs-hygiene rules and restructuring (DECISIONS D412 the record): the LIVE-HEAD SINGLE-SOURCE
   RULE (HANDOFF.md's top ⚡ block is THE one canonical live boundary; other canonical docs carry
