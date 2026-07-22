@@ -147,6 +147,136 @@ Daily-life beats from the primary-sources system · relationship memory expansio
 (D407 spine) · wounding/medicine narratives (disease-medical) · soldier POV in
 owner-mode battles · promotion bridge to General Command · franchise-archive replay UI.
 
+#### D512 law — first medicine-to-soldier-depth consumer and future Slice 1
+
+**Adjudication:** extend this section; do not create another ARC 8 plan. The first
+consumer is the existing pure `warCareerReportHTML(C, opts)` section composed into the
+After Action report. LANE-005 carries the contract because War Career already owns that
+reader, the current-person identity, service/participation receipts, fate, and the
+`Your Timeline` label. LANE-002 remains only the citation-grade `ss:` replacement
+feeder. This decision creates no medical system, state owner, relationship owner, or
+new surface.
+
+**State authority and persistence:** future Slice 1 is read-only and nonpersistent.
+It derives at report-read time from one independently revalidated pair: the current
+canonical person's qualifying War Career result event and its exact credit. Require
+`credit.eventId === event.eventId`; equal credit key, current person, outcome, type,
+qualification, and `fate:"wounded"`; event status `wounded`; and byte-equal event/credit
+participation objects. Within that receipt, run id, credit key, person, side, chain index,
+scenario, and result id must revalidate against the current campaign and credit fields.
+The participation receipt must independently re-prove a unique canonical identity, a
+valid service window at `battleYear`, and exact scenario participation under
+the existing v1/v2 validators. Scan stored result events newest-to-oldest and admit the
+first uniquely matched valid credit; ambiguity suppresses the section. Foreign,
+predecessor, successor, stale, duplicated, malformed, nonqualifying, alive, captured, or
+fallen rows
+grant nothing. Eligibility labels are presentation predicates, never stored facts.
+Nothing is added to the event, credit, journey, relationship, archive, save, or campaign
+envelope; `_SAVE_VER=1` holds; rendering must be byte-pure over campaign and game data.
+
+**What the report may say:** the personal statement is only **Your Timeline**: this
+playthrough's exact receipt classified the selected person as wounded. It may not infer
+diagnosis, wound mechanism or severity, aid received, evacuation, hospital admission,
+treatment, prognosis, recovery, disability, discharge, or death. A separate
+**Historical context** paragraph may appear only for a United States receipt dated 1862
+or later whose uniquely resolved canonical source record says `team.army === "Army of
+the Potomac"`, and only when the existing `data/disease-medical.json` practice with
+exact id `letterman-system` is well formed, has `provenance:"Verified"`, and carries at
+least two nonempty source strings. It may present that row's generic Army of the Potomac
+evacuation-chain summary and source disclosure, followed by an explicit limit: the
+context does not establish that this person entered any aid-station, hospital, ambulance,
+or transfer path. Missing or malformed context suppresses the whole care-context section;
+it never weakens the receipt guard or fabricates a substitute.
+
+**Eligibility and evidence floor:** generic material may be used only at its claimed
+army/date/category grain and only from a source-floor-passing existing row. A named
+historical person claim requires the complete person-safe proof chain—unique identity,
+service at the claimed date, proved participation, and claim-specific medical or
+disposition evidence at the D501 two-independent-family floor. No named case satisfies
+Slice 1 because none is promoted here. Player-timeline eligibility requires the exact
+receipt pair above and remains visibly distinct from historical evidence. D501's
+`Verified`, `Inferred`, and case/category labels describe evidence; none becomes campaign
+state or permission by itself.
+
+**Owner map:** D169 remains sole owner of aggregate `C.medical`, formulas, priorities,
+caps, medical relief, Campaign Kit teaching, save bytes, and War Effort UI. Human Cost
+retains aggregate mortality, moral gravity, and mourning. The primary-source reader owns
+document cards and excerpts. Canonical-person registries own identity/service facts;
+Women in War owns its distinct support and noncombatant records; LANE-002 alone owns
+`ss:` overlays and its still-open 5b feeder pool. War Career owns this report and the
+receipt/fate chain. D407 alone owns relationship-event qualification and memory; a wound
+does not create rapport, a relationship edge, or a historical relationship claim. No
+owner's data may be copied into a second ledger.
+
+**Presentation and dignity law:** use semantic heading/list/paragraph structure inside
+the existing report; plain language; escaped text; source names visible in text; and
+wrapping/text fallback at 200% zoom. Historical versus `Your Timeline`, provenance, and
+the personal-claim limit must be words, never color alone. Preserve keyboard/focus order
+by adding no control, modal, disclosure widget, live region, animation, or focus move.
+Retain visible focus and high-contrast/reduced-motion behavior of the parent report.
+Period terminology must be explained in current plain language and must not romanticize
+suffering, imply deserved outcomes, encode racial susceptibility, force Union/Confederate
+symmetry, or use spectacle. Quote no source text in Slice 1; any later quotation must be
+brief, attribution-complete, copyright-safe, and accompanied by a prose fallback.
+
+**Future Slice-1 implementation allowlist (exact):** `src/106-war-career.js` for one
+pure derived reader and report subsection; `tools/probe-war-career.mjs` for exactly one
+new browser row (current 45 → 46; static preflight remains 30/30);
+`tools/probe-war-career-loop-plan.mjs` only for the mechanically necessary changed-path,
+source/focused-probe/game hash, and 45 → 46 structural-pin transitions with documented
+old→new history while all 24 plan step names/order remain exact; generated
+`civil_war_generals.html` only through `node tools/build.mjs`; and the canonical closeout
+files `AUTONOMOUS-RUN.md`, `COORDINATION.md`, `DECISIONS.md`, `HANDOFF.md`, `RUN-LOG.md`,
+`START-HERE.md`, `V1-CHECKLIST.md`, `WAKE-UP.md`, plus
+`legacy/HANDOFF-ARCHIVE.md` only when the two-head archival rule requires it. The law
+artifact itself is already settled and does not move in implementation.
+
+**Everything else is prohibited:** all `data/**` including the existing disease and
+replacement rows; `src/63-disease-medical.js`, `src/82-after-action.js`,
+`src/37-loot-survival.js`, every Human Cost, primary-source, relationship, canonical-
+person, Women in War, battle, tactical, economy, UI, AI, and state owner;
+`src/00-manifest.json`, `tools/vet-no-regression.mjs`, `tools/save-shape.json`,
+`build/base.html`, suite membership, save/version code, and every other probe. The
+Letterman row is a read-only input, not an authorized edit.
+
+**Focused proof:** the one new War Career row must exercise a valid current-person AOP
+US wounded pair and prove exactly one semantic, escaped, separately labeled section;
+source disclosure and the personal-path disclaimer; newest-valid-pair selection;
+campaign/game-data/save byte purity; and no new relationship or scoring effect. In the
+same row, table-drive every fail-closed case: missing/ambiguous canonical identity,
+invalid service year, absent or mismatched event/credit/participation/result id, foreign
+or stale person, nonqualifying/duplicate receipt, non-wounded fate/status, CS or non-AOP
+service, pre-1862 receipt, missing/malformed/non-Verified/under-sourced Letterman row, or
+missing report authority. Each suppresses only the new subsection and leaves the existing
+War Career report byte behavior otherwise intact. The plan stays 24/24, the browser probe
+becomes 46/46, and static preflight stays 30/30.
+
+**Required negative binds (never committed):** Bind A removes the exact event/credit
+participation equality guard; the new D512 browser row alone must fail, then source and
+generated HTML restore byte-for-byte before a fresh green run. Bind B weakens the exact
+`letterman-system`/Verified/two-source/AOP-date admission guard; the new row alone must
+fail on its malformed-source matrix, then source and generated HTML restore byte-for-byte.
+Record pre/post SHA-256 (or MD5 where the existing probe convention requires it) and
+`cmp` both source and generated output after each inverse. A bind that trips an unrelated
+row or cannot restore exactly is a HALT, never a reason to weaken the probe.
+
+**Implementation gates and release:** from a separately committed LANE-005 DRIVE take,
+run `node --check` on both touched JS/MJS files; `node tools/build.mjs`; the 24/24 plan;
+the 46/46 War Career browser probe with a shared foreground server and full JSON readback;
+adjacent `probe-afteraction.mjs`, `probe-disease-medical.mjs`, and
+`probe-command.mjs`; both isolated binds; `git diff --check`; exact scope/hash/save-shape
+proof; then sync docs, commit/push the green implementation, rerun focused gates from the
+clean pushed commit, and release LANE-005 to CONTRACT/unowned. The full 140-row battery
+is not owed for this guarded presentation-only slice unless another shared surface moves
+or a release checkpoint is explicitly selected.
+
+**Deferred deliberately:** personal medical mechanics; treatment choice; wound or
+disease probabilities; resource/economy/capacity effects; diagnosis, hospital, transfer,
+convalescence, recovery, disability, discharge, or death state; recovery clocks; new UI;
+primary-source excerpts; relationship expansion beyond D407; named cases below the
+claim-specific source floor; D501 case promotion; LANE-002 batch selection; `ss:` edits;
+and any combat, D74, score, casualty, AI, or historical-fate change.
+
 ### 4g. Desk-to-battle pacing (pains: processing wait · unclear next action · stops)
 Turn-processing latency profile + progress feedback · Chief of Staff brief as the
 hub's next-action pointer · click-path collapse + one-click re-engage + remembered

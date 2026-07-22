@@ -768,38 +768,81 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **DRIVE (D512 ARC 8 MEDICINE-TO-SOLDIER-DEPTH LAW; DOCS ONLY)**
+### LANE-005 · war-career-loop — **CONTRACT (D512 FUTURE SLICE 1; UNIMPLEMENTED, UNOWNED)**
 
-- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra. No simultaneous edits by any provider.
-- **State:** DRIVE for one docs-only D512 law adjudication. The shipped War Career spine through Slice F remains unchanged; no runtime slice is authorized in this take.
-- **D512 DRIVE contract (2026-07-22):** The overlap check selects existing
-  `docs/design/unlocked-but-judged-design.md` §4f as the sole ARC 8 design-law owner and this
-  existing lane as the coordination carrier because the smallest consumer is the lane-owned pure
-  `warCareerReportHTML` After Action report. A new ARC 8 plan or LANE-020 would duplicate the
-  master-law/War-Career ownership split. LANE-002 remains only the citation-grade `ss:` replacement
-  feeder, at 42 Verified overlays and 1,437 open generated rows; no batch or candidate is selected.
-  D169 remains the sole `C.medical`, formula, relief-priority, Campaign Kit, save, and War Effort UI
-  owner. Human Cost remains the aggregate moral-accounting owner; the primary-source reader remains
-  the document/excerpt owner; canonical people and Women in War remain their existing record owners.
-- **D512 acceptance boundary:** write one unambiguous D512 adjudication into §4f and the canonical
-  ledgers; select the existing War Career report as the first consumer; keep Slice 1 read-only and
-  nonpersistent; derive any future presentation only from an exact matching qualifying current-person
-  event/credit participation receipt and existing `Your Timeline` fate; require source authority and
-  fail closed when identity, service, participation, receipt pairing, source, or report authority is
-  absent. Historical person claims additionally require identity + service + participation +
-  claim-specific medical/disposition evidence. Eligibility labels are never state. Historical and
-  `Your Timeline` remain visibly separate. Contract exact future allowed/prohibited files, focused
-  probe teeth, at least two byte-restored negative binds, gates, and release point, then return this
-  lane to CONTRACT/unowned without implementation.
-- **D512 prohibited scope:** no runtime, data, tool, probe, generated-output, state, save, UI,
-  mechanic, economy, AI, battle, terrain, tactical, person-record, `ss:`, named-case, relationship,
-  archive, or historical-fate change. No deterministic diagnosis, wound/disease probability,
-  treatment, recovery clock, capacity, medical resource, outcome formula, spectacle, disability
-  debuff, racial susceptibility rule, false symmetry, Lost Cause framing, or D74 output lever.
-- **D512 resume pointer:** extend only `docs/design/unlocked-but-judged-design.md` §4f, prepend D512
-  to DECISIONS/HANDOFF, archive D510 byte-verbatim under the D510 archival law, sync the six canonical
-  live summaries and routing docs, release this lane to CONTRACT/unowned with the future Slice-1
-  contract, run the authorized static/importer gates, commit/push, and stop before implementation.
+- **Owning tool:** none. No implementation lock exists; no simultaneous edits by any provider.
+- **State:** CONTRACT/unowned for the future D512 read-only care-context report slice. The docs-only
+  adjudication is complete; the shipped War Career spine through Slice F is unchanged.
+- **Design law:** `docs/design/unlocked-but-judged-design.md` §4f, D512; D501 is the historical
+  research feeder; D169, D407, Human Cost, canonical people, primary sources, Women in War, and
+  LANE-002 retain their existing owners.
+- **Overlap/owner decision:** use this existing lane and the existing pure
+  `warCareerReportHTML(C, opts)` After Action consumer. Do not create LANE-020 or another ARC 8 plan.
+  D169 keeps aggregate `C.medical`, formulas, relief/caps, Campaign Kit, save, and War Effort UI;
+  Human Cost keeps aggregate moral accounting; the primary-source reader keeps document/excerpt
+  cards; canonical registries keep identity/service; Women in War keeps distinct support records;
+  LANE-002 keeps only `ss:` overlays (42 Verified, 1,437 open feeder rows; no selected 5b batch);
+  D407 keeps qualifying-alive relationship memory. No copied ledger or new owner is authorized.
+- **Acceptance criteria (future Slice 1, in full):**
+  1. Add one semantic care-context subsection to `warCareerReportHTML`, derived on every read and
+     never persisted. Scan result events newest-to-oldest and require one unique exact credit:
+     `credit.eventId === event.eventId`; equal credit key, current person, outcome, type,
+     qualification, and wounded fate/status; byte-equal event/credit participation; and receipt
+     run/person/side/chain/scenario/result fields revalidated against campaign and credit. Existing
+     validators must re-prove unique identity, service-year, and participation. Ambiguity and every
+     other fate, person, or receipt suppress the section.
+  2. Label the personal statement `Your Timeline` and say only that this playthrough classified the
+     selected person as wounded. Do not infer diagnosis, mechanism, severity, care, transfer,
+     treatment, prognosis, recovery, disability, discharge, or death.
+  3. Add separately labeled `Historical context` only for a US receipt dated 1862 or later whose
+     unique canonical source record says `team.army === "Army of the Potomac"`, and only from the
+     existing exact `letterman-system` practice when it is Verified and has at least two nonempty
+     sources. Disclose those sources and state that generic context proves no personal care path.
+  4. Fail closed by omitting only the new subsection when report authority, unique identity,
+     service, participation, exact pair, current-person ownership, wound status, US/AOP/date scope,
+     or source authority is absent/malformed. Existing report output remains otherwise intact.
+  5. Rendering is byte-pure over campaign, journey, event/credit, relationships, game data, and
+     save output; `_SAVE_VER=1`; no merit/reputation/promotion/relationship/score/combat effect.
+  6. Use escaped plain text, semantic headings/lists/paragraphs, visible provenance/source disclosure,
+     non-color labels, 200%-zoom wrapping and text fallback. Add no control, modal, live region,
+     animation, or focus move. Preserve contrast, focus, and reduced-motion behavior; quote no source;
+     avoid spectacle, deserved-outcome framing, racial susceptibility, false symmetry, and Lost Cause.
+  7. Named historical claims remain excluded until unique identity + service + participation +
+     claim-specific medical/disposition evidence meet the two-family floor. Labels never become state.
+- **Exact implementation allowlist:** `src/106-war-career.js`; `tools/probe-war-career.mjs`;
+  `tools/probe-war-career-loop-plan.mjs` only for documented allowlist/hash/45→46 pin transitions
+  while all 24 names/order remain; generated `civil_war_generals.html` only via the build; closeout
+  `AUTONOMOUS-RUN.md`, `COORDINATION.md`, `DECISIONS.md`, `HANDOFF.md`, `RUN-LOG.md`, `START-HERE.md`,
+  `V1-CHECKLIST.md`, `WAKE-UP.md`, and `legacy/HANDOFF-ARCHIVE.md` only if head rotation requires it.
+  The D512 law and every data row are read-only during implementation.
+- **Prohibited:** every other file/owner, specifically all `data/**`, `src/63-disease-medical.js`,
+  `src/82-after-action.js`, `src/37-loot-survival.js`, Human Cost/primary-source/relationship/person/
+  Women-in-War owners, manifest, suite, frozen base, save shape/version, battle/tactical/economy/UI/AI,
+  LANE-002 records, named cases, historical fates, and D74 outputs. Personal medicine, treatment,
+  probabilities, economy/capacity, recovery state/clock, new UI, and relationship depth are deferred.
+- **Probe design:** add exactly one table-driven browser row to `tools/probe-war-career.mjs`, 45→46;
+  retain 30/30 static. The positive case proves one current-person AOP-US-1862+ wound section,
+  separation/wording/source disclosure, newest-valid selection, purity, and zero effect. Its negative
+  matrix covers absent/ambiguous identity, invalid service, every pair/participation mismatch, foreign/
+  stale/duplicate/nonqualifying receipts, every other fate, wrong side/army/year, malformed or weak
+  Letterman source, and missing report authority. Plan remains 24/24 with names/order exact.
+- **Negative binds:** A removes exact event/credit-participation equality; B weakens the exact
+  Letterman/Verified/two-source/AOP-date guard. Run each in isolation against the new row; it alone
+  must go red. Restore source and generated HTML byte-for-byte (`cmp` plus recorded digest), rerun
+  green, and HALT on collateral red or imperfect restore. Red teeth never land in git.
+- **Gate/release contract:** take DRIVE in a standalone committed ledger edit; implement only the
+  allowlist; `node --check` touched JS/MJS; normal build; plan 24/24; War Career 46/46 browser + 30/30
+  static with fresh JSON readback and zero page/real errors; adjacent afteraction, disease-medical,
+  and command probes; both binds; scope/protected-hash/save-shape/diff checks; docs sync; commit/push;
+  rerun from clean pushed HEAD; release to CONTRACT/unowned. Full 140-row battery is not owed unless
+  a shared surface moves or a release checkpoint is selected.
+- **Resume pointer (authoritative, D512 CONTRACT):** a fresh ChatGPT/Codex 5.6 Sol Ultra TOP LOOP may
+  take DRIVE in one standalone seven-routing-file commit, then implement the future Slice 1 exactly
+  above. Stop and HALT if live code/data contradict the law, an owner boundary must move, or the
+  subsection cannot stay pure, source-honest, and fail-closed. No simultaneous edits.
+- **D512 docs history:** ChatGPT/Codex took DRIVE at `d59cd351d3ff47b96049c441e172fd861afa9a9b`,
+  adjudicated the contract without implementation, and released it in D512.
+- **Last-touched commit:** D512 docs/law release (this commit).
 - **Prior current resume pointer (retained history):** none. A new War Career capability required a new contract; the D413 §17 State/Owner and acceptance material below are retained history.
 - **Retained D413 history:**
 - **State:** CONTRACT — released from ledger take

@@ -4,6 +4,120 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D512 — ARC 8 MEDICINE-TO-SOLDIER-DEPTH LAW USES THE EXISTING WAR CAREER REPORT; FUTURE SLICE 1 IS PURE, CONTRACTED, AND UNIMPLEMENTED — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS/ARCHITECTURE ONLY] (2026-07-22)
+
+**VERDICT: `CONTRACT_READY_NO_IMPLEMENTATION`.** The required architectural-overlap
+check found a direct extension path, not a missing architecture. The sole law remains
+`docs/design/unlocked-but-judged-design.md` §4f; the coordination carrier remains
+LANE-005; and the first consumer is the existing pure `warCareerReportHTML(C, opts)`
+section already composed into After Action. A second ARC 8 plan or LANE-020 would split
+authority without adding a capability. The standalone DRIVE transfer shipped first at
+`d59cd351d3ff47b96049c441e172fd861afa9a9b`; D512 now releases LANE-005 to
+CONTRACT/unowned and stops before implementation.
+
+### Exact consumer, authority, and evidence boundary
+
+Future Slice 1 may add one read-only care-context subsection to the existing War Career
+report. Its sole personal-state authority is the first uniquely matched pair found by
+scanning result events newest-to-oldest: `credit.eventId === event.eventId`; equal credit
+key, current person, outcome, type, qualification, and wounded fate/status; byte-equal
+event/credit participation; and receipt run/person/side/chain/scenario/result fields
+revalidated against campaign and credit. Existing validators must also re-prove unique
+canonical identity, service in the receipt year, and exact participation. Ambiguity
+suppresses the section. A label or D501 category is never
+state. The reader is derived on every call, writes nothing, adds no field to campaign,
+journey, receipt, relationship, archive, or save, and leaves `_SAVE_VER=1`.
+
+The personal sentence is visibly **Your Timeline** and may say only that this
+playthrough's exact receipt classified the selected person as wounded. It may not infer
+diagnosis, mechanism, severity, treatment, hospital/ambulance use, prognosis, recovery,
+disability, discharge, or death. A separate **Historical context** paragraph may use
+only the existing `data/disease-medical.json` practice `letterman-system`, and only when
+that row remains `Verified` with at least two nonempty sources and the exact receipt is
+US, 1862 or later, with a uniquely resolved canonical source record in the Army of the
+Potomac. It must disclose sources and say that generic Army of the Potomac context does
+not prove this person's care path. Any missing or malformed authority suppresses the
+new subsection; the existing report stays intact.
+
+Generic category eligibility is restricted to the source row's army/date/category
+grain. A named historical claim needs the complete person-safe chain: unique identity,
+service at the claimed date, proved participation, and claim-specific medical or
+disposition evidence at D501's two-independent-family floor. No named D501 case is
+promoted. The Slice-1 current-person statement is gameplay evidence, not a rewrite of
+historical biography.
+
+### Owner map and dignity locks
+
+- D169 remains sole owner of aggregate `C.medical`, formulas, relief priority/caps,
+  Campaign Kit teaching, persistence, and War Effort UI.
+- Human Cost remains owner of aggregate death, suffering, moral gravity, and mourning.
+- The primary-source reader remains owner of document cards/excerpts; canonical people
+  own identity/service records; Women in War owns its distinct support/noncombatant rows.
+- LANE-002 remains only the citation-grade `ss:` replacement feeder: 42 Verified rows
+  and 1,437 open generated rows, with no selected 5b batch and no changed overlay.
+- War Career retains current-person identity, service/participation receipts, fate, the
+  pure report, and `Your Timeline`; D407 retains alive-only relationship qualification.
+  Wounding creates no rapport, edge, archive fact, score, promotion, or owner transfer.
+
+Any future presentation uses escaped plain language, semantic headings/lists/paragraphs,
+visible text provenance and source disclosure, non-color labels, 200%-zoom wrapping and
+text fallback. It adds no control, modal, disclosure, live region, animation, focus move,
+or keyboard stop. Existing contrast, visible focus, and reduced-motion behavior hold.
+Period terms require current-language explanation. No source quotation is needed; later
+quotes must be brief, attribution-complete, copyright-safe, and paired with prose. The
+copy must not romanticize suffering, imply deserved outcomes, encode racial
+susceptibility, force false sectional symmetry, or carry Lost Cause framing.
+
+### Future Slice-1 implementation contract
+
+The exact allowlist is `src/106-war-career.js`; `tools/probe-war-career.mjs`;
+`tools/probe-war-career-loop-plan.mjs` only for documented changed-path/hash/45→46 pin
+transitions while all 24 plan step names/order stay exact; generated
+`civil_war_generals.html` only via the build; and canonical closeout files, including
+`legacy/HANDOFF-ARCHIVE.md` only when two-head rotation requires it. The law and all
+data are read-only in implementation. Everything else is prohibited, especially
+`data/**`, `src/63-disease-medical.js`, `src/82-after-action.js`,
+`src/37-loot-survival.js`, every other owner, manifest, suite, frozen base, save shape,
+save/version code, combat, D74, economy, UI, AI, relationships, named cases, person
+records, and historical fates.
+
+The focused War Career probe gains exactly one table-driven browser row, 45→46; static
+preflight stays 30/30. Its valid case proves one semantic section, exact pair/current-
+person/source admission, newest-valid selection, separate labels, disclosure/disclaimer,
+byte purity, and zero effects. Its fail-closed matrix covers missing/ambiguous identity,
+invalid service, every event/credit/participation mismatch, foreign/stale/duplicate or
+nonqualifying rows, every other fate, wrong side/army/year, missing or malformed source,
+and missing report authority. Plan remains 24/24.
+
+Bind A removes exact event/credit participation equality. Bind B weakens the exact
+Letterman/Verified/two-source/AOP-date guard. Each must make only the new D512 row red;
+source and generated output must then compare byte-for-byte with recorded pre-bind
+digests before a fresh green run. Collateral red or an imperfect inverse is a HALT.
+
+Implementation requires a separately committed LANE-005 DRIVE take; syntax checks;
+normal build; plan 24/24; War Career 46/46 browser + 30/30 static with full artifact
+readback; adjacent After Action, disease-medical, and Command probes; both binds; exact
+scope/protected-object/save-shape/diff proof; docs sync; commit/push; clean pushed
+focused rerun; and lane release. The 140-row full battery is not owed unless another
+shared surface moves or an explicit release checkpoint is selected.
+
+### Explicit deferral and docs-only proof boundary
+
+Personal medical mechanics, treatment choice, wound/disease probabilities, economy,
+capacity, medical resources, stateful diagnosis/transfer/hospital/convalescence/recovery/
+disability/discharge/death, recovery clocks, new UI, primary-source excerpts,
+relationship expansion beyond D407, named cases below the source floor, D501 case
+promotion, a LANE-002 batch, `ss:` changes, and every combat/score/AI/historical-fate
+effect remain deferred. D512 changes documentation only. D510's displaced HANDOFF head
+is archived byte-verbatim at SHA-256
+`96974613a002efdbb9b3673d738485e58258e33c3bff9a7b99f7f080aa36791a`.
+Release evidence is green: replacement importer 42/42/0; Women in War 11/9/2;
+coherence 5/5; build `GATE OK` at 65 data, 36/36 territories, and transport
+27/15/2/4/18; open-history/Mayhem 13/13; War Career 24/24; conquest layer 8/8;
+all fresh artifacts `ok:true` with empty failure/error/pageerror/real-error arrays;
+every protected object exact; archive `cmp` exact; ten-file authorized scope; clean
+`git diff --check`. Browser probes and `npm run vet:noreg` were deliberately not run.
+
 ## D511 — THE FINAL AUTHORIZED ROAD EVIDENCE PASS RETAINS NEEDS_MORE_RESEARCH; ARC 7 TRANSPORT STAYS BLOCKED — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS/RESEARCH ONLY] (2026-07-21)
 
 **VERDICT: `NEEDS_MORE_RESEARCH`.** The fourth and final authorized LANE-019 road pass

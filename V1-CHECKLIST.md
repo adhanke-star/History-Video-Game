@@ -1,10 +1,10 @@
 # V1 CHECKLIST — current approved roadmap
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D511 next-lane=LANE-005 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D511 transfer, 2026-07-22):** LANE-005 is DRIVE under ChatGPT/Codex 5.6 Sol Ultra for one docs-only ARC 8 medicine-to-soldier-depth law adjudication. D511 remains the latest decision; LANE-019 remains CONTRACT/unowned with road transport blocked at `NEEDS_MORE_RESEARCH`.
+<!-- LIVE-HEAD decision=D512 next-lane=LANE-005 state=CONTRACT owner=none -->
+> **Live status (D512, 2026-07-22):** ARC 8 medicine-to-soldier-depth law is adjudicated in the existing §4f; LANE-005 is CONTRACT/unowned for one future read-only War Career report slice, still unimplemented. LANE-019 remains CONTRACT/unowned with road transport blocked at `NEEDS_MORE_RESEARCH`.
 >
-> **Boundary:** Extend one existing law artifact, choose one existing consumer and state authority, contract but do not implement the first slice, then release the lane. LANE-002 stays the 42-Verified/1,437-open replacement feeder; runtime, data, tools, probes, generated output, state, save, UI, mechanics, person records, and historical fates are closed. No simultaneous edits.
+> **Boundary:** The first consumer is only the pure `warCareerReportHTML` After Action report. Its authority is an exact qualifying current-person wounded event/credit pair plus existing `Your Timeline` fate; the existing Verified Letterman-system row may supply separately labeled generic Army of the Potomac context, never a personal treatment claim. No new state, persistence, medical mechanic, person claim, relationship, or LANE-002 batch is authorized. No simultaneous edits.
 >
 > **Authority:** `HANDOFF.md`'s first ⚡ block owns the full live boundary. This exact summary is build-checked across the routing docs; historical `NEXT` language records an old boundary and is never current authority.
 <!-- LIVE-HEAD-SUMMARY:END -->
@@ -38,9 +38,11 @@ Only unchecked boxes under **Outstanding approved roadmap** are authorized roadm
   - [ ] Chronicle tree comparing canonical history with clearly labeled `Your Timeline` receipts.
 
 - [ ] **ARC 8 — soldier depth.**
+  - [x] D512 docs-only medicine-to-soldier-depth law adjudication: §4f now selects the existing pure War Career After Action report, exact current-person wounded receipt authority, separate generic Letterman context, and no new state/owner.
+  - [ ] Implement the contracted D512 future Slice 1 only after a standalone LANE-005 DRIVE take; the slice is read-only/nonpersistent, 46/46 focused-browser targeted, and still unimplemented.
   - [ ] Continue bounded LANE-002 5b replacement batches when a citation-grade candidate set is selected. The live inventory is 42 Verified overlays and 1,437 open generated rows; the open count is a feeder pool, not a mandate to fill every row.
   - [ ] Add primary-source daily-life beats and relationship depth beyond the shipped D407 spine.
-  - [ ] Integrate wounding, hospitals, disease, and recovery narratives from the D501 packet without duplicating D169's strategic medical owner.
+  - [ ] After Slice 1, adjudicate any deeper wounding, hospital, disease, or recovery narrative separately without duplicating D169 or turning generic evidence into a personal claim.
   - [ ] Carry soldier point of view into owner-mode battle receipts and consequences.
 
 - [ ] **ARC 9 — desk-to-battle pacing.**

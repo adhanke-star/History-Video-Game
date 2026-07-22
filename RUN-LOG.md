@@ -1,10 +1,10 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D511 next-lane=LANE-005 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D511 transfer, 2026-07-22):** LANE-005 is DRIVE under ChatGPT/Codex 5.6 Sol Ultra for one docs-only ARC 8 medicine-to-soldier-depth law adjudication. D511 remains the latest decision; LANE-019 remains CONTRACT/unowned with road transport blocked at `NEEDS_MORE_RESEARCH`.
+<!-- LIVE-HEAD decision=D512 next-lane=LANE-005 state=CONTRACT owner=none -->
+> **Live status (D512, 2026-07-22):** ARC 8 medicine-to-soldier-depth law is adjudicated in the existing §4f; LANE-005 is CONTRACT/unowned for one future read-only War Career report slice, still unimplemented. LANE-019 remains CONTRACT/unowned with road transport blocked at `NEEDS_MORE_RESEARCH`.
 >
-> **Boundary:** Extend one existing law artifact, choose one existing consumer and state authority, contract but do not implement the first slice, then release the lane. LANE-002 stays the 42-Verified/1,437-open replacement feeder; runtime, data, tools, probes, generated output, state, save, UI, mechanics, person records, and historical fates are closed. No simultaneous edits.
+> **Boundary:** The first consumer is only the pure `warCareerReportHTML` After Action report. Its authority is an exact qualifying current-person wounded event/credit pair plus existing `Your Timeline` fate; the existing Verified Letterman-system row may supply separately labeled generic Army of the Potomac context, never a personal treatment claim. No new state, persistence, medical mechanic, person claim, relationship, or LANE-002 batch is authorized. No simultaneous edits.
 >
 > **Authority:** `HANDOFF.md`'s first ⚡ block owns the full live boundary. This exact summary is build-checked across the routing docs; historical `NEXT` language records an old boundary and is never current authority.
 <!-- LIVE-HEAD-SUMMARY:END -->
@@ -12,6 +12,38 @@
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-22 — D512: ARC 8 CARE-CONTEXT LAW CONTRACTED WITHOUT IMPLEMENTATION
+
+The standalone LANE-005 DRIVE transfer shipped first at `d59cd351`. The architectural-
+overlap check then selected existing §4f, existing LANE-005, and the existing pure
+`warCareerReportHTML` After Action section; no ARC 8 plan, LANE-020, state owner, or UI
+was created. D169, Human Cost, primary sources, canonical people, Women in War, D407,
+LANE-002, and War Career retain their existing boundaries.
+
+Future Slice 1 is read-only and nonpersistent. It admits only the newest byte-matching,
+independently revalidated qualifying current-person wounded event/credit pair. The
+personal sentence is `Your Timeline`. Separately labeled historical context may read
+the existing Verified/two-source Letterman row only for a US Army of the Potomac receipt
+dated 1862 or later, and must say that generic context proves no personal care path.
+Missing identity, service, participation, pair, wound, source, or consumer authority
+suppresses the new subsection and leaves the existing report intact.
+
+The future allowlist is source 106, the focused War Career probe, mechanical War Career
+plan-pin transitions, generated HTML through the build, and closeout docs. The focused
+target is one new table-driven browser row (45→46), static 30/30, plan 24/24, with two
+byte-restored binds for exact receipt equality and source admission. Personal medical
+mechanics, treatment, probabilities, economy/capacity, recovery state, new UI, named
+cases below the claim floor, relationship expansion, and LANE-002 work remain deferred.
+LANE-005 releases to CONTRACT/unowned; no implementation byte moves in D512.
+
+Docs release proof is green: both importers are exact at 42/42/0 and 11/9/2;
+coherence 5/5; build `GATE OK` at 65 data, 36/36 territories, and transport
+27/15/2/4/18; plans 13/13, 24/24, and 8/8; all fresh artifacts clean. D510's source
+and archive bytes match at SHA-256 `96974613a002efdbb9b3673d738485e58258e33c3bff9a7b99f7f080aa36791a`.
+All seven protected objects retain their D511 hashes, the dirty scope is exactly ten
+authorized documentation/archive files, and `git diff --check` is clean. No browser
+probe or full battery was run or owed.
 
 ## 2026-07-21 — D511: FINAL ROAD PASS RETAINS NEEDS_MORE_RESEARCH
 
