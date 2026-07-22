@@ -4,6 +4,43 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D509 — THE FIVE-FAMILY ROAD EVIDENCE PASS RETAINS NEEDS_MORE_RESEARCH; ROAD RUNTIME REMAINS CLOSED — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS/RESEARCH ONLY] (2026-07-21)
+
+The third citation-grade pass expands
+`docs/design/strategic-road-transport-research-packet.md` to **59 sources, 37
+nodes, 18 candidate rows (14 Verified · 4 Inferred · 0 Disputed), six Potomac
+rows, 13 Sherman interval rows, 11 explicit non-links, and ten interchange
+candidates across all seven D503 theaters**.
+
+The pass resolves Boteler's Ford as an exact, dated, direction-specific Verified
+operation and records exact but still Inferred Harpers Ferry-Winchester and
+Boonville-Arrow Rock passages. It separates Sherman's wings, corps, cavalry, and
+Platter's rear column across Sisters Ferry, Rivers Bridge/Salkehatchie, Buford
+Bridge, the unnamed South Edisto ferry, Orangeburg Road, named South Edisto and
+Orangeburg crossings, and the March North Carolina limits. The primary Platter
+diary corrects D508's premise: 5 March was a camp/crossing-wait day; the rain,
+heavy-road, corduroy, broken-bridge, and wagon limits belong to 8-9 March.
+
+Negative findings remain evidence, not inferred routes. No qualifying New
+Orleans-origin military-road operation toward the Mississippi interior was found;
+the exact Marshall-Shreveport stage road lacks dated army/wagon use, a military
+crossing set, and independent corroboration; Banks stopped at Mansfield/Pleasant
+Hill and retreated without completing Alexandria-Shreveport; and CT-36 evidence
+fixes railroad movement and the Virginia Point railroad bridge, not a Houston-
+Galveston wagon road. The CT-29 Boonville-Arrow Rock passage remains one-family
+evidence and cannot be composed with St. Louis-Rolla rail or the CT-30 Wire Road.
+
+The exact verdict is **NEEDS_MORE_RESEARCH**. Missing claim-specific second
+families, exact crossings/endpoints, and road identities prevent a referentially
+closed register. All 11 non-links remain binding, including distinct Potomac
+crossings, operation-only Sherman corridors, no New Orleans composition, no
+completed Union Shreveport approach, no inferred Marshall join, and no rail-to-road
+substitution in CT-29/CT-36. LANE-019 returns to CONTRACT/unowned. D503 retains
+territory law; D497/D499 retain rail/water evidence; D506 retains the immutable
+read-only transport substrate; all gameplay owners hold. No runtime, data, tool,
+generated, state, save, UI, movement, ownership/control, capacity, economy, AI,
+battle, result, terrain, or tactical byte or behavior changes.
+
 ## D508 — THE NINE-GAP ROAD EVIDENCE PASS RETAINS NEEDS_MORE_RESEARCH; LANE-019 RETURNS TO CONTRACT/UNOWNED — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS/RESEARCH ONLY] (2026-07-21)
 
 The second citation-grade pass expands
