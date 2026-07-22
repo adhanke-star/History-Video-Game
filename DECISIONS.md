@@ -4,6 +4,71 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D510 — CANONICAL DOCS RECONCILED; LIVE-STATE DRIFT BECOMES A BUILD FAILURE — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS/TOOLING ONLY] (2026-07-21)
+
+The disagreement was caused by an unenforced closeout convention, not conflicting product
+decisions. D412 made HANDOFF the sole full live-boundary owner and required short mirrors plus
+byte-verbatim archival, but added no executable coherence check. D468-D509 advanced HANDOFF,
+DECISIONS, and COORDINATION while START-HERE and WAKE-UP stopped at D467, V1-CHECKLIST at
+D454, AUTONOMOUS-RUN at D431, and RUN-LOG at D494. HANDOFF accumulated nineteen amendment
+heads despite the latest-plus-one rule. The clean D509 tree's transport plan failed 10/11
+because its historical D505/D506 proof incorrectly required the live lane to remain frozen at
+D506. The D504 board plan then failed 7/10 on the legitimate D509/D510 tree because it froze the
+manifest tail, schema count, and dirty-file allowlist at D504. The Mayhem and War Career plan
+guards repeated the ambient-dirty-tree mistake and rejected authorized D510 files unrelated to
+their shipped contracts. Ordinary feature gates could therefore pass while routing truth drifted.
+
+The current product truth is D509. LANE-019 is CONTRACT/unowned; the 36-territory board and
+immutable read-only rail/water/sea transport-evidence substrate are shipped; road data,
+runtime, gameplay, movement, state, save, UI, cost/capacity/repair, economy, AI, terrain, and
+all other gameplay owners remain closed. The only immediate product work permitted is a new
+ledger-chartered fourth road-evidence pass limited to six gaps: RD-E17 crossing plus second
+family; RD-E18 second family plus lawful endpoint; a qualifying New Orleans-origin operation;
+RD-E11 Marshall-Shreveport military passage, crossings, and corroboration; an exact two-family
+CT-36 road row; and Sherman handling claims below the two-family floor.
+
+D510 replaces prose discipline with an executable invariant. HANDOFF carries the full D510
+boundary plus D509 only. One delimited summary block is byte-identical in HANDOFF, START-HERE,
+WAKE-UP, AUTONOMOUS-RUN, V1-CHECKLIST, and RUN-LOG. `tools/probe-doc-coherence.mjs` fails when
+those blocks differ, their D-number differs from the first HANDOFF amendment or DECISIONS
+heading, HANDOFF has other than two amendments, a lane header differs from its first State,
+a SHIPPED lane is still owned, or the declared next lane differs from its first State/Owner. Its
+marker grammar accepts future decision, lane, state, and compact owner values; current values are
+not hard-coded into the gate.
+`tools/build.mjs` runs that gate before any deliverable write. The D503/D504 board plan and
+D505/D506 transport plan now check durable historical records plus the current unowned
+no-transport boundary without requiring stale manifest/count/HANDOFF state. The Mayhem and War
+Career planning guards retain their substantive contract/hash/runtime teeth but no longer inspect
+unrelated dirty scope.
+
+The V1 checklist is replaced with the reconciled roadmap: ARCs 0-6 shipped; ARC 7's board and
+read-only substrate shipped but playable transport movement, Council of War, terrain pipeline,
+operational hex zoom, and Chronicle tree remain; ARC 8 soldier depth and ARC 9 pacing remain.
+Parked REVIEW proposals and explicit v2/deferred work are separate, and already-shipped work
+is named to prevent resurrection. Superseded routing/checklist heads are preserved byte-verbatim
+in the matching legacy archives. Old AUTONOMOUS-RUN roadmaps and historical `NEXT` statements
+are explicitly non-actionable.
+
+Release evidence is complete. The final coherence artifact is 5/5. The isolated summary-mismatch
+bind and LANE-019-State bind each exited 1 for its exact named failure and restored to the same
+pre-bind blob. All 21 planning artifacts were regenerated and inspected: 224/224 steps, no failed
+row. All six touched tools pass `node --check`. Both `node tools/build.mjs --check` and the normal
+build print `GATE OK · doc-coherence ✓`; the generated game remains blob
+`6f8558dd8afec6fab5ac87885ff714ce9559f091`. D509 protected objects remain exact: src tree
+`6c7abffee1be95c41edbb52d292852df6b0651ac`; data tree
+`c4ededdd664036b72806d007184223ddf86ddf08`; manifest
+`3f35ac1abe5de8d75e62bac503dbb33595813a57`; suite
+`d1650af5f0e118b9f1869375a50c8397e1841ff6`; frozen base
+`fda24be7f1470dde129a73d6b1c1106eaaf6df76`; save shape
+`e5834a96bd4b076f68f92153748382e37ad0a2c7`. Seven archived regions match their D509 source
+bytes exactly, and `git diff --check` is clean.
+
+This is docs/tooling only. No runtime, data, gameplay, simulation, balance, UI, source claim,
+asset, save/version, manifest, suite membership, frozen base, or generated deliverable behavior
+is authorized to change. Release requires the doc gate, two byte-restored negative binds, all
+21 plan probes, build check, byte-invariant proof, and diff check; the full browser battery is
+not owed for this non-runtime slice.
+
 ## D509 — THE FIVE-FAMILY ROAD EVIDENCE PASS RETAINS NEEDS_MORE_RESEARCH; ROAD RUNTIME REMAINS CLOSED — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS/RESEARCH ONLY] (2026-07-21)
 
 The third citation-grade pass expands

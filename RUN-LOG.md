@@ -1,6 +1,45 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
+<!-- LIVE-HEAD-SUMMARY:BEGIN -->
+<!-- LIVE-HEAD decision=D510 next-lane=LANE-019 state=CONTRACT owner=none -->
+> **Live status (D510, 2026-07-21):** The canonical-doc coherence repair is shipped. Product state remains D509: LANE-019 is CONTRACT/unowned; road runtime, data, and gameplay are closed. The only immediate product work allowed is a separately chartered fourth road-evidence research pass on the six named D509 gaps.
+>
+> **Authority:** `HANDOFF.md`'s first ⚡ block owns the full live boundary. This exact summary is build-checked across the routing docs; historical `NEXT` language records an old boundary and is never current authority.
+<!-- LIVE-HEAD-SUMMARY:END -->
+
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
+
+**Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-21 — D510: CANONICAL DOCS RECONCILED; DRIFT NOW FAILS CLOSED
+
+D412 established a sensible policy but no executable enforcement. D468-D509 advanced
+HANDOFF, DECISIONS, and the active lane while four routing docs and this log retained
+older live heads; HANDOFF also grew to nineteen amendments. The product itself had not
+forked: D509 and LANE-019 remained the newest consistent truth.
+
+D510 restores one full boundary in HANDOFF, one byte-identical marked summary across six
+routing docs, and one concise V1 task map. Superseded HANDOFF, WAKE-UP, START-HERE,
+AUTONOMOUS-RUN, and V1 material is preserved byte-verbatim in the matching archives.
+Stale current lane State/Owner fields are corrected without deleting acceptance history.
+The old autonomous roadmaps and every historical `NEXT` are explicitly non-actionable.
+
+The new zero-dependency doc-coherence probe checks mirror identity, the top D-number,
+HANDOFF's exact two-amendment depth, lane header/first-State agreement, SHIPPED ownership,
+and the declared next lane. The build runs it before any deliverable write. The D505/D506
+conquest board and transport plans now prove their D503-D506 historical contracts without
+freezing later manifest/count/lane state. The Mayhem and War Career plans likewise stop
+policing unrelated current worktree files. Runtime, data, gameplay, UI, history claims, assets, save,
+manifest, suite, frozen base, and generated deliverable remain outside this docs/tooling
+repair.
+
+Release gates passed: coherence 5/5; both declared negative binds failed for the named
+reason and restored blob-identically; all 21 fresh plan artifacts were green at 224/224;
+all touched tools passed syntax checks; build check and normal build both printed GATE OK.
+The generated game remained `6f8558dd8afec6fab5ac87885ff714ce9559f091`; src, data,
+manifest, suite, frozen base, and save-shape blobs/trees matched D509 exactly. Seven archived
+regions compared byte-for-byte with their originals, and the final diff check was clean.
+No browser battery was owed because no runtime or suite surface moved.
 
 ## 2026-07-21 — D494: ARC 5 RELEASED — LANE-018 SHIPPED
 

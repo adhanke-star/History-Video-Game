@@ -12,7 +12,6 @@ import {
   writeFileSync
 } from "node:fs";
 import { createHash } from "node:crypto";
-import { execFileSync } from "node:child_process";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -53,42 +52,6 @@ const MARKER = "WAR_CAREER_RUNTIME_V1";
 const JOURNEY_MARKER = "WAR_CAREER_JOURNEY_ADAPTER_V1";
 const RUNTIME_NAME = "106-war-career.js";
 const RECEIPT_BIND = "WAR_CAREER_RECEIPT_BIND:SOURCE_REF_NEVER_EQUALS_TIMELINE_AUTHORITY";
-const D408_CONTRACT_ALLOWED = new Set([
-  "AUTONOMOUS-RUN.md",
-  "COORDINATION.md",
-  "DECISIONS.md",
-  "HANDOFF.md",
-  "RUN-LOG.md",
-  "START-HERE.md",
-  "V1-CHECKLIST.md",
-  "WAKE-UP.md",
-  "docs/design/war-career-loop-design.md",
-  "tools/probe-war-career-loop-plan.mjs",
-  // D411 transition: the D410 planning allowlist gains exactly the §18-contracted
-  // runtime surface (DECISIONS D410/D411; nothing else may move in the take).
-  "civil_war_generals.html",
-  "data/soldier-replacements.json",
-  "src/106-war-career.js",
-  "src/37-loot-survival.js",
-  "tools/probe-war-career.mjs",
-  // D411 documented exception (Aaron-approved in-take, 2026-07-16): the loot probe's
-  // Rhodes detail card pinned 'Sources (4)'; the contracted end-bound source row makes
-  // it 5, so that single stale pin moved with history (DECISIONS D411).
-  "tools/probe-loot-survival.mjs",
-  // D413 transition: the D408 §17 Matters-of-State runtime allowlist gains exactly the
-  // one §17-contracted seam file (DECISIONS D408 item 5 / D413; nothing else may move).
-  "src/32-decisions.js",
-  // D413 transition (discovered at gate, documented in DECISIONS D413): the D412
-  // HISTORY ARCHIVAL RULE moves each canonical doc's now-second prior head verbatim to
-  // legacy/<DOC>-ARCHIVE.md at EVERY release closeout — those archive targets postdate
-  // this allowlist's authoring and are docs-lane surface, so they are admitted here.
-  "legacy/AUTONOMOUS-RUN-ARCHIVE.md",
-  "legacy/HANDOFF-ARCHIVE.md",
-  "legacy/START-HERE-ARCHIVE.md",
-  "legacy/V1-CHECKLIST-ARCHIVE.md",
-  "legacy/WAKE-UP-ARCHIVE.md"
-]);
-
 function read(path) {
   return readFileSync(path, "utf8");
 }
@@ -137,15 +100,6 @@ function treeMd5(root) {
   }
   walk(root, "");
   return hash.digest("hex");
-}
-
-function gitChangedPaths() {
-  const options = { cwd:ROOT, encoding:"utf8" };
-  const tracked = execFileSync("git", ["diff", "--name-only", "HEAD", "--"], options)
-    .split(/\r?\n/).filter(Boolean);
-  const untracked = execFileSync("git", ["ls-files", "--others", "--exclude-standard"], options)
-    .split(/\r?\n/).filter(Boolean);
-  return Array.from(new Set(tracked.concat(untracked))).sort();
 }
 
 function campaignChain(text, side) {
@@ -1022,11 +976,6 @@ srcTree:"8928865aa355e27532b4318fcab3ff23",
   for (const key of Object.keys(expected)) {
     if (locks[key] !== expected[key]) throw new Error(key + " D411-complete lock moved: " + locks[key]);
   }
-  const changed = gitChangedPaths();
-  const forbidden = changed.filter(path => !D408_CONTRACT_ALLOWED.has(path));
-  if (forbidden.length) {
-    throw new Error("D408 contract allowlist violation: " + forbidden.join(", "));
-  }
   const runtimeText = read(RUNTIME), journeyText = read(JOURNEY), commandText = read(COMMAND);
   const focusedText = read(FOCUSED), commandProbeText = read(COMMAND_PROBE);
   for (const token of [
@@ -1228,7 +1177,7 @@ srcTree:"8928865aa355e27532b4318fcab3ff23",
   if (occurrences(read(SPEC), "WAR_CAREER_POLITICAL_DATE_BIND:QUALIFYING_RECEIPT_YEAR_1864_OR_LATER") !== 1) {
     throw new Error("D408 political-date bind token moved");
   }
-  return { ...locks, changed, commandConsumers:consumerCount, relationshipRows:d407Rows.length,
+  return { ...locks, commandConsumers:consumerCount, relationshipRows:d407Rows.length,
     status:"D407 runtime locked; D408 Slice E contracted" };
 });
 
@@ -1856,9 +1805,6 @@ srcTree:"8928865aa355e27532b4318fcab3ff23",
   for (const key of Object.keys(expected)) {
     if (hashes[key] !== expected[key]) throw new Error("D411 shipped baseline moved: " + key + " " + hashes[key]);
   }
-  const changed = gitChangedPaths();
-  const forbidden = changed.filter(path => !D408_CONTRACT_ALLOWED.has(path));
-  if (forbidden.length) throw new Error("D410 planning allowlist violation: " + forbidden.join(", "));
   const lane = lane005(read(COORD));
   mustInclude(lane, [
     "D410 reachability planning contract",
@@ -1889,7 +1835,7 @@ srcTree:"8928865aa355e27532b4318fcab3ff23",
   if (JSON.stringify(actualNames) !== JSON.stringify(expectedD410Names)) {
     throw new Error("D410 24-row names moved: " + JSON.stringify(actualNames));
   }
-  return { planRows:expectedD410Names.length, hashes, changed, status:"D411 shipped; D408 §17 runtime next" };
+  return { planRows:expectedD410Names.length, hashes, status:"D411 shipped; D408 §17 runtime next" };
 });
 
 writeFileSync(OUTFILE, JSON.stringify(result, null, 2) + "\n");

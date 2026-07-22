@@ -44,6 +44,10 @@ const checkOnly = process.argv.includes('--check');
 
 function die(code, msg) { console.error('BUILD FAIL [' + code + '] ' + msg); process.exit(code); }
 
+// ---- 0. D510 canonical-doc coherence gate (fail before any deliverable write) ----
+const docCoherence = spawnSync(process.execPath, [join(__dirname, 'probe-doc-coherence.mjs')], { encoding: 'utf8' });
+if (docCoherence.status !== 0) die(5, 'doc-coherence gate failed:\n' + (docCoherence.stdout || '') + (docCoherence.stderr || ''));
+
 // ---- 1. load base + assert the splice anchor is present and UNIQUE ----
 if (!existsSync(BASE)) die(5, 'missing build/base.html (snapshot the frozen foundation first)');
 const base = readFileSync(BASE, 'utf8');
@@ -675,7 +679,7 @@ for (const rm of RATING_MODULES) {
 
 // ---- 5. report + write ----
 const KB = (s) => (s.length / 1024).toFixed(1) + 'KB';
-console.log('GATE OK · parse ✓ · hex ✓ · collision ✓ · no-fudge ✓ · citations ✓ · women-in-war ✓ · save-shape ✓');
+console.log('GATE OK · doc-coherence ✓ · parse ✓ · hex ✓ · collision ✓ · no-fudge ✓ · citations ✓ · women-in-war ✓ · save-shape ✓');
 console.log('  data:      GAME_DATA = {' + (dataKeys.join(', ') || '(none)') + '}');
 console.log('  schemas:   ' + dataKeys.length + ' data files; conquest territories: ' + conquestTerritoryCount + '/36; transport: ' + conquestTransportCounts.rail + '/' + conquestTransportCounts.water + '/' + conquestTransportCounts.sea + '/' + conquestTransportCounts.interchanges + '/' + conquestTransportCounts.nonLinks);
 console.log('  assets:    __ASSETS = ' + embedCount + ' embedded (' + (embedBytes / 1024).toFixed(0) + 'KB raw' + (embedCount ? '; ' + Object.keys(embedCats).map(c => c + ':' + embedCats[c]).join(', ') : '') + ')');

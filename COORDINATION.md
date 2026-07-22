@@ -99,7 +99,7 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
 
 ### LANE-001 · e50-save-envelope-deep-guard — **SHIPPED** *(retroactive worked example)*
 
-- **Owning tool:** Claude Code (drove + shipped); teeth authored by ChatGPT/Codex.
+- **Owning tool:** none; Claude Code drove and shipped the historical slice, and ChatGPT/Codex authored the teeth.
 - **State:** SHIPPED (D353, commit `47f6f71`).
 - **Design law:** `DECISIONS.md` D244 (E13 guard pattern) + D323 (Transfer sink) + the
   REVIEW-QUEUE run-2 E50 entry; fix record D353.
@@ -222,9 +222,12 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   chartered session in D368 and released it untouched at D372's 10% boundary, 2026-07-10;
   ChatGPT/Codex took DRIVE for the three-record New Market Heights batch in D421, 2026-07-17.
 
-### LANE-003 · battle-ladder — **CONTRACT** (unowned; D398 Petersburg release verified)
+### LANE-003 · battle-ladder — **CONTRACT** (unowned; no queued ladder work)
 
-- **Owning tool:** none. ChatGPT/Codex discharged D397 VERIFY in D398 after the complete serialized 129-command release, full artifact audit, and terminal-only Presets/Gettysburg teardown repairs. No gameplay, data, simulation input, balance, save, or generated-game byte moved. The canonical Desktop checkout remains largely `compressed,dataless` and must not be overwritten or pulled across; `/private/tmp/codex-vg-recovery-019f62fe` remains the trusted materialized checkout.
+- **Owning tool:** none. No simultaneous edits.
+- **State:** CONTRACT/unowned. The later ladder shipped Cold Harbor in D442 and the Crater/Olustee runtimes in D469-D470, with the D471 release battery. No battle is currently queued; any new battle needs a new bounded contract and live-baseline reconciliation.
+- **Current resume pointer:** none. D398 and the retained DRIVE/VERIFY blocks below are historical acceptance evidence, not current work. The old statement that Cold Harbor was deferred is superseded by D442.
+- **Retained D398 history:** ChatGPT/Codex discharged D397 VERIFY in D398 after the complete serialized 129-command release, full artifact audit, and terminal-only Presets/Gettysburg teardown repairs. No gameplay, data, simulation input, balance, save, or generated-game byte moved.
 <!-- Stale prior-owner line retained verbatim as takeover provenance:
 - **Owning tool:** Claude Code / Claude Fable (Fable 5, xhigh), DRIVE for the D397 playable Petersburg initial-assaults RUNTIME from the committed D396 contract — spec §11 atomic integration + §14 runtime gate are the law: `data/petersburg-assaults.json` + T1 registry/menu rank 69 + schema 54 + Army Register 1434+U×3 (the 13-site pin-bump grep) + flags/weather/Intel/media 24 + suite 129 + sweep 24 + THE TEN NAMED RESHAPE OBLIGATIONS + the focused runtime probe with THE CITY GUARD (CS holds ≥5/8) and THE AGGREGATE CASUALTY-DIRECTION TOOTH (US>CS ≥5/8, direction only) + both binds with md5-identical restores + honest A/B if any simulation input moves. The take is this ledger-only commit at the clean pushed D396 boundary `3bec246` (HEAD == origin/main verified; all twelve plan probes rerun after the lane edit). Before this take: none after D396 discharged Claude Code / Claude Fable's planning DRIVE (taken in ledger-only commit `9db61f7` at the clean pushed D395 boundary `d099082`) after the complete planning slice shipped: the two-workflow research-verify pass (10 agents, 189 CONFIRMED / 4 ADJUSTED / 0 REFUTED — the packet's §14 addendum, commit `203343e`), `docs/design/petersburg-initial-assaults-battle-build-spec.md` (md5 `277e6754d66e619a8bf63bc0b7ca65b9`) + `tools/probe-petersburg-initial-assaults-plan.mjs` (md5 `0886f6abc4606ba7d28fc55d1692cdc7`; 12/12 dual-mode, filesystem-first, fail-closed, bind-tested — the one-token Beauregard `Gen.`→`Lt. Gen.` tamper bit EXACTLY `RANKS + COMMAND TRAPS` with an md5-identical restore), the serialized focused gate, docs sync, and push. RUNTIME STAYED EXCLUDED: no `data/petersburg-assaults.json`, no T1/registry/menu/schema/coverage/suite/sweep/Army-Register movement, no simulation input; every D394 lock held byte-identical. Before this take: none after D394 discharged ChatGPT/Codex's D393 VERIFY ownership after the complete serialized release battery, artifact audit, narrow Five Forks stale-baseline fix, docs sync, and push. The standing serialization law survives: no provider takes DRIVE without a committed ledger edit, and release batteries run alone.
 -->
@@ -765,9 +768,12 @@ next green commit and confer through this ledger instead of permitting simultane
   with 12 confirmed findings; Phase C shipped only E72 in D371 before Aaron's 10% boundary;
   D372 released LANE-004 and the untouched LANE-002 lock. No LANE-003 touch.
 
-### LANE-005 · war-career-loop — **CONTRACT (D413 §17 Matters of State shipped; unowned)**
+### LANE-005 · war-career-loop — **CONTRACT (unowned; War Career through Slice F shipped D438)**
 
-- **Owning tool:** none. Owner: none. No simultaneous edits by any provider.
+- **Owning tool:** none. No simultaneous edits by any provider.
+- **State:** CONTRACT/unowned. The War Career spine through Slice F is shipped through D438; later ARC 5 GM/election integrations also shipped. No War Career slice is queued.
+- **Current resume pointer:** none. A new War Career capability requires a new contract; the D413 §17 State/Owner and acceptance material below are retained history.
+- **Retained D413 history:**
 - **State:** CONTRACT — released from ledger take
   `a3aec520c3f8e4e823d453011488a7447906c040`, based on clean D412 boundary
   `70e0f990bbe8d9b37636b5484ebf5f8245467683`. D413 shipped the D408 §17 Matters-of-State
@@ -1432,10 +1438,12 @@ next green commit and confer through this ledger instead of permitting simultane
   Slice D relationship memory is unstarted and requires its own DRIVE take; every later exclusion
   remains locked.
 
-### LANE-006 · docs-hygiene — **DRIVE (D510 canonical-doc coherence repair; ChatGPT/Codex)**
+### LANE-006 · docs-hygiene — **CONTRACT (D510 canonical-doc coherence repair shipped; unowned)**
 
-- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra top loop. No simultaneous edits by any provider.
-- **State:** DRIVE — taken from clean pushed D509 boundary
+- **Owning tool:** none. ChatGPT/Codex 5.6 Sol Ultra drove the D510 repair and released the lock. No simultaneous edits by any provider.
+- **State:** CONTRACT/unowned — D510 reconciled the six routing docs, restored byte-verbatim archives, corrected current lane summaries, and added a fail-closed build-time coherence gate. Product scope remains at D509; LANE-019 owns the next possible docs/research charter.
+- **D510 release evidence:** doc coherence 5/5; two declared binds exited nonzero for the exact mirror/lane reasons and restored blob-identically; 21 fresh planning artifacts are green at 224/224; all six touched tools pass `node --check`; build check and normal build print `GATE OK · doc-coherence ✓`; generated game blob `6f8558dd8afec6fab5ac87885ff714ce9559f091`, src tree `6c7abffee1be95c41edbb52d292852df6b0651ac`, data tree `c4ededdd664036b72806d007184223ddf86ddf08`, manifest `3f35ac1abe5de8d75e62bac503dbb33595813a57`, suite `d1650af5f0e118b9f1869375a50c8397e1841ff6`, frozen base `fda24be7f1470dde129a73d6b1c1106eaaf6df76`, and save shape `e5834a96bd4b076f68f92153748382e37ad0a2c7` all match D509; seven archived regions compare byte-for-byte; diff check clean. No runtime battery owed.
+- **D510 DRIVE history:** taken from clean pushed D509 boundary
   `61c26df740aa2cc29fd0b61bb2b35d9f90ee2fd3` on Aaron's 2026-07-21 request to determine why
   the canonical docs disagree, establish the live truth, repair them, and prevent recurrence.
 - **D510 root-cause finding:** D412 made `HANDOFF.md` the single live-boundary owner and required
@@ -1444,8 +1452,11 @@ next green commit and confer through this ledger instead of permitting simultane
   while `START-HERE.md` and `WAKE-UP.md` stopped at D467, `V1-CHECKLIST.md` stopped at D454,
   `AUTONOMOUS-RUN.md` stopped at D431, and `RUN-LOG.md` stopped at D494. `HANDOFF.md` also
   accumulated nineteen amendment heads despite the latest-plus-one rule. The stale D506-only
-  lane assertion in `tools/probe-conquest-transport-plan.mjs` now fails 10/11 at clean D509,
-  proving the drift escaped both closeout practice and the existing gates.
+  lane assertion in `tools/probe-conquest-transport-plan.mjs` fails 10/11 at clean D509; the
+  older D504 board plan also freezes the module tail, schema count, and dirty-file allowlist and
+  fails 7/10 on the legitimate D509/D510 tree. The Mayhem and War Career planning guards repeat
+  the ambient-dirty-tree pattern, going red on authorized D510 files despite their own historical
+  contracts remaining intact. The drift escaped both closeout practice and existing gates.
 - **D510 acceptance contract:**
   1. Preserve D509 as the pre-repair product truth: LANE-019 is CONTRACT/unowned; road runtime,
      data, and gameplay remain closed; only the named fourth docs/research pass may be chartered.
@@ -1468,15 +1479,21 @@ next green commit and confer through this ledger instead of permitting simultane
      six live-summary blocks differ, their D-number disagrees with the top HANDOFF/DECISIONS entry,
      HANDOFF has other than two live amendment heads, the declared next lane disagrees with that
      lane's first State/Owner fields, or any lane header disagrees with its first State field.
-  7. Repair `tools/probe-conquest-transport-plan.mjs` so its D505/D506 historical substrate proof
-     does not require the live lane to remain frozen at D506 or inspect unrelated dirty scope.
+  7. Repair the stale planning guards: `tools/probe-conquest-transport-plan.mjs` must prove
+     the durable D505/D506 substrate without freezing the live lane at D506 or inspecting unrelated
+     dirty scope; `tools/probe-conquest-layer-plan.mjs` must prove the durable D503/D504 territory
+     board without freezing the manifest tail, current schema count, or dirty worktree at D504;
+     `tools/probe-open-history-mayhem-plan.mjs` and `tools/probe-war-career-loop-plan.mjs` must stop
+     treating unrelated current worktree files as changes to their shipped historical contracts.
   8. Prove the new gate with two isolated byte-restored binds: one mirror-marker mismatch and one
      current-lane State mismatch. Each must exit nonzero for the named reason; final reruns green.
 - **D510 allowlist:** `START-HERE.md`, `HANDOFF.md`, `WAKE-UP.md`, `AUTONOMOUS-RUN.md`,
   `RUN-LOG.md`, `V1-CHECKLIST.md`, `COORDINATION.md`, append-only `DECISIONS.md`, the corresponding
-  existing `legacy/*-ARCHIVE.md` files, new `tools/probe-doc-coherence.mjs`, `tools/build.mjs`, and
-  `tools/probe-conquest-transport-plan.mjs`; generated HTML may be rewritten only byte-identically
-  by the build. No `src/`, `data/`, manifest, save, gameplay, balance, historical claim, asset, UI,
+  existing `legacy/*-ARCHIVE.md` files, new `tools/probe-doc-coherence.mjs`, `tools/build.mjs`,
+  `tools/probe-conquest-layer-plan.mjs`, `tools/probe-conquest-transport-plan.mjs`,
+  `tools/probe-open-history-mayhem-plan.mjs`, and `tools/probe-war-career-loop-plan.mjs`; generated
+  HTML may be rewritten only byte-identically by the build. No `src/`, `data/`, manifest, save,
+  gameplay, balance, historical claim, asset, UI,
   or other probe may move.
 - **D510 gate sequence:** complete the probe-anchor inventory; `node --check` all touched tools;
   run the doc-coherence probe and both negative binds; run all 21 `tools/probe-*-plan.mjs` guards;
@@ -1832,6 +1849,9 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ### LANE-009 · finish-line-fixnow — **SHIPPED** (unowned; D454 — the AD-0 battery ran 137/137 GREEN with every artifact read)
 
+- **Owning tool:** none; the D454 release discharged the historical Claude Code/Fable lock.
+- **State:** SHIPPED — all FIX-NOW slices and the AD-0 release battery are complete. The DRIVE material below is retained history only.
+- **Historical contract follows:**
 - **Owning tool:** Claude Code (Fable 5) — Aaron authorized Fable-friendly sessions through
   Sunday 2026-07-19; owner recorded per §3-4 role law (TOP LOOP resolved to the live session
   model).
@@ -1944,6 +1964,7 @@ next green commit and confer through this ledger instead of permitting simultane
   nine binds exact with md5 restores, three runtime bugs root-fixed). The AD-0 terminal
   battery ran to 45/133 GREEN with zero reds and was then DEFERRED mid-run by Aaron's
   extend-coding directive; it re-settles as ONE full serialized battery at the FINAL head.
+- **State:** SHIPPED — D454 completed the terminal AD-0 battery and released the lane. The VERIFY paragraph below is retained history.
 - **State:** VERIFY (battery-only; prior states: VERIFY audit-owed at `51e27a5` → DRIVE
   combined-session at `c463152` → this release). The D432 queue
   ran down COMPLETE except the Cold Harbor RUNTIME (deferred by its own if-room clause; its
@@ -2011,6 +2032,7 @@ next green commit and confer through this ledger instead of permitting simultane
 
 - **Owning tool:** unowned (the Claude Code / Fable 5 lock RELEASED at the D452 boundary;
   the run executed within Aaron's authorized Fable window through Sunday 2026-07-19).
+- **State:** SHIPPED — D454 completed the shared terminal battery and released the lane. The VERIFY paragraph below is retained history.
 - **State:** VERIFY (battery-only; prior: DRIVE taken ledger-only at the clean pushed D443
   boundary `0041c9ac2cf227b61d539999d5955c3b2b65521c`; slices 1-8 shipped as D444-D452; the
   optional LANE-002 5b batch was deliberately NOT started — a citation-grade content lane
@@ -2532,6 +2554,7 @@ next green commit and confer through this ledger instead of permitting simultane
   (LANE-015/D469) and Olustee (LANE-016/D470) runtimes and SHED slices 3-5 honestly
   under the context safe-stop law; the D471 battery (SHA c9934a0) then released
   ARC 2 / C3 fully, leaving this lane the sole open arc.
+- **State:** SHIPPED — all six slices and the D477 release battery are complete; no graphics-uplift work remains queued. The DRIVE paragraph below is retained history.
 - **State:** DRIVE — this entry IS the acceptance contract (ratified `489cfc4`, the
   LANE-013 `3506716` precedent). SLICE 1 is SHIPPED (`6f62352`, D467: the assets3d
   provenance wall; all 30 staged files Verified CC0-1.0 byte-identical to identified
@@ -3566,7 +3589,7 @@ next green commit and confer through this ledger instead of permitting simultane
 
 ### LANE-019 · conquest-design-law — **CONTRACT (D509 FIVE-FAMILY ROAD EVIDENCE PASS SHIPPED; UNOWNED)**
 
-- **Owning tool:** Unowned. No simultaneous edits.
+- **Owning tool:** none. No simultaneous edits.
 - **State:** CONTRACT after D509's third docs/research-only pass adjudicated the five
   evidence families D508 left open and retained exact verdict
   `NEEDS_MORE_RESEARCH`. The packet now records 59 sources, 37 nodes, 18 candidate
