@@ -1,17 +1,35 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D519 next-lane=LANE-020 state=CONTRACT owner=none -->
-> **Live status (D519, 2026-07-22):** ARC 9 Slices 1–4 are green, committed, and pushed; LANE-020 is released to `CONTRACT` / `none` because Slice 5 has no lawful independent strategic-turn entrypoint.
+<!-- LIVE-HEAD decision=D520 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D520, 2026-07-22):** existing LANE-019 is under ChatGPT/Codex DRIVE for one state-free ARC 7 Transport Movement foundation: a pure physical-service evidence query inside the existing read/freeze transport owner.
 >
-> **Boundary:** Slice 5 stays unchecked, unenrolled, and unclaimed at future 31→43 focused steps and 140→141 suite rows. No runtime, probe, generated deliverable, count pin, or suite row moved. Exact next is a separately committed ARC 7 non-road conquest lane contract and DRIVE take under D514.
+> **Boundary:** D520 changes only routing/law documents plus the stale D506 plan-boundary tooth; runtime remains untouched. The slice may expose sourced rail, inland-water, and bounded-sea rows by immutable ruleset view, but may create no topology, adjacency, current-availability claim, state, save, UI, order, movement, capacity, receipt, AI, economy, or battle coupling. Roads remain unavailable.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block owns D519's dependency release; D514's work-conserving completion loop remains binding. `V1-CHECKLIST.md` is the ledger and `COORDINATION.md` preserves LANE-020's exact re-take dependency.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D520 exact contract own the slice. D514's work-conserving loop remains binding; LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-22 — D520: LANE-019 PURE PHYSICAL-SERVICE QUERY CONTRACT TAKEN
+
+The D519 head was clean at `9cea762` before selection. The live ARC 7 owner inventory
+keeps `src/115-conquest-transport.js` as the sole immutable transport surface and rejects
+a duplicate module, topology, or early state/save owner. LANE-019 takes ChatGPT/Codex
+DRIVE for exactly one pure `conquestTransportPhysicalServices` reader over the existing
+27 rail, 15 inland-water, and two bounded-sea rows. Historical keeps qualitative/date
+evidence; Mayhem filters only the sourced physical flag. Roads, interchanges, and non-links
+cannot become services, and no current availability, state, save, UI, order, movement,
+capacity, economy, AI, or battle behavior is authorized.
+
+The clean-head transport plan exposed one pre-existing red: 10/11 because its final tooth
+still demanded the pre-D514 CONTRACT/unowned no-transport boundary. D514 explicitly
+authorized separately contracted non-road work. D520 replaces only that obsolete state/text
+pin with the exact DRIVE owner, pure-query contract, road prohibition, and no-playable-
+transport assertion. Product runtime remains untouched; all evidence/count/owner/no-gameplay
+teeth remain. Implementation follows only after this routing commit is pushed clean.
 
 ## 2026-07-22 — D519: LANE-020 BLOCKER RELEASED UNOWNED; ARC 9 SLICE 5 REMAINS UNCLAIMED
 

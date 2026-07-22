@@ -3684,10 +3684,12 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **CONTRACT (D514 NON-ROAD PLAYABLE LADDER AUTHORIZED; ROAD EVIDENCE STILL INCOMPLETE; UNOWNED)**
+### LANE-019 · conquest-design-law — **DRIVE (D520 PURE PHYSICAL-SERVICE QUERY; CHATGPT/CODEX)**
 
-- **Owning tool:** none after the D511 clean release. No simultaneous edits.
-- **State:** CONTRACT/unowned. D511 completed the fourth road-evidence pass and retained exact
+- **Owning tool:** ChatGPT/Codex. The full-access 5.6 Sol Ultra top loop took the lock in D520
+  for one state-free physical-service evidence query. No simultaneous edits.
+- **State:** DRIVE. D520 authorizes only the exact Slice-2B pure reader below; it does not
+  authorize stateful or playable transport. D511 completed the fourth road-evidence pass and retained exact
   verdict `NEEDS_MORE_RESEARCH`.
   The packet now records 65 sources, 37 nodes, 18 candidate rows (14 Verified,
   4 Inferred, 0 Disputed), six Potomac rows, 13 Sherman interval rows (11 Verified,
@@ -3805,8 +3807,70 @@ next green commit and confer through this ledger instead of permitting simultane
   but no road row can enter runtime without the existing evidence floor. Council, terrain, hex,
   Chronicle, economy, AI, state, save, and combat integration each require their own declared
   slice inside this lane; none piggybacks on D514 without acceptance teeth.
+- **D520 architecture/overlap verdict:** extend the existing read/freeze owner
+  `src/115-conquest-transport.js`; do not create module 116, a second registry, a topology,
+  or a stateful movement owner. The closest current surfaces remain separate: D159 aggregate
+  logistics, Transfer readiness, Western Theater readout, blockade/economy/engineering, the
+  immutable transport evidence normalizer, and the sole bridge/auto-resolve/result path. The
+  new reader differs only by providing one immutable ruleset-filtered view of already-normalized
+  physical evidence; it owns no state, action, route, or gameplay result.
+- **Slice-2B exact contract — pure physical-service evidence query:** add exactly one global
+  `conquestTransportPhysicalServices` in `src/115-conquest-transport.js`. Its sole argument is
+  an exact plain object with exactly `id` and `version`; only `{id:"historical",version:1}`
+  and `{id:"mayhem",version:1}` qualify. It never reads `G`, `C`, settings, localStorage,
+  DOM, or another ruleset source. It must first call the existing fail-closed
+  `conquestTransportNormalized()` and return `null` for invalid input or invalid/missing
+  territory/transport authority.
+- **Slice-2B exact output:** return a deeply frozen exact object with only `rulesetId` and
+  `services`. Preserve source order: `CTS-R-01`..`CTS-R-27`, then `CTS-W-01`..`CTS-W-15`,
+  then `CTS-S-01`..`CTS-S-02`. Historical returns the 44 sourced rows with every qualitative
+  `historicalEligibility.status` and verbatim `dateText` intact; it may not synthesize a turn,
+  date, `open`, availability, or legal-now boolean. Mayhem returns only rows whose existing
+  `mayhemPhysicalEligibility` is true. Rows remain cloned/frozen evidence descriptors. The four
+  interchanges end an order and are not services; the eighteen non-links remain prohibitions,
+  not services; roads remain absent with exact `ROAD_REQUIRES_BOUNDED_SOURCE_PASS` authority.
+- **Slice-2B prohibited behavior:** no endpoint-pair projection, topology, adjacency, path,
+  bidirectionality inference, current availability, control, node operation, service condition,
+  capacity, order, movement, attack, heavy transport, cut, repair, bypass, economy, theater,
+  directive, receipt, state, `C.conquest`, campaign kind/start, save/import/export/undo,
+  `_SAVE_VER`, UI/H0/menu/board trace, AI, battle/result, Chronicle, War Career, Custom Builder,
+  casualty, winner, score, surrender, or tactical output. No existing owner formula or ledger
+  may be copied. D74 and the immutable `C.ruleset` owner remain binding; this helper consumes
+  only an already-authoritative copied view and cannot select the live ruleset itself.
+- **Slice-2B implementation allowlist:** `src/115-conquest-transport.js`;
+  `tools/probe-conquest-transport.mjs`; `tools/probe-conquest-transport-plan.mjs`; generated
+  `civil_war_generals.html` only through `node tools/build.mjs`; mechanical generated/source
+  hash pins in `tools/probe-open-history-mayhem-plan.mjs` and
+  `tools/probe-war-career-loop-plan.mjs` only when verbatim extraction proves movement; and the
+  canonical decision/run/handoff/checklist/live-summary documents, this lane, §8 of
+  `docs/design/unlocked-but-judged-design.md`, and `legacy/HANDOFF-ARCHIVE.md` only when the
+  two-head rule requires it. Every data file, manifest/build source, new module/probe, H0/menu,
+  campaign/save/economy/movement/AI/battle/tactical owner, `tools/save-shape.json`,
+  `tools/vet-no-regression.mjs`, and `build/base.html` is barred.
+- **Slice-2B probe and bind:** keep all existing D506 11-step substrate behavior and grow
+  `tools/probe-conquest-transport.mjs` exactly 11→18. The seven new teeth prove strict two-field
+  ruleset views and invalid/extra/wrong-version rejection; exact 44-row mode/ID order and deep
+  freeze; Historical qualitative/date preservation with no legal-now field; Mayhem filtering
+  against an otherwise-valid synthetic normalized row whose physical flag is false; roads,
+  interchanges, and non-links excluded as services with no path/state fields; absent/malformed
+  substrate failure; and repeated-call zero-write/UI/board purity. Bind 2B removes only the
+  Mayhem physical-eligibility filter; exactly the false-eligibility tooth reds, every old/new
+  other tooth stays green, and source/generated bytes restore exactly before a clean rerun.
+- **Slice-2B gates and pins:** `node --check` every touched JS/MJS; normal build `GATE OK`;
+  transport plan; focused transport with fresh JSON and zero failed/page/real errors; conquest
+  layer plan and board; Mayhem and War Career plans after only declared hash transitions; Bind
+  2B exact-red plus byte restore and clean rerun; doc coherence; protected counts/owners;
+  allowlist; `git diff --check`; commit/push/fetch/clean parity. Data remains 65, manifest 111
+  with 115 last, suite 140, save shape and `_SAVE_VER=1` unchanged. No full battery is owed
+  before the first playable transport loop.
+- **D520 stale-plan-root fix:** at clean D519, the D506 plan was 10/11 only because its last
+  tooth required the pre-D514 no-transport phrase and CONTRACT/unowned state. D514 expressly
+  authorized separately contracted non-road work. D520 may change only that existing plan tooth
+  in the routing commit so it asserts this exact DRIVE owner/contract, roads unavailable, and
+  no stateful or playable transport. All 27/15/2/4/18 evidence, count, source, field, owner, and
+  no-gameplay teeth remain unchanged; runtime remains untouched in the routing commit.
 - **Design law:** `docs/design/unlocked-but-judged-design.md` §5 and §8, especially
-  §§8.11-8.23; DECISIONS D455, D497, D499, D502, and D503; the rail and strategic-
+  §§8.11-8.24; DECISIONS D455, D497, D499, D502, D503, and D520; the rail and strategic-
   water packets. D503 records Aaron's exact answer: "execute option a."
 - **Package-A locks:** exactly 36 `CT-*` operational catchments and exact anchor
   assignments; 24 two-month turns plus Jan-Apr 1865 endgame; sourced physical
@@ -3889,6 +3953,12 @@ next green commit and confer through this ledger instead of permitting simultane
   combined normalization/evidence-integrity tooth and restored data/game
   `7138a61b6cfc152d1051850831a27e92` / `d278c30f4cbbe2179b10bc566a8a461b`.
   Frozen base/save shape held; no UI/state/save/gameplay behavior shipped.
+- **Resume pointer:** D520 is a routing/contract boundary only. Implement exactly
+  `conquestTransportPhysicalServices` in `src/115-conquest-transport.js`, grow the existing
+  focused runtime proof 11→18, execute Bind 2B, restore source/generated bytes exactly, run
+  every declared gate, document D521 evidence, commit/push/fetch/clean parity, then reload this
+  lane and contract the next dependency separately. No runtime implementation may begin before
+  the D520 routing commit itself is pushed clean.
 - **Last-touched commits:** D503 standalone design-lock `a3403da`; D503 final-law
   commit `44ffac5`; Slice-1 DRIVE take `7a0ca42`; allowlist/gate HALT ledger
   `cb46f55`; D504 Slice-1 implementation `74237b9`; D505 docs-only contract ships in
@@ -3898,7 +3968,8 @@ next green commit and confer through this ledger instead of permitting simultane
   `d0dcf84`; second nine-gap road-evidence DRIVE transfer `3da0de9`; D508 packet and
   lane release `27df304`; third five-family road-evidence DRIVE transfer `3e68144`;
   D509 packet/lane release; D510 final-pass DRIVE transfer `be54d4a`; D511 packet
-  and lane release ship in the commit containing this entry.
+  and lane release ship in the commit containing that entry; D519 cleared the ARC 9 dependency
+  reorder at `9cea762`; D520 pure-query DRIVE take is the current routing milestone.
 - **History:** D502 created the design-only contract. Aaron chose Package A. D503
   completed the final law. D504 shipped the read-only territory board. D505 audits
   every rail/water evidence row, contracts the read-only substrate, and D506 ships
@@ -3913,6 +3984,8 @@ next green commit and confer through this ledger instead of permitting simultane
   `NEEDS_MORE_RESEARCH`, and releases the lane. At that historical boundary no read-only road
   substrate or transport gameplay was authorized. D514 supersedes only the global blocker by
   authorizing non-road conquest and further adjudication; it changes no D511 evidence classification.
+  D519 releases blocked ARC 9 and selects this lane. D520 takes DRIVE only for the state-free
+  physical-service evidence query and repairs the obsolete pre-D514 plan-boundary assertion.
 
 ### LANE-020 · desk-to-battle-pacing — **CONTRACT (D519 SLICE-5 DEPENDENCY; UNOWNED)**
 

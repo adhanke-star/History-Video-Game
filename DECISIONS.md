@@ -4,6 +4,45 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D520 — LANE-019 TAKES DRIVE FOR A PURE PHYSICAL-SERVICE EVIDENCE QUERY; STATEFUL TRANSPORT REMAINS SEPARATELY SLICED — [CHATGPT/CODEX 5.6 SOL ULTRA, ARCHITECTURE/CONTRACT] (2026-07-22)
+
+**VERDICT: `CONTRACT_PURE_PHYSICAL_SERVICE_QUERY`.** After D519 pushed clean at
+`9cea762adc4534ee74747d97f2f9df10030b6cd1`, the live Package A law, LANE-019,
+transport substrate, campaign/save lifecycle, and overlapping logistics, Transfer,
+Western Theater, economy, engineering, blockade, bridge, and battle owners were
+re-inventoried. The first dependency-ready Transport Movement increment is one pure
+ruleset-filtered view of existing evidence—not a new module, topology, state owner,
+or visible move.
+
+`src/115-conquest-transport.js` remains the single immutable transport owner and may
+add exactly `conquestTransportPhysicalServices(rulesetView)`. An exact two-field
+Historical/Mayhem version-1 view is required. The helper reads no live authority and
+returns only a deeply frozen `{rulesetId,services}` value after the existing complete
+normalizer succeeds. Service order and evidence remain 27 rail, 15 inland-water, and
+two bounded-sea rows. Historical keeps qualitative status and verbatim dates; Mayhem
+filters only the sourced physical flag. Roads, interchanges, and non-links cannot
+become services.
+
+The query deliberately cannot answer “legal now.” There are no machine-readable
+Historical turn windows, conquest control/node/service receipts, or lawful state/save
+owner yet. D520 therefore forbids adjacency, endpoint projection, path, availability,
+control, state, save, UI, order, movement, capacity, cut/repair, economy, AI, or battle
+coupling. A new module 116 would duplicate the current read/freeze owner; `C.conquest`
+and the fresh-start save discriminator remain a later dedicated contract before any
+mutation.
+
+At the clean D519 head, `probe-conquest-transport-plan` was 10/11 only because its
+final tooth still pinned the pre-D514 CONTRACT/unowned no-transport phrase. D514
+expressly authorized separately contracted non-road work. D520 corrects that tooth
+to assert the exact DRIVE owner, pure-query contract, roads unavailable, and no
+stateful/playable transport. Every evidence, count, source, field, owner-separation,
+and no-gameplay tooth remains intact. Runtime is untouched in this routing commit.
+
+**EXACT NEXT:** push D520 clean, then implement only the pure reader in existing
+`src/115`; grow focused runtime proof 11→18; run the isolated Mayhem-filter bind and
+byte restoration; run all declared focused/adjacent plans and board proof; document
+D521, commit/push/fetch/clean parity, and separately contract the next dependency.
+
 ## D519 — LANE-020 RELEASES UNOWNED AT THE REAL ARC 9 SLICE-5 DEPENDENCY; NO BATCH-TURN SHIPMENT IS CLAIMED — [CHATGPT/CODEX 5.6 SOL ULTRA, BLOCKER/RELAY] (2026-07-22)
 
 **VERDICT: `BLOCKED_NO_INDEPENDENT_STRATEGIC_TURN_ENTRYPOINT`.** D518 is pushed at
