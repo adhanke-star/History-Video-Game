@@ -1,12 +1,12 @@
 # AUTONOMOUS-RUN.md — the 12-hour max-productivity build plan ("The Civil War")
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D524 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D524, 2026-07-22):** LANE-019 is under ChatGPT/Codex DRIVE for one pure detached campaign-calendar query in the existing sole conquest-state owner.
+<!-- LIVE-HEAD decision=D525 next-lane=LANE-019 state=CONTRACT owner=none -->
+> **Live status (D525, 2026-07-22):** the pure detached conquest campaign calendar is shipped and focused-green; LANE-019 is `CONTRACT` / `none` for separate next-dependency adjudication.
 >
-> **Boundary:** D523 remains the runtime head; D524 changes routing/law plus the transport-plan current-contract tooth only. D525 may add one zero-argument immutable 25-interval schedule query to `src/116`; it adds no `C.conquest` field, current/default turn, live start/load/save/UI, eligibility, control, service, army, order, movement, or operational behavior.
+> **Boundary:** existing sole owner `src/116-conquest-state.js` now additionally exposes one strict zero-argument query returning a fresh deeply frozen exact 25-interval schedule. It attaches nowhere and creates no current/default/legal turn, live start/load/save/UI, eligibility, control, service, army, order, movement, or operational behavior.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D524 exact contract own the slice. D514's work-conserving loop remains binding; LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D525 delivery record own the boundary. D514's work-conserving loop remains binding; D526 must separately adjudicate the next dependency, while LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **D514 completion rule:** `HANDOFF.md` owns the work-conserving loop and terminal condition. This manual executes the whole live ledger, not one bundle; each slice remains independently contracted, gated, documented, committed, and pushed.

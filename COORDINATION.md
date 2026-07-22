@@ -3684,15 +3684,13 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **DRIVE (D524 PURE DETACHED CONQUEST CALENDAR; CHATGPT/CODEX)**
+### LANE-019 · conquest-design-law — **CONTRACT (D525 PURE DETACHED CONQUEST CALENDAR SHIPPED; UNOWNED)**
 
-- **Owning tool:** ChatGPT/Codex, from clean pushed D523
-  `b59532cf1092b3987a94ace1830ef897fa9a95f2`, for the exact D524 Slice-3B contract below.
-  No simultaneous edits.
-- **State:** DRIVE. D524 authorizes only a pure detached campaign-calendar query in the existing
-  sole conquest-state owner. D523 remains the product/runtime head; this routing commit changes
-  only law, ledger, live summaries, archive, and the transport-plan current-boundary tooth. D523
-  ships only a new sole state owner, exact campaign
+- **Owning tool:** none. D525 ships the detached Slice-3B calendar and releases the lane; any D526
+  work requires its own committed owner/contract transfer. No simultaneous edits.
+- **State:** CONTRACT/unowned. D525 ships only a pure detached campaign-calendar query in the
+  existing sole conquest-state owner. D523's strict factory/view remains exact and D525 adds no
+  live or operational authority. D523 ships only a new sole state owner, exact campaign
   identity/ruleset serialization, and detached factory/view; no live campaign start, load, save
   acceptance, UI, migration, topology, control, service condition, army, date, order, movement,
   or operational default exists. D521 remains the shipped pure physical-service reader. D511 completed the fourth road-evidence pass and retained exact
@@ -4118,12 +4116,37 @@ next green commit and confer through this ledger instead of permitting simultane
   `git diff --check`. Data remains 65, manifest 112 with 116 last, suite 140, `_SAVE_VER=1`, save
   shape, frozen base, build/data sources, and all existing owners remain unchanged. The full
   140-row battery remains deferred until the first playable conquest loop.
-- **Resume pointer:** after the D524 routing commit is pushed clean, implement only this calendar
-  as D525, execute the exact proof/bind/restore/gates, synchronize delivery evidence, commit,
-  push, fetch, and return LANE-019 to CONTRACT/unowned. D526 must then separately adjudicate the
-  smallest dependency-ready prerequisite; it may not infer opening control, node operation,
-  service condition, armies, Historical availability windows, receipt grammar, migration,
-  topology, movement, or a live start/load/save-acceptance path.
+- **D525 delivery record — pure detached conquest campaign calendar:** existing sole owner
+  `src/116-conquest-state.js` additionally exposes exactly `conquestCampaignCalendar()` with
+  declared arity zero. Argument-bearing calls return `null` before inspection. Every valid call
+  returns a fresh deeply frozen exact 25-record Array: 24 formula-derived two-month regular
+  intervals through Nov-Dec 1864 and the bounded Jan-Apr 1865 endgame. Exact ordinary record/date
+  prototypes, ordered own-data keys, frozen descriptors, and no within/across-call shared identity
+  hold. Ordinal 25 grants no turn/action/boundary/current/default/next/legal-now meaning. The query
+  attaches nowhere, branches on no ruleset, transforms no source date, and creates no eligibility,
+  availability, state, save, UI, transport, or operational behavior. D523's factory/view and exact
+  empty extensible factory namespace are unchanged.
+- **D525 evidence and protected pins:** focused state proof is 15/15 with `ok:true`, zero failed,
+  errors, pageerrors, or realErrors. Bind B changed only the unique endgame end-month 4→3 after
+  proving one source anchor and one value assertion; the rebuilt mutation returned exactly 14/15
+  with only the endgame tooth red and runtime error `bounded endgame interval drifted`. Source and
+  generated HTML restored byte-identically to MD5 `45246d89bb479f7a7c5934c38cd78f65` /
+  `269ecc62eed83e6220c42c0efab40d38`, then clean proof returned 15/15. Source-tree MD5 is
+  `9f4ffbff132bf2b22b1174538b9a9311`; manifest MD5 remains
+  `4cc094911506cf5af9929cf79d25dc6c`. Independent Sol-high review found no blocker. Normal build
+  is `GATE OK` at data 65, territories 36, transport 27/15/2/4/18, manifest 112 with 116 last,
+  and suite 140. Final adjacency is doc coherence 5/5, transport plan 11/11, conquest plan 8/8,
+  Mayhem plan 13/13, War Career plan 24/24, state 15/15, transport 18/18, board 13/13, Mayhem mode
+  24/24, and save slots 17/17 with clean fresh artifacts. `_SAVE_VER=1`, save shape, frozen base,
+  build/data sources, existing owners, and every live entry/load/save/UI surface hold. The full
+  140-row battery remains deferred until the first playable conquest loop.
+- **Resume pointer:** D525 releases this lane to CONTRACT/unowned. Under D514, D526 must re-read
+  Package A, this full lane, the existing foundation/calendar/transport owners, and live/save
+  owners; separately adjudicate the smallest dependency-ready prerequisite and either commit a
+  precise owner-safe contract/DRIVE take or record a bounded prerequisite. D526 may not infer
+  opening control, node operation, service condition, armies, Historical availability windows,
+  receipt grammar, current/default turn, migration, topology, movement, or a live
+  start/load/save-acceptance path.
 - **Last-touched commits:** D503 standalone design-lock `a3403da`; D503 final-law
   commit `44ffac5`; Slice-1 DRIVE take `7a0ca42`; allowlist/gate HALT ledger
   `cb46f55`; D504 Slice-1 implementation `74237b9`; D505 docs-only contract ships in
@@ -4138,7 +4161,8 @@ next green commit and confer through this ledger instead of permitting simultane
   CONTRACT/unowned release precede the D522 detached-state DRIVE take from
   `ef85725b2e7ea55fba96b4c7996a0d70abb6a56f`; D522 routing/contract is `bfbe64b`; D523
   implementation and CONTRACT/unowned release are `b59532c`; D524's pure-calendar DRIVE contract
-  ships in the commit containing this entry.
+  is `7adcc28`; D525 implementation and CONTRACT/unowned release ship in the commit containing
+  this entry.
 - **History:** D502 created the design-only contract. Aaron chose Package A. D503
   completed the final law. D504 shipped the read-only territory board. D505 audits
   every rail/water evidence row, contracts the read-only substrate, and D506 ships
@@ -4159,7 +4183,8 @@ next green commit and confer through this ledger instead of permitting simultane
   D522 separately contracts the detached conquest identity/state representation. D523 ships its
   strict factory/view under the exact ten-step proof and releases the lane to CONTRACT/unowned
   before any live entry, save acceptance, or operational state. D524 takes DRIVE only for the
-  law-fixed detached 25-interval calendar query; operational state and integration remain closed.
+  law-fixed detached 25-interval calendar query; D525 ships that pure query under exact 15-step
+  proof and releases the lane to CONTRACT/unowned. Operational state and integration remain closed.
 
 ### LANE-020 · desk-to-battle-pacing — **CONTRACT (D519 SLICE-5 DEPENDENCY; UNOWNED)**
 

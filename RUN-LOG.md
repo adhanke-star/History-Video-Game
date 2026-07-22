@@ -1,17 +1,33 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D524 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D524, 2026-07-22):** LANE-019 is under ChatGPT/Codex DRIVE for one pure detached campaign-calendar query in the existing sole conquest-state owner.
+<!-- LIVE-HEAD decision=D525 next-lane=LANE-019 state=CONTRACT owner=none -->
+> **Live status (D525, 2026-07-22):** the pure detached conquest campaign calendar is shipped and focused-green; LANE-019 is `CONTRACT` / `none` for separate next-dependency adjudication.
 >
-> **Boundary:** D523 remains the runtime head; D524 changes routing/law plus the transport-plan current-contract tooth only. D525 may add one zero-argument immutable 25-interval schedule query to `src/116`; it adds no `C.conquest` field, current/default turn, live start/load/save/UI, eligibility, control, service, army, order, movement, or operational behavior.
+> **Boundary:** existing sole owner `src/116-conquest-state.js` now additionally exposes one strict zero-argument query returning a fresh deeply frozen exact 25-interval schedule. It attaches nowhere and creates no current/default/legal turn, live start/load/save/UI, eligibility, control, service, army, order, movement, or operational behavior.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D524 exact contract own the slice. D514's work-conserving loop remains binding; LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D525 delivery record own the boundary. D514's work-conserving loop remains binding; D526 must separately adjudicate the next dependency, while LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-22 — D525: PURE DETACHED CONQUEST CALENDAR SHIPPED
+
+Existing sole owner `src/116-conquest-state.js` now exposes strict zero-arity
+`conquestCampaignCalendar()`: a fresh deeply frozen exact 25-record schedule covering 24
+two-month regular intervals in 1861-64 plus the bounded Jan-Apr 1865 endgame. It attaches to no
+factory or campaign state and creates no current/legal turn, eligibility, action, save, UI, or
+operational behavior. D523's factory/view and exact empty extensible namespace remain unchanged.
+
+The focused proof grew exactly 10→15 and is clean 15/15. Bind B rebuilt with the unique end-month
+4→3 mutation and returned exactly 14/15 with only the endgame tooth red, then source/generated
+bytes restored exactly to MD5 `45246d89bb479f7a7c5934c38cd78f65` /
+`269ecc62eed83e6220c42c0efab40d38` and clean 15/15. Independent Sol-high audit passed with no
+blockers. Build and every declared adjacent plan/browser proof are green; protected 65 data,
+112/116-last manifest, 140 suite, save/base, and existing-owner boundaries hold. LANE-019 releases
+to CONTRACT/unowned for separate D526 adjudication.
 
 ## 2026-07-22 — D524: PURE DETACHED CONQUEST CALENDAR CONTRACT TAKEN
 

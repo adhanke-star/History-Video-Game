@@ -1,5 +1,5 @@
 /* ============================================================================
-   D523 / LANE-019 Slice 3A — detached conquest campaign identity foundation.
+   D523 + D525 / LANE-019 Slices 3A-3B — detached conquest foundation.
 
    This module creates no live campaign, save path, UI, map state, transport
    state, order, or movement. The factory returns one detached four-field value;
@@ -9,9 +9,14 @@
    disposable local carrier because Mayhem initialization also sanitizes carried
    receipts. Only the carrier's verified frozen ruleset descriptor/value crosses
    into the exact returned root; every incidental carrier field is discarded.
+
+   The campaign calendar is a detached immutable query over Package A's fixed
+   schedule. It is not attached to the factory namespace and establishes no
+   current turn, availability, action, resolution boundary, or live state.
    ========================================================================== */
 var conquestCampaignFoundation = null;
 var conquestCampaignFoundationView = null;
+var conquestCampaignCalendar = null;
 
 (function conquestCampaignStateModule() {
   var _ccsOwn = Object.prototype.hasOwnProperty;
@@ -80,6 +85,14 @@ var conquestCampaignFoundationView = null;
   function _ccsLockedPair(id, version) {
     var value={id:id,version:version};
     return _ccsFreezeExact(value);
+  }
+
+  function _ccsCalendarDate(year, month) {
+    return _ccsFreezeExact({year:year,month:month});
+  }
+
+  function _ccsCalendarRecord(ordinal, start, end, kind) {
+    return _ccsFreezeExact({ordinal:ordinal,start:start,end:end,kind:kind});
   }
 
   function _ccsDefineLocked(root, key, value) {
@@ -153,6 +166,30 @@ var conquestCampaignFoundationView = null;
         !_ccsFreezeExact(conquest) || !_ccsFreezeExact(root)) return null;
     return root;
   }
+
+  conquestCampaignCalendar = function () {
+    if (arguments.length !== 0) return null;
+    try {
+      var intervals=[], ordinal, index, year, startMonth, start, end, record;
+      for (ordinal=1;ordinal<=24;ordinal++) {
+        index=ordinal-1;
+        year=1861+Math.floor(index/6);
+        startMonth=1+2*(index%6);
+        start=_ccsCalendarDate(year,startMonth);
+        end=_ccsCalendarDate(year,startMonth+1);
+        record=_ccsCalendarRecord(ordinal,start,end,"regular");
+        if (!start || !end || !record) return null;
+        intervals.push(record);
+      }
+      var endgameEndMonth=4; // CONQUEST_CALENDAR_BIND_B:ENDGAME_APRIL
+      start=_ccsCalendarDate(1865,1);
+      end=_ccsCalendarDate(1865,endgameEndMonth);
+      record=_ccsCalendarRecord(25,start,end,"endgame");
+      if (!start || !end || !record) return null;
+      intervals.push(record);
+      return _ccsFreezeExact(intervals);
+    } catch (e) { return null; }
+  };
 
   conquestCampaignFoundation = function (startView) {
     try {

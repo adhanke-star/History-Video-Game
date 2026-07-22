@@ -1300,3 +1300,19 @@ syncs closeout docs. Data 65, manifest 112/116-last, suite 140, `_SAVE_VER=1`, s
 base, build/data/current owners hold. Bind B changes only the unique endgame end-month anchor
 4→3, producing exactly 14/15 with only the endgame tooth red before byte restoration and clean
 15/15. No full battery is owed before the first playable conquest loop.
+
+### 8.29 D525 detached conquest campaign-calendar delivery
+
+Existing sole owner `src/116-conquest-state.js` now exposes `conquestCampaignCalendar()` under
+the exact §8.28 contract. It returns a fresh deeply frozen exact 25-record schedule on every
+zero-argument call and returns `null` on every argument-bearing call before inspection. The
+24 regular intervals and bounded Jan-Apr 1865 endgame are exact; record/date prototypes, key
+order, descriptors, freeze state, and within/across-call identity separation are proved.
+
+The query remains detached law: no factory/namespace attachment, current/default/legal turn,
+action/boundary, ruleset or source-date interpretation, eligibility/availability, state, save,
+UI, or operational integration exists. D523's factory/view behavior remains exact. Focused proof
+is 15/15; Bind B is exact one-tooth 14/15 and byte-restored; declared adjacent plans/browser
+proofs are green. Data 65, manifest 112/116-last, suite 140, save version/shape, frozen base, and
+existing owners hold. LANE-019 releases to CONTRACT/unowned; D526 must separately adjudicate the
+next dependency before any operational or live integration work.

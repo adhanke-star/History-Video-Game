@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import "./guard-probe-browser.mjs";
-// D523 / LANE-019 Slice-3A focused detached conquest-state contract proof.
+// D523 + D525 / LANE-019 Slices 3A-3B focused detached conquest-state/calendar proof.
 import { chromium } from "playwright-core";
 import { spawn } from "node:child_process";
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
@@ -186,6 +186,93 @@ try{
     const source=String(conquestCampaignFoundation)+"\n"+String(conquestCampaignFoundationView);
     if(/(?:startCampaign|applySave|localStorage|document\.|G\.)/.test(source))throw new Error("factory/view reaches barred live authority");
     return {operationalFields:0,actions:0,uiTrace:0};
+  }));
+
+  await step("CALENDAR API: zero arity and strict extra-argument failure without coercion",()=>page.evaluate(()=>{
+    const api=conquestCampaignCalendar;
+    if(typeof api!=="function"||api.length!==0)throw new Error("zero-arity calendar API missing");
+    if(!Array.isArray(api()))throw new Error("zero-argument calendar call failed");
+    let coercions=0;
+    const hostile={get value(){coercions++;throw new Error("argument getter invoked");},valueOf(){coercions++;throw new Error("argument coerced");},toString(){coercions++;throw new Error("argument stringified");}};
+    const revoked=Proxy.revocable({hostile:true},{});revoked.revoke();
+    for(const args of [[undefined],[null],[false],[0],[""],[hostile],[revoked.proxy],[hostile,"extra"]]){
+      let value;
+      try{value=Reflect.apply(api,null,args);}catch(error){throw new Error("extra argument threw: "+String(error&&error.message||error));}
+      if(value!==null)throw new Error("extra argument did not fail null");
+    }
+    if(coercions!==0)throw new Error("calendar coerced or inspected an argument");
+    return {declaredArity:api.length,validArgumentCount:0,rejectedCalls:8,coercions};
+  }));
+
+  await step("CALENDAR REGULAR INTERVALS: exact 24-row formula, order, and inclusive bounds",()=>page.evaluate(()=>{
+    const rows=conquestCampaignCalendar();
+    if(!Array.isArray(rows)||rows.length!==25)throw new Error("calendar row count drifted");
+    for(let ordinal=1;ordinal<=24;ordinal++){
+      const row=rows[ordinal-1],index=ordinal-1,year=1861+Math.floor(index/6),startMonth=1+2*(index%6);
+      if(row.ordinal!==ordinal||row.kind!=="regular")throw new Error("regular identity/order drift at "+ordinal);
+      if(row.start.year!==year||row.end.year!==year||row.start.month!==startMonth||row.end.month!==startMonth+1)throw new Error("regular formula drift at "+ordinal);
+      if(!Number.isInteger(row.start.year)||!Number.isInteger(row.end.year)||!Number.isInteger(row.start.month)||!Number.isInteger(row.end.month)||row.start.month<1||row.end.month>12)throw new Error("regular inclusive integer bound drift at "+ordinal);
+    }
+    return {regular:24,first:"Jan-Feb 1861",last:"Nov-Dec 1864",monthBase:1,inclusive:true};
+  }));
+
+  await step("CALENDAR ENDGAME: exact bounded Jan-Apr 1865 row; ordinal grants no turn authority",async()=>{
+    const proof=await page.evaluate(()=>{
+      const rows=conquestCampaignCalendar(),row=rows&&rows[24];
+      if(!row||row.ordinal!==25||row.kind!=="endgame"||row.start.year!==1865||row.start.month!==1||row.end.year!==1865||row.end.month!==4)throw new Error("bounded endgame interval drifted");
+      for(const key of ["turn","current","default","next","legal","legalNow","action","boundary","resolution","resolve"]){
+        if(Object.prototype.hasOwnProperty.call(row,key))throw new Error("endgame ordinal gained authority: "+key);
+      }
+      return {ordinal:25,kind:"endgame",start:"Jan 1865",end:"Apr 1865",normalTurn:false,actionBoundary:false};
+    });
+    const source=readFileSync(join(ROOT,"src/116-conquest-state.js"),"utf8");
+    need((source.match(/var endgameEndMonth=4; \/\/ CONQUEST_CALENDAR_BIND_B:ENDGAME_APRIL/g)||[]).length===1,"Bind B endgame anchor is not unique");
+    return proof;
+  });
+
+  await step("CALENDAR SHAPE: exact descriptors, deep freeze, and fresh non-shared identities",()=>page.evaluate(()=>{
+    const first=conquestCampaignCalendar(),second=conquestCampaignCalendar();
+    if(first===second||Object.getPrototypeOf(first)!==Array.prototype||Object.getPrototypeOf(second)!==Array.prototype||!Object.isFrozen(first)||!Object.isFrozen(second))throw new Error("calendar array freshness/freeze drifted");
+    const arrayKeys=[...Array(25)].map((_,index)=>String(index)).concat("length");
+    const identities=new Set(),cross=new Set();
+    for(const rows of [first,second]){
+      if(Reflect.ownKeys(rows).join(",")!==arrayKeys.join(","))throw new Error("calendar array own keys drifted");
+      const lengthDescriptor=Object.getOwnPropertyDescriptor(rows,"length");
+      if(!lengthDescriptor||lengthDescriptor.value!==25||lengthDescriptor.enumerable||lengthDescriptor.writable||lengthDescriptor.configurable)throw new Error("calendar array length descriptor drifted");
+      for(let index=0;index<rows.length;index++){
+        const row=rows[index],rowDescriptor=Object.getOwnPropertyDescriptor(rows,String(index));
+        if(!rowDescriptor||rowDescriptor.value!==row||!rowDescriptor.enumerable||rowDescriptor.writable||rowDescriptor.configurable)throw new Error("calendar array item descriptor drifted");
+        if(Object.getPrototypeOf(row)!==Object.prototype||Reflect.ownKeys(row).join(",")!=="ordinal,start,end,kind"||!Object.isFrozen(row))throw new Error("calendar record shape/freeze drifted");
+        for(const key of ["ordinal","start","end","kind"]){const descriptor=Object.getOwnPropertyDescriptor(row,key);if(!descriptor||!Object.prototype.hasOwnProperty.call(descriptor,"value")||!descriptor.enumerable||descriptor.writable||descriptor.configurable)throw new Error("calendar record descriptor drifted "+key);}
+        if(row.start===row.end)throw new Error("calendar start/end identity shared");
+        for(const date of [row.start,row.end]){
+          if(Object.getPrototypeOf(date)!==Object.prototype||Reflect.ownKeys(date).join(",")!=="year,month"||!Object.isFrozen(date))throw new Error("calendar date shape/freeze drifted");
+          for(const key of ["year","month"]){const descriptor=Object.getOwnPropertyDescriptor(date,key);if(!descriptor||!Object.prototype.hasOwnProperty.call(descriptor,"value")||!descriptor.enumerable||descriptor.writable||descriptor.configurable)throw new Error("calendar date descriptor drifted "+key);}
+          if(cross.has(date))throw new Error("calendar nested date identity shared within/across calls");
+          cross.add(date);
+        }
+        if(cross.has(row))throw new Error("calendar record identity shared within/across calls");
+        cross.add(row);identities.add(row);
+      }
+    }
+    if(identities.size!==50||cross.size!==150)throw new Error("calendar fresh identity counts drifted");
+    return {arrays:2,records:50,datePairs:100,sharedIdentities:0,deeplyFrozen:true};
+  }));
+
+  await step("CALENDAR PURITY: no current/legal semantics, attachment, ruleset branch, or external write",()=>page.evaluate(()=>{
+    const storage=()=>{const out={};for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i);out[key]=localStorage.getItem(key);}return out;};
+    const snapshot=()=>({g:typeof G==="undefined"?"__absent__":JSON.stringify(G),c:typeof C==="undefined"?"__absent__":JSON.stringify(C),storage:JSON.stringify(storage()),dom:document.body.innerHTML,board:typeof conquestBoardNormalized==="function"?JSON.stringify(conquestBoardNormalized()):"__absent__",transport:typeof conquestTransportPhysicalServices==="function"?JSON.stringify(conquestTransportPhysicalServices({id:"historical",version:1})):"__absent__"});
+    const before=snapshot(),first=conquestCampaignCalendar(),second=conquestCampaignCalendar();
+    if(JSON.stringify(first)!==JSON.stringify(second))throw new Error("calendar law changed across calls");
+    if(JSON.stringify(snapshot())!==JSON.stringify(before))throw new Error("calendar changed an external authority");
+    const historical=conquestCampaignFoundation({side:"US",ruleset:{id:"historical",version:1}}),mayhem=conquestCampaignFoundation({side:"CS",ruleset:{id:"mayhem",version:1}});
+    for(const root of [historical,mayhem])if(!root||Object.keys(root.conquest).length||Object.prototype.hasOwnProperty.call(root.conquest,"calendar")||Object.prototype.hasOwnProperty.call(root,"calendar"))throw new Error("calendar attached to foundation state");
+    const barred=new Set(["current","currentturn","default","defaultturn","next","nextturn","legal","legalnow","available","availability","eligible","eligibility","action","boundary","resolution","resolve","ruleset","historicalwindow","servicewindow","control","nodeoperation","servicecondition","army","armies","order","movement","topology","adjacency","capacity","save","load","migration"]);
+    const walk=node=>{if(!node||typeof node!=="object")return;for(const key of Object.keys(node)){if(barred.has(key.toLowerCase()))throw new Error("calendar gained prohibited semantic field "+key);walk(node[key]);}};
+    walk(first);
+    const source=String(conquestCampaignCalendar);
+    if(/(?:\bG\b|\bC\b|settings|localStorage|document\.|conquestCampaignFoundation|conquestTransport|conquestBoard)/.test(source))throw new Error("calendar reaches an external authority");
+    return {writes:0,attachments:0,currentOrLegalFields:0,rulesetBranches:0,operationalFields:0};
   }));
 
   if(result.pageerrors.length||result.realErrors.length){result.ok=false;result.errors.push("browser errors present");}

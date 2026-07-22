@@ -4,6 +4,30 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D525 — SHIPPED_DETACHED_CONQUEST_CALENDAR: EXACT FRESH IMMUTABLE 25-INTERVAL LAW QUERY SHIPS WITHOUT STATE OR INTEGRATION — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION/ADVERSARIAL VERIFY] (2026-07-22)
+
+**VERDICT: `SHIPPED_DETACHED_CONQUEST_CALENDAR`.** D524's exact contract is implemented in
+existing sole owner `src/116-conquest-state.js` with one additional zero-arity global,
+`conquestCampaignCalendar()`. Any argument returns `null` before inspection. Each valid call
+returns a fresh deeply frozen exact 25-record schedule: 24 formula-derived two-month `regular`
+intervals from Jan-Feb 1861 through Nov-Dec 1864, then exact Jan-Apr 1865 `endgame`. Exact
+ordinary record/date keys, frozen descriptors, and non-shared identities hold within/across calls.
+
+The query attaches nowhere, leaves D523's factory/view and empty extensible namespace unchanged,
+and establishes no current/default/next/legal-now turn, action/boundary, ruleset branch, source-date
+conversion, eligibility, availability, operational state, or live/save/UI behavior. Data remains
+65, manifest 112/116-last, suite 140, `_SAVE_VER=1`, save shape, frozen base, build/data sources,
+and all existing owners hold.
+
+Focused proof is clean 15/15 with zero failed/errors/pageerrors/realErrors. Bind B's unique
+end-month 4→3 mutation rebuilt and returned exactly 14/15 with only the endgame tooth red and
+runtime error `bounded endgame interval drifted`; source/game then restored byte-identically to
+MD5 `45246d89bb479f7a7c5934c38cd78f65` / `269ecc62eed83e6220c42c0efab40d38`
+and clean 15/15. Source-tree MD5 is `9f4ffbff132bf2b22b1174538b9a9311`.
+Independent Sol-high audit found no blocker. All declared static and browser adjacency gates are
+green; the full 140-row battery remains deferred until the first playable loop. LANE-019 releases
+to CONTRACT/unowned; D526 must separately adjudicate the next prerequisite.
+
 ## D524 — CONTRACT_DETACHED_CONQUEST_CALENDAR: LANE-019 TAKES DRIVE FOR ONE PURE LAW-FIXED 25-INTERVAL QUERY — [CHATGPT/CODEX 5.6 SOL ULTRA, ARCHITECTURE/CONTRACT] (2026-07-22)
 
 **VERDICT: `CONTRACT_DETACHED_CONQUEST_CALENDAR`.** From clean, pushed D523
