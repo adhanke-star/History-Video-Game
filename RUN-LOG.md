@@ -1,8 +1,8 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D512 next-lane=LANE-005 state=CONTRACT owner=none -->
-> **Live status (D512, 2026-07-22):** ARC 8 medicine-to-soldier-depth law is adjudicated in the existing §4f; LANE-005 is CONTRACT/unowned for one future read-only War Career report slice, still unimplemented. LANE-019 remains CONTRACT/unowned with road transport blocked at `NEEDS_MORE_RESEARCH`.
+<!-- LIVE-HEAD decision=D512 next-lane=LANE-005 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D512, 2026-07-22):** ARC 8 medicine-to-soldier-depth law is adjudicated in the existing §4f; LANE-005 is DRIVE under ChatGPT/Codex for the one read-only War Career report slice, with implementation not yet begun. LANE-019 remains CONTRACT/unowned with road transport blocked at `NEEDS_MORE_RESEARCH`.
 >
 > **Boundary:** The first consumer is only the pure `warCareerReportHTML` After Action report. Its authority is an exact qualifying current-person wounded event/credit pair plus existing `Your Timeline` fate; the existing Verified Letterman-system row may supply separately labeled generic Army of the Potomac context, never a personal treatment claim. No new state, persistence, medical mechanic, person claim, relationship, or LANE-002 batch is authorized. No simultaneous edits.
 >
@@ -12,6 +12,10 @@
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-22 — LANE-005 DRIVE TAKE FOR D512 CARE CONTEXT
+
+ChatGPT/Codex took LANE-005 DRIVE from clean D512 at `f255cc4fdbb09ccbc5a7e69ace1a0c74b373f5ed` for the contracted read-only War Career care-context slice. This standalone transfer changes only the seven routing documents; runtime, data, probes, generated output, law, save shape, and LANE-019 remain untouched. Implementation begins only after this transfer is committed, pushed, fetched, and confirmed clean with `HEAD == origin/main`.
 
 ## 2026-07-22 — D512: ARC 8 CARE-CONTEXT LAW CONTRACTED WITHOUT IMPLEMENTATION
 

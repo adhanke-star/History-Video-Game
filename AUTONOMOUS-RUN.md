@@ -1,8 +1,8 @@
 # AUTONOMOUS-RUN.md — the 12-hour max-productivity build plan ("The Civil War")
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D512 next-lane=LANE-005 state=CONTRACT owner=none -->
-> **Live status (D512, 2026-07-22):** ARC 8 medicine-to-soldier-depth law is adjudicated in the existing §4f; LANE-005 is CONTRACT/unowned for one future read-only War Career report slice, still unimplemented. LANE-019 remains CONTRACT/unowned with road transport blocked at `NEEDS_MORE_RESEARCH`.
+<!-- LIVE-HEAD decision=D512 next-lane=LANE-005 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D512, 2026-07-22):** ARC 8 medicine-to-soldier-depth law is adjudicated in the existing §4f; LANE-005 is DRIVE under ChatGPT/Codex for the one read-only War Career report slice, with implementation not yet begun. LANE-019 remains CONTRACT/unowned with road transport blocked at `NEEDS_MORE_RESEARCH`.
 >
 > **Boundary:** The first consumer is only the pure `warCareerReportHTML` After Action report. Its authority is an exact qualifying current-person wounded event/credit pair plus existing `Your Timeline` fate; the existing Verified Letterman-system row may supply separately labeled generic Army of the Potomac context, never a personal treatment claim. No new state, persistence, medical mechanic, person claim, relationship, or LANE-002 batch is authorized. No simultaneous edits.
 >

@@ -1,8 +1,8 @@
 # V1 CHECKLIST — current approved roadmap
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D512 next-lane=LANE-005 state=CONTRACT owner=none -->
-> **Live status (D512, 2026-07-22):** ARC 8 medicine-to-soldier-depth law is adjudicated in the existing §4f; LANE-005 is CONTRACT/unowned for one future read-only War Career report slice, still unimplemented. LANE-019 remains CONTRACT/unowned with road transport blocked at `NEEDS_MORE_RESEARCH`.
+<!-- LIVE-HEAD decision=D512 next-lane=LANE-005 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D512, 2026-07-22):** ARC 8 medicine-to-soldier-depth law is adjudicated in the existing §4f; LANE-005 is DRIVE under ChatGPT/Codex for the one read-only War Career report slice, with implementation not yet begun. LANE-019 remains CONTRACT/unowned with road transport blocked at `NEEDS_MORE_RESEARCH`.
 >
 > **Boundary:** The first consumer is only the pure `warCareerReportHTML` After Action report. Its authority is an exact qualifying current-person wounded event/credit pair plus existing `Your Timeline` fate; the existing Verified Letterman-system row may supply separately labeled generic Army of the Potomac context, never a personal treatment claim. No new state, persistence, medical mechanic, person claim, relationship, or LANE-002 batch is authorized. No simultaneous edits.
 >
@@ -39,7 +39,7 @@ Only unchecked boxes under **Outstanding approved roadmap** are authorized roadm
 
 - [ ] **ARC 8 — soldier depth.**
   - [x] D512 docs-only medicine-to-soldier-depth law adjudication: §4f now selects the existing pure War Career After Action report, exact current-person wounded receipt authority, separate generic Letterman context, and no new state/owner.
-  - [ ] Implement the contracted D512 future Slice 1 only after a standalone LANE-005 DRIVE take; the slice is read-only/nonpersistent, 46/46 focused-browser targeted, and still unimplemented.
+  - [ ] Implement the contracted D512 future Slice 1 under the active standalone LANE-005 DRIVE lock held by ChatGPT/Codex; the slice is read-only/nonpersistent, 46 browser rows plus unchanged 30/30 static targeted, and still unimplemented at this routing boundary.
   - [ ] Continue bounded LANE-002 5b replacement batches when a citation-grade candidate set is selected. The live inventory is 42 Verified overlays and 1,437 open generated rows; the open count is a feeder pool, not a mandate to fill every row.
   - [ ] Add primary-source daily-life beats and relationship depth beyond the shipped D407 spine.
   - [ ] After Slice 1, adjudicate any deeper wounding, hospital, disease, or recovery narrative separately without duplicating D169 or turning generic evidence into a personal claim.
