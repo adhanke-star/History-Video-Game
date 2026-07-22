@@ -1,12 +1,12 @@
 # START HERE — "The Civil War" (master index)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D526 next-lane=LANE-019 state=CONTRACT owner=none -->
-> **Live status (D526, 2026-07-22):** the Historical transport-window prerequisite is source-blocked; LANE-019 is `CONTRACT` / `none` after a bounded 44-service plus four-interchange audit.
+<!-- LIVE-HEAD decision=D527 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D527, 2026-07-22):** LANE-019 is `DRIVE` / `ChatGPT/Codex` for one docs/research-only rail physical construction/existence-window adjudication covering the exact 27 rail services plus rail-facing evidence for four interchanges.
 >
-> **Boundary:** the shipped 10 `eligible`, 21 `conditional`, and 13 `operation-specific` date strings are qualitative evidence, not machine-readable physical windows or legal-now authority. No runtime/data/state/save/UI behavior moved; D525 remains the product head.
+> **Boundary:** D527 changes only committed law/routing and one planning-probe boundary tooth. D525 remains the product head; transport data, runtime, state, save, UI, topology, movement, and generated output remain fixed, and no rail row is presumed to meet the source floor.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D526 finding own the boundary. D514 remains binding; the next ARC 7 work requires a separately contracted, mode-bounded source adjudication, while LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D527 exact contract own the boundary. D528 must use the existing rail packet, enforce the two-family floor, retain every unresolved/disputed row and all four interchange limits, and stop before data/runtime behavior; LANE-020 remains independently blocked.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **D514 completion rule:** the project now runs a work-conserving completion loop. `HANDOFF.md` owns the algorithm and terminal condition; `V1-CHECKLIST.md` owns every live item; ordinary milestone/phase/browser boundaries do not stop a healthy run.

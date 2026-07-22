@@ -3684,11 +3684,15 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **CONTRACT (D526 HISTORICAL WINDOW PREREQUISITE FINDING; UNOWNED)**
+### LANE-019 · conquest-design-law — **DRIVE (D527 RAIL PHYSICAL-WINDOW RESEARCH; CHATGPT/CODEX)**
 
-- **Owning tool:** none. D526 records the bounded Historical-window prerequisite and leaves the
-  lane unowned; any D527 work requires its own committed owner/contract transfer. No simultaneous edits.
-- **State:** CONTRACT/unowned. D526 authorizes no runtime/data change: all 44 service dates and
+- **Owning tool:** ChatGPT/Codex, from clean pushed D526
+  `24c7a2b051fa1f4fafefe17ba5f3908b2081a221`, for the exact docs/research-only D527 contract
+  below. No simultaneous edits.
+- **State:** DRIVE. D527 authorizes only a rail physical construction/existence source
+  adjudication in the existing D497 packet. D525 remains the product head and D527 changes only
+  law/routing plus the transport-plan current-boundary tooth. D526's finding remains binding: all
+  44 service dates and
   four interchange dates require mode-bounded source adjudication before machine-readable
   Historical windows. D525 ships only a pure detached campaign-calendar query in the
   existing sole conquest-state owner. D523's strict factory/view remains exact and D525 adds no
@@ -3704,8 +3708,9 @@ next green commit and confer through this ledger instead of permitting simultane
   No qualifying New Orleans-origin or CT-36 road row exists. Boonville, Arrow Rock,
   and Glasgow are explicitly unassigned; RD-E18 ends at Arrow Rock, Glasgow is only
   the target beyond it, and no water interchange forms.
-  D514 authorizes a separately contracted playable ladder for the already Verified rail,
-  inland-water, and two bounded sea services while road service remains absent/unavailable.
+  D514 authorizes a separately contracted non-road ladder, but Historical movement remains blocked
+  until physical windows are source-proved for the Verified rail, inland-water, and two bounded sea
+  services; road service remains absent/unavailable.
   No road data, runtime, eligibility, capacity, interchange, or gameplay may be invented. Cost,
   repair, economy, AI, terrain, battle, and tactical behavior move only under future slice contracts.
   D503 retains exact
@@ -4170,15 +4175,95 @@ next green commit and confer through this ledger instead of permitting simultane
   5,870-byte D524 archive comparison pass. No product source/data/generated/save/base/suite owner
   moved. Independent Sol-high re-audit reports PASS with no remaining blocker, so no browser or
   full 140-row battery is owed before the first playable conquest loop.
-- **Resume pointer:** D526 leaves this lane CONTRACT/unowned with D525 still the product head.
-  D527 must separately contract a docs/research-only, mode-bounded source adjudication beginning
-  with the 27 rail services. It must use and, only for genuinely new claims, amend the existing
-  rail packet; separate construction/existence from canonical control, operation, and service
-  condition; preserve exact source dates and unresolved rows; include the rail-facing limits of
-  `CTI-01` through `CTI-04` without declaring those interchanges ready; define a source-floor and
-  row-by-row audit artifact/probe; and stop before data, runtime, current-turn, state, receipt,
-  topology, movement, or live/save behavior. If that research cannot establish a row, quarantine
-  it and continue under D514 rather than inferring an interval.
+- **D526 historical resume pointer:** D527 must separately contract a docs/research-only, mode-bounded source adjudication
+  beginning with the 27 rail services. That prerequisite is now
+  satisfied by the committed D527 contract below; this sentence remains the exact historical
+  D526 boundary rather than current authorization by itself.
+- **D527 artifact and preservation contract:** D528 uses only the existing D497
+  `docs/design/strategic-rail-conquest-research-packet.md`. It may append genuinely used `SR-*`
+  source-register rows and exactly one normative audit section/table covering the exact ordered
+  `CTS-R-01`..`CTS-R-27` / `RE-01`..`RE-27` rows plus a separate ordered rail-face subpart for
+  `CTI-01`..`CTI-04`. Existing `SR-01`..`SR-26` rows remain byte-identical and ordered; new unique
+  source IDs append contiguously from `SR-27` with no gap or insertion. The packet's current node,
+  candidate-edge, and case-study tables and every
+  shipped JSON `historicalEligibility.dateText` value remain byte-identical. The historic
+  `READY_FOR_CONQUEST_LAW` verdict remains topology/category-input readiness only. Create no new
+  packet, parallel cross-mode table, registry, schema, parser, data field, or runtime owner.
+- **D527 exact claim record:** each rail row preserves its exact service/edge IDs, corridor, and
+  endpoints, then separately records start or dated-presence evidence, end or continued-existence
+  evidence, continuity evidence, and nonphysical context. Every claim record includes an explicit
+  underlying-work `familyKey`, resolved `SR-*` ID, claim role, source type, precise locator, and
+  verbatim or bounded source precision. Different hosts of one creator/work/report count as one
+  family. Every cited or used claim source and exact locator—including snapshot, unresolved, and
+  disputed evidence—must be manually accessed and read back; an unavailable citation cannot count.
+  Direct physical evidence is limited to construction/engineering/property/inspection/
+  company records or an official account explicitly describing completion, rebuilding, survival,
+  removal, or destruction. Maps and photographs prove only dated snapshots. Military use, control,
+  capture, damage, service, condition, or operation cannot supply a physical bound or continuity.
+- **D527 dispositions and floor:** exact docs-only precedence is explicit material conflict →
+  `PHYSICAL_EXISTENCE_DISPUTED`; qualifying continuous proof → `PHYSICAL_WINDOW_ESTABLISHED`;
+  one or more dated physical observations without the complete floor →
+  `PHYSICAL_PRESENCE_SNAPSHOTS_ONLY`; otherwise `PHYSICAL_EXISTENCE_UNRESOLVED`. An established
+  interval requires two independent non-tertiary families for the exact corridor and each asserted
+  bound, at least one direct physical family supporting presence and continuity, and actual evidence
+  of continuous existence across the asserted interval. Two snapshots do not prove continuity.
+  Exact dates remain exact; no precision or campaign boundary is invented. `CTS-R-27` retains its
+  removal dispute and no settled end. No positive count is required. Every outcome remains docs-only,
+  not an enum, legal-now result, operation/control/condition/gauge/terminal/through-service finding,
+  adjacency, topology, route, or movement authority.
+- **D527 CTI and semantic negatives:** the only admitted rail faces are `CTI-01` / `RE-06`,
+  `CTI-02` / `RE-22`, `CTI-03` / `RE-11`, and `CTI-04` / `RE-11`+`RE-12`. Each may report only
+  `RAIL_FACE_EVIDENCE_ONLY`; every full result remains `INTERCHANGE_WINDOW_UNADJUDICATED`.
+  No `SW-*`, water/service date, rebuild, co-location, landing, or operational event proves the
+  handling connection. RE-05's Aug. 1861 connection proves neither earlier seamless transfer nor a
+  later end; RE-06's rebuild is not original construction or a CTI window; RE-07 degradation is not
+  absence; RE-04 cannot create Strasburg-Harpers Ferry rail; RE-17+18 and RE-25 cannot create through
+  service; RE-27 remains disputed; and D526's Cape Fear parser counterexample remains binding.
+- **D527/D528 allowlist:** this routing commit changes only `AUTONOMOUS-RUN.md`,
+  `COORDINATION.md`, `DECISIONS.md`, `HANDOFF.md`, `RUN-LOG.md`, `START-HERE.md`,
+  `V1-CHECKLIST.md`, `WAKE-UP.md`, Package A §8, `legacy/HANDOFF-ARCHIVE.md`, and only the
+  current-boundary tooth in `tools/probe-conquest-transport-plan.mjs`. D528 may additionally change
+  only the existing rail packet and add suite-excluded
+  `tools/probe-conquest-rail-window-research.mjs`; it also updates the transport-plan boundary tooth
+  when the lane releases. Every data file, `src/`, runtime probe, manifest/build/suite/save owner,
+  water/road packet, generated game, frozen base, and unlisted file is barred. Normal build output
+  must remain byte-identical. A material contradiction with an existing edge, endpoint, non-link, or
+  qualitative date is a HALT rather than authority to rewrite it.
+- **D527 probe, bind, and gates:** the dedicated filesystem guard proves one normative audit and
+  byte-identical node/edge/case tables; byte-identical ordered `SR-01`..`SR-26` rows plus contiguous
+  unique appended source IDs; exact ordered 27 service/edge/endpoint rows; exact four CTI rail faces;
+  required claim metadata; source/family/locator resolution and independence; verbatim precision and
+  claim-role separation; the direct-source/continuity floor; every named negative; no runtime/data
+  enum or prohibited authority; and D528 terminal routing. Bind removes one qualifying family from
+  the first established row or, if none exists, promotes the first ordered non-disputed row lacking
+  the floor without curing its deficit. One named `DISPOSITION / POSITIVE FLOOR / CONTINUITY` tooth
+  owns both deterministic precedence and the complete positive floor; only that tooth may red;
+  packet/probe bytes restore exactly before clean proof.
+- **D527 routing gates:** `node --check tools/probe-conquest-transport-plan.mjs`; doc coherence;
+  transport plan 12/12; conquest, Mayhem, and War Career plans; normal build and `--check`; exact
+  4,023-byte D525 HANDOFF archive equality at SHA-256
+  `02314fbd9a5b9432e546b023147e05b74d5bd69234f2ead624596c28753376d0`; exact 11-file routing
+  allowlist; protected no-diff audit; fresh JSON with zero failed/errors/pageerrors/realErrors; and
+  `git diff --check`.
+- **D528 research gates:** `node --check` both touched probes; the dedicated research proof; manual
+  readback of every cited/used claim source and locator, including snapshot, unresolved, and disputed
+  evidence; isolated Bind R exact-red/byte restore; the transport-plan terminal-boundary tooth; byte-
+  verbatim archiving of D526's exact 4,723-byte block at SHA-256
+  `c156b0bbfbbddd6448a36a9fcedff3621def8819f13e4d18886a7a0a3391c044`; then the same doc/static,
+  build, allowlist, protected, artifact, and diff gates. No browser/full 140-row battery is owed unless
+  a shared surface moves.
+- **D527 routing proof:** doc coherence 5/5; transport plan 12/12; conquest plan 8/8; Mayhem plan
+  13/13; War Career plan 24/24; normal build/check `GATE OK` at data 65, territories 36, transport
+  27/15/2/4/18, manifest 112 with 116 last, and suite 140. Syntax, exact 11-file allowlist,
+  protected no-diff, fresh artifact readback, archive 4,023-byte/SHA equality, and
+  `git diff --check` pass. Product/generated output is unchanged. Independent Sol-high final audit
+  reports PASS. No browser/full-suite work is owed for this routing-only commit.
+- **Resume pointer:** after D527 is committed, pushed, fetched, and proven clean, execute only this
+  research contract as D528. Record the honest 27+4 result, proof, source readback, and exact
+  unresolved/disputed quarantine; commit/push/fetch clean; return LANE-019 to CONTRACT/unowned with
+  D525 still the product head; then reload D514. Zero established windows is a valid terminal. D528
+  may not change data/runtime/current-turn/state/receipt/topology/movement/live-save behavior or make
+  a lane-level `SHIPPED` claim.
 - **Last-touched commits:** D503 standalone design-lock `a3403da`; D503 final-law
   commit `44ffac5`; Slice-1 DRIVE take `7a0ca42`; allowlist/gate HALT ledger
   `cb46f55`; D504 Slice-1 implementation `74237b9`; D505 docs-only contract ships in
@@ -4194,7 +4279,8 @@ next green commit and confer through this ledger instead of permitting simultane
   `ef85725b2e7ea55fba96b4c7996a0d70abb6a56f`; D522 routing/contract is `bfbe64b`; D523
   implementation and CONTRACT/unowned release are `b59532c`; D524's pure-calendar DRIVE contract
   is `7adcc28`; D525 implementation and CONTRACT/unowned release are `9b94e3f`; D526's bounded
-  Historical-window finding ships in the commit containing this entry.
+  Historical-window finding is `24c7a2b`; D527's rail-window research DRIVE contract ships in the
+  commit containing this entry.
 - **History:** D502 created the design-only contract. Aaron chose Package A. D503
   completed the final law. D504 shipped the read-only territory board. D505 audits
   every rail/water evidence row, contracts the read-only substrate, and D506 ships
@@ -4218,8 +4304,9 @@ next green commit and confer through this ledger instead of permitting simultane
   law-fixed detached 25-interval calendar query; D525 ships that pure query under exact 15-step
   proof and releases the lane to CONTRACT/unowned. D526 proves that the qualitative date strings
   cannot become machine-readable physical windows or legal-now authority, records the exact
-  44-service/four-interchange prerequisite, and keeps the lane unowned. Operational state and
-  integration remain closed.
+  44-service/four-interchange prerequisite, and keeps the lane unowned. D527 takes DRIVE only for
+  the exact 27-row rail construction/existence research contract plus rail-face CTI evidence;
+  operational state and integration remain closed.
 
 ### LANE-020 · desk-to-battle-pacing — **CONTRACT (D519 SLICE-5 DEPENDENCY; UNOWNED)**
 

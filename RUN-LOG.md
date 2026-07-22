@@ -1,17 +1,47 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D526 next-lane=LANE-019 state=CONTRACT owner=none -->
-> **Live status (D526, 2026-07-22):** the Historical transport-window prerequisite is source-blocked; LANE-019 is `CONTRACT` / `none` after a bounded 44-service plus four-interchange audit.
+<!-- LIVE-HEAD decision=D527 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D527, 2026-07-22):** LANE-019 is `DRIVE` / `ChatGPT/Codex` for one docs/research-only rail physical construction/existence-window adjudication covering the exact 27 rail services plus rail-facing evidence for four interchanges.
 >
-> **Boundary:** the shipped 10 `eligible`, 21 `conditional`, and 13 `operation-specific` date strings are qualitative evidence, not machine-readable physical windows or legal-now authority. No runtime/data/state/save/UI behavior moved; D525 remains the product head.
+> **Boundary:** D527 changes only committed law/routing and one planning-probe boundary tooth. D525 remains the product head; transport data, runtime, state, save, UI, topology, movement, and generated output remain fixed, and no rail row is presumed to meet the source floor.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D526 finding own the boundary. D514 remains binding; the next ARC 7 work requires a separately contracted, mode-bounded source adjudication, while LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D527 exact contract own the boundary. D528 must use the existing rail packet, enforce the two-family floor, retain every unresolved/disputed row and all four interchange limits, and stop before data/runtime behavior; LANE-020 remains independently blocked.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-22 — D527: RAIL PHYSICAL-WINDOW RESEARCH CONTRACT TAKEN
+
+From clean pushed D526, LANE-019 takes ChatGPT/Codex DRIVE for a docs/research-only audit of the
+exact 27 rail services plus rail-facing evidence for four interchanges. The current packet proves
+dated snapshots and isolated construction/rebuild facts, not continuous physical windows; two
+observations cannot silently fill an intervening removal/rebuild gap. D528 therefore uses the
+existing D497 rail packet only, with append-only genuinely used sources and one normative 27+4
+audit table. Existing node/edge/case tables and shipped qualitative dates remain byte-identical.
+
+Every cited or used claim source requires an underlying-work family key, source/role/type, precise
+locator, verbatim precision, and manual access/readback, including snapshot, unresolved, and
+disputed evidence. Continuous-window findings require the two-family
+floor for the exact corridor and each bound, direct physical continuity evidence, and no invented
+precision. Maps/photos remain snapshots; control/use/damage/service/operation remain nonphysical
+context. Four deterministic docs-only outcomes permit an honest zero-positive result. All four
+CTIs stay `INTERCHANGE_WINDOW_UNADJUDICATED`; the audit may record rail-face evidence only.
+
+D528 adds one dedicated suite-excluded filesystem proof and uses a zero-positive-safe bind. Data,
+runtime, generated output, manifest/build/suite/save owners, water/road packets, state, topology,
+receipts, and movement are barred. D525 remains the product head. After D528's proof, source
+readback, bind/restore, static gates, commit, and push, the lane returns CONTRACT/unowned and D514
+continues.
+
+D527 routing proof is green: doc coherence 5/5, transport plan 12/12, conquest plan 8/8, Mayhem
+plan 13/13, War Career plan 24/24, and normal build/check `GATE OK` at data 65, territories 36,
+transport 27/15/2/4/18, manifest 112/116-last, and suite 140. Syntax, exact 11-file allowlist,
+protected no-diff, fresh artifacts, `git diff --check`, and the exact 4,023-byte D525 archive/SHA
+comparison pass. No product/generated diff exists. Independent Sol-high final audit reports PASS;
+no browser/full-suite gate is owed for this routing-only contract.
 
 ## 2026-07-22 — D526: HISTORICAL TRANSPORT-WINDOW PREREQUISITE RECORDED
 

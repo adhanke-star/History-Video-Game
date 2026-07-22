@@ -1371,3 +1371,90 @@ built-line existence can be examined without inventing water seasonality. It mus
 rail packet, preserve control/condition separation, retain every unresolved row honestly, and stop
 before data/runtime behavior. Any probe work remains filesystem-first planning/research validation,
 not product behavior or suite enrollment. LANE-019 remains CONTRACT/unowned until that take.
+
+### 8.31 D527 rail physical construction/existence-window research contract
+
+D527 takes LANE-019 DRIVE from clean D526 solely for a docs/research adjudication. D528 must audit
+the exact `CTS-R-01` through `CTS-R-27` / `RE-01` through `RE-27` rail rows and, separately within
+the same artifact, only the rail-facing evidence for `CTI-01` through `CTI-04`. The sole claim home
+is the existing D497 `docs/design/strategic-rail-conquest-research-packet.md`: genuinely new sources
+may be appended to its `SR-*` register, and one normative audit section/table may be appended there.
+Existing `SR-01` through `SR-26` rows remain byte-identical and ordered; new unique source IDs append
+contiguously from `SR-27` with no gap or insertion. The current node, candidate-edge, and case-study
+tables plus every shipped JSON
+`historicalEligibility.dateText` value remain byte-identical. No new packet, cross-mode table,
+registry, schema, parser, data field, or runtime owner is authorized. The packet's historic
+`READY_FOR_CONQUEST_LAW` verdict remains topology/category-input readiness only; it cannot supersede
+D526 or mean physical-window/runtime readiness.
+
+Each rail row must identify its service/edge IDs and exact corridor/endpoints, then record separate
+claim records for start or dated presence, end or continued existence, continuity, and nonphysical
+context. Every claim record carries an explicit underlying-work `familyKey`, resolved `SR-*` ID,
+claim role, source type, precise locator, and the source's exact wording or bounded precision.
+Different hosts of the same creator/work/report are one family. Direct physical evidence is limited
+to construction, engineering, property/inspection, or company records, or an official account that
+explicitly describes completion, rebuilding, survival, removal, or destruction. Contemporary maps
+and photographs prove only their dated snapshot; military use, control, capture, damage, service,
+or operation alone proves no physical boundary or continuity. Every source counted toward a claim
+must be accessed and read back manually; an unavailable citation cannot count.
+
+The four closed docs-only rail dispositions use deterministic precedence: an explicit material
+conflict is `PHYSICAL_EXISTENCE_DISPUTED`; otherwise a source-proved continuous interval is
+`PHYSICAL_WINDOW_ESTABLISHED`; otherwise one or more dated physical observations are
+`PHYSICAL_PRESENCE_SNAPSHOTS_ONLY`; otherwise the row is `PHYSICAL_EXISTENCE_UNRESOLVED`.
+`PHYSICAL_WINDOW_ESTABLISHED` requires two independent non-tertiary families for the exact corridor
+and each asserted bound, at least one direct physical family supporting physical presence and
+continuity, and evidence that actually establishes continuous existence across the claimed interval.
+Two snapshots do not prove continuity. Exact dates remain verbatim; no missing day/month or campaign
+boundary may be invented. `CTS-R-27` must retain the removal conflict and no settled end. No positive
+count is required, and every disposition remains research metadata rather than a JSON/runtime enum,
+legal-now result, or evidence of operation, control, condition, gauge compatibility, terminal
+handling, through-car service, adjacency, or movement.
+
+The four CTI rows form a separate ordered subpart of the same table and retain exact full result
+`INTERCHANGE_WINDOW_UNADJUDICATED`. Their only admitted rail faces are `CTI-01` / `RE-06`,
+`CTI-02` / `RE-22`, `CTI-03` / `RE-11`, and `CTI-04` / `RE-11` plus `RE-12`. A row may report
+`RAIL_FACE_EVIDENCE_ONLY`; it may not use any `SW-*` source, water or service date, rebuild date,
+co-location, landing, or operational event to establish the handling connection. RE-05's August
+1861 direct connection does not prove an earlier seamless transfer or a later physical end; RE-06's
+rebuild is not original construction or a City Point interchange window; RE-07 degradation is not
+physical absence; RE-04 cannot create Strasburg-Harpers Ferry rail; RE-17 plus RE-18 and RE-25 cannot
+be chained into through service; and the D526 Cape Fear parser counterexample remains binding.
+
+D528 may add one suite-excluded filesystem research guard,
+`tools/probe-conquest-rail-window-research.mjs`, and update the existing transport-plan current-
+boundary tooth. The dedicated guard must prove a singular audit; byte-identical node,
+candidate-edge, and case-study tables; byte-identical ordered
+`SR-01`..`SR-26` rows plus contiguous unique appended source IDs; exact
+ordered 27-row service/edge/endpoint coverage; exact ordered four-row CTI mapping; required
+claim fields; source/family/locator resolution and
+independence; verbatim precision and role separation; the direct-source/continuity floor; every
+named negative; and absence of runtime/data enums or prohibited authority. Its bind is distribution-
+safe: remove one qualifying family from the first established row, or, if none exists, promote the
+first ordered non-disputed row that lacks the floor without curing its evidence deficit. One named
+`DISPOSITION / POSITIVE FLOOR / CONTINUITY` tooth owns both deterministic precedence and the complete
+positive floor; only that tooth may red. Packet/probe bytes restore exactly before a clean rerun.
+
+D527 routing changes only the eight routing documents, this law, the HANDOFF archive, and the
+existing transport-plan current-boundary tooth. D528 may additionally change only the existing rail
+packet and the new dedicated research probe. Data, every `src/` and runtime probe, manifest/build/
+suite/save owners, water/road packets, generated HTML, frozen base, and all unlisted files are barred;
+normal build output must remain byte-identical. D527 routing proof is existing transport-plan syntax
+and 12/12; doc coherence; conquest, Mayhem, and War Career plans; normal build and `--check`; exact
+4,023-byte D525 HANDOFF archive equality at SHA-256
+`02314fbd9a5b9432e546b023147e05b74d5bd69234f2ead624596c28753376d0`; exact routing allowlist;
+protected no-diff audit; fresh JSON with no failed/errors/pageerrors/realErrors; and
+`git diff --check`. D528 proof additionally requires syntax for both touched probes; the dedicated
+research guard; manual readback of every cited/used claim source and locator including snapshot,
+unresolved, and disputed evidence; isolated Bind R/byte restore; the transport-plan terminal tooth;
+byte-verbatim archiving of D526's exact 4,723-byte HANDOFF block at SHA-256
+`c156b0bbfbbddd6448a36a9fcedff3621def8819f13e4d18886a7a0a3391c044`; and the same static,
+allowlist, protected, artifact, build, and diff gates. No browser or full 140-row battery is owed
+unless a protected/shared surface moves. A material contradiction with an existing edge, endpoint,
+non-link, or qualitative date is a HALT, not authority to rewrite it.
+
+After D528 records the honest finding, commit/push/fetch clean and return LANE-019 to
+CONTRACT/unowned with D525 still the product head. Zero established windows is a valid terminal;
+unresolved/disputed rows remain quarantined and D514 continues the next independent item. D528 ships
+no lane-level `SHIPPED` claim and may not extend data/runtime/current-turn/state/receipt/topology/
+movement/live-save behavior.

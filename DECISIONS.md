@@ -4,6 +4,76 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D527 — CONTRACT_RAIL_PHYSICAL_WINDOW_RESEARCH: LANE-019 TAKES DOCS/RESEARCH DRIVE FOR EXACT 27-ROW CONSTRUCTION/EXISTENCE ADJUDICATION — [CHATGPT/CODEX 5.6 SOL ULTRA, ARCHITECTURE/RESEARCH CONTRACT] (2026-07-22)
+
+**VERDICT: `CONTRACT_RAIL_PHYSICAL_WINDOW_RESEARCH`.** From clean, pushed D526
+`24c7a2b051fa1f4fafefe17ba5f3908b2081a221`, the existing rail packet, exact 27 rail
+service mappings, four rail-facing interchange mappings, Package A physical/control law, and
+current product owners were re-audited. Existing sources show dated corridor snapshots and a few
+construction/rebuild facts, but none of the 27 rows currently proves a safe continuous physical
+window: two dated snapshots can conceal an undocumented removal/rebuild. LANE-019 therefore takes
+ChatGPT/Codex DRIVE only for a separately committed docs/research adjudication; D525 remains the
+product head and no positive result is presumed.
+
+**Sole artifact and evidence floor:** D528 may append genuinely used `SR-*` source-register rows
+and one normative audit section/table only to the existing D497 rail packet. Its node, edge, and
+case-study tables and every shipped `historicalEligibility.dateText` value remain byte-identical;
+existing `SR-01`..`SR-26` rows remain byte-identical and ordered, while new unique IDs append
+contiguously from `SR-27` with no gap or insertion.
+Each `CTS-R-01` through `CTS-R-27` / `RE-01` through `RE-27` audit row records exact scope plus
+separate start/presence, end/continued-existence, continuity, and nonphysical-context claims. Every
+claim carries an underlying-work `familyKey`, resolved source ID, claim role, source type, precise
+locator, and verbatim/bounded source precision. Shared underlying works count once. Every cited or
+used claim source and locator, including snapshot, unresolved, and disputed evidence, receives
+manual access/readback; inaccessible sources do not count. Maps/photos are dated snapshots only.
+Military use, control, capture, damage,
+condition, service, or operation cannot supply a physical bound or continuity.
+
+**Closed docs-only outcomes:** precedence is explicit material conflict →
+`PHYSICAL_EXISTENCE_DISPUTED`; qualifying continuous proof → `PHYSICAL_WINDOW_ESTABLISHED`;
+dated physical observation without the complete floor → `PHYSICAL_PRESENCE_SNAPSHOTS_ONLY`;
+otherwise `PHYSICAL_EXISTENCE_UNRESOLVED`. An established interval needs two independent
+non-tertiary families for the exact corridor and each asserted bound, at least one direct physical
+construction/engineering/property/company or explicit official physical account, and evidence of
+continuous existence across the asserted interval. Exact precision stays verbatim. `CTS-R-27`
+retains the removal dispute/no settled end. No outcome is a runtime/data enum, legal-now result,
+operation, control, condition, gauge/terminal/through-service finding, adjacency, or movement law.
+
+**Interchange and semantic binds:** one separate ordered subpart records only `CTI-01` / `RE-06`,
+`CTI-02` / `RE-22`, `CTI-03` / `RE-11`, and `CTI-04` / `RE-11`+`RE-12`; every full result remains
+`INTERCHANGE_WINDOW_UNADJUDICATED`, with at most `RAIL_FACE_EVIDENCE_ONLY`. No water source/date,
+co-location, rebuild, landing, or operation can establish handling. RE-05's Aug. 1861 connection,
+RE-06's rebuild, RE-07's degradation, RE-04's Strasburg terminus, RE-17+18, RE-25, RE-27, and the
+D526 Cape Fear parser counterexample are permanent negatives. A contradiction with an existing
+edge/endpoint/non-link/date claim HALTs instead of silently rewriting the shipped substrate.
+
+**Probe, bind, and terminal:** D528 adds one suite-excluded filesystem owner,
+`tools/probe-conquest-rail-window-research.mjs`, covering the exact 27+4 rows, byte-identical
+node/edge/case tables, byte-identical ordered `SR-01`..`SR-26` plus contiguous appended IDs,
+source/family/locator resolution, verbatim precision, continuity floor, negatives, and absence of
+runtime/data authority. Bind removes one family from the first established row or, with zero
+positives, promotes the first ordered non-disputed row lacking the floor without curing its deficit.
+One named `DISPOSITION / POSITIVE FLOOR / CONTINUITY` tooth owns deterministic precedence and the
+complete positive floor; only that tooth may red, then packet/probe bytes restore. D527 changes the
+eight routing docs, Package A law, HANDOFF archive, and existing transport-plan boundary tooth only.
+D528 may additionally change only the rail packet and new guard. Data/src/generated/manifest/build/
+suite/save/runtime/water/road surfaces are barred.
+
+**Separate gate boundaries:** D527 requires existing-probe syntax; doc coherence; transport 12/12,
+conquest, Mayhem, and War Career plans; normal build and `--check`; the exact 4,023-byte D525 archive
+at SHA-256 `02314fbd9a5b9432e546b023147e05b74d5bd69234f2ead624596c28753376d0`;
+the exact 11-file allowlist; protected no-diff and artifact readback; and `git diff --check`. D528
+adds both-probe syntax, the dedicated proof, readback of every cited/used claim source and locator,
+Bind R/restore, terminal-boundary proof, and byte-verbatim archiving of D526's exact 4,723-byte block
+at SHA-256 `c156b0bbfbbddd6448a36a9fcedff3621def8819f13e4d18886a7a0a3391c044`, then repeats the static
+gates. D528 records the honest result and releases LANE-019 to CONTRACT/unowned. Zero established
+windows is valid; it triggers quarantine and the next independent D514 item, not weaker evidence.
+
+D527 routing closes green on doc coherence 5/5, transport plan 12/12, conquest plan 8/8, Mayhem
+plan 13/13, War Career plan 24/24, normal build/check `GATE OK`, exact archive equality, exact
+11-file allowlist, protected no-diff, fresh artifacts, and `git diff --check`. Independent Sol-high
+final audit reports PASS. No product/generated surface moved; no browser or full-suite gate is owed.
+
 ## D526 — NEEDS_PHYSICAL_WINDOW_ADJUDICATION: QUALITATIVE TRANSPORT DATES CANNOT BECOME HISTORICAL LEGALITY — [CHATGPT/CODEX 5.6 SOL ULTRA, ARCHITECTURE/EVIDENCE AUDIT] (2026-07-22)
 
 **VERDICT: `NEEDS_PHYSICAL_WINDOW_ADJUDICATION`.** A row-by-row audit covers the complete
