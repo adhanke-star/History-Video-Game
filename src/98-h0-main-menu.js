@@ -412,6 +412,10 @@
       ".h0-menu.h0-somber .gn-btn:hover{transform:none;}",
       ".h0-menu.is-reduced-motion .gn-btn,.h0-menu.is-reduced-motion *{transition:none!important;animation:none!important;}",
       "@media (prefers-reduced-motion: reduce){.h0-menu .gn-btn,.h0-menu *{transition:none!important;animation:none!important;}}",
+      /* D517 adjacent-baseline repair: injected utility cards can outgrow the frozen
+         desktop sheet. Keep that one column internally scrollable, as Field Operations
+         already is; narrow layouts retain their existing document flow. */
+      "@media (min-width:901px){.h0-notices{max-height:520px;overflow-y:auto;overscroll-behavior:contain;align-self:start;}}",
       "@media (max-width:900px){#overlay .sheet:has(.h0-menu){width:min(760px,96vw);}.h0-top{grid-template-columns:1fr;}.h0-stage{min-height:0;}.h0-chips{grid-template-columns:repeat(3,minmax(0,1fr));}.h0-hero-img,.h0-hero-fallback{height:150px;}.h0-fieldops-list{max-height:300px;}}",
       "@media (max-width:520px){.sheet .pad{padding:10px;}.h0-top{padding:10px;gap:10px;}.h0-command,.h0-notices{padding:12px;}.h0-title{font-size:31px;}.h0-sub{font-size:12px;}.h0-chips{grid-template-columns:1fr;}.h0-hero-img,.h0-hero-fallback{height:128px;}.h0-menu .gn-btn{padding:9px;}.h0-card-icon{width:30px;height:30px;min-width:30px;font-size:15px;}.h0-chainrail{padding:8px 10px 10px;}.h0-seg{min-width:10px;}}",
       /* High-contrast mode force-hides the backdrop entirely — copy sits on pure black. */

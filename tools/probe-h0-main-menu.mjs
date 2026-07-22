@@ -492,6 +492,67 @@ async function runSavedCampaign(browser) {
     });
     saved.checks.chainVisibleFirstViewport = fold.ok;
     if (!fold.ok) saved.failures.push('chain tracker segments hidden below the desktop fold: ' + JSON.stringify(fold));
+    // D517 root-fix tooth: the dynamically injected Command Utilities column must own
+    // its desktop overflow so the chain stays above the frozen-sheet fold. Natural Tab
+    // order must still reach the final utility and reveal it inside that inner scroller.
+    const utilityOrder = await page.evaluate(() => {
+      const sh = document.querySelector('.sheet');
+      const box = document.querySelector('.h0-notices');
+      if (!sh || !box) return { ok: false, why: 'missing sheet or Command Utilities' };
+      sh.scrollTop = 0;
+      box.scrollTop = 0;
+      const buttons = Array.from(box.querySelectorAll('button')).filter(btn => !btn.disabled && btn.offsetParent !== null);
+      if (buttons.length < 2) return { ok: false, why: 'fewer than two visible utility buttons', count: buttons.length };
+      buttons[0].focus();
+      return {
+        ok: true,
+        ids: buttons.map(btn => btn.id),
+        overflowY: getComputedStyle(box).overflowY,
+        clientHeight: box.clientHeight,
+        scrollHeight: box.scrollHeight
+      };
+    });
+    if (utilityOrder.ok) {
+      for (let i = 1; i < utilityOrder.ids.length; i++) await page.keyboard.press('Tab');
+    }
+    const utility = await page.evaluate((order) => {
+      const sh = document.querySelector('.sheet');
+      const box = document.querySelector('.h0-notices');
+      const active = document.activeElement;
+      const lastId = order && order.ids ? order.ids[order.ids.length - 1] : '';
+      const target = lastId ? document.getElementById(lastId) : null;
+      if (!order || !order.ok || !sh || !box || !target) return { ok: false, order };
+      const br = box.getBoundingClientRect();
+      const tr = target.getBoundingClientRect();
+      const capped = /auto|scroll/.test(order.overflowY) && order.scrollHeight > order.clientHeight;
+      const keyboardReachable = active === target && tr.top >= br.top - 1 && tr.bottom <= br.bottom + 1;
+      return {
+        ok: capped && keyboardReachable && sh.scrollTop === 0,
+        capped,
+        keyboardReachable,
+        activeId: active && active.id || '',
+        targetId: lastId,
+        utilityScrollTop: box.scrollTop,
+        sheetScrollTop: sh.scrollTop,
+        clientHeight: order.clientHeight,
+        scrollHeight: order.scrollHeight,
+        targetTop: Math.round(tr.top),
+        targetBottom: Math.round(tr.bottom),
+        boxTop: Math.round(br.top),
+        boxBottom: Math.round(br.bottom)
+      };
+    }, utilityOrder);
+    saved.commandUtilities = utility;
+    saved.checks.commandUtilitiesDesktopCapped = !!utility.capped;
+    saved.checks.commandUtilitiesKeyboardReachable = !!utility.keyboardReachable && utility.sheetScrollTop === 0;
+    if (!saved.checks.commandUtilitiesDesktopCapped) saved.failures.push('Command Utilities did not own desktop overflow: ' + JSON.stringify(utility));
+    if (!saved.checks.commandUtilitiesKeyboardReachable) saved.failures.push('last Command Utility was not keyboard-reachable inside its scroller: ' + JSON.stringify(utility));
+    await page.evaluate(() => {
+      const sh = document.querySelector('.sheet');
+      const box = document.querySelector('.h0-notices');
+      if (sh) sh.scrollTop = 0;
+      if (box) box.scrollTop = 0;
+    });
     // Two-state screenshots (§5 tooth 5): the saved state at all three widths.
     for (const vp of VIEWPORTS) {
       try {

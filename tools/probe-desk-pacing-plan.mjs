@@ -59,6 +59,9 @@ const focusedExists = existsSync(join(ROOT, focusedRel));
 const runtimeMarker = [src90, src99, src109, src91].some(text => text.includes("ARC9_PACING_RUNTIME_V1"));
 const slice2Marker = count(src109, "function cosNextAction(") === 1 &&
   count(src109, "function _cosLiveDeskTab(") === 1;
+const slice3Marker = count(src99, "function h0DeskTabKnown(") === 1 &&
+  count(src99, "function h0DeskLandingTab(") === 1 &&
+  count(src99, "function h0DeskRememberTab(") === 1;
 const mode = (focusedExists || runtimeMarker) ? "runtime" : "planning";
 
 step("D514 and section 4g carry one executable ARC 9 law", () => {
@@ -136,18 +139,19 @@ step("resolver order and the battle-bound Slice-5 dependency are pinned", () => 
   return { hooks: order.length, campaignResolveCalls: 1, batchRuntimeAuthorized: false };
 });
 
-step("Slices 1-2 runtime owners and protected-boundary hashes are exact", () => {
+step("Slices 1-3 runtime owners and protected-boundary hashes are exact", () => {
   const expected = {
     "src/90-president-register.js": "3e9f44a1b9c78e7ff66cab1c4ed79cc839b55914d49fe075fe0ae3ea73e1ba19",
-    "src/99-h0-president-desk.js": "ca44e0fd6c74def8c43f8efdba060a2524bd0f4288966279072b27e04b356078",
+    "src/99-h0-president-desk.js": "dcb3b7341df72dab4dbed54cda75cce1da4ebe4e68b26cec5ce9fb2366b85295",
     "src/109-chief-of-staff.js": "352a326661a3ee1b21db863357a5da794a7a913a512f88b306ac17e274a32b38",
     "src/91-save-slots.js": "8ef7b23d95ed076bd527a2c43f045a2eacef4c7810dec755dde5827f53ceb208",
+    "src/98-h0-main-menu.js": "eb55217c4b05eb6dd0f0590754aa0ee9d3f8400f65a1e64ce8cb7d15a75ae96c",
     "src/00-manifest.json": "a94ae7f0bd5f09d9749195f88a5517fe4aeb45f41541a958713b1515273c8ace",
     "tools/save-shape.json": "548ab27f7d25aa006922e781ee0cd4d16b666ee070809174cef2719d4a92d33d",
     "build/base.html": "2531e68d2ed34250ba522a358009802076c7f55f54c78c8a560287dfa0bb96e7",
-    "civil_war_generals.html": "604521531913701c4ed26b0b5c9e497a237a9b5725f29bdcc26ead7fff0a507f"
+    "civil_war_generals.html": "a0d1af091004f6b17e52f92b51959207af19fa33b601c5cc1398dd6b45fce139"
   };
-  for (const [rel, value] of Object.entries(expected)) need(hash(rel) === value, rel + " Slice 2 hash moved");
+  for (const [rel, value] of Object.entries(expected)) need(hash(rel) === value, rel + " Slice 3 hash moved");
   return { files: Object.keys(expected).length };
 });
 
@@ -178,19 +182,23 @@ step("all known literal/hash pin transitions are declared before runtime", () =>
   return { sourceGamePins: 2, futureSuiteCountPins: 6 };
 });
 
-step("Slices 1-2 runtime mode has exactly fourteen focused teeth and remains suite-excluded", () => {
+step("Slices 1-3 runtime mode has exactly twenty-one focused teeth and remains suite-excluded", () => {
   const focused = read(focusedRel);
-  need(mode === "runtime", "Slice 2 runtime mode missing");
-  need(focusedExists, focusedRel + " missing after Slice 2");
+  need(mode === "runtime", "Slice 3 runtime mode missing");
+  need(focusedExists, focusedRel + " missing after Slice 3");
   need(runtimeMarker, "ARC 9 Slice 1 runtime marker missing");
   need(slice2Marker, "ARC 9 Slice 2 action/live-tab owners missing");
-  need(count(focused, "step(\"") === 3 && count(focused, "run(\"") === 10 &&
-    focused.includes("browserEvidence.push(keyboardRow)"),
-    "Slice 2 focused probe must carry exactly three static plus eleven browser steps");
+  need(slice3Marker, "ARC 9 Slice 3 preference owners missing");
+  need(count(focused, "step(\"") === 3 && count(focused, "run(\"") === 15 &&
+    count(focused, "browserEvidence.push(keyboardRow)") === 1 &&
+    count(focused, "browserEvidence.push(deskInputRow)") === 1 &&
+    count(focused, "browserEvidence.push(zoomRow)") === 1,
+    "Slice 3 focused probe must carry exactly three static plus eighteen browser steps");
   need(!vet.includes(focusedRel), "focused ARC 9 probe must remain unenrolled before Slice 5 release");
   need(read("V1-CHECKLIST.md").includes("[x] Profile turn-processing latency and add honest progress feedback."), "Slice 1 checklist not closed");
   need(read("V1-CHECKLIST.md").includes("[x] Extend Chief of Staff into the live next-action pointer."), "Slice 2 checklist not closed");
-  return { focusedExists: true, focusedSteps: 14, suiteEnrolled: false, runtimeMarker: true, slice2Marker: true };
+  need(read("V1-CHECKLIST.md").includes("[x] Collapse repeated click paths, add one-click re-engagement, and remember safe preferences."), "Slice 3 checklist not closed");
+  return { focusedExists: true, focusedSteps: 21, suiteEnrolled: false, runtimeMarker: true, slice2Marker: true, slice3Marker: true };
 });
 
 step("gates, binds, artifacts, and restoration law are complete", () => {

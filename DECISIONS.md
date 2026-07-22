@@ -4,6 +4,90 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D517 — ARC 9 SLICE 3 SHIPS ONE LIVE-REGISTRY-VALIDATED DESK PREFERENCE AND BOTH EXISTING RETURN PATHS BECOME ONE CLICK — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION/VERIFY] (2026-07-22)
+
+**VERDICT: `SHIPPED_SAFE_ONE_CLICK_DESK_RETURN`.** `src/99-h0-president-desk.js`
+remains the sole live Desk-tab registry and shell. `h0DeskTabKnown(k)` validates ids only
+against lexical `H0_DESK_TABS`; `h0DeskLandingTab()` admits a remembered id only after that
+validation, otherwise preserving `psDefaultDeskTab()`; and `h0DeskRememberTab(k)` writes
+only a changed valid `G.settings.arc9DeskTab` through existing `saveLocal`. No second
+registry, storage key, settings owner, or repair write exists.
+
+### Measured path reduction without new authority
+
+The native Desk-tab path remembers the selected safe id immediately before the existing
+`_wdRefresh()`. The existing main-menu and between-battle Desk controls still call only
+`openWarDept()`, but that existing opener now lands directly on the safe remembered tab.
+The measured path from either control therefore changes from Desk-plus-tab in two clicks
+to Desk-on-the-target in one. Pointer, Enter, and Space activation each produce one save,
+one refresh, the same target, retained focus, and matching `aria-pressed` state.
+
+The preference is presentation-only. Pre-onboarded A/B fixtures prove campaign bytes,
+save-campaign bytes, owner identity, and storage identity match the prior landing behavior.
+No entity id, pending action, focus node, campaign mutation, decision bypass, alternate tab
+registry, save field, second localStorage key, RNG draw, receipt, or `_SAVE_VER` movement was
+added. Old saves without the preference preserve the play-style `command` default with no
+repair; an invalid or removed value also falls neutral to `command` with no write.
+
+### Accessibility and adversarial proof
+
+The proactive WCAG 2.2 AA audit found no defect and made no edit. Native tab semantics,
+focus indication, `aria-pressed`, contrast, wrapped reflow, reduced motion, and keyboard/
+pointer parity remain intact. The inspected normal screenshot shows Treasury active and
+focused with a stable Desk hierarchy. At 200% CSS zoom in a 780-pixel viewport, the tabs
+wrap without shell, tab-row, or sheet overflow; the active control remains fully visible,
+focused, and pressed, with reduced motion enabled and no animation/transition dependence.
+
+The focused probe grows exactly 14→21 and is green 21/21 with `ok:true`, empty failed,
+pageerror, and real-error arrays, plus fresh normal and zoom PNGs. Its seven new teeth prove
+the measured 2→1 paths, the sole validated setting write and existing `gor_save` envelope,
+old-save default, invalid/removed neutral fallback without repair, pre-onboarded campaign/
+save authority identity, native pointer/Enter/Space parity, and 200% reflow/reduced-motion
+safety. The first zoom capture exposed only a harness font-readiness timeout; switching the
+screenshot transport to direct CDP capture preserved every assertion and removed the hang.
+
+The first post-amendment bind exposed one harness cleanup leak: the intentionally failing
+invalid-preference fixture left its sheet open and a later native click timed out. Moving
+only that fixture cleanup into `finally` removed the collateral. Bind S3 bypasses only the
+live-registry predicate and returns the required 20/21 expected
+red with only `invalid or removed preference falls neutral without repair`; it exits 1 with
+zero page/real errors. Source and generated HTML then restore byte-for-byte at SHA-256
+`dcb3b7341df72dab4dbed54cda75cce1da4ebe4e68b26cec5ce9fb2366b85295` and
+`a0d1af091004f6b17e52f92b51959207af19fa33b601c5cc1398dd6b45fce139` (MD5
+`43a501f1a7d6562a74d967eb700744ac` / `de2770b21ab306a8d9fb5cae72b9f9ea`),
+followed by a clean 21/21 rerun.
+
+Adjacent H0 Desk, between-battle, play-style, accessibility, and save-slot gates pass
+3/3, 3/3, 14/14, 27/27, and 17/17 with fresh artifacts and no exposed errors. The H0
+main-menu gate exposed one pre-existing first-viewport geometry failure: current Slice 3
+and a temporary sparse worktree at exact parent D516 `a0e4579` both failed only
+`chainVisibleFirstViewport` with identical chain-bottom 904 / sheet-bottom 825 values.
+Diagnosis showed dynamically injected Command Utilities cards made the desktop grid row
+taller than the frozen sheet. D517 amended the lane instead of weakening the original tooth:
+only the desktop utility column gains a 520-pixel internal scroller, while tablet/phone flow,
+DOM order, ids, injection contracts, actions, state/save behavior, and D74 hold. A new tooth
+proves natural Tab reaches the final utility inside that scroller while the outer sheet stays
+at scrollTop 0. Fresh H0 main-menu proof is green 5/5 with pageerrors 0; 636 pixels of utility
+content cap at 520, inner scrollTop reaches 116, and the inspected rail is above the fold.
+The follow-up WCAG audit found no violation or edit; focus contrast, native reachability,
+reflow, scroll containment, semantics, and reduced-motion behavior remain AA-safe.
+
+Mechanical pins move generated game `593d03fe`→`de2770b2` in the Mayhem and War
+Career plans and source tree `899a4408`→`6a385aa2` in War Career. Data 65, modules 111 with
+115 last, suite 140, three named slots, twenty Desk tabs, Chief cap three, manifest, frozen
+base, save shape, `_SAVE_VER=1`, Historical/Mayhem authority, and public readiness hold;
+the focused probe remains suite-excluded through Slice 4.
+
+**EXACT NEXT:** LANE-020 remains ChatGPT/Codex DRIVE. Slice 4 changes only
+`src/91-save-slots.js` plus the growing focused probe, generated build, declared pins, and
+milestone documents. Store at most three strict metadata pointers in existing
+`G.settings.arc9SessionBookmarks`; never store a campaign/settings snapshot or create a
+storage owner. Re-read and revalidate the named slot before one shared atomic load.
+Missing, deleted, changed, foreign, mismatched, corrupt, Ironman, or malformed authority
+must fail before `applySave` with no partial mutation. Grow focused proof 21→31, isolate
+Bind S4 to the changed-target tooth, restore bytes, document/commit/push/clean-parity, and
+then execute the contracted Slice-5 blocker boundary under D514.
+
 ## D516 — ARC 9 SLICE 2 SHIPS ONE PURE, LIVE-TAB-VALIDATED CHIEF-OF-STAFF NEXT ACTION; LOWER FACTS REMAIN NON-ACTIONABLE — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION/VERIFY] (2026-07-22)
 
 **VERDICT: `SHIPPED_ONE_PURE_LIVE_NEXT_ACTION`.** The existing deterministic

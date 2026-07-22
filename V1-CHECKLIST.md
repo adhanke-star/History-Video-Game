@@ -1,12 +1,12 @@
 # V1 CHECKLIST — current approved roadmap
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D516 next-lane=LANE-020 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D516, 2026-07-22):** ARC 9 Slice 2 ships one pure Chief-of-Staff next action from the unique top live priority. Lower facts stay plain, ambiguous or stale authority fails neutral, focused proof is 14/14, and LANE-020 remains DRIVE under ChatGPT/Codex.
+<!-- LIVE-HEAD decision=D517 next-lane=LANE-020 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D517, 2026-07-22):** ARC 9 Slice 3 ships one live-registry-validated Desk preference and reduces both existing Desk return paths from two clicks to one. Focused proof is 21/21, invalid or removed values fail neutral without repair, and LANE-020 remains DRIVE under ChatGPT/Codex.
 >
-> **Boundary:** Exact next is Slice 3 in `src/99-h0-president-desk.js`: validate one remembered Desk-tab preference against the live H0 registry and collapse the existing Desk-plus-tab return path to one click. Persist only `G.settings.arc9DeskTab` through the existing settings envelope; old, invalid, or stale values use the current default, and pre-onboarded campaign/save authority must remain identical.
+> **Boundary:** Exact next is Slice 4 in `src/91-save-slots.js`: add at most three strict session-bookmark metadata pointers over existing valid named slots. Create no snapshot or storage owner; every open must re-read and revalidate the target, and missing, changed, foreign, corrupt, Ironman, or malformed authority must fail closed without partial apply.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block owns D516's evidence and exact next; D514's work-conserving completion loop remains binding. `V1-CHECKLIST.md` is the ledger and `COORDINATION.md` owns the Slice 3 contract and lock.
+> **Authority:** `HANDOFF.md`'s first ⚡ block owns D517's evidence and exact next; D514's work-conserving completion loop remains binding. `V1-CHECKLIST.md` is the ledger and `COORDINATION.md` owns the Slice 4 contract and lock.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 ## How to read this checklist
@@ -56,7 +56,7 @@ Under D514, every unchecked item in this file—outstanding, formerly parked, or
 - [ ] **ARC 9 — desk-to-battle pacing.**
   - [x] Profile turn-processing latency and add honest progress feedback. *(D515: 60 fresh + 36 sequential samples; p95 25.2/15.4 ms, optimization `NOT_NEEDED`; honest ≥50 ms completion status.)*
   - [x] Extend Chief of Staff into the live next-action pointer. *(D516: unique-top pure derivation; mounted H0-tab validation; neutral tie/invalid/stale fallback; focused 14/14 and isolated Bind S2.)*
-  - [ ] Collapse repeated click paths, add one-click re-engagement, and remember safe preferences.
+  - [x] Collapse repeated click paths, add one-click re-engagement, and remember safe preferences. *(D517: both existing Desk return paths measure 2→1 clicks; only live-registry-validated `G.settings.arc9DeskTab` persists through the existing settings envelope; invalid/removed values fail neutral without repair; focused 21/21 and isolated Bind S3.)*
   - [ ] Add session bookmarks.
   - [ ] Add bounded batch turn processing without hiding decisions or historical consequences.
 

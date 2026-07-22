@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 import "./guard-probe-browser.mjs";
-// D516 / LANE-020 ARC 9 Slices 1-2: measured resolver pacing plus one pure,
-// live-tab-validated Chief-of-Staff next action.
-// Writes tools/shots/probe-desk-pacing.json + probe-desk-pacing.png.
+// D517 / LANE-020 ARC 9 Slices 1-3: measured resolver pacing, one pure live
+// Chief-of-Staff action, and one live-registry-validated remembered Desk tab.
+// Writes focused JSON plus normal and 200%-zoom PNG evidence.
 import { chromium } from "playwright-core";
 import { spawn } from "node:child_process";
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, statSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -15,7 +15,9 @@ const OUT = join(HERE, "shots");
 const ART = join(OUT, "probe-desk-pacing.json");
 const BIND_ART = join(OUT, "probe-desk-pacing-bind-s1.json");
 const BIND_S2_ART = join(OUT, "probe-desk-pacing-bind-s2.json");
+const BIND_S3_ART = join(OUT, "probe-desk-pacing-bind-s3.json");
 const PNG = join(OUT, "probe-desk-pacing.png");
+const ZOOM_PNG = join(OUT, "probe-desk-pacing-zoom-200.png");
 mkdirSync(OUT, { recursive: true });
 const cfg = JSON.parse(readFileSync(join(HERE, "shots.json"), "utf8"));
 const read = rel => readFileSync(join(ROOT, rel), "utf8");
@@ -623,6 +625,212 @@ try {
         clearChiefFixture();
       }
     });
+
+    run("remembered tab cuts both Desk return paths from two clicks to one", () => {
+      if (typeof closeSheet === "function") closeSheet();
+      _pdAfterDeskClose = null;
+      G.settings = { gfx: "classic", diff: 1, speed: 1 };
+      const C = campaign();
+      C.president.onboarded = true;
+      const defaultTab = psDefaultDeskTab();
+      const preferred = defaultTab === "decisions" ? "treasury" : "decisions";
+      delete G.settings.arc9DeskTab;
+      saveLocal();
+
+      openMainMenu();
+      const baselineDesk = document.getElementById("gnWarDept");
+      requireValue(baselineDesk, "saved-campaign Desk control missing");
+      let baselineClicks = 0;
+      baselineDesk.click(); baselineClicks += 1;
+      requireValue(_wdTab === defaultTab, "absent preference did not open the current default");
+      const preferredTab = document.getElementById("wdTab_" + preferred);
+      requireValue(preferredTab, "preferred native tab missing");
+      preferredTab.click(); baselineClicks += 1;
+      requireValue(_wdTab === preferred && G.settings.arc9DeskTab === preferred,
+        "second baseline click did not select and remember the preferred tab");
+      requireValue(baselineClicks === 2, "baseline Desk-plus-tab path was not two clicks");
+
+      _pdAfterDeskClose = null;
+      closeSheet();
+      openMainMenu();
+      const returningDesk = document.getElementById("gnWarDept");
+      requireValue(returningDesk, "returning main-menu Desk control missing");
+      let menuClicks = 0;
+      returningDesk.click(); menuClicks += 1;
+      let active = document.getElementById("wdTab_" + preferred);
+      requireValue(menuClicks === 1 && _wdTab === preferred && active && active.getAttribute("aria-pressed") === "true",
+        "main-menu return did not land on the remembered tab in one click");
+
+      _pdAfterDeskClose = null;
+      closeSheet();
+      _pdShowTurnInterstitial();
+      const interstitialDesk = document.getElementById("pdGoDesk");
+      requireValue(interstitialDesk, "turn-interstitial Desk control missing");
+      let interstitialClicks = 0;
+      interstitialDesk.click(); interstitialClicks += 1;
+      active = document.getElementById("wdTab_" + preferred);
+      requireValue(interstitialClicks === 1 && _wdTab === preferred && active && active.getAttribute("aria-pressed") === "true",
+        "turn-interstitial return did not land on the remembered tab in one click");
+      _pdAfterDeskClose = null;
+      closeSheet();
+      return { defaultTab, preferred, baselineClicks, menuClicks, interstitialClicks };
+    });
+
+    run("native selection writes only one validated setting through the existing save envelope", () => {
+      if (typeof closeSheet === "function") closeSheet();
+      _pdAfterDeskClose = null;
+      G.settings = { gfx: "classic", diff: 1, speed: 1 };
+      const C = campaign();
+      C.president.onboarded = true;
+      delete G.settings.arc9DeskTab;
+      saveLocal();
+      openWarDept();
+
+      const target = "treasury";
+      const button = document.getElementById("wdTab_" + target);
+      requireValue(button, "validated native target missing");
+      const settingsBefore = JSON.stringify(G.settings);
+      const campaignBefore = JSON.stringify(C);
+      const storageKeysBefore = JSON.stringify(Object.keys(localStorage).sort());
+      const originalSave = saveLocal;
+      let saveCalls = 0;
+      saveLocal = function () { saveCalls += 1; return originalSave.apply(this, arguments); };
+      try { button.click(); } finally { saveLocal = originalSave; }
+
+      const before = JSON.parse(settingsBefore);
+      const after = JSON.parse(JSON.stringify(G.settings));
+      const added = Object.keys(after).filter(key => !Object.prototype.hasOwnProperty.call(before, key));
+      const afterWithoutPreference = JSON.parse(JSON.stringify(after));
+      delete afterWithoutPreference.arc9DeskTab;
+      const stored = JSON.parse(localStorage.getItem("gor_save") || "null");
+      requireValue(saveCalls === 1, "native selection did not use exactly one existing saveLocal write");
+      requireValue(added.length === 1 && added[0] === "arc9DeskTab" && after.arc9DeskTab === target,
+        "selection wrote more than the one Desk preference");
+      requireValue(JSON.stringify(afterWithoutPreference) === settingsBefore,
+        "a pre-existing setting changed during Desk preference selection");
+      requireValue(stored && stored.ver === 1 && stored.settings.arc9DeskTab === target,
+        "existing settings envelope did not carry the validated target");
+      requireValue(JSON.stringify(stored.settings) === JSON.stringify(after),
+        "stored settings diverged from the live settings envelope");
+      requireValue(JSON.stringify(stored.campaign) === campaignBefore,
+        "the preference save captured campaign bytes beyond the pre-refresh baseline");
+      requireValue(JSON.stringify(Object.keys(localStorage).sort()) === storageKeysBefore,
+        "preference created a second storage key");
+      _pdAfterDeskClose = null;
+      closeSheet();
+      return { target, saveCalls, added, storageKeys: JSON.parse(storageKeysBefore) };
+    });
+
+    run("old save without a preference retains the play-style Desk default", () => {
+      if (typeof closeSheet === "function") closeSheet();
+      _pdAfterDeskClose = null;
+      G.settings = { gfx: "classic", diff: 1, speed: 1, playStyle: "commander" };
+      const C = campaign();
+      C.president.onboarded = true;
+      delete G.settings.arc9DeskTab;
+      const oldSave = JSON.parse(JSON.stringify(serializeSave()));
+      oldSave.when = 0;
+      delete oldSave.settings.arc9DeskTab;
+      const oldBytes = JSON.stringify(oldSave);
+      localStorage.setItem("gor_save", oldBytes);
+      G.campaign = null;
+      G.settings = { gfx: "classic", diff: 1, speed: 1 };
+      const originalSave = saveLocal;
+      let saveCalls = 0;
+      saveLocal = function () { saveCalls += 1; return originalSave.apply(this, arguments); };
+      try { openWarDept(); } finally { saveLocal = originalSave; }
+      const expected = psDefaultDeskTab();
+      requireValue(expected === "command" && _wdTab === expected,
+        "old-save landing did not retain psDefaultDeskTab");
+      requireValue(!Object.prototype.hasOwnProperty.call(G.settings, "arc9DeskTab"),
+        "absent old-save preference was manufactured");
+      requireValue(saveCalls === 0 && localStorage.getItem("gor_save") === oldBytes,
+        "opening an old save repaired or rewrote it");
+      _pdAfterDeskClose = null;
+      closeSheet();
+      return { expected, landed: _wdTab, saveCalls, repaired: false };
+    });
+
+    run("invalid or removed preference falls neutral without repair", () => {
+      if (typeof closeSheet === "function") closeSheet();
+      _pdAfterDeskClose = null;
+      const stale = "removed-office";
+      G.settings = { gfx: "classic", diff: 1, speed: 1, playStyle: "commander", arc9DeskTab: stale };
+      const C = campaign();
+      C.president.onboarded = true;
+      saveLocal();
+      const staleBytes = localStorage.getItem("gor_save");
+      const expected = psDefaultDeskTab();
+      const originalSave = saveLocal;
+      let saveCalls = 0;
+      saveLocal = function () { saveCalls += 1; return originalSave.apply(this, arguments); };
+      try { openWarDept(); } finally { saveLocal = originalSave; }
+      try {
+        requireValue(expected === "command" && _wdTab === expected,
+          "invalid preference did not fall back to the current default");
+        requireValue(G.settings.arc9DeskTab === stale, "invalid preference was repaired in memory");
+        requireValue(saveCalls === 0 && localStorage.getItem("gor_save") === staleBytes,
+          "invalid preference was repaired in storage");
+        return { stale, expected, landed: _wdTab, saveCalls, repaired: false };
+      } finally {
+        _pdAfterDeskClose = null;
+        closeSheet();
+      }
+    });
+
+    run("pre-onboarded A B paths preserve campaign and save authority against the existing landing", () => {
+      if (typeof closeSheet === "function") closeSheet();
+      _pdAfterDeskClose = null;
+      G.settings = { gfx: "classic", diff: 1, speed: 1, playStyle: "commander" };
+      const seedCampaign = campaign();
+      seedCampaign.president.onboarded = true;
+      const seed = JSON.stringify(seedCampaign);
+      const saveOwner = saveLocal;
+      const serializeOwner = serializeSave;
+
+      function exercise(preferred) {
+        if (typeof closeSheet === "function") closeSheet();
+        _pdAfterDeskClose = null;
+        G.settings = { gfx: "classic", diff: 1, speed: 1, playStyle: "commander" };
+        if (preferred) G.settings.arc9DeskTab = "command";
+        G.campaign = JSON.parse(seed);
+        requireValue(G.campaign.president.onboarded === true, "A/B fixture was not pre-onboarded");
+        const storageBefore = storageBytes();
+        const ownerBefore = saveLocal;
+        openWarDept();
+        const serialized = serializeSave();
+        const result = {
+          tab: _wdTab,
+          campaign: JSON.stringify(G.campaign),
+          saveCampaign: JSON.stringify(serialized.campaign),
+          storageStable: storageBytes() === storageBefore,
+          ownerStable: saveLocal === ownerBefore && saveLocal === saveOwner && serializeSave === serializeOwner,
+          onboarded: G.campaign.president.onboarded,
+          preferencePresent: Object.prototype.hasOwnProperty.call(G.settings, "arc9DeskTab")
+        };
+        _pdAfterDeskClose = null;
+        closeSheet();
+        return result;
+      }
+
+      const baselinePath = exercise(false);
+      const preferredPath = exercise(true);
+      requireValue(baselinePath.tab === "command" && preferredPath.tab === "command",
+        "A/B paths did not land on the same current default tab");
+      requireValue(baselinePath.campaign === preferredPath.campaign &&
+        baselinePath.saveCampaign === preferredPath.saveCampaign,
+        "remembered landing added campaign or save-campaign mutation");
+      requireValue(baselinePath.storageStable && preferredPath.storageStable,
+        "opening either landing path wrote storage");
+      requireValue(baselinePath.ownerStable && preferredPath.ownerStable,
+        "save authority identity moved from the baseline owners");
+      requireValue(baselinePath.onboarded === true && preferredPath.onboarded === true,
+        "pre-onboarded assignment changed authority");
+      requireValue(!baselinePath.preferencePresent && preferredPath.preferencePresent,
+        "A/B preference fixture did not isolate the one setting");
+      return { tab: "command", campaignBytes: baselinePath.campaign.length,
+        saveCampaignBytes: baselinePath.saveCampaign.length, ownerStable: true, storageStable: true };
+    });
     return rows;
   }, { groupNames: GROUPS });
 
@@ -708,6 +916,186 @@ try {
       ok: false, error: String(error && error.message || error) };
   }
   browserEvidence.push(keyboardRow);
+
+  let deskInputRow = null;
+  try {
+    await page.evaluate(() => {
+      if (typeof closeSheet === "function") closeSheet();
+      _pdAfterDeskClose = null;
+      G.settings = { gfx: "classic", diff: 1, speed: 1, arc9DeskTab: "economy" };
+      const C = {
+        side: "US", iron: false, idx: 0, funds: 420, recovery: false, completed: [], runId: "arc9-desk-input-run",
+        roster: [{ id: "R1", type: "inf", weapon: "springfield", xp: 1, name: "Core" }],
+        nextId: 2, stats: { battles: 0, won: 0, infl: 0, suff: 0 },
+        recoveryLossCount: 0, recoveryMode: false, flipAtk: false, captured: []
+      };
+      G.campaign = C;
+      _t1InitAll(C);
+      C.president.onboarded = true;
+      openWarDept();
+      const button = document.getElementById("wdTab_treasury");
+      if (!button || button.tagName !== "BUTTON" || button.type !== "button") {
+        throw new Error("native Desk target setup missing");
+      }
+      const state = {
+        button,
+        target: "treasury",
+        originalSave: saveLocal,
+        originalRefresh: _wdRefresh,
+        saveCalls: 0,
+        refreshCalls: 0
+      };
+      window.__arc9DeskInput = state;
+      saveLocal = function () { state.saveCalls += 1; return state.originalSave.apply(this, arguments); };
+      _wdRefresh = function () { state.refreshCalls += 1; return state.originalRefresh.apply(this, arguments); };
+      state.reset = function () {
+        G.settings.arc9DeskTab = "economy";
+        _wdTab = "economy";
+        state.saveCalls = 0;
+        state.refreshCalls = 0;
+        state.originalRefresh();
+        state.button.focus();
+      };
+      state.reset();
+    });
+
+    async function deskInputState() {
+      return page.evaluate(() => {
+        const state = window.__arc9DeskInput;
+        const stored = JSON.parse(localStorage.getItem("gor_save") || "null");
+        return {
+          saveCalls: state.saveCalls,
+          refreshCalls: state.refreshCalls,
+          target: _wdTab,
+          preference: G.settings.arc9DeskTab,
+          storedPreference: stored && stored.settings && stored.settings.arc9DeskTab,
+          focus: document.activeElement === state.button,
+          pressed: state.button.getAttribute("aria-pressed") === "true"
+        };
+      });
+    }
+    function requireDeskParity(value, label) {
+      need(value.saveCalls === 1 && value.refreshCalls === 1, label + " did not save and refresh exactly once");
+      need(value.target === "treasury" && value.preference === "treasury" && value.storedPreference === "treasury",
+        label + " did not select and persist the same validated target");
+      need(value.focus && value.pressed, label + " did not retain native focus and pressed state");
+    }
+
+    await page.click("#wdTab_treasury");
+    const pointer = await deskInputState();
+    requireDeskParity(pointer, "Pointer");
+    await page.evaluate(() => window.__arc9DeskInput.reset());
+    await page.keyboard.press("Enter");
+    const enter = await deskInputState();
+    requireDeskParity(enter, "Enter");
+    await page.evaluate(() => window.__arc9DeskInput.reset());
+    await page.keyboard.press("Space");
+    const space = await deskInputState();
+    requireDeskParity(space, "Space");
+    await page.evaluate(() => {
+      const state = window.__arc9DeskInput;
+      saveLocal = state.originalSave;
+      _wdRefresh = state.originalRefresh;
+      delete window.__arc9DeskInput;
+    });
+    deskInputRow = {
+      name: "native Desk pointer Enter and Space retain focus with selection persistence parity",
+      ok: true,
+      value: { pointer, enter, space }
+    };
+  } catch (error) {
+    try {
+      await page.evaluate(() => {
+        const state = window.__arc9DeskInput;
+        if (state) {
+          if (state.originalSave) saveLocal = state.originalSave;
+          if (state.originalRefresh) _wdRefresh = state.originalRefresh;
+        }
+        delete window.__arc9DeskInput;
+      });
+    } catch (cleanupError) {}
+    deskInputRow = {
+      name: "native Desk pointer Enter and Space retain focus with selection persistence parity",
+      ok: false,
+      error: String(error && error.message || error)
+    };
+  }
+  browserEvidence.push(deskInputRow);
+
+  let zoomRow = null;
+  try {
+    await page.setViewportSize({ width: 780, height: 900 });
+    const zoom = await page.evaluate(() => {
+      if (typeof closeSheet === "function") closeSheet();
+      _pdAfterDeskClose = null;
+      G.settings = { gfx: "classic", diff: 1, speed: 1, reduceMotion: true, arc9DeskTab: "treasury" };
+      const C = {
+        side: "US", iron: false, idx: 0, funds: 420, recovery: false, completed: [], runId: "arc9-desk-zoom-run",
+        roster: [{ id: "R1", type: "inf", weapon: "springfield", xp: 1, name: "Core" }],
+        nextId: 2, stats: { battles: 0, won: 0, infl: 0, suff: 0 },
+        recoveryLossCount: 0, recoveryMode: false, flipAtk: false, captured: []
+      };
+      G.campaign = C;
+      _t1InitAll(C);
+      C.president.onboarded = true;
+      openWarDept();
+      document.documentElement.style.zoom = "2";
+      const shell = document.querySelector(".h0-desk-shell");
+      const tabs = document.getElementById("wdTabs");
+      const sheet = document.getElementById("sheetPad");
+      const active = document.getElementById("wdTab_treasury");
+      if (!shell || !tabs || !sheet || !active) throw new Error("200% Desk fixture missing");
+      active.focus();
+      const shellStyle = getComputedStyle(shell);
+      const activeStyle = getComputedStyle(active);
+      const rect = active.getBoundingClientRect();
+      return {
+        shellOverflow: shell.scrollWidth - shell.clientWidth,
+        tabsOverflow: tabs.scrollWidth - tabs.clientWidth,
+        sheetOverflow: sheet.scrollWidth - sheet.clientWidth,
+        activeWidth: rect.width,
+        activeHeight: rect.height,
+        activePressed: active.getAttribute("aria-pressed"),
+        focus: document.activeElement === active,
+        reducedMedia: matchMedia("(prefers-reduced-motion: reduce)").matches,
+        reducedSetting: G.settings.reduceMotion === true,
+        shellAnimation: shellStyle.animationName,
+        activeAnimation: activeStyle.animationName,
+        activeTransition: activeStyle.transitionDuration
+      };
+    });
+    await sleep(150);
+    /* Playwright's screenshot wrapper can wait forever on this 9 MB single-file
+       build's font set after CSS zoom. Direct CDP capture preserves the same
+       rendered viewport without weakening any reflow or motion assertion. */
+    const cdp = await context.newCDPSession(page);
+    const captured = await cdp.send("Page.captureScreenshot", { format: "png", fromSurface: true });
+    writeFileSync(ZOOM_PNG, Buffer.from(captured.data, "base64"));
+    const screenshotBytes = statSync(ZOOM_PNG).size;
+    need(zoom.shellOverflow <= 2 && zoom.tabsOverflow <= 2 && zoom.sheetOverflow <= 2,
+      "200% Desk reflow overflowed: " + JSON.stringify(zoom));
+    need(zoom.activeWidth > 20 && zoom.activeHeight > 20 && zoom.activePressed === "true" && zoom.focus,
+      "remembered target was unreadable or lost state at 200% zoom");
+    need(zoom.reducedMedia && zoom.reducedSetting && zoom.shellAnimation === "none" &&
+      zoom.activeAnimation === "none" && zoom.activeTransition === "0s",
+      "200% remembered landing was not reduced-motion safe");
+    need(screenshotBytes >= 5000, "200% Desk screenshot is unexpectedly small");
+    zoomRow = {
+      name: "remembered landing reflows at 200 percent zoom with reduced-motion safety",
+      ok: true,
+      value: { ...zoom, screenshotBytes }
+    };
+  } catch (error) {
+    zoomRow = {
+      name: "remembered landing reflows at 200 percent zoom with reduced-motion safety",
+      ok: false,
+      error: String(error && error.message || error)
+    };
+  } finally {
+    try { await page.evaluate(() => { document.documentElement.style.zoom = ""; }); } catch (cleanupError) {}
+    try { await page.setViewportSize(cfg.viewport); } catch (cleanupError) {}
+  }
+  browserEvidence.push(zoomRow);
   for (const row of browserEvidence) steps.push(row);
   await page.screenshot({ path: PNG, fullPage: false, timeout: 90000 });
 } catch (error) {
@@ -719,14 +1107,19 @@ try {
 
 const failed = steps.filter(row => row.ok === false);
 const bindS2 = process.argv.includes("--bind-s2");
+const bindS3 = process.argv.includes("--bind-s3");
+const bindMode = bindS2 ? "bind-s2" : bindS3 ? "bind-s3" : "runtime";
 const bindS2Tooth = "Chief stale target fails neutral with no action";
-const expectedRed = bindS2 && steps.length === 14 && failed.length === 1 &&
-  failed[0].name === bindS2Tooth && pageerrors.length === 0 && realErrors.length === 0;
+const bindS3Tooth = "invalid or removed preference falls neutral without repair";
+const bindTooth = bindS2 ? bindS2Tooth : bindS3 ? bindS3Tooth : "";
+const expectedRed = (bindS2 || bindS3) && steps.length === 21 && failed.length === 1 &&
+  failed[0].name === bindTooth && pageerrors.length === 0 && realErrors.length === 0;
 const result = {
-  schema: bindS2 ? "cw_probe_desk_pacing_bind_s2_v1" : "cw_probe_desk_pacing_v1",
+  schema: bindS2 ? "cw_probe_desk_pacing_bind_s2_v1" :
+    bindS3 ? "cw_probe_desk_pacing_bind_s3_v1" : "cw_probe_desk_pacing_v1",
   generatedAt: new Date().toISOString(),
-  mode: bindS2 ? "bind-s2" : "runtime",
-  ok: !bindS2 && steps.length === 14 && failed.length === 0 && pageerrors.length === 0 && realErrors.length === 0,
+  mode: bindMode,
+  ok: !bindS2 && !bindS3 && steps.length === 21 && failed.length === 0 && pageerrors.length === 0 && realErrors.length === 0,
   expectedRed,
   baseline: BASELINE,
   steps,
@@ -735,24 +1128,28 @@ const result = {
   pageerrors,
   realErrors,
   benignWarnings,
-  artifacts: { json: bindS2 ? "tools/shots/probe-desk-pacing-bind-s2.json" : "tools/shots/probe-desk-pacing.json",
-    png: "tools/shots/probe-desk-pacing.png" },
+  artifacts: {
+    json: bindS2 ? "tools/shots/probe-desk-pacing-bind-s2.json" :
+      bindS3 ? "tools/shots/probe-desk-pacing-bind-s3.json" : "tools/shots/probe-desk-pacing.json",
+    png: "tools/shots/probe-desk-pacing.png",
+    zoomPng: "tools/shots/probe-desk-pacing-zoom-200.png"
+  },
   summary: { passed: steps.length - failed.length, total: steps.length }
 };
-writeFileSync(bindS2 ? BIND_S2_ART : ART, JSON.stringify(result, null, 2) + "\n");
-console.log("probe-desk-pacing" + (bindS2 ? " bind-s2" : "") + ": " + result.summary.passed + "/" + result.summary.total +
+writeFileSync(bindS2 ? BIND_S2_ART : bindS3 ? BIND_S3_ART : ART, JSON.stringify(result, null, 2) + "\n");
+console.log("probe-desk-pacing" + (bindS2 ? " bind-s2" : bindS3 ? " bind-s3" : "") + ": " + result.summary.passed + "/" + result.summary.total +
   " steps ok, " + failed.length + " fail pageerrors=" + pageerrors.length +
-  " realErrors=" + realErrors.length + (bindS2 ? " expectedRed=" + expectedRed : ""));
-if (bindS2) {
+  " realErrors=" + realErrors.length + ((bindS2 || bindS3) ? " expectedRed=" + expectedRed : ""));
+if (bindS2 || bindS3) {
   for (const row of failed) console.error("EXPECTED RED " + row.name + " - " + row.error);
   if (!expectedRed) {
-    console.error("FAIL Bind S2 must isolate only " + bindS2Tooth);
+    console.error("FAIL " + (bindS2 ? "Bind S2" : "Bind S3") + " must isolate only " + bindTooth);
     process.exit(2);
   }
   process.exit(1);
 }
 if (!result.ok) {
-  if (steps.length !== 14) console.error("FAIL expected exactly 14 steps, got " + steps.length);
+  if (steps.length !== 21) console.error("FAIL expected exactly 21 steps, got " + steps.length);
   for (const row of failed) console.error("FAIL " + row.name + " - " + row.error);
   for (const message of pageerrors) console.error("PAGEERROR " + message);
   for (const message of realErrors) console.error("REALERROR " + message);

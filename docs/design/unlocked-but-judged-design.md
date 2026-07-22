@@ -336,6 +336,33 @@ serialization, or saves. The live Desk renders one semantic measured-completion 
 only for completed work at or above 50 ms; short, disabled, invalid, or unsupported-clock
 paths render nothing. Exact next remains the pure Chief-of-Staff action in item 2.
 
+**D516 Slice 2 delivery:** the existing Chief brief remains the deterministic priority
+owner and derives at most one copied action only when the highest-severity fact is unique.
+Facts render inert until the mounted H0 Desk proves the corresponding native tab exists;
+missing, tied, invalid, absent, or post-wiring stale authority stays neutral. A valid action
+uses only the existing `_wdTab/_wdRefresh` route. No domain renderer, campaign/save state,
+setting, storage key, queue, decision, spend, time advance, hidden-state prediction, RNG,
+receipt, or focus authority was added. Focused proof is 14/14; isolated Bind S2 is 13/14
+with only the stale-target tooth red.
+
+**D517 Slice 3 delivery:** `src/99-h0-president-desk.js` now validates one optional
+`G.settings.arc9DeskTab` against its own live `H0_DESK_TABS` registry. Selection persists
+only that id through existing `saveLocal`; unchanged selection writes nothing. Desk open
+uses the validated preference before the existing play-style default, reducing both
+existing return paths from two clicks to one. Old or absent preferences retain
+`psDefaultDeskTab()`; invalid or removed values fall back without repair. Pre-onboarded A/B
+proof preserves campaign and save authority; no entity, action, focus node, second key, or
+alternate registry exists. Focused proof is 21/21; isolated Bind S3 is 20/21 with only the
+invalid-preference tooth red. Exact next is the strict session-bookmark pointer contract in
+item 4.
+
+The required adjacent H0 main-menu gate exposed a parent-identical first-fold failure at
+D516: injected Command Utilities made the desktop grid taller than the frozen sheet. D517
+retains that fold assertion and narrowly gives only the desktop utility column an internal
+520-pixel scroller; natural Tab reaches the final utility without scrolling the outer sheet.
+Tablet/phone flow, DOM order, ids, injectors, actions, state/save behavior, and D74 remain
+unchanged. Fresh main-menu proof is green 5/5 with the campaign rail above the fold.
+
 ## 5. THE CONQUEST LAYER — Risk-style player-authored alt-history (R9-R11)
 
 **Thesis:** break the rung system. The campaign becomes a map you play ON, not a

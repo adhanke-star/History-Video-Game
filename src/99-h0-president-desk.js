@@ -29,6 +29,37 @@
     ["map", "Map"]
   ];
 
+  /* ARC 9 Slice 3: one validated presentation preference, carried by the
+     existing settings save envelope. The private registry remains the sole
+     tab allowlist; stale save ids are read-only fallbacks, never repaired. */
+  function h0DeskTabKnown(k) {
+    if (typeof k !== "string") return false;
+    for (var i = 0; i < H0_DESK_TABS.length; i++) {
+      if (H0_DESK_TABS[i][0] === k) return true;
+    }
+    return false; /* ARC9_S3_ALLOWLIST_BIND */
+  }
+
+  function h0DeskLandingTab() {
+    var fallback = (typeof psDefaultDeskTab === "function") ? psDefaultDeskTab() : "economy";
+    if (!h0DeskTabKnown(fallback)) fallback = "economy";
+    var preferred = null;
+    try {
+      if (typeof G !== "undefined" && G && G.settings) preferred = G.settings.arc9DeskTab;
+    } catch (e) { preferred = null; }
+    return h0DeskTabKnown(preferred) ? preferred : fallback;
+  }
+
+  function h0DeskRememberTab(k) {
+    if (!h0DeskTabKnown(k)) return;
+    try {
+      if (typeof G === "undefined" || !G || !G.settings || typeof G.settings !== "object") return;
+      if (G.settings.arc9DeskTab === k) return;
+      G.settings.arc9DeskTab = k;
+      if (typeof saveLocal === "function") saveLocal();
+    } catch (e) {}
+  }
+
   function h0DeskEsc(v) {
     return (typeof htmlEsc === "function") ? htmlEsc(v)
       : String(v == null ? "" : v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
@@ -328,7 +359,12 @@
     for (var i = 0; i < H0_DESK_TABS.length; i++) {
       (function (k) {
         var b = document.getElementById("wdTab_" + k);
-        if (b) b.addEventListener("click", function () { _wdTab = k; _wdRefresh(); });
+        if (b) b.addEventListener("click", function () {
+          if (!h0DeskTabKnown(k)) return;
+          _wdTab = k;
+          h0DeskRememberTab(k);
+          _wdRefresh();
+        });
       })(H0_DESK_TABS[i][0]);
     }
   }
@@ -352,7 +388,7 @@
     if (typeof _t1InitAll === "function") _t1InitAll(C);
     if (typeof presInit === "function") presInit(C);
     C.president.onboarded = true;
-    _wdTab = (typeof psDefaultDeskTab === "function") ? psDefaultDeskTab() : "economy";
+    _wdTab = h0DeskLandingTab();
 
     var P = C.president || {};
     var head = P.head || {};
