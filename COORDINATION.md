@@ -3512,11 +3512,16 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **CONTRACT (D507 ROAD PASS SHIPPED; NEEDS_MORE_RESEARCH; UNOWNED)**
+### LANE-019 · conquest-design-law — **DRIVE (D507 NINE-GAP ROAD EVIDENCE PASS; CHATGPT/CODEX)**
 
-- **Owning tool:** none. Any future source pass requires a standalone committed
-  DRIVE transfer to a ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. No simultaneous edits.
-- **State:** CONTRACT after D507 ships the docs/research-only road source pass with
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra TOP LOOP owns DRIVE. No simultaneous
+  edits.
+- **State:** DRIVE for a second docs/research-only pass limited to D507's nine named
+  evidence gaps. D507 shipped at `d0dcf84f54606fadc71acb46e2232a0b84fa44e5`
+  with exact verdict `NEEDS_MORE_RESEARCH`; this pass adjudicates only those gaps,
+  updates the existing packet, declares exactly one operative verdict, releases the
+  lane, and stops. It authorizes no road substrate, runtime, or gameplay. Before
+  this transfer, the lane rested at CONTRACT after D507 shipped the road pass with
   exact verdict `NEEDS_MORE_RESEARCH`. The packet records 22 sources, 26 nodes, 11
   candidate rows (7 Verified, 4 Inferred, 0 Disputed), 11 non-links, eight
   interchange candidates, seven-theater coverage, and nine material gaps. It
@@ -3611,9 +3616,11 @@ next green commit and confer through this ledger instead of permitting simultane
   reds. All other teeth stay green; data and generated output restore byte-identically.
 - **Gate sequence and resume pointer:** D506's implementation commit containing
   this entry completes Slice 2A, and D507 completes the first bounded road source
-  pass. No road data/runtime or transport gameplay is authorized. A future TOP LOOP
-  may resume only under a new docs/research contract limited to D507's nine named
-  evidence gaps, with a standalone DRIVE transfer; it may not infer endpoints,
+  pass. The active resume pointer is to adjudicate only D507's nine named evidence
+  gaps, update `docs/design/strategic-road-transport-research-packet.md`, declare
+  exactly one `READY_FOR_READ_ONLY_SUBSTRATE` / `NEEDS_MORE_RESEARCH` /
+  `DO_NOT_MODEL` verdict, release this lane to CONTRACT/unowned, and stop. No road
+  data/runtime or transport gameplay is authorized. This pass may not infer endpoints,
   compose operation-specific passages into routine service, or treat a later READY
   verdict as playable authorization. Any later
   playable slice needs a separate full contract. For D506 verification, `node --check` all touched JS/probes; build
@@ -3715,14 +3722,16 @@ next green commit and confer through this ledger instead of permitting simultane
   `cb46f55`; D504 Slice-1 implementation `74237b9`; D505 docs-only contract ships in
   `53befb6`; Slice-2A DRIVE take `af90db1`; D506 implementation ships in the
   commit containing that entry; D507 DRIVE take `f54d1d4`; D507 packet/closeout
-  `c547bb4`; whitespace-gate cleanup `ba127f8`; final lane reconciliation is the
-  commit containing this edit.
+  `c547bb4`; whitespace-gate cleanup `ba127f8`; final lane reconciliation
+  `d0dcf84`; second nine-gap road-evidence DRIVE transfer is the commit containing
+  this edit.
 - **History:** D502 created the design-only contract. Aaron chose Package A. D503
   completed the final law. D504 shipped the read-only territory board. D505 audits
   every rail/water evidence row, contracts the read-only substrate, and D506 ships
   it. D507 ships the first bounded road source pass with `NEEDS_MORE_RESEARCH` and
-  releases the lane unowned. No read-only road substrate or transport gameplay is
-  authorized.
+  releases the lane unowned. The current second pass is limited to D507's nine
+  evidence gaps and changes no authorization boundary. No read-only road substrate
+  or transport gameplay is authorized.
 
 ---
 
