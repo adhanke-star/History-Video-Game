@@ -4,6 +4,69 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D518 — ARC 9 SLICE 4 SHIPS STRICT SESSION-BOOKMARK POINTERS OVER THE EXISTING NAMED-SLOT AUTHORITY — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION/VERIFY] (2026-07-22)
+
+**VERDICT: `SHIPPED_STRICT_SESSION_BOOKMARK_POINTERS`.** `src/91-save-slots.js`
+remains the only named-save owner. The existing settings envelope may hold at most three
+`G.settings.arc9SessionBookmarks` records, each with exactly six scalar fields: cleaned
+nonempty label, slot 0–2, string run id, side, exact ruleset id, and fingerprint. Slots are
+unique. A bookmark stores no campaign/settings/save snapshot, timestamp, focus target,
+pending action, storage key, schema field, autosave, undo state, or alternate authority.
+
+### Exact target authority and atomic open
+
+The fingerprint deep-clones the already-valid named save, deletes only own top-level
+`slotName` and `when`, recursively sorts object keys, preserves array order and JSON scalar
+encoding, and emits `v1:<UTF-16 length>:<8-hex hashStr("arc9-a|"+canonical)>:<8-hex
+hashStr("arc9-b|"+canonical)>`. Object order and those two display fields are neutral;
+every nested or authoritative change is binding. Current live and target run, side,
+ruleset, non-Ironman state, exact pointer shape/types, and valid bookmark settings inside
+the target must all revalidate. Malformed metadata never repairs itself or rewrites an
+unrelated setting or raw slot.
+
+One `_slLoadSlot` path now owns ordinary slot load and bookmark open. It reads and guards,
+uses the existing replace-live confirmation, re-reads and re-guards after that blocking
+prompt, clones and validates, and only then applies. Missing, deleted, replaced, changed,
+foreign, mismatched, corrupt, malformed, or Ironman targets stop before `applySave`,
+War Career initialization, undo clearing, and `saveLocal`; a deletion during confirmation
+is independently proved to produce zero partial mutation.
+
+### Accessible manager and adversarial correction
+
+The Save & Load manager adds native Bookmark/Update, Open, and Remove controls plus a
+semantic status region. Pointer, Enter, and Space activation share behavior and restore
+focus after rerender. The proactive WCAG audit corrected accessible-name order so it begins
+with the visible Bookmark/Update label and added `overflow-wrap:anywhere` for long metadata.
+Focus indication, contrast, non-color meaning, status semantics, 200%-zoom reflow, and
+reduced-motion independence pass.
+
+The independent adversarial audit found four candidate gaps before shipment: malformed
+bookmark settings inside a target could be applied; numeric pointer run ids were coerced;
+the exact fingerprint formula lacked an independent oracle; and the second `_slRead` after
+confirmation was untested. Final code type-checks run ids, validates target bookmark
+settings, and the probe carries both an independently implemented non-ASCII UTF-16/FNV-1a
+oracle and a post-confirmation deletion fixture. All four are now fail-closed teeth.
+
+### Evidence and next boundary
+
+Focused proof grows exactly 21→31 and is green 31/31 with `ok:true`, fresh normal/zoom
+PNGs, and zero failed/page/real errors. Bind S4 bypasses only fingerprint equality and
+isolates `foreign and changed bookmark authority fails closed before apply` at 30/31
+expected red, exit 1, zero page/real errors. Restored source/game SHA-256 is
+`8af9f69da1ecb5a7f68a18d945ae1b64059993805bfc870cc7aea439405ba193` /
+`858ce48499b966b27ee775df1964bab87e47d1791e828655f424eb7f27da47a7`;
+MD5 is `dec6e4665b5cd6a0c9deedb5ce5646ed` / `2249daa32d6d2f5981519d7b894de396`.
+Adjacent save-slot, H0 main-menu, accessibility, play-style, and War Career gates pass
+17/17, 5/5, 27/27, 14/14, and 47/47; planning gates pass 9/9, 13/13, and 24/24. Mechanical
+pins move game `de2770b2`→`2249daa3` and source tree `6a385aa2`→`6950a862`. Protected
+counts, owners, `_SAVE_VER=1`, suite exclusion, build, syntax, and diff checks hold.
+
+**EXACT NEXT:** D518 leaves LANE-020 DRIVE only for its already contracted standalone
+blocker-only release. Slice 5 has no authorized runtime file because production exposes no
+independent sequential strategic-turn entrypoint before the next real battle. The next
+commit moves the lane to `CONTRACT` / `none`, leaves Slice 5 unchecked and unenrolled,
+claims no `SHIPPED` or release battery, then advances ARC 7 under D514.
+
 ## D517 — ARC 9 SLICE 3 SHIPS ONE LIVE-REGISTRY-VALIDATED DESK PREFERENCE AND BOTH EXISTING RETURN PATHS BECOME ONE CLICK — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION/VERIFY] (2026-07-22)
 
 **VERDICT: `SHIPPED_SAFE_ONE_CLICK_DESK_RETURN`.** `src/99-h0-president-desk.js`

@@ -139,19 +139,19 @@ step("resolver order and the battle-bound Slice-5 dependency are pinned", () => 
   return { hooks: order.length, campaignResolveCalls: 1, batchRuntimeAuthorized: false };
 });
 
-step("Slices 1-3 runtime owners and protected-boundary hashes are exact", () => {
+step("Slices 1-4 runtime owners and protected-boundary hashes are exact", () => {
   const expected = {
     "src/90-president-register.js": "3e9f44a1b9c78e7ff66cab1c4ed79cc839b55914d49fe075fe0ae3ea73e1ba19",
     "src/99-h0-president-desk.js": "dcb3b7341df72dab4dbed54cda75cce1da4ebe4e68b26cec5ce9fb2366b85295",
     "src/109-chief-of-staff.js": "352a326661a3ee1b21db863357a5da794a7a913a512f88b306ac17e274a32b38",
-    "src/91-save-slots.js": "8ef7b23d95ed076bd527a2c43f045a2eacef4c7810dec755dde5827f53ceb208",
+    "src/91-save-slots.js": "8af9f69da1ecb5a7f68a18d945ae1b64059993805bfc870cc7aea439405ba193",
     "src/98-h0-main-menu.js": "eb55217c4b05eb6dd0f0590754aa0ee9d3f8400f65a1e64ce8cb7d15a75ae96c",
     "src/00-manifest.json": "a94ae7f0bd5f09d9749195f88a5517fe4aeb45f41541a958713b1515273c8ace",
     "tools/save-shape.json": "548ab27f7d25aa006922e781ee0cd4d16b666ee070809174cef2719d4a92d33d",
     "build/base.html": "2531e68d2ed34250ba522a358009802076c7f55f54c78c8a560287dfa0bb96e7",
-    "civil_war_generals.html": "a0d1af091004f6b17e52f92b51959207af19fa33b601c5cc1398dd6b45fce139"
+    "civil_war_generals.html": "858ce48499b966b27ee775df1964bab87e47d1791e828655f424eb7f27da47a7"
   };
-  for (const [rel, value] of Object.entries(expected)) need(hash(rel) === value, rel + " Slice 3 hash moved");
+  for (const [rel, value] of Object.entries(expected)) need(hash(rel) === value, rel + " Slice 4 hash moved");
   return { files: Object.keys(expected).length };
 });
 
@@ -182,23 +182,32 @@ step("all known literal/hash pin transitions are declared before runtime", () =>
   return { sourceGamePins: 2, futureSuiteCountPins: 6 };
 });
 
-step("Slices 1-3 runtime mode has exactly twenty-one focused teeth and remains suite-excluded", () => {
+step("Slices 1-4 runtime mode has exactly thirty-one focused teeth and remains suite-excluded", () => {
   const focused = read(focusedRel);
-  need(mode === "runtime", "Slice 3 runtime mode missing");
-  need(focusedExists, focusedRel + " missing after Slice 3");
+  need(mode === "runtime", "Slice 4 runtime mode missing");
+  need(focusedExists, focusedRel + " missing after Slice 4");
   need(runtimeMarker, "ARC 9 Slice 1 runtime marker missing");
   need(slice2Marker, "ARC 9 Slice 2 action/live-tab owners missing");
   need(slice3Marker, "ARC 9 Slice 3 preference owners missing");
-  need(count(focused, "step(\"") === 3 && count(focused, "run(\"") === 15 &&
+  need(count(src91, "function _slBookmarkFingerprint(") === 1 &&
+    count(src91, "function _slBookmarkPointer(") === 1 &&
+    count(src91, "function _slBookmarkList(") === 1 &&
+    count(src91, "function _slLoadSlot(") === 1 &&
+    count(src91, "function _slBookmarkOpen(") === 1 &&
+    src91.includes("ARC9_BIND_S4:FINGERPRINT_EQUALITY"),
+    "Slice 4 bookmark fingerprint/list/shared-loader boundary missing");
+  need(count(focused, "step(\"") === 3 && count(focused, "run(\"") === 24 &&
     count(focused, "browserEvidence.push(keyboardRow)") === 1 &&
     count(focused, "browserEvidence.push(deskInputRow)") === 1 &&
-    count(focused, "browserEvidence.push(zoomRow)") === 1,
-    "Slice 3 focused probe must carry exactly three static plus eighteen browser steps");
+    count(focused, "browserEvidence.push(zoomRow)") === 1 &&
+    count(focused, "browserEvidence.push(bookmarkInputRow)") === 1,
+    "Slice 4 focused probe must carry exactly three static plus twenty-eight browser steps");
   need(!vet.includes(focusedRel), "focused ARC 9 probe must remain unenrolled before Slice 5 release");
   need(read("V1-CHECKLIST.md").includes("[x] Profile turn-processing latency and add honest progress feedback."), "Slice 1 checklist not closed");
   need(read("V1-CHECKLIST.md").includes("[x] Extend Chief of Staff into the live next-action pointer."), "Slice 2 checklist not closed");
   need(read("V1-CHECKLIST.md").includes("[x] Collapse repeated click paths, add one-click re-engagement, and remember safe preferences."), "Slice 3 checklist not closed");
-  return { focusedExists: true, focusedSteps: 21, suiteEnrolled: false, runtimeMarker: true, slice2Marker: true, slice3Marker: true };
+  need(read("V1-CHECKLIST.md").includes("[x] Add session bookmarks."), "Slice 4 checklist not closed");
+  return { focusedExists: true, focusedSteps: 31, suiteEnrolled: false, runtimeMarker: true, slice2Marker: true, slice3Marker: true, slice4Marker: true };
 });
 
 step("gates, binds, artifacts, and restoration law are complete", () => {

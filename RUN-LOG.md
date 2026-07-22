@@ -1,17 +1,46 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D517 next-lane=LANE-020 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D517, 2026-07-22):** ARC 9 Slice 3 ships one live-registry-validated Desk preference and reduces both existing Desk return paths from two clicks to one. Focused proof is 21/21, invalid or removed values fail neutral without repair, and LANE-020 remains DRIVE under ChatGPT/Codex.
+<!-- LIVE-HEAD decision=D518 next-lane=LANE-020 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D518, 2026-07-22):** ARC 9 Slice 4 ships at most three strict session-bookmark metadata pointers over the existing named-slot authority. Focused proof is 31/31, every stale, foreign, corrupt, Ironman, and malformed path fails before apply, and LANE-020 remains DRIVE only for its contracted Slice-5 blocker release.
 >
-> **Boundary:** Exact next is Slice 4 in `src/91-save-slots.js`: add at most three strict session-bookmark metadata pointers over existing valid named slots. Create no snapshot or storage owner; every open must re-read and revalidate the target, and missing, changed, foreign, corrupt, Ironman, or malformed authority must fail closed without partial apply.
+> **Boundary:** Slice 5 has no authorized runtime owner at this head: production exposes no independent sequential strategic-turn entrypoint before the next real battle. Exact next is the standalone blocker-only relay commit that moves LANE-020 to `CONTRACT` / `none`, leaves Slice 5 unchecked and unenrolled, and then advances ARC 7 under D514.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block owns D517's evidence and exact next; D514's work-conserving completion loop remains binding. `V1-CHECKLIST.md` is the ledger and `COORDINATION.md` owns the Slice 4 contract and lock.
+> **Authority:** `HANDOFF.md`'s first ⚡ block owns D518's evidence and blocker boundary; D514's work-conserving completion loop remains binding. `V1-CHECKLIST.md` is the ledger and `COORDINATION.md` owns the release dependency.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-22 — D518: ARC 9 SLICE 4 STRICT SESSION BOOKMARKS SHIPPED
+
+The existing named-slot owner now stores at most three strict six-field bookmark pointers
+in `G.settings.arc9SessionBookmarks`: cleaned label, slot, string run id, side, ruleset,
+and deterministic target fingerprint. No snapshot or storage key was added. Canonical JSON
+sorts object keys, preserves arrays/scalars, excludes only own top-level `slotName`/`when`,
+and uses the exact UTF-16-length plus dual `arc9-a|`/`arc9-b|` FNV-1a form. Creation/open
+require the current run, side, ruleset, non-Ironman target, strict metadata, and a current
+fingerprint; malformed bookmark settings inside the target also fail closed.
+
+Ordinary and bookmark loads now share one atomic path. It reads and guards before the
+existing replace-live prompt, then re-reads and re-guards before clone/validate/apply. A
+slot deleted during confirmation, or any missing/changed/foreign/corrupt/malformed target,
+produces zero apply/save/undo/partial mutation. The Save & Load manager adds native
+Bookmark/Update/Open/Remove controls and status feedback. The WCAG audit corrected visible-
+label-first accessible names and long-label wrapping; focus, contrast, keyboard parity,
+200%-zoom reflow, and reduced motion pass.
+
+An independent adversarial audit caught malformed target metadata, coercive numeric run ids,
+an underlocked fingerprint formula, and an unproved post-confirmation reread. All four were
+fixed before final evidence. Focused proof is 31/31 with fresh clean artifacts; Bind S4 is
+the exact 30/31 expected red with only the changed-authority tooth. Restored source/game
+SHA-256 is `8af9f69d…ba193` / `858ce484…a47a7`, MD5 `dec6e466` / `2249daa3`.
+Adjacent save-slot, H0 menu, accessibility, play-style, and War Career gates are green
+17/17, 5/5, 27/27, 14/14, and 47/47; plans are green 9/9, 13/13, and 24/24. Mechanical pins
+move game `de2770b2`→`2249daa3` and source tree `6a385aa2`→`6950a862`; protected counts and
+suite exclusion hold. LANE-020 remains DRIVE only for the standalone Slice-5 blocker release,
+after which D514 advances ARC 7.
 
 ## 2026-07-22 — D517: ARC 9 SLICE 3 SAFE ONE-CLICK DESK RETURN SHIPPED
 

@@ -81,6 +81,156 @@ function _slRead(i) {
     return _slValidSave(sv) ? sv : null;
   } catch (e) { return null; }
 }
+
+/* ---- ARC 9 session-bookmark pointers (metadata only; named slots stay authoritative) ---- */
+function _slBookmarkRunId(v) {
+  if (typeof v !== "string") return "";
+  return /^[A-Za-z0-9][A-Za-z0-9._:@|/-]{0,95}$/.test(v) ? v : "";
+}
+function _slBookmarkSide(C) { return C && (C.side === "US" || C.side === "CS") ? C.side : ""; }
+function _slBookmarkRuleset(C) {
+  var raw = C && C.ruleset, keys;
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return "";
+  try { keys = Object.keys(raw).sort(); } catch (e) { return ""; }
+  if (keys.length !== 2 || keys[0] !== "id" || keys[1] !== "version" || raw.version !== 1) return "";
+  return raw.id === "historical" || raw.id === "mayhem" ? raw.id : "";
+}
+function _slCanonicalJSON(v) {
+  if (v === null || typeof v === "string" || typeof v === "boolean" || typeof v === "number") {
+    var scalar = JSON.stringify(v);
+    return typeof scalar === "string" ? scalar : null;
+  }
+  if (Array.isArray(v)) {
+    var items = [];
+    for (var i = 0; i < v.length; i++) {
+      var item = _slCanonicalJSON(v[i]);
+      if (item === null) return null;
+      items.push(item);
+    }
+    return "[" + items.join(",") + "]";
+  }
+  if (!v || typeof v !== "object") return null;
+  var keys;
+  try { keys = Object.keys(v).sort(); } catch (e) { return null; }
+  var pairs = [];
+  for (var j = 0; j < keys.length; j++) {
+    var value = _slCanonicalJSON(v[keys[j]]);
+    if (value === null) return null;
+    pairs.push(JSON.stringify(keys[j]) + ":" + value);
+  }
+  return "{" + pairs.join(",") + "}";
+}
+function _slHex32(v) {
+  var hex = (v >>> 0).toString(16);
+  return "00000000".slice(hex.length) + hex;
+}
+function _slBookmarkFingerprint(sv) {
+  if (!_slValidSave(sv) || typeof hashStr !== "function") return "";
+  var copy = _slClone(sv);
+  if (!_slValidSave(copy)) return "";
+  if (_slOwn(copy, "slotName")) delete copy.slotName;
+  if (_slOwn(copy, "when")) delete copy.when;
+  var canonical = _slCanonicalJSON(copy);
+  if (canonical === null) return "";
+  return "v1:" + canonical.length + ":" + _slHex32(hashStr("arc9-a|" + canonical)) + ":" +
+    _slHex32(hashStr("arc9-b|" + canonical));
+}
+function _slBookmarkTarget(i, sv) {
+  if (typeof i !== "number" || !isFinite(i) || Math.floor(i) !== i || i < 0 || i >= _SL_MAX) return null;
+  if (!_slValidSave(sv) || _slBookmarkListFromSettings(sv.settings) === null || !sv.campaign || sv.campaign.iron) return null;
+  var runId = _slBookmarkRunId(sv.campaign.runId);
+  var side = _slBookmarkSide(sv.campaign);
+  var ruleset = _slBookmarkRuleset(sv.campaign);
+  var fingerprint = _slBookmarkFingerprint(sv);
+  if (!runId || !side || !ruleset || !fingerprint) return null;
+  return { slot:i, runId:runId, side:side, ruleset:ruleset, fingerprint:fingerprint, save:sv };
+}
+function _slBookmarkLive() {
+  var C = (typeof G !== "undefined" && G) ? G.campaign : null;
+  if (!C || C.iron) return null;
+  var runId = _slBookmarkRunId(C.runId), side = _slBookmarkSide(C), ruleset = _slBookmarkRuleset(C);
+  return runId && side && ruleset ? { runId:runId, side:side, ruleset:ruleset } : null;
+}
+function _slBookmarkSameAuthority(a, b) {
+  return !!(a && b && a.runId === b.runId && a.side === b.side && a.ruleset === b.ruleset);
+}
+function _slBookmarkPointer(raw) {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
+  var keys;
+  try { keys = Object.keys(raw).sort(); } catch (e) { return null; }
+  if (keys.join("|") !== "fingerprint|label|ruleset|runId|side|slot") return null;
+  var label = _slCleanLabel(raw.label);
+  if (!label || label !== raw.label || typeof raw.runId !== "string" || _slBookmarkRunId(raw.runId) !== raw.runId ||
+      (raw.side !== "US" && raw.side !== "CS") ||
+      (raw.ruleset !== "historical" && raw.ruleset !== "mayhem") ||
+      typeof raw.slot !== "number" || !isFinite(raw.slot) || Math.floor(raw.slot) !== raw.slot ||
+      raw.slot < 0 || raw.slot >= _SL_MAX ||
+      typeof raw.fingerprint !== "string" || !/^v1:\d+:[0-9a-f]{8}:[0-9a-f]{8}$/.test(raw.fingerprint)) return null;
+  return { label:label, slot:raw.slot, runId:raw.runId, side:raw.side,
+    ruleset:raw.ruleset, fingerprint:raw.fingerprint };
+}
+function _slBookmarkListFromSettings(settings) {
+  if (!settings || typeof settings !== "object" || Array.isArray(settings)) return null;
+  if (!_slOwn(settings, "arc9SessionBookmarks")) return [];
+  var raw = settings.arc9SessionBookmarks;
+  if (!Array.isArray(raw) || raw.length > _SL_MAX) return null;
+  var clean = [], slots = {};
+  for (var i = 0; i < raw.length; i++) {
+    var pointer = _slBookmarkPointer(raw[i]);
+    if (!pointer || slots[pointer.slot]) return null;
+    slots[pointer.slot] = true;
+    clean.push(pointer);
+  }
+  return clean;
+}
+function _slBookmarkList() {
+  var settings = (typeof G !== "undefined" && G) ? G.settings : null;
+  return _slBookmarkListFromSettings(settings);
+}
+function _slBookmarkCreationTarget(i) {
+  if (_slBookmarkList() === null) return null;
+  var target = _slBookmarkTarget(i, _slRead(i));
+  return _slBookmarkSameAuthority(_slBookmarkLive(), target) ? target : null;
+}
+function _slBookmarkCreate(i, label) {
+  var list = _slBookmarkList();
+  var target = list === null ? null : _slBookmarkCreationTarget(i);
+  if (!target) return { ok:false, reason:"This slot is not a valid bookmark target for the current campaign." };
+  label = _slCleanLabel(label) || _slCleanLabel(target.save.slotName || "") || ("Slot " + (i + 1) + " bookmark");
+  var pointer = { label:label, slot:i, runId:target.runId, side:target.side,
+    ruleset:target.ruleset, fingerprint:target.fingerprint };
+  var next = [], replaced = false;
+  for (var j = 0; j < list.length; j++) {
+    if (list[j].slot === i) { next.push(pointer); replaced = true; }
+    else next.push(list[j]);
+  }
+  if (!replaced) {
+    if (next.length >= _SL_MAX) return { ok:false, reason:"The three session-bookmark positions are already in use." };
+    next.push(pointer);
+  }
+  if (JSON.stringify(next) === JSON.stringify(list)) return { ok:true, changed:false, pointer:pointer };
+  G.settings.arc9SessionBookmarks = next;
+  if (typeof saveLocal === "function") saveLocal();
+  return { ok:true, changed:true, pointer:pointer };
+}
+function _slBookmarkRemove(position) {
+  var list = _slBookmarkList();
+  if (!list || typeof position !== "number" || Math.floor(position) !== position || position < 0 || position >= list.length) return false;
+  list.splice(position, 1);
+  if (list.length) G.settings.arc9SessionBookmarks = list;
+  else delete G.settings.arc9SessionBookmarks;
+  if (typeof saveLocal === "function") saveLocal();
+  return true;
+}
+function _slBookmarkMatches(pointer, sv) {
+  pointer = _slBookmarkPointer(pointer);
+  var target = pointer ? _slBookmarkTarget(pointer.slot, sv) : null;
+  var live = _slBookmarkLive();
+  if (!pointer || !target || !_slBookmarkSameAuthority(live, target)) return false;
+  if (pointer.runId !== target.runId || pointer.side !== target.side || pointer.ruleset !== target.ruleset) return false;
+  if (pointer.fingerprint !== target.fingerprint) return false; // ARC9_BIND_S4:FINGERPRINT_EQUALITY
+  return true;
+}
 function _slIronmanNamedSaveBlocked(sv) {
   return !!(sv && sv.campaign && sv.campaign.iron);
 }
@@ -113,6 +263,35 @@ function _slConfirmReplaceLive(what) {
   try { hasLive = !!(typeof G !== "undefined" && G && G.campaign); } catch (e) {}
   if (!hasLive) return true;
   try { return window.confirm(what + " will replace your current campaign — unsaved progress is lost. Continue?"); } catch (e2) { return true; }
+}
+function _slLoadSlot(i, what, guard) {
+  var sv = _slRead(i);
+  if (!sv) return { ok:false, reason:"Slot is empty or incompatible." };
+  if (typeof guard === "function" && !guard(sv)) return { ok:false, reason:"Bookmark target changed or no longer belongs to this campaign." };
+  if (!_slConfirmReplaceLive(what)) return { ok:false, cancelled:true, reason:"Load cancelled." };
+  // Re-read after the blocking confirmation: another tab may have replaced the slot while it was open.
+  sv = _slRead(i);
+  if (!sv) return { ok:false, reason:"Slot is empty or incompatible." };
+  if (typeof guard === "function" && !guard(sv)) return { ok:false, reason:"Bookmark target changed or no longer belongs to this campaign." };
+  var copy = _slClone(sv);
+  if (!_slValidSave(copy)) return { ok:false, reason:"Slot is empty or incompatible." };
+  applySave(copy);
+  if (typeof G !== "undefined" && G && G.campaign && typeof warCareerInit === "function") warCareerInit(G.campaign);
+  _slClearUndo();
+  if (typeof saveLocal === "function") saveLocal();
+  return { ok:true, save:sv };
+}
+function _slBookmarkOpen(position) {
+  var list = _slBookmarkList();
+  if (!list || typeof position !== "number" || Math.floor(position) !== position || position < 0 || position >= list.length) {
+    return { ok:false, reason:"Session bookmark metadata is unavailable." };
+  }
+  var pointer = list[position];
+  var result = _slLoadSlot(pointer.slot, 'Opening bookmark "' + pointer.label + '"', function (sv) {
+    return _slBookmarkMatches(pointer, sv);
+  });
+  if (result.ok) result.pointer = pointer;
+  return result;
 }
 function _slSetSlotName(i, name) {
   var sv = _slRead(i);
@@ -297,6 +476,10 @@ function _slRestoreUndo() {
 function _slRowHTML(i) {
   var m = _slMeta(i);
   var stale = !m && _slRawPresent(i);   // S34 (D234): raw data present but unreadable (old version / damaged)
+  var bookmarkList = _slBookmarkList();
+  var bookmarkAllowed = bookmarkList !== null && !!_slBookmarkCreationTarget(i);
+  var bookmarked = false;
+  if (bookmarkList) for (var bi = 0; bi < bookmarkList.length; bi++) if (bookmarkList[bi].slot === i) bookmarked = true;
   var ironBlocked = false;
   try { ironBlocked = !!(typeof G !== "undefined" && G && G.campaign && G.campaign.iron); } catch (e0) {}
   var title = stale ? "Incompatible save" : "Empty";
@@ -324,9 +507,32 @@ function _slRowHTML(i) {
     +     '<button class="upg" id="slSave' + i + '" style="padding:6px 10px;font-size:12px" aria-label="Save current campaign to slot ' + (i + 1) + (ironBlocked ? ' — unavailable during Ironman' : '') + '"' + ((stale || ironBlocked) ? ' disabled aria-disabled="true"' : "") + '>Save</button>'
     +     '<button class="upg" id="slRename' + i + '" style="padding:6px 10px;font-size:12px" aria-label="Rename save slot ' + (i + 1) + '"' + (m ? "" : " disabled") + '>Rename</button>'
     +     '<button class="upg" id="slLoad' + i + '" style="padding:6px 10px;font-size:12px" aria-label="Load save slot ' + (i + 1) + '"' + (m ? "" : " disabled") + '>Load</button>'
+    +     '<button class="upg" type="button" id="slBookmark' + i + '" style="padding:6px 10px;font-size:12px" aria-describedby="slBookmarkHelp" aria-label="' + (bookmarked ? "Update Bookmark" : "Bookmark") + ' for save slot ' + (i + 1) + '"' + (bookmarkAllowed ? "" : " disabled aria-disabled=\"true\"") + '>' + (bookmarked ? "Update Bookmark" : "Bookmark") + '</button>'
     +     '<button class="upg" id="slDel' + i + '" style="padding:6px 10px;font-size:12px;opacity:.75" aria-label="Delete save slot ' + (i + 1) + '"' + ((m || stale) ? "" : " disabled") + '>Delete</button>'
     +   '</div>'
     + '</div>';
+}
+function _slBookmarksHTML(status) {
+  var list = _slBookmarkList();
+  var html = '<section id="slBookmarks" aria-labelledby="slBookmarkTitle" style="border:1px solid #8c724e;border-radius:6px;padding:10px 12px;margin:12px 0;background:rgba(0,0,0,.12)">'
+    + '<h2 id="slBookmarkTitle" style="font-size:15px;margin:0 0 4px;color:#f0d98a">Session Bookmarks</h2>'
+    + '<p id="slBookmarkHelp" style="font-size:11.5px;line-height:1.45;opacity:.78;margin:0 0 8px">Bookmarks are labels over this campaign\'s existing named slots. Opening one rechecks the live slot; it never stores another campaign copy.</p>';
+  if (list === null) {
+    html += '<p style="font-size:11.5px;margin:6px 0">Bookmark metadata is malformed. It has not been repaired, and named saves remain unchanged.</p>';
+  } else if (!list.length) {
+    html += '<p style="font-size:11.5px;margin:6px 0">No bookmarks yet. Use Bookmark beside a valid slot from this campaign.</p>';
+  } else {
+    for (var i = 0; i < list.length; i++) {
+      var p = list[i];
+      html += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:7px">'
+        + '<span style="min-width:0;flex:1;font-size:12px;overflow-wrap:anywhere"><b>' + _slEsc(p.label) + '</b> · Slot ' + (p.slot + 1) + ' · ' + _slEsc(p.side === "CS" ? "Confederate" : "Union") + ' · ' + _slEsc(p.ruleset === "mayhem" ? "Mayhem" : "Historical") + '</span>'
+        + '<button class="upg" type="button" id="slBookmarkOpen' + i + '" aria-label="Open session bookmark ' + _slEsc(p.label) + '" style="padding:5px 9px;font-size:12px">Open</button>'
+        + '<button class="upg" type="button" id="slBookmarkRemove' + i + '" aria-label="Remove session bookmark ' + _slEsc(p.label) + '" style="padding:5px 9px;font-size:12px;opacity:.78">Remove</button>'
+        + '</div>';
+    }
+  }
+  html += '<div id="slBookmarkStatus" role="status" aria-atomic="true" style="min-height:1.4em;font-size:11.5px;margin-top:8px;opacity:.82">' + _slEsc(status || "") + '</div></section>';
+  return html;
 }
 function _slUndoHTML() {
   var snap = _slReadUndo();
@@ -343,7 +549,7 @@ function _slUndoHTML() {
   var why = snap ? "Undo is disabled for this campaign's current terms." : "No undo snapshot is available yet.";
   return '<div style="font-size:11.5px;opacity:.72;margin:10px 0">' + why + '</div>';
 }
-function _slOpenManager() {
+function _slOpenManager(bookmarkStatus, focusId) {
   var rows = "";
   for (var i = 0; i < _SL_MAX; i++) rows += _slRowHTML(i);
   var html =
@@ -353,6 +559,7 @@ function _slOpenManager() {
     ((typeof G !== "undefined" && G && G.campaign && G.campaign.iron) ? '<div id="slIronmanLaw" role="status" style="border:1px solid #b8863b;border-radius:5px;padding:8px 10px;margin:8px 0;font-size:12px">Ironman uses its live campaign save only. New named saves are disabled; existing slots may still be loaded, renamed, exported, or deleted.</div>' : '') +
     '<hr class="rule">' +
     rows +
+    _slBookmarksHTML(bookmarkStatus) +
     _slUndoHTML() +
     '<hr class="rule" style="margin-top:14px">' +
     '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px">' +
@@ -366,6 +573,14 @@ function _slOpenManager() {
     '<button class="upg" id="slImportPaste" style="margin-top:8px;padding:6px 14px">Import Pasted JSON</button>';
   openSheet(html);
   _slWire();
+  if (focusId) {
+    var focusTarget = document.getElementById(focusId);
+    if (focusTarget && !focusTarget.disabled) focusTarget.focus();
+  }
+}
+function _slBookmarkSay(message) {
+  var status = document.getElementById("slBookmarkStatus");
+  if (status) status.textContent = String(message || "");
 }
 function _slWire() {
   for (var i = 0; i < _SL_MAX; i++) {
@@ -374,18 +589,15 @@ function _slWire() {
       var saveBtn = document.getElementById("slSave" + idx);
       var delBtn = document.getElementById("slDel" + idx);
       var renBtn = document.getElementById("slRename" + idx);
+      var bookmarkBtn = document.getElementById("slBookmark" + idx);
       var nameEl = document.getElementById("slName" + idx);
 
       if (loadBtn) loadBtn.addEventListener("click", function () {
-        var sv = _slRead(idx);
-        if (!sv) { if (typeof toast === "function") toast("Slot is empty."); return; }
-        if (!_slConfirmReplaceLive("Loading slot " + (idx + 1))) return;   // S32 (D234)
-        applySave(_slClone(sv));
-        if (G.campaign && typeof warCareerInit === "function") warCareerInit(G.campaign);
-        _slClearUndo();
-        if (typeof saveLocal === "function") saveLocal();
-        if (typeof toast === "function") toast("Loaded slot " + (idx + 1) + ".");
-        if (typeof openMainMenu === "function") openMainMenu();
+        var loaded = _slLoadSlot(idx, "Loading slot " + (idx + 1));
+        if (loaded.ok) {
+          if (typeof toast === "function") toast("Loaded slot " + (idx + 1) + ".");
+          if (typeof openMainMenu === "function") openMainMenu();
+        } else if (!loaded.cancelled && typeof toast === "function") toast(loaded.reason || "Slot is empty.");
       });
       if (saveBtn) saveBtn.addEventListener("click", function () {
         var liveSave = serializeSave();
@@ -412,6 +624,13 @@ function _slWire() {
         else if (typeof toast === "function") toast("Rename failed.");
         _slOpenManager();
       });
+      if (bookmarkBtn) bookmarkBtn.addEventListener("click", function () {
+        var made = _slBookmarkCreate(idx, nameEl ? nameEl.value : "");
+        if (!made.ok) { _slBookmarkSay(made.reason); return; }
+        var message = made.changed ? ("Bookmark saved for slot " + (idx + 1) + ".") : ("Bookmark for slot " + (idx + 1) + " is already current.");
+        if (typeof toast === "function") toast(message);
+        _slOpenManager(message, "slBookmark" + idx);
+      });
       if (delBtn) delBtn.addEventListener("click", function () {
         // S33 (D234): a single mis-tap beside Load must not permanently destroy a save — confirm first.
         var dm = _slMeta(idx);
@@ -424,6 +643,25 @@ function _slWire() {
         _slOpenManager();
       });
     })(i);
+  }
+  var bookmarks = _slBookmarkList();
+  if (bookmarks) for (var b = 0; b < bookmarks.length; b++) {
+    (function (position, pointer) {
+      var openBtn = document.getElementById("slBookmarkOpen" + position);
+      var removeBtn = document.getElementById("slBookmarkRemove" + position);
+      if (openBtn) openBtn.addEventListener("click", function () {
+        var opened = _slBookmarkOpen(position);
+        if (!opened.ok) { _slBookmarkSay(opened.reason); return; }
+        if (typeof toast === "function") toast('Opened bookmark "' + pointer.label + '".');
+        if (typeof openMainMenu === "function") openMainMenu();
+      });
+      if (removeBtn) removeBtn.addEventListener("click", function () {
+        if (!_slBookmarkRemove(position)) { _slBookmarkSay("Bookmark removal failed closed."); return; }
+        var message = 'Removed bookmark "' + pointer.label + '".';
+        if (typeof toast === "function") toast(message);
+        _slOpenManager(message, "slBookmark" + pointer.slot);
+      });
+    })(b, bookmarks[b]);
   }
   var expBtn = document.getElementById("slExport");
   if (expBtn) expBtn.addEventListener("click", _slExportEnhanced);

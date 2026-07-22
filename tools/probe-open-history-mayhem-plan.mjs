@@ -126,8 +126,8 @@ const PIN = {
 // D513 re-pin (Aaron-authorized one-file cross-plan exception): the pure source-106 care-context reader and normal rebuild move only generated-game MD5 d278c30f -> 4c775fd1; base, data, manifest, suite, scenario/schema counts, save version, Mayhem authority, and public readiness remain unchanged.
 // D515 re-pin: ARC 9 Slice 1 adds only ephemeral resolver timing and the honest long-work Desk status; game 4c775fd1 -> 09cc00e6. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
 // D516 re-pin: ARC 9 Slice 2 adds only the pure, live-tab-validated Chief next action, including stale-after-wire demotion; game 09cc00e6 -> 593d03fe. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
-// D517 re-pin: ARC 9 Slice 3 adds the live-registry-validated Desk preference through the existing settings envelope and root-fixes the parent-red desktop Command Utilities containment; game 593d03fe -> de2770b2. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
-game: "de2770b21ab306a8d9fb5cae72b9f9ea",
+// D518 re-pin: ARC 9 Slice 4 adds only strict session-bookmark metadata pointers over existing named slots; game de2770b2 -> 2249daa3. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
+game: "2249daa32d6d2f5981519d7b894de396",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "309a7bc1eb43407f405e12323af7638d",
   suite: "69681d6f2216fe1dcfd594ffc4a757b7",

@@ -4096,6 +4096,26 @@ next green commit and confer through this ledger instead of permitting simultane
   target/metadata; zero partial apply; Ironman/undo/import independence; malformed/unrelated preservation;
   keyboard/pointer/names/status/focus; and save-shape/version identity. Bind S4 skips fingerprint equality
   so only the changed-target tooth reds; byte-restore source and generated HTML.
+- **Slice 4 delivery record (D518):** shipped only in `src/91-save-slots.js` plus the declared
+  growing probe, generated build, mechanical pins, and milestone documents. At most three pointers
+  live only in `G.settings.arc9SessionBookmarks`, with exact scalar keys `label`, `slot`, `runId`,
+  `side`, `ruleset`, and `fingerprint`; slots are unique, run ids are type-strict strings, and no
+  campaign/settings/save snapshot or storage key exists. Canonical fingerprint input deletes only
+  own top-level `slotName`/`when`, recursively sorts object keys, preserves arrays/scalars, and uses
+  the exact UTF-16-length plus dual prefixed FNV-1a formula. Creation/open revalidate current and
+  target run/side/ruleset/non-Ironman authority, strict pointer and target bookmark settings, and
+  current fingerprint. One shared ordinary/bookmark loader reads/guards before confirmation and
+  re-reads/re-guards before clone/validate/apply; a post-confirmation deletion and all missing,
+  foreign, changed, corrupt, malformed, or Ironman cases stop with zero partial mutation. The WCAG
+  audit corrected visible-label-first names and long-label wrapping. The independent adversarial
+  audit found and drove fixes for malformed target settings, coerced numeric run ids, the missing
+  independent fingerprint oracle, and the unproved second read. Focused proof is 31/31 with clean
+  normal/zoom artifacts; Bind S4 is the exact isolated 30/31 expected red. Adjacent save-slot/H0
+  menu/accessibility/play-style/War Career gates pass 17/17, 5/5, 27/27, 14/14, and 47/47. Plans
+  pass 9/9, 13/13, and 24/24. Source/game SHA-256 restores at `8af9f69d…ba193` /
+  `858ce484…a47a7`; game and source-tree MD5 pins move `de2770b2`→`2249daa3` and
+  `6a385aa2`→`6950a862`. Protected counts, owners, save v1, suite exclusion, build, syntax, and
+  diff checks hold. Ownership remains DRIVE only for the standalone blocker release below.
 - **Slice 5 dependency contract — no fabricated standalone turn:** no runtime file is authorized at the
   present head. Production has no independent strategic-turn entrypoint: `campaignAdvance` reaches
   `_t1Resolve` only after a real battle result, and the next campaign boundary is another battle. Calling
@@ -4126,21 +4146,20 @@ next green commit and confer through this ledger instead of permitting simultane
   the named bind per slice, hash/`cmp` every temporary source/generated mutation, rerun the clean focused
   gate, inspect all fresh JSON/stdout/PNGs for `ok:true`, empty failed/page/real errors, then doc coherence,
   `git diff --check`, commit/push/fetch/clean parity. Browser gates remain serialized.
-- **Resume pointer:** D517 Slice 3 is complete: both existing Desk return paths measure 2→1 clicks; only
-  a live-registry-validated `G.settings.arc9DeskTab` persists through the existing settings envelope;
-  old/absent/invalid/removed values retain the current default without repair; pre-onboarded campaign/save
-  authority is identical; pointer/Enter/Space/focus/reflow/reduced-motion proof passes the exact 21/21
-  focused contract and isolated Bind S3. Exact next is Slice 4 in `src/91-save-slots.js`: add at most three
-  strict `G.settings.arc9SessionBookmarks` metadata pointers over current valid named slots. Store no
-  campaign/settings snapshot or new storage key; re-read and revalidate every target before one shared
-  atomic load; fail closed before `applySave` for every missing/deleted/changed/foreign/mismatched/corrupt/
-  Ironman/malformed case. Grow focused proof exactly 21→31, run Bind S4, docs/commit/push/clean parity,
-  then execute the contracted standalone Slice-5 blocker release.
-- **Last-touched commit:** executable plan boundary `dc16547`; D517 Slice 3 delivery is the current milestone.
+- **Resume pointer:** D518 Slice 4 is complete: strict six-field pointers, exact independent-oracle-locked
+  fingerprinting, target-settings validation, post-confirmation re-read, accessible manager controls,
+  31/31 focused proof, isolated Bind S4, and every declared adjacent gate are green. Exact next is the
+  standalone blocker-only relay commit. Change no runtime, probe, generated output, pin, or suite row;
+  run no browser/full release battery; claim neither Slice 5 nor LANE-020 `SHIPPED`. Move the lane's first
+  live fields to `CONTRACT` / `none`, preserve the no-independent-strategic-turn dependency verbatim,
+  leave Slice 5 unchecked and unenrolled, commit/push/fetch/clean parity, then reload the ledger and take
+  ARC 7 under its own lane pursuant to D514.
+- **Last-touched commit:** executable plan boundary `dc16547`; D518 Slice 4 delivery is the current milestone.
 - **History:** D514 CONTRACT/unowned at `6ca0fba` → full-access ChatGPT/Codex DRIVE after the fresh
   D513 War Career verification-debt rerun (47/47 + static 30/30, zero failed/page/real errors) → D515
   Slice 1 measured-status delivery → D516 Slice 2 pure live-action delivery → D517 Slice 3 safe one-click
-  return delivery; ownership remains ChatGPT/Codex DRIVE for Slice 4.
+  return delivery → D518 Slice 4 strict session-bookmark delivery; ownership remains ChatGPT/Codex DRIVE
+  only for the standalone Slice-5 blocker release.
 
 ---
 

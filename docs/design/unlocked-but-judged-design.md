@@ -363,6 +363,22 @@ retains that fold assertion and narrowly gives only the desktop utility column a
 Tablet/phone flow, DOM order, ids, injectors, actions, state/save behavior, and D74 remain
 unchanged. Fresh main-menu proof is green 5/5 with the campaign rail above the fold.
 
+**D518 Slice 4 delivery:** `src/91-save-slots.js` now stores at most three exact six-field
+bookmark pointers only in `G.settings.arc9SessionBookmarks`. The named slot remains the
+sole save authority. Canonical fingerprinting deletes only own top-level `slotName`/`when`,
+sorts object keys recursively, preserves array/scalar encoding, and uses the exact UTF-16
+length plus dual prefixed FNV-1a form. Current run, side, exact ruleset, non-Ironman state,
+strict pointer types, valid target bookmark settings, and target fingerprint revalidate on
+every open. Ordinary and bookmark load share one path that reads/guards before confirmation,
+then reads/guards again before clone/validate/apply; deletion during the prompt and every
+missing, foreign, changed, corrupt, malformed, or Ironman target stop before mutation.
+The accessible manager supplies native Bookmark/Update/Open/Remove controls and status/focus
+feedback. Focused proof is 31/31; isolated Bind S4 is 30/31 with only the changed-authority
+tooth red. Exact next is the already contracted standalone blocker release: Slice 5 remains
+unchecked because no independent strategic-turn entrypoint exists before the next real battle;
+LANE-020 moves to `CONTRACT`/unowned without suite enrollment, SHIPPED claim, or release
+battery, and D514 advances ARC 7 under its own lane.
+
 ## 5. THE CONQUEST LAYER — Risk-style player-authored alt-history (R9-R11)
 
 **Thesis:** break the rung system. The campaign becomes a map you play ON, not a
