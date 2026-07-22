@@ -3920,8 +3920,12 @@ next green commit and confer through this ledger instead of permitting simultane
   discharging D513's clean-pushed focused rerun. No simultaneous edits.
 - **State:** DRIVE. D514 authorizes all five ARC 9 slices and continuous execution across
   their green commit boundaries. Each slice is separately implemented, focused-gated, documented,
-  committed, pushed, and proven clean before the next begins; the lane releases only after all five
-  and the selected release checkpoint are green.
+  committed, pushed, and proven clean before the next begins. The present DRIVE lock covers Slices 1-4.
+  If Slice 5's resolver dependency still exists after Slice 4, a standalone blocker commit changes this
+  lane's first live fields to `CONTRACT` / `none`, records the exact dependency and resume owner, and does
+  not claim `SHIPPED`, enroll the suite, or run the post-Slice-5 release battery. A later routing take
+  returns the lane to DRIVE for Slice 5; only Slice 5 plus the selected release checkpoint may release it
+  SHIPPED/unowned.
 - **Design/owner law:** extend the existing President's Desk, Chief of Staff, campaign turn,
   save-slot/settings, and H0 shell owners. Create no second task queue, clock, save system, campaign
   resolver, notification bus, or settings store. D74, historical consequences, pending decisions,
@@ -3936,8 +3940,9 @@ next green commit and confer through this ledger instead of permitting simultane
   a queue. Missing/ambiguous authority fails to a neutral orientation message.
 - **Slice 3 — path reduction + re-engagement/preferences:** collapse repeated navigation and add a
   one-click return to the last safe, still-valid surface. Remember only non-authoritative UI preferences
-  through the existing settings owner; never remember a stale entity/action, bypass a decision, alter
-  campaign state, or change defaults for old saves. Keyboard/pointer parity and return-focus are required.
+  through the existing settings owner; never remember a stale entity/action, bypass a decision, introduce
+  a campaign-state mutation beyond the pre-existing Desk-open baseline, or change defaults for old saves.
+  Keyboard/pointer parity and return-focus are required.
 - **Slice 4 — session bookmarks:** build on existing save-slot/export/import authority rather than a
   parallel save owner. A bookmark is a safe label/navigation aid over a valid existing save boundary,
   never a second campaign snapshot, hidden autosave, Ironman escape, undo bypass, or authority source.
@@ -3959,14 +3964,119 @@ next green commit and confer through this ledger instead of permitting simultane
   `ok:true` and zero failed/page/real errors; bind restores; `git diff --check`; allowlist/protected-owner
   audit; docs sync; commit/push/clean parity per slice. Run the full serialized no-regression battery after
   Slice 5 because campaign lifecycle, save/navigation, and batch-turn surfaces are shared.
+- **Post-routing live-owner inventory (D514 executable boundary):** production truth is one ordered
+  `_t1Resolve` in `src/90-president-register.js`, one live H0 Desk override in
+  `src/99-h0-president-desk.js`, one pure Chief reader in `src/109-chief-of-staff.js`, and one named-save
+  owner in `src/91-save-slots.js`. `campaignAdvance` invokes `_t1Resolve` exactly once only after a battle
+  result. `src/30-president-shell.js` is the older shell/interstitial owner, not the live Desk override.
+  ARC 9 creates no module, resolver, clock, queue, settings store, save snapshot, notification bus, or
+  manifest row. Baseline protected counts are 65 data files, 111 modules with `115-conquest-transport.js`
+  last, 140 release-suite rows, three named slots, twenty H0 Desk tabs, Chief brief cap three, and
+  `_SAVE_VER=1`.
+- **Common per-slice allowlist:** the slice's source owner(s) below; growing
+  `tools/probe-desk-pacing.mjs`; `tools/probe-desk-pacing-plan.mjs` only for declared pin/mode transitions;
+  `tools/probe-open-history-mayhem-plan.mjs` and `tools/probe-war-career-loop-plan.mjs` only for their
+  declared source-tree/game hash transitions and adjacent history comments;
+  generated `civil_war_generals.html` only through `node tools/build.mjs`; this lane, §4g of
+  `docs/design/unlocked-but-judged-design.md`, and the canonical decision/run/handoff/checklist/live-summary
+  documents needed to record the milestone. `legacy/HANDOFF-ARCHIVE.md` is allowed only when the two-head
+  history rule requires it. Any other path requires a surfaced contract amendment before editing.
+- **Common do-not-touch list through Slice 4:** `build/base.html`; every `data/*.json`; `src/00-manifest.json`;
+  `tools/save-shape.json`; `tools/vet-no-regression.mjs`; `src/10-president-state.js`;
+  `src/30-president-shell.js`; `src/32-decisions.js`; `src/82-after-action.js`;
+  `src/85-battle-bridge.js`; `src/87-auto-resolve.js`; `src/97-accessibility.js`;
+  `src/98-h0-main-menu.js`; `src/105-save-guard.js`; all tactical sources; D74/combat/history/data owners; and
+  every probe not expressly named. The release enrollment is a later declared 140→141 suite transition,
+  never a Slice-1-to-4 rider.
+- **Slice 1 exact contract — profile/status only:** source allowlist is
+  `src/90-president-register.js` and `src/99-h0-president-desk.js`. Add five named monotonic measurement
+  groups around the existing hook order without moving, skipping, retrying, or adding a hook; keep all
+  timing state ephemeral and excluded from `C`, `G.settings`, RNG, receipts, serialization, and saves.
+  The Desk may render/announce a measured completion status only at or above the declared 50 ms long-work
+  threshold; shorter work renders no status. Fresh pre-edit profiling decides whether any optimization is
+  earned. If no repeatable bottleneck exists, optimize nothing and record `NOT_NEEDED`. Focused probe count
+  is exactly 0→8 steps: owner/order; five groups; finite/nonnegative timings; enabled-vs-disabled campaign,
+  RNG, receipt, and serialization identity; threshold truth; semantic/non-color/reduced-motion behavior;
+  no focus move; and stable non-speed-bound reporting. Bind S1 removes one group mark so only the exact
+  phase-order tooth reds; restore source and generated HTML byte-for-byte.
+- **Slice 2 exact contract — one pure next action:** source allowlist is
+  `src/109-chief-of-staff.js`. Derive zero or one action from the existing deterministic `cosBriefLines`
+  ordering; allow only a currently present H0 Desk tab routed through `_wdTab/_wdRefresh`. The action never
+  invokes a domain renderer while deriving, creates/clears a decision, writes campaign/settings/storage,
+  spends, advances time, predicts hidden state, or duplicates a queue. Missing/equal/invalid/stale authority
+  yields neutral orientation text with no live action. Focused probe grows 8→14: exact-one priority,
+  deterministic fallback, deep state/save/RNG purity, valid route, stale-target neutral failure, and native
+  keyboard/semantic-label/focus retention. Bind S2 weakens the live-tab validation so only the stale-target
+  tooth reds; byte-restore both source and generated HTML.
+- **Slice 3 exact contract — measured one-click return and one safe preference:** source allowlist is
+  `src/99-h0-president-desk.js`. Persist only `G.settings.arc9DeskTab`, validated against the live
+  `H0_DESK_TABS` ids; the existing `saveLocal` settings envelope is the sole persistence path. The existing
+  main-menu/turn-interstitial Desk control opens that safe tab in one click instead of Desk-plus-tab in two.
+  Old saves and absent preference retain `psDefaultDeskTab()`; invalid/removed ids fail neutral to that
+  default. Never persist an entity, pending action, focus node, campaign authority, or second storage key.
+  Both A/B paths use a pre-onboarded fixture (`C.president.onboarded === true`): the pre-existing
+  `openWarDept` idempotent onboarding assignment remains byte-behavioral baseline, and Slice 3 may add no
+  campaign mutation. Focused probe grows 14→21: measured 2→1 click path, only-new persisted write is the
+  validated settings id, old-save default, invalid/stale fallback, no additional campaign mutation plus
+  save-authority identity against the baseline, keyboard/pointer/focus parity, and 200% reflow/zoom plus
+  reduced-motion safety. Bind S3 bypasses the allowlisted-tab check so only the invalid-preference tooth
+  reds; byte-restore source and generated HTML.
+- **Slice 4 exact contract — bookmark pointers over named slots:** source allowlist is
+  `src/91-save-slots.js`. Store at most three strict metadata pointers only in
+  `G.settings.arc9SessionBookmarks`; each contains a cleaned label, slot index 0-2, validated run id, side,
+  ruleset, and deterministic fingerprint of the already-valid target save. Fingerprint input is a deep
+  clone with only own top-level `slotName` and `when` deleted; nested fields remain authoritative. Canonical
+  JSON recursively sorts object keys lexicographically, preserves array order, and uses normal JSON scalar
+  encoding. The exact fingerprint is
+  `v1:<canonical UTF-16 length>:<8-hex hashStr("arc9-a|"+canonical)>:<8-hex hashStr("arc9-b|"+canonical)>`.
+  It contains no save/campaign/settings snapshot and creates no localStorage key. Creation requires
+  `_slRead`; opening re-reads `_slRead`, recomputes every bind, confirms live replacement, then uses one
+  shared atomic slot-load path. Missing/deleted/changed/foreign/mismatched/corrupt targets fail before
+  `applySave`; malformed bookmark settings fail closed without rewriting unrelated settings or raw slot
+  data. Ironman named-save law, undo, import/export, deep-poison guards, three-slot count, and `_SAVE_VER=1`
+  remain exact. Focused probe grows 21→31: pointer-only shape; valid create/open plus object-key-order
+  invariance; top-level display-only rename/timestamp tolerance; missing and deleted target;
+  foreign/run/ruleset/side/fingerprint mismatch including an authoritative-field change; corrupt
+  target/metadata; zero partial apply; Ironman/undo/import independence; malformed/unrelated preservation;
+  keyboard/pointer/names/status/focus; and save-shape/version identity. Bind S4 skips fingerprint equality
+  so only the changed-target tooth reds; byte-restore source and generated HTML.
+- **Slice 5 dependency contract — no fabricated standalone turn:** no runtime file is authorized at the
+  present head. Production has no independent strategic-turn entrypoint: `campaignAdvance` reaches
+  `_t1Resolve` only after a real battle result, and the next campaign boundary is another battle. Calling
+  `_t1Resolve` with invented winner/type/battle data or silently invoking delegated combat would violate the
+  exact-resolver, stop-before-battle, no-hidden-consequence, and D74 laws. After Slice 4, a standalone
+  blocker commit moves LANE-020 to `CONTRACT` / `none`, records this exact resume dependency, and leaves
+  Slice 5 unchecked, unenrolled, and unclaimed; then the D514 loop advances ARC 7 under its own lane. Amend
+  and re-take LANE-020 only when ARC 7 or another owner supplies one independently gated sequential turn
+  entrypoint with explicit pending-choice, battle, war-end, election/dated-hinge, error, and
+  historical-consequence stops. Its future focused transition is 31→43 steps and release enrollment is
+  140→141 at the suite end; no count pin moves or full release battery runs before that amendment.
+- **Declared literal/hash pins before runtime:** `src/90` or `src/99` moves the generated game and the
+  source-tree/game pins in `probe-open-history-mayhem-plan.mjs` and
+  `probe-war-career-loop-plan.mjs`; `src/109` and `src/91` move the same source-tree/game pins. A future
+  140→141 enrollment additionally moves the suite counts in `probe-conquest-transport-plan.mjs`,
+  `probe-mayhem-mode.mjs`, `probe-open-history-mayhem-plan.mjs`,
+  `probe-women-in-war-arc-plan.mjs`, `probe-war-career-loop-plan.mjs`, and
+  `probe-war-career.mjs` while preserving the War Career row at index 38. Direct behavior pins remain:
+  Chief manifest/purity/max-three, H0 D74 no-write/twenty-tab shell, accessibility live/focus semantics,
+  three named slots/deep-poison/undo/Ironman, and full-campaign 45/2/16 pacing bounds. Every legitimate
+  transition must be declared in the slice diff before edit; a surprise pin is a HALT/allowlist amendment.
+- **Exact focused/adjacent gates through Slice 4:** syntax on every touched JS/MJS; planning probe; build
+  `GATE OK`; growing focused pacing probe and fresh JSON/PNG readback; then S1 adjacent Desk, H0 Desk,
+  accessibility, decisions, full-campaign, and campaign-link as applicable; S2 Chief, Desk, H0 Desk, and
+  accessibility; S3 H0 Desk, H0 main menu, between-battle, playstyle, accessibility, and save-shape; S4
+  save-slots, H0 main menu, accessibility, playstyle, War Career, and save-shape. Run deterministic A/B and
+  the named bind per slice, hash/`cmp` every temporary source/generated mutation, rerun the clean focused
+  gate, inspect all fresh JSON/stdout/PNGs for `ok:true`, empty failed/page/real errors, then doc coherence,
+  `git diff --check`, commit/push/fetch/clean parity. Browser gates remain serialized.
 - **Resume pointer:** D513's owed clean-pushed War Career rerun is freshly green at 47/47 browser steps,
   static 30/30, `ok:true`, and zero failed/page/real errors; the 200%-zoom PNG is fresh, decodable, and
-  reflows without horizontal overflow. From the clean routing take, inventory the live ARC 9 owners and
-  all affected probe pins, then write the filesystem-first plan probe plus exact Slice-1 allowlist,
-  exclusions, counts, binds, artifacts, gates, and restoration hashes before any runtime edit. Execute
-  Slices 1-5 without stopping at ordinary slice or phase boundaries. HALT only under D514's hard-stop
-  rule; otherwise quarantine a blocked slice and continue another independent completion-ledger item.
-- **Last-touched commit:** D514 contract `6ca0fba`; current standalone DRIVE routing transfer pending.
+  reflows without horizontal overflow. The live owner/pin inventory and exact Slices 1-5 contracts above
+  are now written. Commit/push the green filesystem-first plan boundary with runtime untouched, then run a
+  fresh baseline profile and execute Slice 1. Continue through Slices 2-4; quarantine the explicit Slice-5
+  resolver dependency into ARC 7 rather than fabricating turn authority. HALT only under D514's hard-stop
+  rule; otherwise continue the next dependency-ready completion-ledger item.
+- **Last-touched commit:** standalone DRIVE routing transfer `4ec7c70`; executable plan boundary pending.
 - **History:** D514 CONTRACT/unowned at `6ca0fba` → full-access ChatGPT/Codex DRIVE after the fresh
   D513 War Career verification-debt rerun (47/47 + static 30/30, zero failed/page/real errors).
 

@@ -40,6 +40,40 @@ authority; and finite batch turns that are byte-equivalent to sequential turns a
 decision/battle/dated consequence. The first full-access run must discharge D513's owed clean-
 pushed War Career rerun, then take LANE-020 and continue across its green commits.
 
+### D514 execution contract after the live ARC 9 owner inventory
+
+The full-access continuation discharged D513 at 47/47 browser steps plus static 30/30, then
+took LANE-020 DRIVE in routing commit `4ec7c70985cd44f97ab00c660877acce864c2c89`.
+The inventory selects extension, not architecture: `src/90-president-register.js` is the
+only ordered strategic resolver; `src/99-h0-president-desk.js` the live Desk;
+`src/109-chief-of-staff.js` the pure brief; and `src/91-save-slots.js` the named-save
+owner. ARC 9 adds no module, manifest row, queue, clock, resolver, settings store, save
+snapshot, or notification bus.
+
+Slices 1-4 are separately allowlisted to those four owners. Timing is ephemeral and
+outcome-inert; the Chief reduces existing live rules to at most one validated tab route;
+re-engagement persists only a validated Desk-tab id through `G.settings`. Its A/B proof is
+pre-onboarded because the existing Desk opener already assigns the idempotent onboarding
+flag; the slice introduces no campaign mutation beyond that baseline. Bookmarks are strict
+metadata pointers in that same settings envelope to one of the three existing validated
+slots, never copied campaign state. Their exact fingerprint uses recursively key-sorted JSON
+after removing only top-level display `slotName`/`when`, plus two distinct-prefix passes of
+the existing FNV-1a `hashStr`; display metadata/order cannot stale a pointer, but any
+authoritative change must. All malformed/stale/foreign authority fails closed and old-save
+defaults remain unchanged.
+
+The inventory also establishes a real dependency for Slice 5. Production has no standalone
+strategic turn: `campaignAdvance` calls `_t1Resolve` exactly once only after a battle result,
+then routes directly toward the next battle. A current-head batch control could proceed only
+by fabricating result inputs or silently auto-resolving a battle, both forbidden by the
+stop-before-battle/no-hidden-consequence/D74 contract. Therefore Slices 1-4 proceed, Slice 5
+remains contracted but runtime-blocked until ARC 7 (or another separately gated owner) creates
+an independent sequential turn entrypoint with explicit stop signals. After Slice 4, a
+standalone blocker commit releases LANE-020 to `CONTRACT`/unowned without a SHIPPED claim,
+suite enrollment, or post-Slice-5 battery; the D514 loop then advances ARC 7 under its own lane
+rather than retaining a dead DRIVE lock, idling, or inventing authority. This is dependency
+reordering, not a scope stop.
+
 ## D513 — ARC 8 FUTURE SLICE 1 SHIPS AS A PURE WAR CAREER CARE-CONTEXT READER; PERSONAL RECEIPT EVIDENCE STAYS SEPARATE FROM GENERIC HISTORY — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION/VERIFY] (2026-07-22)
 
 **VERDICT: `SHIPPED_PURE_READER_LANE_RELEASED`.** The D512 contract fit the live

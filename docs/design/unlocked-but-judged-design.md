@@ -282,6 +282,50 @@ Turn-processing latency profile + progress feedback · Chief of Staff brief as t
 hub's next-action pointer · click-path collapse + one-click re-engage + remembered
 preferences · session bookmarks · batch turn processing.
 
+**D514 executable interpretation after the live-owner inventory:** ARC 9 extends the
+existing lifecycle instead of inventing a second one. `src/90-president-register.js`
+remains the sole ordered strategic resolver; `src/99-h0-president-desk.js` remains the
+live Desk shell; `src/109-chief-of-staff.js` remains the pure brief; and
+`src/91-save-slots.js` remains the named-save owner. No ARC 9 source module, task queue,
+clock, resolver, settings store, save snapshot, or notification bus is authorized.
+
+1. **Measured latency and honest status:** instrument the existing `_t1Resolve` groups
+   with ephemeral monotonic timings that never enter campaign state or saves. Report a
+   semantic completion status only when measured work crosses the declared long-work
+   threshold; do not fake percentages or make animation/focus a dependency. Optimize
+   nothing unless the fresh baseline identifies a repeatable bottleneck.
+2. **One lawful next action:** reduce the existing Chief rules to one deterministic
+   highest-priority live line and route only through the existing `_wdTab/_wdRefresh`
+   owner. Missing, ambiguous, or stale authority produces neutral orientation text and
+   no action. The reader remains pure and cannot create/clear decisions or spend/time.
+3. **Safe re-engagement:** persist only a validated Desk-tab id in the existing
+   `G.settings` envelope. The old-save default remains `psDefaultDeskTab()`; invalid or
+   removed tabs fall back there. Reopening the existing Desk button therefore reduces a
+   measured two-click return path to one without storing an entity or action authority.
+   Both proof paths begin pre-onboarded: the existing Desk opener's idempotent
+   `C.president.onboarded = true` remains baseline behavior, while the slice adds no new
+   campaign mutation and only the validated settings id is newly persisted.
+4. **Session bookmarks:** store only strict bookmark pointers in the existing settings
+   envelope. A pointer names one of the three existing slots and pins that valid save's
+   run/ruleset/side/fingerprint; it contains no campaign snapshot. The existing slot
+   validator and one atomic load path remain authoritative. Missing, deleted, changed,
+   foreign, mismatched, or corrupt targets fail before `applySave` and write nothing. The
+   fingerprint is canonical stable JSON of a deep clone with only own top-level
+   `slotName`/`when` removed, followed by two existing-`hashStr` FNV-1a passes with distinct
+   `arc9-a|` / `arc9-b|` prefixes; its exact `v1:length:hex:hex` form is locked in LANE-020.
+   Object key order and display-only rename/time changes do not stale a pointer; any nested
+   or authoritative change does.
+5. **Bounded batch turns:** the stop-before-battle rule is binding. At the D514 head,
+   production turn advancement exists only inside `campaignAdvance` after a battle
+   result; `_t1Resolve` has no lawful standalone result input. Therefore no batch-runtime
+   seam may fabricate a battle/result or silently auto-resolve one. Slice 5 remains a
+   contracted dependency stop until ARC 7 (or another separately gated owner) supplies
+   an independent sequential strategic-turn entrypoint with explicit pending-choice,
+   battle, war-end, election/dated-hinge, and historical-consequence stop signals.
+   Slices 1-4 proceed; a standalone blocker commit then releases LANE-020 to
+   `CONTRACT`/unowned without suite enrollment, SHIPPED claim, or release battery. The
+   completion loop advances ARC 7 under its own lane and later re-takes LANE-020 here.
+
 ## 5. THE CONQUEST LAYER — Risk-style player-authored alt-history (R9-R11)
 
 **Thesis:** break the rung system. The campaign becomes a map you play ON, not a

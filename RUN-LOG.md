@@ -34,6 +34,19 @@ errors, and a fresh decodable 390×700 PNG showing the report at 200% zoom witho
 overflow. LANE-020 then moved from CONTRACT/unowned to ChatGPT/Codex DRIVE in the standalone
 routing transfer; runtime remains untouched pending the filesystem-first ARC 9 plan boundary.
 
+Post-routing inventory found four existing owners rather than a missing architecture: `src/90`
+for the ordered resolver, `src/99` for the live Desk, `src/109` for the pure Chief brief, and
+`src/91` for named saves. The executable contract allowlists Slices 1-4 to those owners and
+forbids a new module/store/queue/clock/resolver. It also records Slice 5's dependency honestly:
+at this head every production `_t1Resolve` follows a real battle result through
+`campaignAdvance`; batching now would require fabricated result data or hidden delegated combat.
+ARC 7 must supply a separately gated standalone strategic-turn owner before the batch slice can
+exist. The post-Slice-4 blocker boundary releases LANE-020 to `CONTRACT`/unowned—without a
+SHIPPED claim, suite enrollment, or release battery—before the D514 loop takes ARC 7 under its
+own lane. The exact Slice-3 proof also accounts for the existing Desk opener's idempotent
+onboarding write, and the Slice-4 pointer now pins a canonical two-pass `hashStr` fingerprint
+whose only exclusions are top-level display `slotName` and `when`.
+
 ## 2026-07-22 — D513: PURE WAR CAREER CARE CONTEXT SHIPPED
 
 ChatGPT/Codex implemented D512 Future Slice 1 under the standalone LANE-005 take
