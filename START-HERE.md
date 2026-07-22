@@ -1,10 +1,10 @@
 # START HERE — "The Civil War" (master index)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D510 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D510, 2026-07-21):** LANE-019 is DRIVE under the ChatGPT/Codex 5.6 Sol Ultra TOP LOOP for the fourth docs/research-only road-evidence pass. Work is limited to RD-E17's Harpers Ferry crossing plus second family; RD-E18's second family plus lawful D503 endpoint treatment; a qualifying New Orleans-origin operation; RD-E11's Marshall-Shreveport military passage, crossings, and corroboration; an exact two-family CT-36 road row; and Sherman handling claims below the two-family floor.
+<!-- LIVE-HEAD decision=D511 next-lane=LANE-019 state=CONTRACT owner=none -->
+> **Live status (D511, 2026-07-21):** LANE-019 is CONTRACT/unowned after the final authorized docs/research-only road-evidence pass retained `NEEDS_MORE_RESEARCH`. The packet now has 65 sources, 37 nodes, 18 candidates (14 Verified · 4 Inferred · 0 Disputed), six Potomac rows, 13 Sherman interval rows (11 Verified · 2 Inferred), 11 non-links, and ten interchanges.
 >
-> **Boundary:** Road substrate, runtime, data, movement, state, save, UI, capacity, repair, economy, AI, terrain, battle, tactical behavior, and all gameplay remain closed. This pass authorizes research only. No simultaneous edits.
+> **Boundary:** RD-SI10 is newly Verified; RD-E11, RD-E15, RD-E17, and RD-E18 remain Inferred, with no qualifying New Orleans-origin or CT-36 road row. Road substrate, runtime, data, movement, state, save, UI, capacity, repair, economy, AI, terrain, battle, tactical behavior, and all gameplay remain closed. No further road work is chartered; no simultaneous edits.
 >
 > **Authority:** `HANDOFF.md`'s first ⚡ block owns the full live boundary. This exact summary is build-checked across the routing docs; historical `NEXT` language records an old boundary and is never current authority.
 <!-- LIVE-HEAD-SUMMARY:END -->
@@ -25,7 +25,7 @@ The game: a teaching wargame in three layers — **owner-mode grand strategy** (
 **Pull-on-demand (no longer mandatory at session start):** `AUTONOMOUS-RUN.md` (operating manual — current loop §3 and guardrails §5; old roadmaps/backlogs are labeled history), `WAKE-UP.md` (human-readable pointer), `RUN-LOG.md` (chronology), `V1-CHECKLIST.md` (the current task map), `git log --oneline`. Read them when the task calls for them, not by default.
 
 ## 📚 Canonical reference (current — pull the section a task needs; don't bulk-read)
-- **`V1-CHECKLIST.md`** — the D510-reconciled approved roadmap: shipped ARC baseline, outstanding ARC 7-9 work, parked proposals, and explicit v2/deferred work. It is the only task checklist; the full live boundary remains in HANDOFF.
+- **`V1-CHECKLIST.md`** — the D511-current approved roadmap: shipped ARC baseline, outstanding ARC 7-9 work, parked proposals, and explicit v2/deferred work. It is the only task checklist; the full live boundary remains in HANDOFF.
 - **`MODERN-UGG-PLAN.md`** — the real-time tactical battle engine spec (the UG:G layer, built LAST, phases P0–P5).
 - **`RUN-LOG.md`** — chronological build log (newest run at top; keeps the current month — older entries live byte-verbatim in `legacy/RUN-LOG-ARCHIVE-2026H1.md`, D412).
 - **`HANDOFF.md`** — **THE single source of the live boundary**: its first ⚡ amendment is the one canonical live head (D510-enforced LIVE-HEAD SINGLE-SOURCE RULE); every other routing doc carries the checked summary + pointer. Keeps the latest block + one prior; older blocks live byte-verbatim in `legacy/HANDOFF-ARCHIVE.md`.
@@ -103,10 +103,9 @@ The task list lives only in [`V1-CHECKLIST.md`](V1-CHECKLIST.md). Cross-check it
 
 **Current priority order:**
 
-1. LANE-019's separately chartered fourth road-evidence pass, docs/research only and limited to the six D509 gaps.
-2. ARC 7's remaining implementation ladder, but only after its evidence and per-rung contracts permit it: playable transport movement, Council of War, terrain pipeline, operational hex zoom, then Chronicle tree.
-3. ARC 8 soldier depth, using bounded LANE-002 5b batches and the D501 medicine packet as feeders.
-4. ARC 9 desk-to-battle pacing.
+1. ARC 8 soldier depth, beginning with a docs-only medicine-to-soldier-depth law adjudication against D501/D169; bounded LANE-002 5b batches remain eligible only when a candidate set is selected.
+2. ARC 9 desk-to-battle pacing.
+3. ARC 7's remaining ladder is blocked at transport after D511 retained `NEEDS_MORE_RESEARCH`; no later ARC 7 rung or road implementation may skip that prerequisite without a new explicit Aaron decision and contract.
 
 **Model naming note (D336/D510):** ChatGPT's top loop is 5.6 Sol at Ultra for architecture, historical judgment, UX/accessibility, balance, integration, and final verification. Helpers are bounded mechanical readers/runners when the surface cannot set a lower tier.
 

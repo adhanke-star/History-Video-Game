@@ -4,6 +4,94 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D511 — THE FINAL AUTHORIZED ROAD EVIDENCE PASS RETAINS NEEDS_MORE_RESEARCH; ARC 7 TRANSPORT STAYS BLOCKED — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS/RESEARCH ONLY] (2026-07-21)
+
+**VERDICT: `NEEDS_MORE_RESEARCH`.** The fourth and final authorized LANE-019 road pass
+expands `docs/design/strategic-road-transport-research-packet.md` from 59 to 65 source
+records while preserving its 12-section structure and stable registers: 37 nodes; 18
+candidate edges (14 Verified, 4 Inferred, 0 Disputed); six Potomac rows; 13 Sherman
+interval rows (11 Verified, 2 Inferred); 11 non-links; ten interchanges; all seven D503
+theaters; and exactly one current verdict. Every internal source/road ID and every
+CT/RN/WN/CTS/CTI/CTNL reference resolves mechanically. The three Boonville/Arrow
+Rock/Glasgow nodes become explicitly Unassigned, moving the honest unassigned-node
+count from eight to eleven without changing D503.
+
+### Claim adjudications
+
+1. **RD-E17 remains Inferred; the crossing premise was wrong.** Breck RDS-47 says
+   about sixty commissary/quartermaster teams arrived at Harpers Ferry from Winchester,
+   loaded, and returned through Charles Town and Berryville. They approached from the
+   Virginia side. Breck's personal skiff crossing does not prove—or make necessary—a
+   team Potomac crossing. Official Records RDS-61 independently confirms the washed-
+   bridge/possible-steam-tug context but not the team movement or exact loading-side
+   handling. The operation still lacks a claim-specific second family.
+2. **RD-E18 remains Inferred and ends at Arrow Rock.** The Army Price atlas RDS-60
+   identifies Clark's brigade plus 500 of Jackman's brigade as the detached force
+   ordered to cross at Arrow Rock and attack Glasgow while the main army moved west;
+   it does not independently place that detachment on the named road from Boonville.
+   Cooper County history RDS-65 independently fixes the road and its Lamine River
+   bridge in a dated 1861 military action, not Price's 1864 passage. Missouri DNR
+   RDS-56 remains the only claim-specific family for the 14 October named-road passage.
+   Boonville, Arrow Rock, and Glasgow have no lawful D503 anchor. Glasgow is a target
+   beyond the segment, and Arrow Rock's operation-specific crossing creates no water
+   interchange.
+3. **No New Orleans-origin candidate is added.** The Joint Committee RDS-62 places
+   the Red River land-column concentration at Franklin/Berwick Bay and the march start
+   at Franklin. Later cavalry from New Orleans and Banks's commander travel to
+   Alexandria do not make that operation a New Orleans-origin road march. River, rail,
+   port, telegraph, Baton Rouge, Brashear City, Franklin, and Berwick Bay evidence
+   cannot be composed into the requested row.
+4. **RD-E11 remains Inferred.** Official Records RDS-63 fixes the Natchitoches-
+   Mansfield-Keachi-Shreveport approach, a fork toward Marshall, and Confederate
+   Shreveport-Keachi-Mansfield movement. It does not place a dated force or military
+   wagon train on the exact civilian Marshall-Shreveport Stagecoach Road carried by
+   RDS-54. Banks still stopped at Mansfield/Pleasant Hill and retreated.
+5. **No CT-36 road candidate is added.** Official Records RDS-64 independently
+   reinforces Galveston railroad, locomotive, train, and Virginia Point railroad-
+   bridge use. A declined civilian subsistence-transfer proposal using vehicles from
+   Eagle Grove is not a Houston-Galveston military road passage.
+6. **RD-SI10 alone moves Inferred → Verified.** Howard's independent subordinate
+   report in RDS-50 corroborates Sherman's account of Force's pontoon crossing below
+   Orangeburg Bridge and Giles Smith's capture/repair of the main bridge. The Fourth
+   Division itinerary corroborates only the broad paths behind RD-SI06 and RD-SI13,
+   not Platter's exact bridge, ferry, weather, corduroy, and wagon-handling chains;
+   those two remain Inferred. Candidate-edge totals do not change because the Sherman
+   interval register is supplemental operation evidence.
+
+### Binding limits and ownership
+
+RD-E11, RD-E15, RD-E17, and RD-E18 remain the four Inferred candidate rows. Non-links
+continue to bar Potomac-site substitution; Glasgow extension; permanent Arrow Rock
+interchange; CT-29/CT-30 composition; New Orleans composition from other modes or
+origins; Marshall-Shreveport substitution from a different military approach; and
+CT-36 substitution from railroad evidence. Operation-specific evidence never becomes
+a reusable service. Modern alignment, proximity, whole-army attribution, reverse
+service, routine availability, and nearest-CT mapping remain rejected inferences.
+
+D503 retains territory boundaries and anchors. D497/D499 retain rail/water evidence;
+D506 retains the immutable 27/15/2/4/18 read-only transport substrate; D159 retains
+aggregate logistics. Blockade/naval, Western Theater, economy, `bridgeArmy`, D74,
+Chronicle, War Career, tactical terrain, Custom Builder, state, save, UI, and every
+gameplay owner remain untouched. The protected src tree, data tree, manifest, suite,
+frozen base, save shape, and generated deliverable remain respectively
+`6c7abffee1be95c41edbb52d292852df6b0651ac`,
+`c4ededdd664036b72806d007184223ddf86ddf08`,
+`3f35ac1abe5de8d75e62bac503dbb33595813a57`,
+`d1650af5f0e118b9f1869375a50c8397e1841ff6`,
+`fda24be7f1470dde129a73d6b1c1106eaaf6df76`,
+`e5834a96bd4b076f68f92153748382e37ad0a2c7`, and
+`6f8558dd8afec6fab5ac87885ff714ce9559f091`.
+
+LANE-019 returns to CONTRACT/unowned. No further road pass is chartered; it may resume
+only under a new standalone contract grounded in genuinely new claim-specific evidence
+or an explicit Aaron boundary decision. ARC 7's exact ladder puts transport before its
+later rungs, so no transport, Council, terrain, hex, or Chronicle implementation may
+skip this evidence failure. The next independent approved bounded task is a docs-only
+ARC 8 medicine-to-soldier-depth law adjudication against D501, D169, Human Cost,
+canonical-person/primary-source ownership, War Career, and LANE-002. It must decide the
+smallest nonduplicative narrative contract and lane ownership, then stop before runtime,
+data, probe, generated, state, save, UI, or gameplay work.
+
 ## D510 — CANONICAL DOCS RECONCILED; LIVE-STATE DRIFT BECOMES A BUILD FAILURE — [CHATGPT/CODEX 5.6 SOL ULTRA, DOCS/TOOLING ONLY] (2026-07-21)
 
 The disagreement was caused by an unenforced closeout convention, not conflicting product

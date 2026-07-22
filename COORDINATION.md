@@ -3587,38 +3587,32 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **DRIVE (FOURTH ROAD EVIDENCE PASS ACTIVE; CHATGPT/CODEX 5.6 SOL ULTRA TOP LOOP)**
+### LANE-019 · conquest-design-law — **CONTRACT (D511 FINAL ROAD PASS RETAINS NEEDS_MORE_RESEARCH; UNOWNED)**
 
-- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. No simultaneous edits.
-- **State:** DRIVE for the fourth docs/research-only pass, bounded to RD-E17's
-  Harpers Ferry crossing plus second family; RD-E18's second family plus lawful
-  D503 endpoint treatment; a qualifying New Orleans-origin operation; RD-E11's
-  Marshall-Shreveport military passage, crossings, and corroboration; an exact
-  two-family CT-36 road row; and Sherman handling claims below the two-family
-  floor. Road substrate, runtime, data, movement, state, save, UI, capacity,
-  repair, economy, AI, terrain, battle, tactical behavior, and all gameplay remain
-  closed. D509's third docs/research-only pass adjudicated the five
-  evidence families D508 left open and retained exact verdict
-  `NEEDS_MORE_RESEARCH`. The packet now records 59 sources, 37 nodes, 18 candidate
-  rows (14 Verified, 4 Inferred, 0 Disputed), six Potomac rows, 13 Sherman interval
-  rows, 11 non-links, ten interchange candidates, and all seven theaters. Boteler's
-  Ford is now an exact Verified operation; the Harpers Ferry-Winchester and
-  Boonville-Arrow Rock passages are exact but remain Inferred. The column-separated
-  Sherman register preserves its roads, crossings, bridges, ferries, weather, and
-  corps/column limits, and corrects Platter's heavy-road evidence from 5 March to
-  8-9 March. No qualifying New Orleans-origin road operation, dated military use of
-  the exact Marshall-Shreveport stage road, completed Union Alexandria-Shreveport
-  movement, or CT-36 wagon-road row was found. Missing claim-specific second
-  families, exact crossings/endpoints, and road identities prevent a closed
-  registry. No read-only road substrate or playable road slice is authorized. D506
-  shipped the read-only transport-evidence substrate at
-  `932fb89e7e2f3e47eaf87e88e99a740cab240062`. No road data, runtime, gameplay,
-  movement, state, save, UI, cost, capacity, repair, bonus, AI, or terrain work is
-  authorized. D503 retains exact territory boundaries/anchors, D497/D499 retain
-  rail/water evidence, and D506 retains the immutable read-only transport substrate.
-  D504 Slice
-  1 shipped at `74237b9273f4640f031a8c46041a98e1d96809a3`. Transport gameplay/runtime,
-  movement, and state remain prohibited.
+- **Owning tool:** none after the D511 clean release. No simultaneous edits.
+- **State:** CONTRACT/unowned. D511 completed the fourth and final authorized
+  docs/research-only road pass and retained exact verdict `NEEDS_MORE_RESEARCH`.
+  The packet now records 65 sources, 37 nodes, 18 candidate rows (14 Verified,
+  4 Inferred, 0 Disputed), six Potomac rows, 13 Sherman interval rows (11 Verified,
+  2 Inferred), 11 non-links, ten interchange candidates, and all seven theaters.
+  RD-SI10 is newly Verified; RD-E11, RD-E15, RD-E17, and RD-E18 remain Inferred.
+  No qualifying New Orleans-origin or CT-36 road row exists. Boonville, Arrow Rock,
+  and Glasgow are explicitly unassigned; RD-E18 ends at Arrow Rock, Glasgow is only
+  the target beyond it, and no water interchange forms.
+  No road data, runtime, gameplay, movement, state, save, UI changes are authorized. Cost,
+  capacity, repair, economy, AI, terrain, battle, and tactical behavior stay closed.
+  D503 retains exact
+  territory boundaries/anchors, D497/D499 retain rail/water evidence, and D506
+  retains the immutable 27/15/2/4/18 read-only transport substrate shipped at
+  `932fb89e7e2f3e47eaf87e88e99a740cab240062`.
+- **D511 classification record:** RD-E17's team Potomac-crossing premise is removed;
+  exact loading-side handling and a second team-movement family remain missing.
+  RD-E18's Army-atlas and Cooper County families corroborate the detached force,
+  Arrow Rock order, road identity, and separate 1861 bridge action, but not a second
+  1864 named-road passage. New Orleans, Marshall-Shreveport, and CT-36 remain bounded
+  negatives. Howard's independent report cures RD-SI10 only; RD-SI06/RD-SI13 keep
+  their one-family handling limits. Every non-link and operation-specific boundary
+  remains binding.
 - **D504 shipped evidence:** exact 36/36 registry in D503 order; all 35 RN, 41 WN,
   and two Missouri battle-library anchors assigned uniquely (78/78); resolved
   source/provenance/uncertainty/non-link data; CT-29/30 direct Missouri sources and
@@ -3701,31 +3695,19 @@ next green commit and confer through this ledger instead of permitting simultane
   unresolved and exactly normalization/integrity reds. Bind B promotes WE-25 or
   RE-29 to service or erases its non-link/provenance and exactly evidence integrity
   reds. All other teeth stay green; data and generated output restore byte-identically.
-- **Gate sequence and resume pointer:** D506 completes Slice 2A, D507 completes the
-  first bounded road source pass, D508 completes the nine-gap follow-up, and D509
-  completes the five-family follow-up. There is no active road slice. A future
-  docs/research pass may take standalone DRIVE only for the unresolved D509 claims:
-  a claim-specific second family and Harpers Ferry crossing for RD-E17; a second
-  family plus lawful D503 endpoint treatment for RD-E18; a qualifying New
-  Orleans-origin military road operation; dated army/wagon use, crossing set, and
-  independent corroboration for RD-E11; an exact two-family CT-36 road row; and any
-  Sherman handling row still below the claim-specific two-family floor. It must
-  preserve the 12-section packet, exact endpoint/operation/non-link limits, and
-  declare exactly one `READY_FOR_READ_ONLY_SUBSTRATE` /
-  `NEEDS_MORE_RESEARCH` / `DO_NOT_MODEL` verdict before releasing the lane. No road
-  substrate, data, runtime, or transport gameplay is authorized. It may not infer
-  endpoints, compose operation-specific passages into routine service, or treat a
-  later READY verdict as playable authorization. Any later
-  playable slice needs a separate full contract. For D506 verification, `node --check` all touched JS/probes; build
-  `GATE OK` at 65 data, 36 territories, 111 modules, suite 140; run/read both focused
-  artifacts; run board 13/13, accessibility 27/27, Mayhem 24/24, Custom Builder 16/16
-  serialized under full access; execute both exact-red binds and prove MD5 restores;
-  run `git diff --check`, scope/base/save-shape audit; commit `-F`, push; rerun/read
-  both planning probes at 13/13 and 24/24. HALT on invented service/adjacency/
-  interchange, road leakage, owner redesign, broader Mayhem work, collateral bind
-  reds, state/save/gameplay fields, or an out-of-scope file. Terminal condition is a
-  pushed, read-only, fail-closed evidence substrate and an unowned next contract;
-  transport gameplay remains closed.
+- **D511 gate and resume pointer:** the final authorized packet pass must close on
+  doc coherence 5/5; build check `GATE OK` at 65 data, 36/36 territories, and
+  transport 27/15/2/4/18; conquest layer 8/8; conquest transport 11/11; Mayhem plan
+  13/13; War Career plan 24/24; clean artifacts/diff; unchanged protected objects;
+  a byte-verbatim D509 archive; commit/push; and clean HEAD/origin equality. After
+  that release, there is no active road slice and repeating the six-family search is
+  not authorized. This lane may resume only after genuinely new claim-specific
+  evidence or an explicit Aaron boundary decision supports a new standalone
+  research contract. No road substrate, data, runtime, transport gameplay, Council,
+  terrain, hex, or Chronicle rung may skip this blocker. The independent next
+  approved task is a docs-only ARC 8 medicine-to-soldier-depth law adjudication; it
+  must first reconcile D501/D169 and existing person/narrative owners, decide its
+  lane ownership and complete contract, and stop before implementation.
 - **Design law:** `docs/design/unlocked-but-judged-design.md` §5 and §8, especially
   §§8.11-8.23; DECISIONS D455, D497, D499, D502, and D503; the rail and strategic-
   water packets. D503 records Aaron's exact answer: "execute option a."
@@ -3818,7 +3800,8 @@ next green commit and confer through this ledger instead of permitting simultane
   `c547bb4`; whitespace-gate cleanup `ba127f8`; final lane reconciliation
   `d0dcf84`; second nine-gap road-evidence DRIVE transfer `3da0de9`; D508 packet and
   lane release `27df304`; third five-family road-evidence DRIVE transfer `3e68144`;
-  D509 packet and lane release ship in the commit containing this entry.
+  D509 packet/lane release; D510 final-pass DRIVE transfer `be54d4a`; D511 packet
+  and lane release ship in the commit containing this entry.
 - **History:** D502 created the design-only contract. Aaron chose Package A. D503
   completed the final law. D504 shipped the read-only territory board. D505 audits
   every rail/water evidence row, contracts the read-only substrate, and D506 ships
@@ -3827,8 +3810,11 @@ next green commit and confer through this ledger instead of permitting simultane
   retains `NEEDS_MORE_RESEARCH`, and again releases the lane unowned without changing
   any authorization boundary. D509 completes the third pass, adds bounded exact
   evidence without curing the closed-register gaps, retains `NEEDS_MORE_RESEARCH`,
-  and again releases the lane unowned. No read-only road substrate or transport
-  gameplay is authorized.
+  and again releases the lane unowned. D511 completes the fourth and final authorized
+  pass, promotes only RD-SI10, corrects the RD-E17 crossing premise and RD-E18 force/
+  endpoint scope, records the New Orleans/Marshall-Shreveport/CT-36 negatives, retains
+  `NEEDS_MORE_RESEARCH`, and releases the lane. No read-only road substrate or
+  transport gameplay is authorized.
 
 ---
 

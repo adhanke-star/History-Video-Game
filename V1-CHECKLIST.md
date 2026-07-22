@@ -1,10 +1,10 @@
 # V1 CHECKLIST — current approved roadmap
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D510 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D510, 2026-07-21):** LANE-019 is DRIVE under the ChatGPT/Codex 5.6 Sol Ultra TOP LOOP for the fourth docs/research-only road-evidence pass. Work is limited to RD-E17's Harpers Ferry crossing plus second family; RD-E18's second family plus lawful D503 endpoint treatment; a qualifying New Orleans-origin operation; RD-E11's Marshall-Shreveport military passage, crossings, and corroboration; an exact two-family CT-36 road row; and Sherman handling claims below the two-family floor.
+<!-- LIVE-HEAD decision=D511 next-lane=LANE-019 state=CONTRACT owner=none -->
+> **Live status (D511, 2026-07-21):** LANE-019 is CONTRACT/unowned after the final authorized docs/research-only road-evidence pass retained `NEEDS_MORE_RESEARCH`. The packet now has 65 sources, 37 nodes, 18 candidates (14 Verified · 4 Inferred · 0 Disputed), six Potomac rows, 13 Sherman interval rows (11 Verified · 2 Inferred), 11 non-links, and ten interchanges.
 >
-> **Boundary:** Road substrate, runtime, data, movement, state, save, UI, capacity, repair, economy, AI, terrain, battle, tactical behavior, and all gameplay remain closed. This pass authorizes research only. No simultaneous edits.
+> **Boundary:** RD-SI10 is newly Verified; RD-E11, RD-E15, RD-E17, and RD-E18 remain Inferred, with no qualifying New Orleans-origin or CT-36 road row. Road substrate, runtime, data, movement, state, save, UI, capacity, repair, economy, AI, terrain, battle, tactical behavior, and all gameplay remain closed. No further road work is chartered; no simultaneous edits.
 >
 > **Authority:** `HANDOFF.md`'s first ⚡ block owns the full live boundary. This exact summary is build-checked across the routing docs; historical `NEXT` language records an old boundary and is never current authority.
 <!-- LIVE-HEAD-SUMMARY:END -->
@@ -25,13 +25,13 @@ Only unchecked boxes under **Outstanding approved roadmap** are authorized roadm
 
 ## Outstanding approved roadmap
 
-- [ ] **Immediate prerequisite — LANE-019 fourth road-evidence pass (docs/research only).** Charter a new DRIVE transfer before work. Limit the pass to the six D509 gaps: RD-E17 crossing plus second family; RD-E18 second family plus lawful endpoint; a qualifying New Orleans-origin operation; RD-E11 Marshall–Shreveport military passage/crossings/corroboration; an exact two-family CT-36 road row; and Sherman handling claims below the two-family floor. No road data or gameplay is authorized unless the evidence produces a closed register and a later contract approves implementation.
+- [x] **D511 final authorized LANE-019 road-evidence pass (docs/research only).** The six D509 gaps were re-adjudicated under the two-family floor. Verdict: `NEEDS_MORE_RESEARCH`; no road data or gameplay is authorized.
 
 - [ ] **ARC 7 — playable conquest layer.**
   - [x] Read-only 36-territory board.
   - [x] Immutable read-only rail/water/sea transport-evidence substrate.
-  - [ ] Road evidence prerequisite above.
-  - [ ] Transport movement: sourced mode registries and interchanges; control/service receipts; movement, cuts, and repairs; economy/theater/directive integration; fresh-start conquest state and save; legal-order AI; then the first playable-loop 140-row release checkpoint.
+  - [ ] Road evidence prerequisite remains unsatisfied after D511: RD-E11/RD-E15/RD-E17/RD-E18 and two Sherman handling rows retain material source gaps; no New Orleans-origin or CT-36 row qualifies. No further road pass is chartered.
+  - [ ] Transport movement: blocked behind the unsatisfied road prerequisite or a new explicit Aaron boundary decision. If later unblocked, it still requires sourced mode registries and interchanges; control/service receipts; movement, cuts, and repairs; economy/theater/directive integration; fresh-start conquest state and save; legal-order AI; then the first playable-loop 140-row release checkpoint.
   - [ ] Council of War through existing site, commitment, equipment, doctrine, bridge, and D74 owners.
   - [ ] Terrain pipeline with provenance, transforms, LOD, period surfaces, offline budgets, and textual fallback.
   - [ ] Operational hex zoom without strategic/tactical ownership leakage.

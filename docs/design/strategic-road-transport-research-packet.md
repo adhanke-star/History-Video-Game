@@ -1,6 +1,6 @@
 # Strategic Road and Wagon Transport Research Packet
 
-**Milestone:** D507 initial road source pass; D508 nine-gap evidence pass; D509 five-family evidence pass
+**Milestone:** D507 initial road source pass; D508 nine-gap evidence pass; D509 five-family evidence pass; D511 final six-family evidence pass
 **Date:** 2026-07-21
 **Research boundary:** documents and historical evidence only
 **Access date for web sources:** 2026-07-21
@@ -42,7 +42,7 @@ remain separate concepts.
 
 ## 3. Source register
 
-The register contains **59 source records**. Pages from one institution are not
+The register contains **65 source records**. Pages from one institution are not
 automatically independent and institutional siblings count as one family unless a
 separate underlying primary record carries the claim; each edge row states which
 distinct families carry its load-bearing claim.
@@ -95,10 +95,10 @@ distinct families carry its load-bearing claim.
 | RDS-44 | Jonathan A. Noyalas, “Shepherdstown, Battle of,” Encyclopedia Virginia | Virginia Humanities scholarly history / Encyclopedia Virginia | Lee’s Army of Northern Virginia crossed from Maryland into Virginia at Boteler’s Ford on the night of 18 Sept.; Union V Corps crossed toward Virginia on 19-20 Sept. and returned to Maryland. | https://encyclopediavirginia.org/entries/shepherdstown-battle-of/ |
 | RDS-45 | Charles W. Snell, *Harpers Ferry Repels an Attack and Secures the Major Base of Operations for Sheridan’s Army, July 4, 1864-July 17, 1865* (1960), National Park Service | Federal historical study using primary records / Snell-NPS | B&O reconstruction to Martinsburg, the macadamized wagon road south from Martinsburg, proposed Winchester rail extension, and Oct.-Nov. 1864 wagon-train supply activity; does not identify one Harpers Ferry road crossing. | https://npshistory.com/publications/hafe/fed-fortifications.pdf |
 | RDS-46 | Ulysses S. Grant, *Personal Memoirs*, part 6 | Primary commander memoir / Grant | Sept. 1864 army-supply teams kept at Harpers Ferry for Sheridan’s Winchester operation; no exact team route or Potomac crossing method. | https://gutenberg.org/cache/epub/5865/pg5865-images.html |
-| RDS-47 | George Breck, wartime newspaper columns, chapter 7, New York State Military Museum | Primary artillery-officer correspondence / Breck-NYSM | 29-30 May 1862 Harpers Ferry bridge retreat; bridge washed out by 7 June; about sixty commissary/quartermaster teams traveled Harpers Ferry-Charles Town-Berryville-Winchester on 7-8 June over a gravelled and macadamized turnpike. | https://museum.dmna.ny.gov/unit-history/artillery/1st-artillery-regiment-light/battery-l-1st-artillery-regiment-light/battery-l-1st-artillery-regiment-light-george-breck-columns-chapter-7 |
+| RDS-47 | George Breck, wartime newspaper columns, chapter 7, New York State Military Museum | Primary artillery-officer correspondence / Breck-NYSM | 29-30 May 1862 Harpers Ferry bridge retreat; bridge washed out by 7 June; about sixty commissary/quartermaster teams arrived at Harpers Ferry from Winchester on 6 June, loaded there on 7 June, and returned through Charles Town and Berryville on 7-8 June over a gravelled and macadamized turnpike. Breck crossed the flooded river by skiff, but he does not say the teams crossed it. | https://museum.dmna.ny.gov/unit-history/artillery/1st-artillery-regiment-light/battery-l-1st-artillery-regiment-light/battery-l-1st-artillery-regiment-light-george-breck-columns-chapter-7 |
 | RDS-48 | Edward Smith, *Historic Resource Study: Williamsport, Maryland* (1979), National Park Service | Federal historical study using primary records / Smith-NPS | Most of Banks’s army crossed into Maryland at Williamsport on 26 May 1862, apparently by ferry followed by the canal bridge; does not assign one method to every wagon or train. | https://npshistory.com/publications/choh/williamsport-hrs.pdf |
 | RDS-49 | William T. Sherman, *Major-General Sherman’s Reports* (1865) | Primary official commander report / Sherman | Separate Jan.-Feb. 1865 corps routes, Union Causeway flooding, Sisters Ferry, Rivers/Beaufort/Binnaker/Holman/Kew/Guignard/Shilling crossings, State and Orangeburg-Edgefield roads, bridge repair, swamp, and mud limits. | https://upload.wikimedia.org/wikipedia/commons/c/c3/Major-General_Sherman%27s_reports_%28IA_majorgeneralsher00sher%29.pdf |
-| RDS-50 | U.S. War Department, *Official Records*, Series I, vol. 47, parts I-II | Primary subordinate reports and orders / Official Records | Parallel Salkehatchie approaches, Rivers and Buford Bridge orders, Robertsville-Lawtonville movement, wet roads, and unit-level timing; official records do not make separate columns one route. | https://www.civilwar.com/battles/918-official-record/series/volume/campaign/columbia-part-ii/243515-286-series-i-volume-xlvii-ii-serial-99-columbia-part-ii.html ; https://civilwar.com/official-record/917-columbia-part-i/242209-129-series-i-volume-xlvii-i-serial-98-columbia-part-i.html |
+| RDS-50 | U.S. War Department, *Official Records*, Series I, vol. 47, parts I-II | Primary subordinate reports, itineraries, and orders / Official Records | Howard independently reports Force's pontoon crossing below Orangeburg Bridge and Giles Smith's repair of the main bridge. Fourth Division itinerary and parallel orders corroborate broad Robertsville-Lawtonville and Cheraw-Laurel Hill routes, but not Platter's whole handling chains; separate columns remain separate. | https://archive.org/details/warofrebellion014701rootrich ; https://archive.org/details/warofrebellion014702rootrich |
 | RDS-51 | Mark L. Bradley, *The Civil War Ends, 1865*, U.S. Army Center of Military History | Federal professional-military history / Army CMH | Broad Carolinas rain, swamp, corduroy, artillery, and wagon constraints; not a substitute for exact unit intervals. | https://history.army.mil/portals/143/Images/Publications/catalog/75-17.pdf |
 | RDS-52 | National Park Service, CWSAC, “Plains Store” | Federal institutional battle register / NPS CWSAC | Augur advanced from Baton Rouge toward the Plains Store/Bayou Sara road intersection on 21 May 1863; the operation did not start at New Orleans. | https://www.nps.gov/civilwar/search-battles-detail.htm?battleCode=LA009 |
 | RDS-53 | U.S. Senate, *Relief of Telegraph Operators Who Served in the War of the Rebellion*, S. Doc. 251 (1904), reproducing War Department reports | Federal compilation of primary official reports / War Department-Senate | Department of the Gulf reports distinguish New Orleans communication from marches beginning at Baton Rouge or Brashear City toward Port Hudson and Bayou Teche; they do not prove a New Orleans-origin road march. | https://www.govinfo.gov/content/pkg/SERIALSET-04592_00_00-007-0251-0000/pdf/SERIALSET-04592_00_00-007-0251-0000.pdf |
@@ -108,6 +108,12 @@ distinct families carry its load-bearing claim.
 | RDS-57 | State Historical Society of Missouri, “Transportation Research Guide” | State historical-society research guide / SHSMO | Wire/Springfield/Telegraph Road naming and broad St. Louis-southwest Missouri reach; no dated claim-specific St. Louis-Rolla military road passage. | https://shsmo.org/research/guides/transportation |
 | RDS-58 | Ralph A. Wooster and Brett J. Derbes, “Civil War,” Handbook of Texas Online | State scholarly synthesis / TSHA | Galveston-Houston-Henderson Railroad dependence and Magruder’s 1 Jan. 1863 railroad-bridge movement; no Houston-Galveston wagon-road identity. | https://www.tshaonline.org/handbook/entries/civil-war |
 | RDS-59 | Texas Historical Commission, “Civil War Fortifications at Virginia Point” marker record | State historical-marker record / THC | The railroad bridge was the only mainland-Galveston connection and carried Magruder’s force on 31 Dec. 1862-1 Jan. 1863; it is negative road evidence, not a road crossing. | https://atlas.thc.texas.gov/Details?atlasnumber=5167008233&fn=print |
+| RDS-60 | Charles D. Collins Jr., *Battlefield Atlas of Price's Missouri Expedition of 1864* (2016), U.S. Army Combat Studies Institute | Federal professional-military study / Collins-Army | On 14 Oct. 1864 Price detached John B. Clark's brigade plus 500 of Jackman's brigade to cross the Missouri at Arrow Rock and attack Glasgow while the main army moved west toward Marshall. It does not independently name the Boonville-Arrow Rock Road or place that detachment on the road from Boonville. | https://purl.fdlp.gov/GPO/gpo74005 |
+| RDS-61 | U.S. War Department, *Official Records*, Series I, vol. 12, pt. 3 | Primary official correspondence / Official Records | Banks's 6 June 1862 Winchester dispatch expected a steam tug at Harpers Ferry to replace the washed-away bridge and separately discussed trains crossing at Williamsport; it does not assign Breck's sixty teams a river crossing or corroborate their exact road movement. | https://archive.org/details/3warofrebellion12secrrich |
+| RDS-62 | U.S. Congress, *Report of the Joint Committee on the Conduct of the War: Red River Expedition* (1865) | Federal investigative report reproducing primary testimony and records / Joint Committee | The Red River land column concentrated at Franklin and Berwick Bay and began from Franklin in March 1864. Cavalry later came up from New Orleans and Banks traveled from New Orleans to Alexandria, but neither fact is a New Orleans-origin army road operation. | https://archive.org/details/cu31924096461599 |
+| RDS-63 | U.S. War Department, *Official Records*, Series I, vol. 34, parts I-II | Primary official reports, correspondence, and orders / Official Records | Banks's Natchitoches-Mansfield approach, the road fork toward Marshall or Shreveport, and Confederate Shreveport-Keachi-Mansfield movement are exact; no report places a dated army or military-wagon passage on the separate Marshall-Shreveport Stagecoach Road. | https://archive.org/details/warofrebellion013401rootrich |
+| RDS-64 | U.S. War Department, *Official Records*, Series I, vol. 15 | Primary official reports and correspondence / Official Records | The 1862 Galveston evacuation and 1863 recapture used the railroad, railroad bridge, locomotives, and trains. A declined proposal for civilian subsistence transfer by vehicles from Eagle Grove does not establish a Houston-Galveston military road row. | https://archive.org/details/warofrebellion15unit |
+| RDS-65 | *History of Cooper County, Missouri* (1876) | Nineteenth-century county history / Cooper County history | On 16 Sept. 1861 Eppstein's battalion was ordered to guard the Lamine River bridge “on the road from Boonville to Arrow Rock”; this independently fixes the road and a dated military bridge action, but not Price's 14 Oct. 1864 passage. | https://archive.org/details/cu31924028846463 |
 
 ## 4. Candidate road-node register
 
@@ -141,8 +147,8 @@ D503 anchor without a later law decision.
 | RD-N22 | Pine Bluff; river/road supply origin | CT-32 | April 1864 resupply destination; only operation-specific evidence. | RDS-20 |
 | RD-N23 | Alexandria, Louisiana; river/road depot | CT-33; WN-18/WN-40 | Red River campaign road origin after river movement. | RDS-18, RDS-19 |
 | RD-N24 | Mansfield-Pleasant Hill corridor; crossroads/battle localities | Unassigned | 8-9 Apr. 1864 high-water-mark on the Shreveport approach; no D503 anchor assignment. | RDS-18, RDS-19 |
-| RD-N25 | Shreveport; river/road depot and Trans-Mississippi headquarters | CT-34; RN-29/WN-19 | Intended Red River campaign objective; the 1864 Union operation did not reach it. | RDS-18, RDS-19 |
-| RD-N26 | Marshall, Texas; road/rail supply center | CT-35; RN-30 | Wartime supply-center status and a civilian stage road toward Shreveport are supported; an exact military passage is not. | RDS-21, RDS-54, RDS-55 |
+| RD-N25 | Shreveport; river/road depot and Trans-Mississippi headquarters | CT-34; RN-29/WN-19 | Intended Red River campaign objective; the 1864 Union operation did not reach it. Confederate Shreveport-Keachi movement does not establish the Marshall road. | RDS-18, RDS-19, RDS-63 |
+| RD-N26 | Marshall, Texas; road/rail supply center | CT-35; RN-30 | Wartime supply-center status and a civilian stage road toward Shreveport are supported; the 1864 road fork toward Marshall is separate, and an exact military passage on the named Marshall-Shreveport road is not proved. | RDS-21, RDS-54, RDS-55, RDS-63 |
 | RD-N27 | Martinsburg, Virginia/West Virginia; pike town and depot | Unassigned | Banks passed north from Winchester on 25 May 1862; the town is not an assigned D503 anchor. | RDS-23, RDS-24 |
 | RD-N28 | Williamsport, Maryland; Potomac crossing | Unassigned | Banks’s column crossed northward on 25-26 May 1862, most of the army apparently by ferry and canal bridge; the train’s exact method remains unresolved. This crossing cannot substitute for Harpers Ferry or Shepherdstown/Boteler’s Ford. | RDS-23, RDS-24, RDS-48 |
 | RD-N29 | Meridian, Mississippi; rail-road objective and junction | CT-27; RN-26 | Sherman reached it from Vicksburg/Jackson in Feb. 1864 and returned in late Feb.-early Mar.; the operation was destructive, not routine service. | RDS-30, RDS-31 |
@@ -151,9 +157,9 @@ D503 anchor without a later law decision.
 | RD-N32 | Springfield/Wilson’s Creek, Missouri; road junction and military base | CT-30; BATTLE-WILSONS-CREEK | Wire/Military Road troop and supply use is exact south of Springfield; northern naming remains inconsistent. | RDS-38, RDS-40 |
 | RD-N33 | Fayetteville-Fort Smith approach, Arkansas; Wire/Military Road limit | Unassigned | Southern road limit for documented Missouri-Arkansas military use; it creates no CT-30-to-CT-32 connection. | RDS-38 |
 | RD-N34 | Shepherdstown/Boteler’s Ford; Potomac ford and battle locality | Unassigned | Lee’s army crossed Maryland-to-Virginia on 18 Sept. 1862; Porter’s V Corps crossed toward Virginia on 19-20 Sept. and withdrew to Maryland. The ford is not Harpers Ferry or Williamsport. | RDS-43, RDS-44 |
-| RD-N35 | Boonville, Missouri; Missouri River road origin | CT-29 evidentiary bookkeeping only | Sterling Price’s army entered the exact Boonville-Arrow Rock Road on 14 Oct. 1864; the D503 anchor set does not place a Boonville point. | RDS-56 |
-| RD-N36 | Arrow Rock, Missouri; Missouri River road waypoint/landing town | CT-29 evidentiary bookkeeping only | Dated road waypoint for Price’s eastbound movement; road and river modes remain separate. | RDS-56 |
-| RD-N37 | Glasgow, Missouri; target beyond the exact road segment | CT-29 evidentiary bookkeeping only | Price’s 14 Oct. 1864 objective beyond Arrow Rock; RDS-56 does not prove that the named Boonville-Arrow Rock Road continued to Glasgow. | RDS-56 |
+| RD-N35 | Boonville, Missouri; Missouri River road origin | Unassigned (CT-29 theater coverage only; no D503 anchor) | The road identity and a separate 1861 Lamine River bridge action are exact. Missouri DNR attributes Price's 14 Oct. 1864 eastbound passage to this road, while the Army atlas fixes the detached force and Arrow Rock order but not its Boonville origin. | RDS-56, RDS-60, RDS-65 |
+| RD-N36 | Arrow Rock, Missouri; Missouri River road waypoint/landing town | Unassigned (CT-29 theater coverage only; no D503 anchor) | Clark's brigade plus 500 of Jackman's brigade was ordered to cross the Missouri here on 14 Oct. 1864 and attack Glasgow. The crossing is operation-specific; road and river modes remain separate. | RDS-56, RDS-60 |
+| RD-N37 | Glasgow, Missouri; target beyond the exact road segment | Unassigned (CT-29 theater coverage only; no D503 anchor) | The 14 Oct. 1864 detached-force objective lay beyond Arrow Rock; neither source proves that the named Boonville-Arrow Rock Road continued to Glasgow. | RDS-56, RDS-60 |
 
 ## 5. Candidate road-edge and service-evidence register
 
@@ -173,16 +179,16 @@ read-only substrate could consider after curing the stated gap.
 | RD-E08 | RD-N17 Jackson—RD-N19 Vicksburg via RD-N18; CT-26→CT-25 | Jackson/Champion Hill/Raymond/Jackson-road westward campaign passage; one-way, 15-17 May 1863 | Full operation-specific return axis | Multiple parallel roads; Bakers Creek bridge/road condition and a prior cloudburst changed the route; rail remains separate | **Verified**: RDS-14 + RDS-15 + RDS-17 | Operation evidence only |
 | RD-E09 | RD-N20 Little Rock—RD-N21 Camden; CT-32 internal | Military Road from Little Rock through Benton and Arkadelphia, then the Washington-Camden Road; southbound 23 Mar.-15 Apr. 1864 and northbound retreat 26 Apr.-3 May | Exact operation-specific campaign passage | Ouachita and Saline crossings, horrible roads, rain, mud, pontoon work, and Jenkins’ Ferry bound the operation; it is not a standing Little Rock-Shreveport road | **Verified**: Sommer-NARA engineer map RDS-42 + Encyclopedia of Arkansas RDS-32 | Operation evidence only |
 | RD-E10 | RD-N23 Alexandria—RD-N24 Mansfield/Pleasant Hill; CT-33 to unassigned endpoint | Red River Campaign army/wagon approach; northwest then southeast retreat, Mar.-Apr. 1864 | Full operation-specific passage to the battle corridor, not Shreveport | Road columns, rain/mud, congestion, river separation, and defeat bounded the operation; no Shreveport completion | **Verified**: Army University Press RDS-18 + Venable map RDS-19 | Operation evidence only; terminal CT unresolved |
-| RD-E11 | RD-N26 Marshall—RD-N25 Shreveport; CT-35→CT-34 | Marshall-Shreveport Stagecoach Road via the Waskom direction; civilian bidirectionality and stage service continued during the Civil War | Named civilian route and wartime stage service; military use unresolved | Dirt road was often impassable in rain. The source’s comparison to a later highway is excluded. No source fixes a dated army/wagon passage, military crossing set, or direction on this named road. | **Inferred**: route and civilian service RDS-54; military context RDS-21/RDS-55 does not carry the road claim | Ineligible until a claim-specific military family and independent corroboration resolve |
+| RD-E11 | RD-N26 Marshall—RD-N25 Shreveport; CT-35→CT-34 | Marshall-Shreveport Stagecoach Road via the Waskom direction; civilian bidirectionality and stage service continued during the Civil War | Named civilian route and wartime stage service; military use unresolved | Dirt road was often impassable in rain. The source's comparison to a later highway is excluded. Official Records fix military movement on the Natchitoches-Mansfield-Keachi-Shreveport approach and a separate fork toward Marshall, not a dated army/wagon passage, crossing set, or direction on this named road. | **Inferred**: route and civilian service RDS-54; military context RDS-21/RDS-55 and route-separation evidence RDS-63 do not carry the exact road claim | Ineligible until a claim-specific military family and independent corroboration resolve |
 | RD-E12 | RD-N21 Camden—RD-N22 Pine Bluff via Camden-Pine Bluff Road/Marks’ Mills and Warren Road junction; CT-32 internal | Eastbound supply-wagon movement, 25 Apr. 1864; a westbound convoy had reached Camden 20 Apr. | Exact operation-specific supply passage | Several-hundred-wagon train, muddy Moro Bottoms, escort/security, and capture at Marks’ Mills prove a dated route, not permanence or safe return | **Verified**: primary Official Records RDS-33 + Encyclopedia of Arkansas RDS-34 | Operation evidence only |
 | RD-E13 | RD-N19 Vicksburg—RD-N17 Jackson—RD-N29 Meridian; CT-25→CT-26→CT-27 | Sherman’s Meridian Expedition; eastbound 3-14 Feb. 1864 and westbound return by 3 Mar. | Full operation-specific army passage with mapped endpoints/dates | Multiple columns and railroad-destruction objectives; the route does not establish a named permanent road, New Orleans continuation, or routine bidirectionality | **Verified**: Army CMH RDS-30 + NPS RDS-31 | Operation evidence only |
 | RD-E14 | RD-N32 Springfield/Wilson’s Creek—RD-N33 Fayetteville/Fort Smith approach; CT-30 to unassigned endpoint | Wire Road/Military Road; physical bidirectionality and troop/supply use, 1861-65 | Named military-road segment/family south of Springfield | Exact traces and bridges varied; the southern endpoint lies outside the D503 anchor set and the row cannot be extended to Little Rock | **Verified**: NPS military-use history RDS-38 + Lloyd wartime road map RDS-39 | Candidate physical segment only; no CT-30→CT-32 edge |
 | RD-E15 | RD-N31 Rolla—RD-N32 Springfield; CT-30 internal | Union wagon-supply route from the Rolla railhead through Lebanon toward Springfield, especially Jan.-Feb. 1862 | Operation-specific supply corridor, exact road name unresolved | Army CMH fixes the base, direction, and campaign; NPS/period maps do not establish one stable named road, surface, or uninterrupted availability | **Inferred**: Army CMH RDS-40 + cartographic/context RDS-38/RDS-39 | Ineligible until the exact named route and claim-specific second family resolve |
 | RD-E16 | RD-N34 Shepherdstown/Boteler’s Ford; unassigned Potomac crossing internal | Boteler’s Ford; Lee’s Army of Northern Virginia crossed Maryland-to-Virginia on the night of 18 Sept. 1862; Porter’s V Corps crossed toward Virginia on 19-20 Sept. and withdrew to Maryland | Exact ford, armies, dates, and directions for one campaign crossing sequence | Ford conditions and control changed during the action; no road extension to RD-N05 Harpers Ferry, RD-N28 Williamsport, or RD-N06 Winchester follows | **Verified**: NPS CWSAC RDS-43 + Encyclopedia Virginia RDS-44 | Operation evidence only; crossing remains unassigned and non-routine |
-| RD-E17 | RD-N05 Harpers Ferry—RD-N06 Winchester via Charles Town and Berryville; CT-02→CT-04 | Gravelled/macadamized turnpike; about sixty Union commissary and quartermaster teams moved south on 7-8 June 1862 after arriving northbound from Winchester | Exact one-way supply operation with physical return evidence | The Potomac/Shenandoah bridge had washed away by 7 June; Breck crossed by skiff, but no source says how the teams reached the Harpers Ferry loading point. Separate 1864 Harpers Ferry/Martinsburg supply evidence does not cure the 1862 crossing gap. | **Inferred**: exact operation RDS-47 only; separate corridor context RDS-45/RDS-46 | Ineligible until the Harpers Ferry crossing and a claim-specific second family resolve |
-| RD-E18 | RD-N35 Boonville—RD-N36 Arrow Rock toward RD-N37 Glasgow; CT-29 evidentiary bookkeeping only | Boonville-Arrow Rock Road; Sterling Price’s Confederate army moved eastward on 14 Oct. 1864 toward Glasgow | Exact named road segment and dated army passage; continuation beyond Arrow Rock unproved | Period surface and crossing set are unresolved; Arrow Rock’s river landing does not create a water interchange or extend the named road to Glasgow | **Inferred**: Missouri DNR RDS-56 only; Lloyd map RDS-39 and SHSMO context RDS-57 are not claim-specific corroboration | Ineligible until a second family and D503 endpoint law resolve |
+| RD-E17 | RD-N05 Harpers Ferry—RD-N06 Winchester via Charles Town and Berryville; CT-02→CT-04 | Gravelled/macadamized turnpike; about sixty Union commissary and quartermaster teams arrived northbound from Winchester on 6 June 1862, loaded on 7 June, and returned south on 7-8 June | Exact round-trip supply operation, with the load site bounded to Harpers Ferry rather than a specific riverbank | The bridge had washed away, and Breck personally crossed the flooded river by skiff. The teams approached from the Virginia-side road, however, and no source says they crossed the Potomac or needed to do so; their exact loading-side/depot handling is unspecified. A projected steam tug and separate 1864 supply evidence do not cure the claim-specific second-family gap. | **Inferred**: exact operation RDS-47 only; bridge context RDS-61 and separate corridor context RDS-45/RDS-46 do not corroborate the team movement | Ineligible until exact loading-side handling and a claim-specific second family resolve |
+| RD-E18 | RD-N35 Boonville—RD-N36 Arrow Rock; Unassigned→Unassigned (CT-29 historical coverage only) | Boonville-Arrow Rock Road; Missouri DNR attributes an eastbound 14 Oct. 1864 Price-army passage toward Glasgow, while the Army atlas specifies Clark's brigade plus 500 of Jackman's brigade as the detached force ordered to cross at Arrow Rock | Exact road identity and one-family attribution of the 1864 named-road passage. The Army atlas independently corroborates the date, detachment, Arrow Rock crossing order, and Glasgow target, but not travel on the named road or a Boonville origin. | The 1864 surface and pre-Arrow Rock crossing set remain unresolved. The road's Lamine River bridge had separate military use in 1861; that does not prove the 1864 passage. Arrow Rock's operation-specific river crossing creates no permanent water interchange, and Glasgow is a target beyond—not an endpoint of—the named road. | **Inferred**: exact 1864 named-road passage RDS-56 only; RDS-60 carries the detached-force operation and RDS-65 the road/1861 bridge, not a second claim-specific 1864 passage family | Ineligible until a claim-specific 1864 second family and D503 endpoint law resolve |
 
-### 5.1 D509 Potomac crossing and Winchester-approach register
+### 5.1 D509/D511 Potomac crossing and Winchester-approach register
 
 These six rows prevent site, date, direction, crossing method, and train evidence from
 being merged. A `Verified` row corroborates only the stated operation. An `Inferred`
@@ -192,16 +198,17 @@ row remains one-family or crossing-incomplete evidence.
 |---|---|---|---|---|
 | RD-P01 | 29-30 May 1862; Union Harpers Ferry garrison and Battery L; Virginia/Bolivar side to Maryland Heights | Harpers Ferry streets to the then-current bridge and Maryland Heights road | Infantry, civilians, teams, horses, guns, and caissons crossed; artillery horses were led singly and carriages drawn by hand | **Inferred**: Breck RDS-47 only; exact operation, no permanence |
 | RD-P02 | 25-26 May 1862; Banks’s army with trains in advance; Winchester north through Martinsburg to Williamsport and Maryland | Martinsburg Pike to RD-N28 Williamsport | Most of the army apparently used the ferry and then the canal bridge; no source assigns that method to every train wagon | **Verified**: RDS-23/RDS-24; method limit RDS-48; same claim as RD-E03 |
-| RD-P03 | 7-8 June 1862; about sixty Union commissary/quartermaster teams; Harpers Ferry south to Winchester after arriving northbound | Turnpike through Charles Town and Berryville | Gravelled/macadamized road carried loaded teams. The bridge had washed away before loading; Breck’s skiff passage does not prove the teams’ river method. | **Inferred**: RDS-47 only; same claim as RD-E17 |
+| RD-P03 | 6-8 June 1862; about sixty Union commissary/quartermaster teams; Winchester north to Harpers Ferry, then loaded return south | Turnpike through Berryville and Charles Town | Gravelled/macadamized road carried the teams in both directions. They approached Harpers Ferry from the Virginia side; Breck's personal skiff passage and the lost bridge do not prove or require a team Potomac crossing. The exact loading-side handling remains unspecified. | **Inferred**: exact team operation RDS-47 only; RDS-61 supplies bridge context, not a second team-movement family; same claim as RD-E17 |
 | RD-P04 | Night 18 Sept. and 19-20 Sept. 1862; Lee’s Army of Northern Virginia and Porter’s V Corps; Maryland-to-Virginia, then Union crossing and withdrawal | RD-N34 Boteler’s Ford, one mile south of Shepherdstown | Named ford; Lee’s army retreated through it, Union detachments crossed toward Virginia, and survivors returned to Maryland | **Verified**: RDS-43/RDS-44; same claim as RD-E16 |
 | RD-P05 | 15, 24, and 25 June 1863; Ewell’s Second, Hill’s Third, and Longstreet’s First Corps; northward Virginia-to-Maryland invasion | Ewell divided between Williamsport and Shepherdstown; Hill used Boteler’s Ford; Longstreet used Williamsport | Boteler’s is a named ford. The source does not assign a method at Williamsport, distribute Ewell’s trains between sites, or join the crossings. | **Inferred**: NPS chronology RDS-07 only |
 | RD-P06 | Sept.-Nov. 1864; Sheridan’s army supply trains; Harpers Ferry and Martinsburg south toward Winchester/Valley and returning north | Separate Harpers Ferry and Martinsburg depot origins; macadamized wagon road south from Martinsburg | Teams were kept at Harpers Ferry in September; large wagon trains used both origins in Oct.-Nov. The sources do not prove one Harpers Ferry-Martinsburg-Winchester road or a Potomac road-crossing method. | **Verified supply-system context, Inferred road interval**: RDS-45/RDS-46 |
 
 The register therefore resolves Boteler’s Ford and several dated Harpers Ferry or
-Williamsport operations, but it leaves the June 1862 Harpers Ferry team crossing,
-the 1863 Williamsport methods, and the 1864 depot-to-road joins unassigned.
+Williamsport operations. The June 1862 evidence does not require a team Potomac
+crossing, but it leaves the Harpers Ferry loading-side handling, the 1863
+Williamsport methods, and the 1864 depot-to-road joins unassigned.
 
-### 5.2 D509 Sherman Georgia/Carolinas interval register
+### 5.2 D509/D511 Sherman Georgia/Carolinas interval register
 
 The thirteen rows below retain each corps, wing, cavalry, or participant column. They
 are subordinate evidence for RD-E06, not candidate services or a composed route.
@@ -213,14 +220,14 @@ are subordinate evidence for RD-E06, not candidate services or a composed route.
 | RD-SI03 | 31 Jan.-3 Feb.; XV Corps; Pocotaligo north by an inland parallel route | Hickory Hill-Loper’s Crossroads-Anglesey Post Office-Beaufort Bridge | Pioneers removed felled trees and rebuilt bridges; the corps reached Loper’s Crossroads by 2 Feb. and was assigned Beaufort Bridge, separate from XVII Corps at Rivers Bridge. | **Verified**: Sherman report RDS-49 + official route map RDS-10 |
 | RD-SI04 | 2-8 Feb.; Williams’s two XX Corps divisions; Sisters Ferry east bank toward the South Carolina Railroad | Lawtonville-Allendale-Beaufort Bridge-Graham’s Station | Flood-delayed column received a distinct route and reached Graham’s Station on 8 Feb.; no Platter or XV Corps interval is substituted. | **Verified**: Sherman report RDS-49 + official route map RDS-10 |
 | RD-SI05 | 2-10 Feb.; Kilpatrick’s cavalry; Sisters Ferry area toward Blackville | Barnwell route to Blackville, then toward Aiken | Cavalry crossed on pontoons by 2 Feb. and moved by Barnwell; this is not the XX Corps Lawtonville route or either right-wing bridge approach. | **Verified**: Sherman report RDS-49 + official route map RDS-10 |
-| RD-SI06 | 5-11 Feb.; Corse’s Fourth Division, XV Corps, separated rear column; Robertsville north toward Orangeburg | Robertsville-Lawtonville-Hickory Hill/Coosawhatchie-Whippy Swamp-Graham’s Station-burned Buford Bridge-unnamed South Edisto ferry-Orangeburg Road | Ax work, heavy rain, corduroy, a swamp bridge, and a delayed supply train bound the route. Platter names no South Edisto ferry, so it cannot be assigned to Binnaker’s, Holman’s, Kew, or Guignard’s. | **Inferred**: Platter RDS-27; OR context RDS-50 does not corroborate the whole chain |
+| RD-SI06 | 5-11 Feb.; Corse’s Fourth Division, XV Corps, separated rear column; Robertsville north toward Orangeburg | Robertsville-Lawtonville-Hickory Hill/Coosawhatchie-Whippy Swamp-Graham’s Station-burned Buford Bridge-unnamed South Edisto ferry-Orangeburg Road | Ax work, heavy rain, corduroy, a swamp bridge, and a delayed supply train bound the route. Platter names no South Edisto ferry, so it cannot be assigned to Binnaker’s, Holman’s, Kew, or Guignard’s. | **Inferred**: Platter RDS-27; the Fourth Division itinerary in RDS-50 corroborates the broad route only, not the burned bridge, unnamed ferry, or whole handling chain |
 | RD-SI07 | 11-12 Feb.; XVII Corps; South Edisto north/east toward Orangeburg | Binnaker’s Bridge to Orangeburg | Corps-specific crossing and direct Orangeburg movement; it is not XV Corps at Holman’s Bridge. | **Verified**: Sherman report RDS-49 + official route map RDS-10 |
 | RD-SI08 | 11-12 Feb.; XV Corps; South Edisto north toward Poplar Springs | Holman’s Bridge to Poplar Springs | Supporting route remained separate from XVII Corps and from the left-wing/cavalry crossings. | **Verified**: Sherman report RDS-49 + official route map RDS-10 |
 | RD-SI09 | 11-12 Feb.; left wing and cavalry; South Edisto toward the Orangeburg-Edgefield Road | Kew and Guignard’s Bridges to Orangeburg-Edgefield Road holding point | The official report preserves two named crossings but does not distribute every left-wing or cavalry unit between them. | **Verified bounded order**: Sherman report RDS-49 + official route map RDS-10 |
-| RD-SI10 | 12 Feb.; XVII Corps; into Orangeburg | Orangeburg Bridge, with Force’s division crossing by pontoon about two miles below | Enemy partially burned the bridge; one division crossed below by pontoon, then the bridge was taken and repaired for the corps. No other corps inherits this method. | **Inferred exact handling**: Sherman report RDS-49 only; map RDS-10 supplies route context |
+| RD-SI10 | 12 Feb.; XVII Corps; into Orangeburg | Orangeburg Bridge, with Force’s division crossing by pontoon about two miles below | Enemy partially burned the bridge; one division crossed below by pontoon, then Giles Smith's division took and repaired the main bridge for the corps. No other corps inherits this method. | **Verified exact handling**: Sherman report RDS-49 + Howard's independent subordinate report in RDS-50 |
 | RD-SI11 | 13-15 Feb.; XVII Corps; Orangeburg north toward Columbia | State Road | The report identifies the corps road but supplies no reusable surface or bridge condition for the full interval. | **Verified bounded route**: Sherman report RDS-49 + official route map RDS-10 |
 | RD-SI12 | 13-15 Feb.; XV Corps; Poplar Springs north toward Columbia | Shilling’s Bridge over North Edisto, country road to State Road at Zeigler’s, then Little Congaree Bridge | Fresh-overflow mud impeded the Little Congaree approach; the partially burned bridge required repair before artillery passage. The route joins the State Road only at Zeigler’s. | **Verified**: Sherman report RDS-49 + official route map RDS-10 |
-| RD-SI13 | 5 and 8-9 Mar.; Platter’s Fourth Division XV Corps column; Cheraw toward Fayetteville | 5 Mar. camp while XVII Corps crossed Great Pee Dee; 8 Mar. Laurensburgh Road; 9 Mar. alternate road through Laurel Hill toward Juniper Creek Swamp | The 5 Mar. entry records no heavy-road march. Rain and cut-up roads blocked the Laurensburgh objective on 8 Mar.; on 9 Mar. treacherous road, attempted corduroy, a broken bridge, and slow wagons stretched the division over miles. | **Inferred**: Platter RDS-27 only; broad rain/corduroy context RDS-51 is not claim-specific corroboration |
+| RD-SI13 | 5 and 8-9 Mar.; Platter’s Fourth Division XV Corps column; Cheraw toward Fayetteville | 5 Mar. camp while XVII Corps crossed Great Pee Dee; 8 Mar. Laurensburgh Road; 9 Mar. alternate road through Laurel Hill toward Juniper Creek Swamp | The 5 Mar. entry records no heavy-road march. Rain and cut-up roads blocked the Laurensburgh objective on 8 Mar.; on 9 Mar. treacherous road, attempted corduroy, a broken bridge, and slow wagons stretched the division over miles. | **Inferred**: Platter RDS-27; the Fourth Division itinerary in RDS-50 corroborates Cheraw-Laurel Hill-Juniper Creek only, not the 8-9 Mar. handling details; broad RDS-51 context is not claim-specific |
 
 ## 6. Explicit non-link register
 
@@ -235,11 +242,11 @@ candidate row records narrower physical passage.
 | RD-NL04 | RD-N08—RD-N09; unassigned→CT-06 | The Stony Creek-Dinwiddie-Boydton bypass is not war-long, routine, or bidirectional. Resolving Stony Creek proves that it is not RN-10 Weldon and cannot be mapped to CT-09 by convenience. | RD-E04 |
 | RD-NL05 | RD-N10—RD-N11—RD-N13; CT-14/12 and unassigned | Sherman’s divided corps marches do not create one permanent Atlanta-Savannah-Goldsboro road, a reverse service, or adjacency through Columbia. The RD-SI rows remain separate; D503’s closed anchor set leaves Columbia and Goldsboro omitted. | RD-E05, RD-E06; RD-SI01 through RD-SI13; D503 |
 | RD-NL06 | RN-12 Louisville—RN-13 Nashville—RN-14 Chattanooga; CT-18→CT-20→CT-21 | The Louisville-Nashville turnpike was real and militarily used, while the mapped Nicholasville-Chattanooga “Great National Military Road” was proposed. Neither establishes a completed parallel Louisville-Nashville-Chattanooga through-road service. | RDS-13, RDS-36, RDS-37; existing CTS-R-11, CTS-R-12, CTI-03, and CTI-04 |
-| RD-NL07 | New Orleans and RD-N14—RD-N19—RD-N29; CT-28 versus CT-25/26/27 | The May 1863 Vicksburg and Feb.-Mar. 1864 Meridian operations remain separate. Department of the Gulf evidence starts the relevant road marches at Baton Rouge or Brashear City, while New Orleans appears as a river/rail/telegraph base; no qualifying New Orleans-origin road operation toward the Mississippi interior was found. | RD-E07, RD-E08, RD-E13; RDS-30, RDS-31, RDS-52, RDS-53 |
+| RD-NL07 | New Orleans and RD-N14—RD-N19—RD-N29; CT-28 versus CT-25/26/27 | The May 1863 Vicksburg and Feb.-Mar. 1864 Meridian operations remain separate. Department of the Gulf evidence starts relevant road marches at Baton Rouge, Brashear City, Franklin, or Berwick Bay. New Orleans was a river/rail/telegraph base and a source of later-arriving cavalry or commander travel, not the origin of a qualifying army road operation toward the Mississippi interior. | RD-E07, RD-E08, RD-E13; RDS-30, RDS-31, RDS-52, RDS-53, RDS-62 |
 | RD-NL08 | RD-N20—RD-N21—RD-N22; CT-32 | Exact Little Rock-Camden and Camden-Pine Bluff operations do not compose a routine through service or establish Little Rock-to-Shreveport/Arkansas Post roads. | RD-E09, RD-E12; existing CTNL-08 and CTNL-18 boundaries |
 | RD-NL09 | RD-N23—RD-N24—Shreveport; CT-33→CT-34 | Banks’s army reached Mansfield/Pleasant Hill and retreated. It did not complete the intended large-force road/river movement to Shreveport, and no Marshall endpoint follows from the plan. | RD-E10; RDS-18, RDS-19, RDS-55 |
-| RD-NL10 | RD-N26 Marshall—RD-N25 Shreveport; CT-35→CT-34 | RDS-54 fixes a civilian stage road and wartime stage service, but supply-center proximity, the later-highway comparison, and mixed rail/lake context do not prove a dated military wagon passage, crossing set, road service, or interchange. | RD-E11; RDS-21, RDS-54, RDS-55; existing CTNL-05 |
-| RD-NL11 | CT-29 Missouri River-St. Louis, CT-30 Missouri Ozarks, and CT-36 Houston-Galveston | RD-E18 is one exact CT-29 army-road segment below the two-family floor. It cannot be joined to St. Louis-Rolla rail or CT-30 Wire-Road rows. CT-36 evidence instead identifies the Galveston-Houston-Henderson Railroad and Virginia Point railroad bridge; rail movement cannot substitute for a Houston-Galveston wagon road. | RD-E14, RD-E15, RD-E18; RDS-38, RDS-39, RDS-40, RDS-41, RDS-56, RDS-57, RDS-58, RDS-59; D503; existing CTNL-17, CTNL-18, and CTNL-16 |
+| RD-NL10 | RD-N26 Marshall—RD-N25 Shreveport; CT-35→CT-34 | RDS-54 fixes a civilian stage road and wartime stage service. Official military movement on the Natchitoches-Mansfield-Keachi-Shreveport approach and its separate Marshall fork, supply-center proximity, the later-highway comparison, and mixed rail/lake context do not prove a dated military wagon passage, crossing set, service, or interchange on the exact Marshall-Shreveport road. | RD-E11; RDS-21, RDS-54, RDS-55, RDS-63; existing CTNL-05 |
+| RD-NL11 | CT-29 Missouri River-St. Louis, CT-30 Missouri Ozarks, and CT-36 Houston-Galveston | RD-E18 remains an unassigned named-road segment below the two-family floor; it cannot be joined to St. Louis-Rolla rail or CT-30 Wire-Road rows. Its Arrow Rock crossing is operation-specific, not a water interchange, and Glasgow is only the target beyond the segment. CT-36 evidence identifies railroad movement and the Virginia Point railroad bridge; a declined civilian vehicle-transfer proposal cannot substitute for a Houston-Galveston military wagon road. | RD-E14, RD-E15, RD-E18; RDS-38, RDS-39, RDS-40, RDS-41, RDS-56, RDS-57, RDS-58, RDS-59, RDS-60, RDS-64, RDS-65; D503; existing CTNL-17, CTNL-18, and CTNL-16 |
 
 ## 7. Road/rail/water/ferry/depot interchange register
 
@@ -258,56 +265,68 @@ substrate; none is modified here.
 | RD-I07 | RD-E07, RD-E08, and RD-E13 at RD-N17 Jackson | RN-25 and CTS-R-22 and CTS-R-23 rail context | May 1863 and Feb. 1864 operations remain distinct; road occupation/damage does not declare rail operability | Verified operation context only |
 | RD-I08 | RD-E07 and RD-E08 at RD-N19 and RD-N14 | RN-24, WN-12, WN-15, CTS-W-10, and CTI-02 | 30 Apr.-17 May 1863; landing, battery passage, road march, rail transfer, and city control remain separate | Verified operation context only |
 | RD-I09 | RD-E13 at RD-N29 Meridian | RN-26 and CTS-R-23/CTS-R-24 rail-junction context | 14-20 Feb. 1864; destructive army arrival does not establish rail operability, road service, or a New Orleans transfer | Verified operation context only; RDS-30/RDS-31 |
-| RD-I10 | RD-E17 at RD-N05 Harpers Ferry | RN-05/B&O plus canal, river, bridge, and depot context | 29-30 May 1862 bridge movement differs from the 7-8 June supply loading after the bridge washed out; 1864 Harpers Ferry and Martinsburg depots remain separate origins | Inferred operation-specific transfer only; RDS-45, RDS-46, RDS-47; no road-crossing service |
+| RD-I10 | RD-E17 at RD-N05 Harpers Ferry | RN-05/B&O plus canal, river, bridge, and depot context | 29-30 May 1862 bridge movement differs from the 6-8 June teams arriving from Winchester, loading, and returning after the bridge washed out; the teams' exact loading-side handling is unknown, and 1864 Harpers Ferry and Martinsburg depots remain separate origins | Inferred operation-specific transfer only; RDS-45, RDS-46, RDS-47, RDS-61; no team Potomac crossing or road-crossing service inferred |
 
 ## 8. Theater coverage
 
 | D503 teaching theater | CTs | Result of this pass |
 |---|---|---|
-| Chesapeake Approaches | CT-01-04, CT-08 | The Potomac register separates Harpers Ferry, Williamsport, and Shepherdstown/Boteler’s Ford operations. Boteler’s Ford is Verified; the Harpers Ferry-Winchester supply row remains Inferred because its June 1862 river join and second family are missing. CT-08 has no strategic-road row. |
+| Chesapeake Approaches | CT-01-04, CT-08 | The Potomac register separates Harpers Ferry, Williamsport, and Shepherdstown/Boteler’s Ford operations. Boteler’s Ford is Verified. The Harpers Ferry-Winchester supply row does not require a team Potomac crossing, but remains Inferred because the loading-side handling and claim-specific second family are missing. CT-08 has no strategic-road row. |
 | Virginia Heartland | CT-05-07 | Stony Creek Station-Dinwiddie Court House-Boydton Plank Road is resolved as a dated bypass into Petersburg, but Stony Creek is outside the closed anchors; no Richmond-Lynchburg road service is established. |
-| Atlantic Coast | CT-09-13 | Thirteen Sherman interval rows separate the wings, corps, cavalry, ferries, bridges, roads, and corrected 5/8-9 Mar. dates. They remain operation evidence; D503 requires Goldsboro/Columbia omission, and no Charleston/Port Royal road edge is proved. |
+| Atlantic Coast | CT-09-13 | Thirteen Sherman interval rows separate the wings, corps, cavalry, ferries, bridges, roads, and corrected 5/8-9 Mar. dates. RD-SI10's Orangeburg handling is now independently corroborated; RD-SI06 and RD-SI13 retain their one-family handling limits. All remain operation evidence; D503 requires Goldsboro/Columbia omission, and no Charleston/Port Royal road edge is proved. |
 | Georgia-Alabama Interior | CT-14-17 | Atlanta-Savannah is operation-specific; no routine Atlanta-Macon-Savannah, Augusta, Montgomery, or Mobile road graph is established. |
 | Ohio-Tennessee | CT-18-24 | The evidence confirms rail/river depots plus local wagon delivery, not a Louisville-Nashville-Chattanooga through road. No CT-19/22/23/24 road rows meet the floor. |
-| Mississippi Spine | CT-25-28 | Two May 1863 rows plus the separate Feb.-Mar. 1864 Vicksburg-Jackson-Meridian operation are exact. New Orleans-base evidence resolves into river, rail, or telegraph connections before road marches beginning at Baton Rouge or Brashear City, so no New Orleans-origin road continuation follows. |
-| Trans-Mississippi | CT-29-36 | Little Rock-Camden and Camden-Pine Bluff remain exact and independently corroborated; CT-30 has bounded Wire/Military Road evidence. CT-29 gains one Inferred Boonville-Arrow Rock army-road segment. Marshall-Shreveport lacks military-road corroboration, Banks never completed Alexandria-Shreveport, and CT-36 remains rail-bridge evidence rather than a road row. |
+| Mississippi Spine | CT-25-28 | Two May 1863 rows plus the separate Feb.-Mar. 1864 Vicksburg-Jackson-Meridian operation are exact. The Red River land column also concentrated at Franklin/Berwick Bay, not New Orleans. New Orleans river, rail, telegraph, later-cavalry, and commander-travel evidence therefore supplies no New Orleans-origin army road continuation. |
+| Trans-Mississippi | CT-29-36 | Little Rock-Camden and Camden-Pine Bluff remain exact and independently corroborated; CT-30 has bounded Wire/Military Road evidence. Boonville, Arrow Rock, and Glasgow remain unassigned under D503; the Inferred RD-E18 segment ends at Arrow Rock, with Glasgow only its target beyond. Marshall-Shreveport lacks exact military-road corroboration, Banks never completed Alexandria-Shreveport, and CT-36 remains rail/railroad-bridge evidence rather than a military road row. |
 
-Coverage is broader and more exact than D508, but still not complete enough
+Coverage is broader and more exact than D509, but still not complete enough
 to produce a referentially closed strategic road substrate.
 
 ## 9. Known gaps and unresolved claims
 
-The five D509 research families adjudicate as follows:
+The six D511 research families adjudicate as follows:
 
-1. **Potomac crossings and Winchester approaches, partly resolved:** RD-P01 through RD-P06
-   now separate Harpers Ferry, Williamsport, and Shepherdstown/Boteler’s Ford by
-   date, direction, force, and crossing method. RD-E16 is a Verified Boteler’s Ford
-   operation; RD-E17 is an Inferred Harpers Ferry-Charles Town-Berryville-Winchester
-   supply operation. The June 1862 team crossing, 1863 Williamsport methods, and
-   1864 depot-to-road joins remain unresolved. No crossing is mapped by proximity.
-2. **Sherman intervals, resolved as bounded operation evidence:** RD-SI01 through RD-SI13
-   keep the left wing, XX Corps, XV Corps, XVII Corps, cavalry, and Platter’s separated
-   rear column distinct. The register preserves Sisters Ferry, Rivers Bridge and the
-   Salkehatchie swamp, Buford Bridge, the unnamed South Edisto ferry, Binnaker’s,
-   Holman’s, Kew, Guignard’s, Orangeburg Bridge, Orangeburg-Edgefield Road, State
-   Road, Shilling’s Bridge, and the Laurensburgh/Laurel Hill limits. It authorizes no
-   reusable route.
-3. **New Orleans, resolved negative for this pass:** RDS-52 starts the Plains Store
-   road movement at Baton Rouge. RDS-53 distinguishes New Orleans communication
-   from road marches beginning at Baton Rouge or Brashear City. River, railroad,
-   port, and telegraph links cannot be composed into the required New Orleans-origin
-   road operation, so no candidate row was added.
-4. **Marshall-Shreveport and the Union objective, partly resolved negative:** RDS-54
-   fixes the named civilian stage road, Waskom direction, dirt surface, rain limit,
-   and wartime stage service. It does not fix military use, crossings, or a dated army
-   or wagon movement. RDS-18/RDS-19/RDS-55 confirm that Banks stopped at
-   Mansfield/Pleasant Hill and retreated without reaching Shreveport; planned movement
-   cannot become completed passage.
-5. **CT-29 and CT-36, partly resolved:** RD-E18 records Price’s exact 14 Oct. 1864
-   movement on the Boonville-Arrow Rock Road as one-family CT-29 evidence. It cannot
-   be joined to the St. Louis-Rolla rail transfer or CT-30 Wire Road. RDS-58/RDS-59
-   identify the Galveston-Houston-Henderson Railroad and Virginia Point railroad
-   bridge for the 1863 Galveston operation; neither supplies a CT-36 wagon road.
+1. **Harpers Ferry-Winchester, premise corrected but not promoted:** RDS-47 says the
+   teams arrived at Harpers Ferry from Winchester, loaded, and returned over the
+   Charles Town-Berryville turnpike. Because that approach remained on the Virginia
+   side, the documented operation neither states nor requires a team Potomac crossing.
+   RDS-61 independently confirms the bridge-loss context and a projected steam tug,
+   but does not corroborate the sixty-team movement or locate its load handling.
+   RD-E17 therefore remains Inferred; exact loading-side handling and a claim-specific
+   second family remain missing.
+2. **Boonville-Arrow Rock, force and endpoints corrected but not promoted:** RDS-60
+   identifies Clark's brigade plus 500 of Jackman's brigade—not Price's main army—as
+   the force ordered to cross at Arrow Rock and attack Glasgow on 14 October. It does
+   not independently place that force on the named road from Boonville. RDS-65 fixes
+   the road and its Lamine River bridge in a separate 1861 military action, not the
+   1864 passage. RD-E18 therefore remains Inferred. Boonville, Arrow Rock, and Glasgow
+   are unassigned because D503 supplies no anchor; the candidate ends at Arrow Rock,
+   Glasgow remains only the target beyond it, and no water interchange is created.
+3. **New Orleans origin, resolved negative for this pass:** RDS-62 places the Red
+   River land-column concentration at Franklin and Berwick Bay and its start at
+   Franklin. Later cavalry from New Orleans and Banks's own travel to Alexandria do
+   not make the army road operation originate in New Orleans. Together with RDS-52
+   and RDS-53, this leaves river, railroad, port, and telegraph connections separate;
+   no candidate row was added.
+4. **Marshall-Shreveport, route families kept separate:** RDS-54 fixes the named
+   civilian stage road, Waskom direction, dirt surface, rain limit, and wartime stage
+   service. RDS-63 fixes military movement along the Natchitoches-Mansfield-Keachi-
+   Shreveport approach and a distinct fork toward Marshall, but does not put a dated
+   force or military wagon train on the exact Marshall-Shreveport Stagecoach Road.
+   RD-E11 remains Inferred. Banks's stopped and reversed Union operation remains
+   bounded by RDS-18, RDS-19, and RDS-55.
+5. **CT-36, rail boundary independently reinforced:** RDS-64's primary reports use
+   railroad movement, the Virginia Point railroad bridge, locomotives, and trains for
+   the Galveston operations. A declined civilian subsistence-transfer proposal by
+   vehicles from Eagle Grove is not a military road passage. It reinforces RDS-58 and
+   RDS-59 without producing a two-family CT-36 road row; no candidate was added.
+6. **Sherman handling, one promotion and two retained limits:** Howard's independent
+   subordinate report in RDS-50 corroborates Sherman's Force-division pontoon crossing
+   below Orangeburg and Giles Smith's repair of the main bridge, promoting RD-SI10
+   from Inferred to Verified. The Fourth Division itinerary corroborates only the
+   broad paths behind RD-SI06 and RD-SI13, not Platter's exact bridge, ferry, corduroy,
+   weather, or wagon-handling chains; those two remain Inferred. The thirteen-row
+   register is now 11 Verified and 2 Inferred and still authorizes no reusable route.
 
 D508’s statement that Platter encountered the cited rain/heavy-road limit on 5 March
 was incorrect. His 5 March entry records a day in camp while XVII Corps crossed the
@@ -315,11 +334,12 @@ Great Pee Dee. He records the Laurensburgh Road limit on 8 March and the treache
 road, attempted corduroy, broken bridge, and slow wagons on 9 March. D509 corrects
 the date without broadening the claim beyond Platter’s column.
 
-The decisive gaps are now narrower: RD-E17 and RD-E18 lack claim-specific second
-families; no qualifying New Orleans-origin road operation was found; RD-E11 lacks a
-dated military passage and crossing set; and CT-36 lacks an exact two-family road row.
-Several Sherman handling details remain one-family operation evidence, but the
-column-separated interval register itself is complete for this pass.
+The final evidence pass changes no candidate-edge classification: RD-E11, RD-E15,
+RD-E17, and RD-E18 remain the four Inferred candidate rows. No qualifying New
+Orleans-origin or CT-36 candidate was found. RD-E11 still lacks a dated military
+passage and crossing set; RD-E17 and RD-E18 still lack claim-specific second
+families. RD-SI06 and RD-SI13 retain one-family handling details even though the
+column-separated Sherman interval register is complete for this pass.
 
 No gap may be filled by present-day highway alignment, inferred catchment geometry,
 or composition of existing rail/water nodes.
@@ -346,7 +366,7 @@ No runtime or probe code is authorized now. If a later contract follows renewed
 research, its filesystem-first validation should require:
 
 1. exact closed IDs and signatures for sources, nodes, candidates, Potomac/Sherman interval rows, non-links, and interchanges;
-2. every CT/RN/WN/CTS/CTI/CTNL/source reference to resolve, with the eight explicitly unassigned road nodes rejected rather than guessed;
+2. every CT/RN/WN/CTS/CTI/CTNL/source reference to resolve, with the eleven explicitly unassigned road nodes rejected rather than guessed;
 3. two independent families for every `Verified` load-bearing claim and one-family rows pinned `Inferred`;
 4. explicit direction, date, scope, crossing/bridge/depot limits, and operation-specific status;
 5. no composition of segments, modern-road terms, gameplay fields, state/save/UI writes, or owner duplication;
@@ -362,14 +382,14 @@ complete acceptance contract and standalone DRIVE transfer.
 
 **NEEDS_MORE_RESEARCH**
 
-The third pass records 59 sources, 37 nodes, 18 candidates (14 Verified · 4
-Inferred · 0 Disputed), six Potomac rows, thirteen Sherman interval rows, 11
-non-links, and ten interchange candidates. It resolves Boteler’s Ford and a
-column-separated Sherman register, adds bounded Harpers Ferry-Winchester and CT-29
-operations, and corrects the Platter heavy-road dates to 8-9 March. It also records
-negative results for a New Orleans-origin road operation, military use of the exact
-Marshall-Shreveport stage road, the uncompleted Union Alexandria-Shreveport plan,
-and CT-36 road evidence. The missing second families, endpoints, crossing sets, and
-road identities still prevent a complete, referentially closed registry. Shipping a
-read-only road substrate now would require forbidden endpoint, composition, or
-routine-service inferences. Road data, runtime, and gameplay remain unauthorized.
+The fourth pass records 65 sources, 37 nodes, 18 candidates (14 Verified · 4
+Inferred · 0 Disputed), six Potomac rows, thirteen Sherman interval rows (11
+Verified · 2 Inferred), 11 non-links, and ten interchange candidates. It corrects
+the Harpers Ferry crossing premise, bounds RD-E18 to unassigned Boonville-Arrow Rock
+endpoints and a detached force, independently verifies RD-SI10's Orangeburg handling,
+and records claim-specific negative results for New Orleans, Marshall-Shreveport,
+and CT-36. The missing second families, lawful endpoints, crossing or handling sets,
+and exact road identities still prevent a complete, referentially closed registry.
+Shipping a read-only road substrate now would require forbidden endpoint,
+composition, or routine-service inferences. Road data, runtime, and gameplay remain
+unauthorized.

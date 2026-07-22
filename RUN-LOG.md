@@ -1,10 +1,10 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D510 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D510, 2026-07-21):** LANE-019 is DRIVE under the ChatGPT/Codex 5.6 Sol Ultra TOP LOOP for the fourth docs/research-only road-evidence pass. Work is limited to RD-E17's Harpers Ferry crossing plus second family; RD-E18's second family plus lawful D503 endpoint treatment; a qualifying New Orleans-origin operation; RD-E11's Marshall-Shreveport military passage, crossings, and corroboration; an exact two-family CT-36 road row; and Sherman handling claims below the two-family floor.
+<!-- LIVE-HEAD decision=D511 next-lane=LANE-019 state=CONTRACT owner=none -->
+> **Live status (D511, 2026-07-21):** LANE-019 is CONTRACT/unowned after the final authorized docs/research-only road-evidence pass retained `NEEDS_MORE_RESEARCH`. The packet now has 65 sources, 37 nodes, 18 candidates (14 Verified · 4 Inferred · 0 Disputed), six Potomac rows, 13 Sherman interval rows (11 Verified · 2 Inferred), 11 non-links, and ten interchanges.
 >
-> **Boundary:** Road substrate, runtime, data, movement, state, save, UI, capacity, repair, economy, AI, terrain, battle, tactical behavior, and all gameplay remain closed. This pass authorizes research only. No simultaneous edits.
+> **Boundary:** RD-SI10 is newly Verified; RD-E11, RD-E15, RD-E17, and RD-E18 remain Inferred, with no qualifying New Orleans-origin or CT-36 road row. Road substrate, runtime, data, movement, state, save, UI, capacity, repair, economy, AI, terrain, battle, tactical behavior, and all gameplay remain closed. No further road work is chartered; no simultaneous edits.
 >
 > **Authority:** `HANDOFF.md`'s first ⚡ block owns the full live boundary. This exact summary is build-checked across the routing docs; historical `NEXT` language records an old boundary and is never current authority.
 <!-- LIVE-HEAD-SUMMARY:END -->
@@ -12,6 +12,43 @@
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-21 — D511: FINAL ROAD PASS RETAINS NEEDS_MORE_RESEARCH
+
+The standalone routing transfer shipped first at `be54d4a`. The fourth and final
+authorized LANE-019 pass then added six source records and mechanically rechecked the
+whole packet. Final registers are 65 sources, 37 nodes, 18 candidates (14 Verified,
+4 Inferred, 0 Disputed), six Potomac rows, 13 Sherman intervals (11 Verified,
+2 Inferred), 11 non-links, and ten interchanges. All 12 sections, stable IDs, external
+transport references, and the single `NEEDS_MORE_RESEARCH` verdict resolve.
+
+RD-E17's missing-wagon-crossing premise was corrected: the teams approached Harpers
+Ferry from Winchester on the Virginia-side road, so Breck's personal skiff passage
+does not establish or require a team Potomac crossing. Loading-side handling and a
+second family remain absent. RD-E18 now ends at unassigned Arrow Rock: the Army atlas
+fixes Clark's detached force, crossing order, and Glasgow target, while Cooper County
+history fixes the road and a separate 1861 Lamine bridge action; neither corroborates
+the 1864 named-road passage. Glasgow is not an endpoint and no water interchange forms.
+
+The Joint Committee starts the Red River column at Franklin/Berwick Bay rather than
+New Orleans. Official Records keep the military Natchitoches-Mansfield-Keachi-
+Shreveport approach distinct from the exact civilian Marshall-Shreveport road, and
+keep CT-36's Galveston operations on railroad/railroad-bridge evidence. Howard's
+independent report promotes only RD-SI10; RD-SI06 and RD-SI13 retain one-family
+handling limits. The candidate split therefore does not move.
+
+Release proof is green: doc coherence 5/5; build check `GATE OK` at 65 data,
+36/36 territories, and transport 27/15/2/4/18; conquest layer 8/8; conquest
+transport 11/11; Mayhem plan 13/13; and War Career plan 24/24. All five fresh
+artifacts are `ok:true` with no failed/error rows or page/real errors. The D509
+HANDOFF source and newest archive region compare byte-for-byte at SHA-256
+`7428a5b01720b9895ef0b1fd2199c0fa2d3826593e7e599376306f7bd5538eff`.
+All protected objects retain their D510 hashes; `git diff --check` is clean.
+
+LANE-019 releases to CONTRACT/unowned. No road substrate, gameplay, or later ARC 7
+rung is authorized to skip the failed prerequisite. The next independent approved
+task is a fresh docs-only ARC 8 medicine-to-soldier-depth law adjudication against
+D501/D169 and the existing person/narrative owners; it must stop before implementation.
 
 ## 2026-07-21 — D510: CANONICAL DOCS RECONCILED; DRIFT NOW FAILS CLOSED
 
