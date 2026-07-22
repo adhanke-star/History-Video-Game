@@ -1,8 +1,8 @@
 # V1 CHECKLIST — current approved roadmap
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D514 next-lane=LANE-020 state=CONTRACT owner=none -->
-> **Live status (D514, 2026-07-22):** Aaron authorized the work-conserving completion loop for every remaining feature and issue. LANE-020 is CONTRACT/unowned for ARC 9 pacing after the owed clean-pushed D513 browser rerun. LANE-019 may advance source-backed rail/water/sea conquest without inventing road service; unsupported roads remain unavailable.
+<!-- LIVE-HEAD decision=D514 next-lane=LANE-020 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D514, 2026-07-22):** Aaron authorized the work-conserving completion loop for every remaining feature and issue. LANE-020 is DRIVE under ChatGPT/Codex for ARC 9 pacing after the fresh owed D513 browser rerun passed 47/47 plus static 30/30. LANE-019 may advance source-backed rail/water/sea conquest without inventing road service; unsupported roads remain unavailable.
 >
 > **Boundary:** Each slice still requires a complete Contract Relay take, focused gates and artifact readback, docs sync, commit, push, and clean parity. After every green milestone, immediately select the next eligible item across phases; ordinary phase changes, browser gates, and reversible design decisions are not stop conditions. Quarantine a blocked item and continue independent work. No simultaneous edits.
 >
@@ -15,7 +15,7 @@ Under D514, every unchecked item in this file—outstanding, formerly parked, or
 
 ## D514 active completion order
 
-- [ ] Discharge D513's owed clean-pushed War Career browser rerun from a full-access non-Seatbelt head.
+- [x] Discharge D513's owed clean-pushed War Career browser rerun from a full-access non-Seatbelt head. Fresh D514-head proof: 47/47 browser steps, static 30/30, `ok:true`, zero failed/page/real errors, and a decodable 200%-zoom reflow PNG.
 - [ ] Complete ARC 9 through LANE-020: measured latency/progress, live Chief-of-Staff next action, reduced click paths/re-engagement and safe preferences, session bookmarks, then bounded batch turns with sequential parity.
 - [ ] Complete ARC 7 using Verified rail/water/bounded-sea services first. Unsupported road service remains visibly unavailable and cannot be invented; road research continues without blocking non-road work.
 - [ ] Complete ARC 8 and citation-grade LANE-002 batches, then close the formerly parked and deferred queues by dependency, severity, and player/teaching value.

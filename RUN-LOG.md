@@ -1,8 +1,8 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D514 next-lane=LANE-020 state=CONTRACT owner=none -->
-> **Live status (D514, 2026-07-22):** Aaron authorized the work-conserving completion loop for every remaining feature and issue. LANE-020 is CONTRACT/unowned for ARC 9 pacing after the owed clean-pushed D513 browser rerun. LANE-019 may advance source-backed rail/water/sea conquest without inventing road service; unsupported roads remain unavailable.
+<!-- LIVE-HEAD decision=D514 next-lane=LANE-020 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D514, 2026-07-22):** Aaron authorized the work-conserving completion loop for every remaining feature and issue. LANE-020 is DRIVE under ChatGPT/Codex for ARC 9 pacing after the fresh owed D513 browser rerun passed 47/47 plus static 30/30. LANE-019 may advance source-backed rail/water/sea conquest without inventing road service; unsupported roads remain unavailable.
 >
 > **Boundary:** Each slice still requires a complete Contract Relay take, focused gates and artifact readback, docs sync, commit, push, and clean parity. After every green milestone, immediately select the next eligible item across phases; ordinary phase changes, browser gates, and reversible design decisions are not stop conditions. Quarantine a blocked item and continue independent work. No simultaneous edits.
 >
@@ -27,6 +27,12 @@ findings and open lanes remain inputs. LANE-020 contracts the five ARC 9 pacing 
 build lane after D513's owed clean-pushed War Career rerun. D514 also resolves the ARC 7 global
 blocker source-honestly: Verified rail/water/bounded-sea conquest may proceed under new slice
 contracts while unsupported roads remain unavailable and every D511 classification/non-link holds.
+
+The full-access D514 continuation discharged D513's owed browser proof from clean `6ca0fba`:
+War Career passed 47/47 browser steps plus static 30/30 with `ok:true`, zero failed/page/real
+errors, and a fresh decodable 390×700 PNG showing the report at 200% zoom without horizontal
+overflow. LANE-020 then moved from CONTRACT/unowned to ChatGPT/Codex DRIVE in the standalone
+routing transfer; runtime remains untouched pending the filesystem-first ARC 9 plan boundary.
 
 ## 2026-07-22 — D513: PURE WAR CAREER CARE CONTEXT SHIPPED
 

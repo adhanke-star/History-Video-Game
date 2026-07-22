@@ -3914,11 +3914,11 @@ next green commit and confer through this ledger instead of permitting simultane
   substrate or transport gameplay was authorized. D514 supersedes only the global blocker by
   authorizing non-road conquest and further adjudication; it changes no D511 evidence classification.
 
-### LANE-020 · desk-to-battle-pacing — **CONTRACT (D514 FIVE-SLICE ARC 9; UNOWNED)**
+### LANE-020 · desk-to-battle-pacing — **DRIVE (D514 FIVE-SLICE ARC 9; CHATGPT/CODEX)**
 
-- **Owning tool:** none. The first full-access ChatGPT/Codex 5.6 Sol Ultra session takes DRIVE in a
-  standalone routing commit after discharging D513's clean-pushed focused rerun. No simultaneous edits.
-- **State:** CONTRACT/unowned. D514 authorizes all five ARC 9 slices and continuous execution across
+- **Owning tool:** ChatGPT/Codex. The full-access 5.6 Sol Ultra session took the lock after freshly
+  discharging D513's clean-pushed focused rerun. No simultaneous edits.
+- **State:** DRIVE. D514 authorizes all five ARC 9 slices and continuous execution across
   their green commit boundaries. Each slice is separately implemented, focused-gated, documented,
   committed, pushed, and proven clean before the next begins; the lane releases only after all five
   and the selected release checkpoint are green.
@@ -3959,12 +3959,16 @@ next green commit and confer through this ledger instead of permitting simultane
   `ok:true` and zero failed/page/real errors; bind restores; `git diff --check`; allowlist/protected-owner
   audit; docs sync; commit/push/clean parity per slice. Run the full serialized no-regression battery after
   Slice 5 because campaign lifecycle, save/navigation, and batch-turn surfaces are shared.
-- **Resume pointer:** first discharge D513's owed clean-pushed War Career 47/47 + static 30/30 rerun.
-  Then take LANE-020 DRIVE in a standalone routing-only commit, write the plan probe/allowlists and exact
-  Slice-1 file contract from the live seam inventory, and execute Slices 1-5 without stopping at ordinary
-  slice or phase boundaries. HALT only under D514's hard-stop rule; otherwise quarantine a blocked slice
-  and continue another independent completion-ledger item.
-- **Last-touched commit:** D514 contract (this commit).
+- **Resume pointer:** D513's owed clean-pushed War Career rerun is freshly green at 47/47 browser steps,
+  static 30/30, `ok:true`, and zero failed/page/real errors; the 200%-zoom PNG is fresh, decodable, and
+  reflows without horizontal overflow. From the clean routing take, inventory the live ARC 9 owners and
+  all affected probe pins, then write the filesystem-first plan probe plus exact Slice-1 allowlist,
+  exclusions, counts, binds, artifacts, gates, and restoration hashes before any runtime edit. Execute
+  Slices 1-5 without stopping at ordinary slice or phase boundaries. HALT only under D514's hard-stop
+  rule; otherwise quarantine a blocked slice and continue another independent completion-ledger item.
+- **Last-touched commit:** D514 contract `6ca0fba`; current standalone DRIVE routing transfer pending.
+- **History:** D514 CONTRACT/unowned at `6ca0fba` → full-access ChatGPT/Codex DRIVE after the fresh
+  D513 War Career verification-debt rerun (47/47 + static 30/30, zero failed/page/real errors).
 
 ---
 
