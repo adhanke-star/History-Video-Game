@@ -4,6 +4,42 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D514 — AARON AUTHORIZES THE WORK-CONSERVING COMPLETION LOOP; EVERY REMAINING FEATURE AND ISSUE MUST SHIP OR CLOSE WITH EVIDENCE — [AARON + CHATGPT/CODEX 5.6 SOL ULTRA, EXECUTION GOVERNANCE] (2026-07-22)
+
+**VERDICT: `LOOP_UNTIL_LEDGER_EMPTY`.** The prior D171/D307 cadence preserved clean
+handoffs but turned ordinary phase, browser, and bundle boundaries into project stops. D514
+keeps every quality mechanism and removes those artificial stops. Each slice still needs a
+complete Contract Relay contract/take, focused teeth, fresh artifacts, docs, commit, push,
+and clean parity; after that proof, the same healthy top loop immediately takes the next
+dependency-ready item. Reversible in-scope forks are decided and logged without asking Aaron.
+
+The completion ledger is every unchecked V1 item, unresolved REVIEW finding, and open lane
+contract. Formerly parked and v2/deferred items are now authorized for research, adjudication,
+implementation, or evidence-based closure. `Done` means `SHIPPED`, `FIXED`, `SUPERSEDED`,
+`NOT_NEEDED` with proof, or `BLOCKED_EXTERNAL` with the exact missing authority/evidence.
+One blocked item is quarantined while independent work continues. The project stops only when
+the ledger is empty; all remaining items share one hard blocker; destructive/irreversible,
+paid/account/credential/licensing authority is required; a locked source/design contradiction
+cannot be solved conservatively; or capacity requires a load-bearing relay.
+
+**Priority decision:** owed verification → ARC 9 pacing/LANE-020 → ARC 7 playable conquest →
+ARC 8 soldier depth → review/formerly parked → formerly deferred depth → full release battery
+and repeat audit/repair. ARC 9 goes first because measured latency, honest progress, navigation,
+bookmarks, and bounded batch turns improve every later build and play session without historical
+invention. Dependency evidence may reorder work with a written why-line.
+
+**Road decision:** D514 supplies D511's required explicit boundary without weakening history.
+Verified rail, inland-water, and two bounded sea services may progress to separately contracted
+playable conquest while road service is visibly unavailable. Road research may continue in
+parallel, but no road edge, eligibility, capacity, or interchange enters runtime below the
+existing source floor. Missing roads no longer idle honest non-road work.
+
+LANE-020 contracts five ARC 9 slices over existing owners: measured latency/progress; pure
+Chief-of-Staff next action; safe re-engagement/preferences; bookmarks over existing save-slot
+authority; and finite batch turns that are byte-equivalent to sequential turns and stop at every
+decision/battle/dated consequence. The first full-access run must discharge D513's owed clean-
+pushed War Career rerun, then take LANE-020 and continue across its green commits.
+
 ## D513 — ARC 8 FUTURE SLICE 1 SHIPS AS A PURE WAR CAREER CARE-CONTEXT READER; PERSONAL RECEIPT EVIDENCE STAYS SEPARATE FROM GENERIC HISTORY — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION/VERIFY] (2026-07-22)
 
 **VERDICT: `SHIPPED_PURE_READER_LANE_RELEASED`.** The D512 contract fit the live

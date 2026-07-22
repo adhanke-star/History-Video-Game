@@ -1,17 +1,25 @@
 # V1 CHECKLIST — current approved roadmap
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D513 next-lane=LANE-005 state=CONTRACT owner=none -->
-> **Live status (D513, 2026-07-22):** ARC 8 Future Slice 1 is shipped as a pure War Career care-context reader; LANE-005 is CONTRACT/unowned with no deeper medicine slice authorized. LANE-019 remains CONTRACT/unowned with road transport blocked at `NEEDS_MORE_RESEARCH`.
+<!-- LIVE-HEAD decision=D514 next-lane=LANE-020 state=CONTRACT owner=none -->
+> **Live status (D514, 2026-07-22):** Aaron authorized the work-conserving completion loop for every remaining feature and issue. LANE-020 is CONTRACT/unowned for ARC 9 pacing after the owed clean-pushed D513 browser rerun. LANE-019 may advance source-backed rail/water/sea conquest without inventing road service; unsupported roads remain unavailable.
 >
-> **Boundary:** The existing `warCareerReportHTML` After Action report now derives one optional subsection from an exact qualifying current-person wounded event/credit pair. `Your Timeline` states only the playthrough classification; separately labeled generic historical context requires the existing Verified, two-source Letterman-system row plus US, 1862+, and canonical Army of the Potomac authority. No state, persistence, medical mechanic, personal treatment claim, relationship, score, or LANE-002 batch moved. No simultaneous edits.
+> **Boundary:** Each slice still requires a complete Contract Relay take, focused gates and artifact readback, docs sync, commit, push, and clean parity. After every green milestone, immediately select the next eligible item across phases; ordinary phase changes, browser gates, and reversible design decisions are not stop conditions. Quarantine a blocked item and continue independent work. No simultaneous edits.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block owns the full live boundary. This exact summary is build-checked across the routing docs; historical `NEXT` language records an old boundary and is never current authority.
+> **Authority:** `HANDOFF.md`'s first ⚡ block owns the full D514 loop and terminal condition; `V1-CHECKLIST.md` is the completion ledger and `COORDINATION.md` owns per-lane contracts. Stop only for a destructive/irreversible or paid/account action, a genuine source/design contradiction, all remaining work sharing one hard blocker, or capacity requiring a load-bearing relay.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 ## How to read this checklist
 
-Only unchecked boxes under **Outstanding approved roadmap** are authorized roadmap work. Parked proposals need a new decision and lane contract; explicit deferrals are not v1 work. Old checklists, gate snapshots, and historical `NEXT` statements are evidence only and live byte-verbatim in [`legacy/V1-CHECKLIST-ARCHIVE.md`](legacy/V1-CHECKLIST-ARCHIVE.md). The full current boundary is the first ⚡ amendment in [`HANDOFF.md`](HANDOFF.md).
+Under D514, every unchecked item in this file—outstanding, formerly parked, or formerly deferred—is authorized for autonomous research, adjudication, contracting, implementation, verification, or evidence-based closure. Each new runtime slice still needs a complete lane contract and committed DRIVE take. An item closes only as shipped/fixed, superseded, proved unnecessary, or externally blocked with the exact missing authority/evidence; one blocked item never stops independent work. Old checklists, gate snapshots, and historical `NEXT` statements remain evidence only in [`legacy/V1-CHECKLIST-ARCHIVE.md`](legacy/V1-CHECKLIST-ARCHIVE.md). The full loop and terminal condition are in the first ⚡ amendment of [`HANDOFF.md`](HANDOFF.md).
+
+## D514 active completion order
+
+- [ ] Discharge D513's owed clean-pushed War Career browser rerun from a full-access non-Seatbelt head.
+- [ ] Complete ARC 9 through LANE-020: measured latency/progress, live Chief-of-Staff next action, reduced click paths/re-engagement and safe preferences, session bookmarks, then bounded batch turns with sequential parity.
+- [ ] Complete ARC 7 using Verified rail/water/bounded-sea services first. Unsupported road service remains visibly unavailable and cannot be invented; road research continues without blocking non-road work.
+- [ ] Complete ARC 8 and citation-grade LANE-002 batches, then close the formerly parked and deferred queues by dependency, severity, and player/teaching value.
+- [ ] Run the full release battery and fresh artifact/a11y/history/code audits; repair every confirmed finding and repeat until the completion ledger is empty.
 
 ## Shipped arc baseline
 
@@ -30,8 +38,8 @@ Only unchecked boxes under **Outstanding approved roadmap** are authorized roadm
 - [ ] **ARC 7 — playable conquest layer.**
   - [x] Read-only 36-territory board.
   - [x] Immutable read-only rail/water/sea transport-evidence substrate.
-  - [ ] Road evidence prerequisite remains unsatisfied after D511: RD-E11/RD-E15/RD-E17/RD-E18 and two Sherman handling rows retain material source gaps; no New Orleans-origin or CT-36 row qualifies. No further road pass is chartered.
-  - [ ] Transport movement: blocked behind the unsatisfied road prerequisite or a new explicit Aaron boundary decision. If later unblocked, it still requires sourced mode registries and interchanges; control/service receipts; movement, cuts, and repairs; economy/theater/directive integration; fresh-start conquest state and save; legal-order AI; then the first playable-loop 140-row release checkpoint.
+  - [ ] Road evidence remains unsatisfied after D511: RD-E11/RD-E15/RD-E17/RD-E18 and two Sherman handling rows retain material source gaps; no New Orleans-origin or CT-36 row qualifies. D514 authorizes further claim-specific research, but unsupported roads remain unavailable and no source floor may be lowered.
+  - [ ] Transport movement: D514 unblocks implementation for the already Verified rail, inland-water, and two bounded sea registries while preserving explicit non-links and no road service. It requires control/service receipts; movement, cuts, and repairs; economy/theater/directive integration; fresh-start conquest state and save; legal-order AI; then the first playable-loop 140-row release checkpoint.
   - [ ] Council of War through existing site, commitment, equipment, doctrine, bridge, and D74 owners.
   - [ ] Terrain pipeline with provenance, transforms, LOD, period surfaces, offline budgets, and textual fallback.
   - [ ] Operational hex zoom without strategic/tactical ownership leakage.
@@ -42,7 +50,7 @@ Only unchecked boxes under **Outstanding approved roadmap** are authorized roadm
   - [x] D513 ships D512 Future Slice 1: the existing War Career report derives one optional care-context subsection from an exact qualifying current-person wounded event/credit pair; generic Letterman context remains separately labeled, source-disclosed, and limited to Verified/two-source US Army of the Potomac receipts dated 1862 or later. The reader is pure and nonpersistent; Aaron's explicit one-file cross-plan exception moves only the Mayhem-plan game pin `d278c30f`→`4c775fd1` plus history, restoring 13/13 within the exact 14-path HANDOFF scope; LANE-005 is released.
   - [ ] Continue bounded LANE-002 5b replacement batches when a citation-grade candidate set is selected. The live inventory is 42 Verified overlays and 1,437 open generated rows; the open count is a feeder pool, not a mandate to fill every row.
   - [ ] Add primary-source daily-life beats and relationship depth beyond the shipped D407 spine.
-  - [ ] Adjudicate any deeper wounding, hospital, disease, or recovery narrative separately before implementation; no deeper medicine slice is currently authorized, and any future contract must not duplicate D169 or turn generic evidence into a personal claim.
+  - [ ] Adjudicate and contract deeper wounding, hospital, disease, or recovery narrative autonomously before implementation; D514 authorizes the decision process, but the slice must not duplicate D169 or turn generic evidence into a personal claim.
   - [ ] Carry soldier point of view into owner-mode battle receipts and consequences.
 
 - [ ] **ARC 9 — desk-to-battle pacing.**
@@ -52,7 +60,7 @@ Only unchecked boxes under **Outstanding approved roadmap** are authorized roadm
   - [ ] Add session bookmarks.
   - [ ] Add bounded batch turn processing without hiding decisions or historical consequences.
 
-## Parked proposals — not selected roadmap work
+## Authorized completion queue — formerly parked proposals
 
 - [ ] **R-7 / REVIEW E33:** situational badge triggers.
 - [ ] **S39:** visual consistency for the fourth pre-battle palette/config surface.
@@ -62,11 +70,11 @@ Only unchecked boxes under **Outstanding approved roadmap** are authorized roadm
 - [ ] **E57:** phase-clock accurate-input audit.
 - [ ] **D460 option:** a separately sourced Leetown-sector build is the honest route to field Drew's regiment; the current non-combat record otherwise stands.
 
-## Explicit v2/deferred work
+## Authorized later completion queue — formerly v2/deferred
 
-- Custom-battle phase authoring/editor depth remains v2. This does not defer ARC 7's approved operational hex zoom.
-- Zoomable regiment-level expansion remains v2. It is distinct from the approved conquest hex interaction.
-- A deeper root/docs/data directory reorganization, optional tooling extras, and unproven performance hot paths remain deferred unless a measured problem earns a contract.
+- [ ] Custom-battle phase authoring/editor depth after current battle and conquest owners stabilize.
+- [ ] Zoomable regiment-level expansion after the approved conquest hex interaction proves the ownership boundary.
+- [ ] Measure optional tooling, hot paths, and repository organization. Implement only changes that solve a demonstrated problem; otherwise close each candidate `NOT_NEEDED` with evidence instead of churning the architecture.
 
 ## Do not re-list these as outstanding
 

@@ -93,6 +93,20 @@ once and assign by task-specific strength. Helpers produce evidence; the TOP LOO
 packet and retains architecture, code ownership, combat balance, historical claims,
 UX/accessibility judgment, final synthesis, integration, and the commit.
 
+## 4A · D514 work-conserving completion protocol
+
+Aaron authorized every remaining feature and issue for autonomous adjudication and delivery. This
+does not merge owners or weaken contracts: one lane still has one owner, every new implementation
+slice still requires a complete acceptance contract/probe design and committed DRIVE take, and each
+green slice still documents, commits, pushes, and proves clean parity before the next begins.
+
+What changes is cadence. A completed bundle, new phase, browser/full-suite gate, or reversible design
+fork is no longer a stop condition. After every clean push the top loop reloads HANDOFF, V1, REVIEW,
+and relevant lanes, then takes the highest-value dependency-ready item. If one item blocks, its lane
+records the exact blocker and releases/quarantines safely while another independent item proceeds.
+Only the D514 terminal/hard-stop conditions or provider capacity may end a healthy run; a capacity
+stop carries a load-bearing relay that resumes this same completion loop.
+
 ---
 
 ## 5 · LANE LEDGER
@@ -194,9 +208,10 @@ UX/accessibility judgment, final synthesis, integration, and the commit.
   action, and independent-source adjudication citation-grade. Expected transition: 39 → 42
   Verified overlays and 1,440 → 1,437 open generated `ss:` rows; registry length stays 1,512.
 - **Resume pointer:** **D421 SHIPPED:** Fleetwood, Beaty, and Gardiner are live at 42 Verified /
-  1,437 open generated `ss:` rows; register 1,512. The next session must adjudicate the roadmap and,
-  only if another 5b batch wins, take a fresh committed DRIVE lock with an exact candidate boundary,
-  batch size, source plan, and expected count transition. No next candidate is preselected.
+  1,437 open generated `ss:` rows; register 1,512. D514 authorizes the top loop to select the next
+  citation-grade batch autonomously: it must still take a fresh committed DRIVE lock with an exact
+  candidate boundary, batch size, source plan, and expected count transition. No next candidate is
+  preselected, and thin evidence closes a candidate rather than stretching the schema.
   **D372 CLEAN RELEASE:** the D367 Sol session ended at its 10% boundary before
   Phase D; no record was opened and the live remainder stays **918**. The next qualified TOP LOOP
   must take 5b DRIVE in a committed ledger edit and log its batch size/reason in `DECISIONS.md`
@@ -772,7 +787,8 @@ next green commit and confer through this ledger instead of permitting simultane
 
 - **Owning tool:** none after the D513 clean release; ChatGPT/Codex 5.6 Sol Ultra drove Future Slice 1.
 - **State:** CONTRACT/unowned — D513 shipped the read-only care-context report slice and its green
-  teeth. No deeper medicine slice is authorized by this retained contract.
+  teeth. This retained contract authorizes no deeper medicine runtime; D514 separately authorizes
+  the top loop to adjudicate and commit a new nonduplicative contract without returning to Aaron.
 - **Design law:** `docs/design/unlocked-but-judged-design.md` §4f, D512; D501 is the historical
   research feeder; D169, D407, Human Cost, canonical people, primary sources, Women in War, and
   LANE-002 retain their existing owners.
@@ -836,11 +852,11 @@ next green commit and confer through this ledger instead of permitting simultane
   and command probes; both binds; scope/protected-hash/save-shape/diff checks; docs sync; commit/push;
   rerun from clean pushed HEAD; release to CONTRACT/unowned. Full 140-row battery is not owed unless
   a shared surface moves or a release checkpoint is selected.
-- **Resume pointer (authoritative, D513 release):** none for medicine implementation. Future Slice 1
-  is closed. Any deeper wound, disease, hospital, care, or recovery work requires a separately
-  adjudicated contract and a fresh committed DRIVE take; do not infer one from this acceptance
-  history. Select a different approved owner-safe V1 item or HALT with a recommendation. No
-  simultaneous edits.
+- **Resume pointer (D514):** Future Slice 1 is closed. D514 allows the top loop to adjudicate any
+  deeper wound, disease, hospital, care, or recovery proposal autonomously, but implementation still
+  requires a separately committed nonduplicative contract and fresh DRIVE take. Preserve D169 and
+  every evidence/personal-claim wall; if one proposal blocks, record it and continue another ledger
+  item rather than halting the project. No simultaneous edits.
 - **D512 Slice-1 take history:** ChatGPT/Codex took DRIVE from clean D512 at
   `f255cc4fdbb09ccbc5a7e69ace1a0c74b373f5ed` in routing-only commit
   `13fe2d9ab66a622054db1da9399b10cfe1125b45`; no implementation byte moved in that take.
@@ -3668,11 +3684,11 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **CONTRACT (D511 FINAL ROAD PASS RETAINS NEEDS_MORE_RESEARCH; UNOWNED)**
+### LANE-019 · conquest-design-law — **CONTRACT (D514 NON-ROAD PLAYABLE LADDER AUTHORIZED; ROAD EVIDENCE STILL INCOMPLETE; UNOWNED)**
 
 - **Owning tool:** none after the D511 clean release. No simultaneous edits.
-- **State:** CONTRACT/unowned. D511 completed the fourth and final authorized
-  docs/research-only road pass and retained exact verdict `NEEDS_MORE_RESEARCH`.
+- **State:** CONTRACT/unowned. D511 completed the fourth road-evidence pass and retained exact
+  verdict `NEEDS_MORE_RESEARCH`.
   The packet now records 65 sources, 37 nodes, 18 candidate rows (14 Verified,
   4 Inferred, 0 Disputed), six Potomac rows, 13 Sherman interval rows (11 Verified,
   2 Inferred), 11 non-links, ten interchange candidates, and all seven theaters.
@@ -3680,8 +3696,10 @@ next green commit and confer through this ledger instead of permitting simultane
   No qualifying New Orleans-origin or CT-36 road row exists. Boonville, Arrow Rock,
   and Glasgow are explicitly unassigned; RD-E18 ends at Arrow Rock, Glasgow is only
   the target beyond it, and no water interchange forms.
-  No road data, runtime, gameplay, movement, state, save, UI changes are authorized. Cost,
-  capacity, repair, economy, AI, terrain, battle, and tactical behavior stay closed.
+  D514 authorizes a separately contracted playable ladder for the already Verified rail,
+  inland-water, and two bounded sea services while road service remains absent/unavailable.
+  No road data, runtime, eligibility, capacity, interchange, or gameplay may be invented. Cost,
+  repair, economy, AI, terrain, battle, and tactical behavior move only under future slice contracts.
   D503 retains exact
   territory boundaries/anchors, D497/D499 retain rail/water evidence, and D506
   retains the immutable 27/15/2/4/18 read-only transport substrate shipped at
@@ -3776,19 +3794,17 @@ next green commit and confer through this ledger instead of permitting simultane
   unresolved and exactly normalization/integrity reds. Bind B promotes WE-25 or
   RE-29 to service or erases its non-link/provenance and exactly evidence integrity
   reds. All other teeth stay green; data and generated output restore byte-identically.
-- **D511 gate and resume pointer:** the final authorized packet pass must close on
+- **D511 gate and D514 resume pointer:** the final packet pass closed on
   doc coherence 5/5; build check `GATE OK` at 65 data, 36/36 territories, and
   transport 27/15/2/4/18; conquest layer 8/8; conquest transport 11/11; Mayhem plan
   13/13; War Career plan 24/24; clean artifacts/diff; unchanged protected objects;
-  a byte-verbatim D509 archive; commit/push; and clean HEAD/origin equality. After
-  that release, there is no active road slice and repeating the six-family search is
-  not authorized. This lane may resume only after genuinely new claim-specific
-  evidence or an explicit Aaron boundary decision supports a new standalone
-  research contract. No road substrate, data, runtime, transport gameplay, Council,
-  terrain, hex, or Chronicle rung may skip this blocker. The independent next
-  approved task is a docs-only ARC 8 medicine-to-soldier-depth law adjudication; it
-  must first reconcile D501/D169 and existing person/narrative owners, decide its
-  lane ownership and complete contract, and stop before implementation.
+  a byte-verbatim D509 archive; commit/push; and clean HEAD/origin equality. D514 is the
+  explicit boundary decision: after LANE-020's selected pacing bundle or a documented dependency
+  reorder, contract source-backed rail/water/bounded-sea movement first with roads visibly
+  unavailable and every non-link intact. Claim-specific road research may run independently,
+  but no road row can enter runtime without the existing evidence floor. Council, terrain, hex,
+  Chronicle, economy, AI, state, save, and combat integration each require their own declared
+  slice inside this lane; none piggybacks on D514 without acceptance teeth.
 - **Design law:** `docs/design/unlocked-but-judged-design.md` §5 and §8, especially
   §§8.11-8.23; DECISIONS D455, D497, D499, D502, and D503; the rail and strategic-
   water packets. D503 records Aaron's exact answer: "execute option a."
@@ -3894,8 +3910,61 @@ next green commit and confer through this ledger instead of permitting simultane
   and again releases the lane unowned. D511 completes the fourth and final authorized
   pass, promotes only RD-SI10, corrects the RD-E17 crossing premise and RD-E18 force/
   endpoint scope, records the New Orleans/Marshall-Shreveport/CT-36 negatives, retains
-  `NEEDS_MORE_RESEARCH`, and releases the lane. No read-only road substrate or
-  transport gameplay is authorized.
+  `NEEDS_MORE_RESEARCH`, and releases the lane. At that historical boundary no read-only road
+  substrate or transport gameplay was authorized. D514 supersedes only the global blocker by
+  authorizing non-road conquest and further adjudication; it changes no D511 evidence classification.
+
+### LANE-020 · desk-to-battle-pacing — **CONTRACT (D514 FIVE-SLICE ARC 9; UNOWNED)**
+
+- **Owning tool:** none. The first full-access ChatGPT/Codex 5.6 Sol Ultra session takes DRIVE in a
+  standalone routing commit after discharging D513's clean-pushed focused rerun. No simultaneous edits.
+- **State:** CONTRACT/unowned. D514 authorizes all five ARC 9 slices and continuous execution across
+  their green commit boundaries. Each slice is separately implemented, focused-gated, documented,
+  committed, pushed, and proven clean before the next begins; the lane releases only after all five
+  and the selected release checkpoint are green.
+- **Design/owner law:** extend the existing President's Desk, Chief of Staff, campaign turn,
+  save-slot/settings, and H0 shell owners. Create no second task queue, clock, save system, campaign
+  resolver, notification bus, or settings store. D74, historical consequences, pending decisions,
+  Ironman, undo/import/export, accessibility, and current save compatibility remain binding.
+- **Slice 1 — measured latency + honest progress:** profile real turn advancement before optimizing;
+  record phase timings without changing order or RNG; surface semantic progress/status for genuinely
+  long work without fake percentages, animation dependence, focus theft, or hidden errors. Remove only
+  measured bottlenecks and prove identical campaign outcomes against the pre-slice path.
+- **Slice 2 — live next-action pointer:** extend Chief of Staff as a pure derivation of existing live
+  state. It names one highest-priority lawful action and routes to the owning existing surface; it never
+  creates/clears decisions, spends resources, advances time, predicts hidden enemy state, or duplicates
+  a queue. Missing/ambiguous authority fails to a neutral orientation message.
+- **Slice 3 — path reduction + re-engagement/preferences:** collapse repeated navigation and add a
+  one-click return to the last safe, still-valid surface. Remember only non-authoritative UI preferences
+  through the existing settings owner; never remember a stale entity/action, bypass a decision, alter
+  campaign state, or change defaults for old saves. Keyboard/pointer parity and return-focus are required.
+- **Slice 4 — session bookmarks:** build on existing save-slot/export/import authority rather than a
+  parallel save owner. A bookmark is a safe label/navigation aid over a valid existing save boundary,
+  never a second campaign snapshot, hidden autosave, Ironman escape, undo bypass, or authority source.
+  Missing/deleted/foreign/corrupt targets fail closed and never partially apply state.
+- **Slice 5 — bounded batch turns:** process a user-selected finite count through the exact existing
+  sequential turn resolver. Stop before every pending choice, battle, war-end, election/dated hinge,
+  error, or other required historical consequence; show each completed turn; provide cancel between
+  turns; preserve RNG/order/output byte-equivalence to manually advancing the same turns. Never skip,
+  summarize away, auto-decide, or coalesce consequences.
+- **Probe design:** add one filesystem-first ARC 9 plan probe before runtime and one focused pacing probe
+  that grows by slice. Measure latency with stable bounds/reporting rather than a brittle speed promise;
+  use deterministic A/B fixtures for state/RNG parity; prove next-action purity; invalid/stale preference
+  and bookmark fail-closed behavior; keyboard/pointer/focus/reflow/reduced-motion semantics; and batch-vs-
+  sequential identity plus every interruption class. Each slice declares one negative bind that reds only
+  its new tooth and restores all mutated source/generated bytes exactly.
+- **Gate/release contract:** source-only edits plus normal generated build; `node --check` touched JS/MJS;
+  `node tools/build.mjs` GATE OK; relevant schema/save-shape gates; focused pacing plus directly adjacent
+  desk, Chief-of-Staff, save-slot, campaign, accessibility, and H0 probes; fresh JSON/screenshots with
+  `ok:true` and zero failed/page/real errors; bind restores; `git diff --check`; allowlist/protected-owner
+  audit; docs sync; commit/push/clean parity per slice. Run the full serialized no-regression battery after
+  Slice 5 because campaign lifecycle, save/navigation, and batch-turn surfaces are shared.
+- **Resume pointer:** first discharge D513's owed clean-pushed War Career 47/47 + static 30/30 rerun.
+  Then take LANE-020 DRIVE in a standalone routing-only commit, write the plan probe/allowlists and exact
+  Slice-1 file contract from the live seam inventory, and execute Slices 1-5 without stopping at ordinary
+  slice or phase boundaries. HALT only under D514's hard-stop rule; otherwise quarantine a blocked slice
+  and continue another independent completion-ledger item.
+- **Last-touched commit:** D514 contract (this commit).
 
 ---
 

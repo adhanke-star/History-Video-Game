@@ -1,14 +1,14 @@
 # ☀ WAKE-UP — current project state
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D513 next-lane=LANE-005 state=CONTRACT owner=none -->
-> **Live status (D513, 2026-07-22):** ARC 8 Future Slice 1 is shipped as a pure War Career care-context reader; LANE-005 is CONTRACT/unowned with no deeper medicine slice authorized. LANE-019 remains CONTRACT/unowned with road transport blocked at `NEEDS_MORE_RESEARCH`.
+<!-- LIVE-HEAD decision=D514 next-lane=LANE-020 state=CONTRACT owner=none -->
+> **Live status (D514, 2026-07-22):** Aaron authorized the work-conserving completion loop for every remaining feature and issue. LANE-020 is CONTRACT/unowned for ARC 9 pacing after the owed clean-pushed D513 browser rerun. LANE-019 may advance source-backed rail/water/sea conquest without inventing road service; unsupported roads remain unavailable.
 >
-> **Boundary:** The existing `warCareerReportHTML` After Action report now derives one optional subsection from an exact qualifying current-person wounded event/credit pair. `Your Timeline` states only the playthrough classification; separately labeled generic historical context requires the existing Verified, two-source Letterman-system row plus US, 1862+, and canonical Army of the Potomac authority. No state, persistence, medical mechanic, personal treatment claim, relationship, score, or LANE-002 batch moved. No simultaneous edits.
+> **Boundary:** Each slice still requires a complete Contract Relay take, focused gates and artifact readback, docs sync, commit, push, and clean parity. After every green milestone, immediately select the next eligible item across phases; ordinary phase changes, browser gates, and reversible design decisions are not stop conditions. Quarantine a blocked item and continue independent work. No simultaneous edits.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block owns the full live boundary. This exact summary is build-checked across the routing docs; historical `NEXT` language records an old boundary and is never current authority.
+> **Authority:** `HANDOFF.md`'s first ⚡ block owns the full D514 loop and terminal condition; `V1-CHECKLIST.md` is the completion ledger and `COORDINATION.md` owns per-lane contracts. Stop only for a destructive/irreversible or paid/account action, a genuine source/design contradiction, all remaining work sharing one hard blocker, or capacity requiring a load-bearing relay.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
-Read the first ⚡ amendment in [`HANDOFF.md`](HANDOFF.md) for D513's shipped care-context boundary, Aaron-authorized one-file Mayhem-plan pin exception, exact 14-path scope, green evidence, LANE-005 release, ARC 7 blocker, and exact selection-only next step. Do not derive current work from older wake-up or `NEXT` prose, and do not begin deeper medicine or road implementation.
+Read the first ⚡ amendment in [`HANDOFF.md`](HANDOFF.md) for D514's completion-loop algorithm, authorized queue, road/no-road boundary, stop conditions, and exact next work. Do not stop at ordinary milestone or phase boundaries; preserve per-slice contracts, gates, commits, pushes, and lane ownership.
 
 **Older wake-up heads:** preserved byte-verbatim in [`legacy/WAKE-UP-ARCHIVE.md`](legacy/WAKE-UP-ARCHIVE.md), newest at top; the archive is evidence only.

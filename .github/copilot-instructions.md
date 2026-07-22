@@ -2,6 +2,8 @@
 
 **Single source of truth: [`START-HERE.md`](../START-HERE.md) — and `CLAUDE.md` / `AGENTS.md` carry the full read-order + standards.** The trimmed mandated read order (D412): `START-HERE.md` → `COORDINATION.md` (relevant lane) → `HANDOFF.md` top ⚡ block (THE canonical live boundary) → the task's own law docs/probes → latest `DECISIONS.md` entry; `WAKE-UP.md`/`RUN-LOG.md`/`V1-CHECKLIST.md` detail are pull-on-demand. Read them before suggesting nontrivial changes. You assist *inline*; you do not run the build/probe gate, so your job is to propose edits that fit the architecture and to flag what a human must verify. D145 model routing applies: Copilot/helper output is bounded assistance; the top loop (ChatGPT/Codex 5.6 Sol Ultra, primary; Claude Opus 4.8 in Claude Code, secondary) owns architecture, important code, historical judgment, UX/accessibility direction, bug hunts, and final integration.
 
+**D514 cadence:** the top loop runs the whole live completion ledger across clean milestone and phase boundaries. Copilot remains bounded assistance and does not independently select lanes, widen scope, commit, push, or treat the blanket completion authorization as permission to bypass a per-slice contract or gate.
+
 ## What this project is
 A single self-contained HTML teaching wargame. Source lives in `src/*.js` (concatenated by `tools/build.mjs`) + `data/*.json` (injected as `GAME_DATA`). The shipped file `civil_war_generals.html` is GENERATED — never the source of truth.
 

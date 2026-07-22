@@ -1,6 +1,8 @@
 # REVIEW QUEUE — The Civil War (Vol. I)
 Updated 2026-07-10 (AUDIT ledger; D370 is run 3 under the D336/D367 ChatGPT/Codex 5.6 Sol + Ultra policy, following D369's genre-elite design audit; run 1 ran under Claude Fable 5 on 2026-07-03). **The live content of this file is the standing AUDIT findings ledger below** — the memory between audit runs; every fix flips its line to fixed-in-D###. Everything beneath the ledger is run-e/f/g/h historical context from 2026-06-13/14, much of it long superseded (the UG:G pivot shipped through D142); use `V1-CHECKLIST.md` + `START-HERE.md` for current priorities and locks. **Canonical folder: ~/Desktop/Video Game.**
 
+**D514 completion rule (2026-07-22):** every unresolved finding in this ledger is authorized for autonomous live-code revalidation and either a gated fix or evidence-based closure. Historical prose does not reopen an item already marked fixed/settled. A blocked or refuted finding must record why; it cannot stop independent V1/REVIEW work. After the feature ledger closes, run a fresh full-spectrum audit, repair every confirmed finding, and repeat until no live finding remains.
+
 ## FABLE AUDIT — 2026-07-03 (run 1)
 
 ## D270 Carry-Forward Queue — 2026-07-05

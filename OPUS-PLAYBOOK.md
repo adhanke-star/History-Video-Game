@@ -1,4 +1,4 @@
-# OPUS-PLAYBOOK — top-model operating playbook (D336; D361 helper clarification; filename retained)
+# OPUS-PLAYBOOK — top-model operating playbook (D336; D361 helper clarification; D514 completion loop; filename retained)
 
 How to run the ChatGPT/Codex main loop as **5.6 Sol**. This is the canonical behavior/routing supplement for `START-HERE.md`, `AGENTS.md`, and `AUTONOMOUS-RUN.md`; `AUDIT-PROMPT.md` applies it directly. Historical Opus/Fable references below record prior runs and are not directives for a new ChatGPT task.
 
@@ -24,7 +24,7 @@ How to run the ChatGPT/Codex main loop as **5.6 Sol**. This is the canonical beh
 
 ## 6 · Long-horizon runs
 - **You have the full spec in the kickoff; execute it end-to-end.** Don't re-derive settled facts, don't re-litigate cleared scope (`DECISIONS.md` is append-only law). When you have enough to act, act.
-- **D171 boundary stands exactly as written:** at a clean committed+pushed milestone, near ~70-80% context consumed, or before a browser-heavy batch gate on a strained window, finish the current bounded slice, refresh `HANDOFF.md` + `WAKE-UP.md`, and return a paste-ready continuation prompt. Don't trim quality/scope mid-milestone out of context worry — finish the slice, then stop clean.
+- **D514 supersedes D171/D307's ordinary stop cadence:** a clean committed+pushed milestone, phase change, browser/full-suite gate, or reversible design fork is a checkpoint, not a session end. Reload `V1-CHECKLIST.md`, unresolved `REVIEW-QUEUE.md`, and live lane ownership; immediately take the next dependency-ready item. Quarantine a blocked item and continue independent work. Stop only when the ledger is empty, every remaining item shares one hard blocker, destructive/paid/account/licensing authority is required, a genuine source/design contradiction cannot be resolved conservatively, or provider capacity requires a clean load-bearing relay. Never trim verification to keep running; finish and prove each slice before selecting again.
 
 ## 7 · Standard run-prompt snippets — embed in every long/autonomous kickoff
 Brief steering beats enumerated micro-management. Quote these (or a tightened equivalent) in kickoff prompts rather than re-listing behaviors:
@@ -42,7 +42,7 @@ Brief steering beats enumerated micro-management. Quote these (or a tightened eq
 > Pause for Aaron only when the work genuinely requires him: an irreversible/destructive action, money/external accounts/publishing, a real scope change, or a new fork that contradicts a shipped decision. If you hit one, ask and end the turn cleanly — never end on an unexecuted promise.
 
 **(e) Autonomous-pipeline reminder (overnight/looping runs).**
-> You are operating autonomously; Aaron is not watching in real time, so "Shall I…?" blocks the work. For reversible actions inside the cleared scope, proceed. Before ending your turn, check your last paragraph: if it is a plan, a question, or a promise about work not yet done, do that work now. End only when the milestone is complete-and-gated or you are HALT-blocked.
+> You are operating autonomously; Aaron is not watching in real time, so "Shall I…?" blocks the work. For reversible actions inside the cleared scope, proceed. After every complete-and-gated, committed, pushed milestone, reload the completion ledger and do the next eligible item; a milestone is not an endpoint. Before ending your turn, check your last paragraph: if it is a plan, a question, or a promise about authorized work not yet done, do that work now. End only at D514's terminal/hard-stop conditions or a clean capacity relay.
 
 **(f) Probe-pin preflight (D412; the D411 loot-probe `Sources (4)` collision class).**
 > Before landing any contracted change, grep ALL `tools/probe-*.mjs` for literal pins touching the files or values you will change — not just the probes named in the take — and declare every hit in the take/lane up front. A pin discovered mid-take forces a surfaced allowlist exception; a pin discovered by the gate is a red you should have predicted.
@@ -63,7 +63,7 @@ Brief steering beats enumerated micro-management. Quote these (or a tightened eq
 3. Kickoff prompt embeds the §7 snippets — including the probe-pin preflight (§7f) and lane-parse convention (§7h) — and the one-line "why."
 4. Helpers: use only for a task-specific strength or independent coverage; packet and configure them when controls exist, or state the no-control inheritance exception (§4).
 5. Narrate sparingly (§2); decide small reversible forks and log them (§3); delegate/search aggressively (§4).
-6. D171 boundary discipline active (§6); §8 HALT charter unchanged.
+6. D514 work-conserving completion loop active (§6); §8 quality floor and hard-stop charter unchanged.
 
 ## 10 · D367 chartered-session kickoff — the LANE-004 Sol session (2026-07-10)
 
