@@ -1,17 +1,33 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D521 next-lane=LANE-019 state=CONTRACT owner=none -->
-> **Live status (D521, 2026-07-22):** ARC 7 Transport Movement Slice 2B ships one pure, deeply frozen physical-service evidence query inside the existing transport owner. Focused proof is 18/18; Bind 2B isolates only the Mayhem physical-filter tooth at 17/18.
+<!-- LIVE-HEAD decision=D522 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D522, 2026-07-22):** LANE-019 is under ChatGPT/Codex DRIVE for one detached fresh-start conquest identity/state serialization foundation in a new sole state owner after the shipped board and transport owners.
 >
-> **Boundary:** LANE-019 returns to `CONTRACT` / `none`. The slice creates no topology, legal-now claim, state, save, UI, order, movement, capacity, economy, AI, or battle coupling; roads remain unavailable. Exact next is a separately committed contract and DRIVE take for the smallest fresh-start conquest identity/state/save foundation required before any movement mutation.
+> **Boundary:** D522 changes only routing/law plus the transport plan's live-boundary tooth; D521 remains the runtime head. The contracted factory is detached and may establish only exact immutable `C.campaignKind`, existing immutable `C.ruleset`, and one empty `C.conquest` namespace—no live start/load/UI, migration, topology, control, service condition, army, order, movement, or operational default.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block owns D521 evidence; LANE-019 owns the next contract. D514's work-conserving loop remains binding, and LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D522 exact contract own the slice. D514's work-conserving loop remains binding; LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-22 — D522: DETACHED CONQUEST IDENTITY/STATE FOUNDATION ROUTED
+
+LANE-019 takes ChatGPT/Codex DRIVE from clean, pushed D521 for one detached,
+fresh-start-only conquest identity/state serialization foundation. New `src/116` will be the
+sole state owner: strict `conquestCampaignFoundation(startView)` and
+`conquestCampaignFoundationView(candidate)` only. The exact root is `side`, immutable versioned
+`campaignKind:{id:"conquest",version:1}`, existing immutable `ruleset`, and one exact empty
+plain extensible `conquest` namespace; there is no live entry, load/apply change, migration, or
+operational default. D522 rejects ruleset overloading, scalar-plus-schema, ladder attachment,
+107/115 ownership, and premature slots/import/undo/Ironman broadening.
+
+D523 is constrained to the 10-step focused proof and isolated invalid-discriminator Bind A;
+data 65, suite 140, save shape, and `_SAVE_VER=1` hold while manifest moves 111→112 with 116
+last. All live integration—start/load/continue, state migration, topology/control/service,
+armies/orders/movement, economy/AI/battle, UI, and old-save behavior—remains excluded.
 
 ## 2026-07-22 — D521: ARC 7 SLICE 2B PURE PHYSICAL-SERVICE EVIDENCE QUERY SHIPPED
 

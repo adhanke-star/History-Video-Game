@@ -1177,3 +1177,65 @@ green; data 65, manifest 111, suite 140, frozen base, save shape, and `_SAVE_VER
 LANE-019 returns to CONTRACT/unowned. The next dependency is not movement: it is a separately
 contracted smallest fresh-start conquest identity/state/save foundation, with no invented initial
 control, node/service condition, armies, Historical windows, or migration.
+
+### 8.26 D522 detached conquest identity/state serialization foundation
+
+D522 takes LANE-019 DRIVE from clean D521 `ef85725b2e7ea55fba96b4c7996a0d70abb6a56f` for the
+smallest prerequisite representation, not a campaign lifecycle. Add exactly
+`src/116-conquest-state.js` as the sole owner of two detached globals:
+`conquestCampaignFoundation(startView)` and `conquestCampaignFoundationView(candidate)`. It must
+not read or write `G`, settings, storage, DOM, or any live start/load/UI path, and it must not
+reuse generic `applySave`, migration, runId, Ironman, bookmarks, slots, import, undo, or campaign
+construction. Existing `mayhemInit` remains the owner of immutable `C.ruleset`; invoke it only on
+the disposable local carrier below, transfer the verified frozen ruleset descriptor/value, and
+never initialize the exact final root or create a conquest-owned ruleset.
+
+`startView` and nested `ruleset` may have only `Object.prototype` or `null` prototype and exact
+own-data keys `{side,ruleset}` / `{id,version}`. Validation inspects prototypes, all own
+names/symbols, and own descriptors before reading descriptor `.value`; custom prototypes,
+inherited enumerable authority, hidden/symbol extras, accessors, missing/extra fields, and wrong
+values fail without invoking an accessor. Side is `"US"` or `"CS"`; ruleset id is `"historical"`
+or `"mayhem"` at version 1. Create a disposable local plain `carrier`, call
+`mayhemInit(carrier,id,"new")`, verify its exact frozen non-writable/non-configurable enumerable
+`ruleset` descriptor/value, transfer only that same descriptor/value, then discard the carrier
+and every incidental receipt/sequence field. Never call `mayhemInit` on the returned root. The
+factory returns exactly `{side,campaignKind,ruleset,conquest}`: immutable `campaignKind` is
+exactly `{id:"conquest",version:1}`, `ruleset` is that verified Mayhem-owned value, and both are
+frozen. The root's `campaignKind`, `ruleset`, and `conquest`
+properties are non-writable and non-configurable. `conquest` is an empty plain object and is
+deliberately not frozen for a later separately contracted state field; no other root/nested field
+is allowed.
+
+The view accepts only `Object.prototype` candidates carrying either all locked factory
+descriptors above or all ordinary enumerable own-data descriptors produced by exact JSON round
+trip. It inspects prototypes/names/symbols/descriptors before values and rejects null/custom
+prototypes, mixed modes, hidden/extras, symbols, and accessors without invocation or mutation.
+Legacy, malformed, mixed, operational, and noncanonical candidates fail `null`. Success returns
+a new deeply frozen exact four-field snapshot with locked root
+descriptors and a frozen empty `conquest` snapshot; the factory namespace remains extensible. The sole
+serialization-adjacent test may carry the view through a controlled test-local `serializeSave`
+fixture and restore it. This is not production save acceptance or loading, and it adds no
+migration, `applySave`, runId, Ironman, bookmark, slot, import, or undo behavior.
+
+No control, service, army, date, order, movement, topology, adjacency, territory/node/service
+receipt, transport legality, economy, AI, battle/tactical, Chronicle, War Career, Custom Builder,
+or result field/action is authorized. The implementation may touch only new `src/116`, manifest,
+new focused `tools/probe-conquest-state.mjs`, mechanically necessary plan pins, generated output
+via the normal build, declared mechanical Mayhem/War-Career pins, and routing/law closeout
+documents. It must not touch build source, data, `src/91-save-slots.js`,
+`src/105-save-guard.js`, `src/107-mayhem-rules.js`, `src/114-conquest-board.js`,
+`src/115-conquest-transport.js`, `tools/save-shape.json`, frozen base, tactical/UI sources, or
+any existing save owner. Data stays
+65; manifest becomes 112 with 116 last; suite stays 140; `_SAVE_VER=1` and save shape stay fixed;
+the focused probe remains suite-excluded.
+
+The focused probe has exactly ten steps: API/manifest; strict input; exact root/two sides;
+campaignKind descriptors; ruleset owner/immutability; empty namespace plus JSON round-trip/view;
+legacy/malformed/mixed rejection and no mutation; controlled serializeSave carry/restore; purity;
+and prohibited operational fields/actions/UI. Bind A removes only
+`campaignKind.version === 1` validation; one invalid-discriminator tooth, and only that tooth,
+must red before byte restoration and a clean rerun. Gates are normal build `GATE OK`, syntax, doc
+coherence, the focused state probe, conquest plan/board/transport (including transport's 18-step
+proof), Mayhem mode/plan, save-slots serialization-adjacent proof, War Career plan, fresh
+artifacts, Bind A, allowlist audit, and `git diff --check`. After D523's clean push and parity,
+release LANE-019 to CONTRACT/unowned; D524 must separately adjudicate the next dependency.

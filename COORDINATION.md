@@ -3684,12 +3684,15 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **CONTRACT (D521 PURE PHYSICAL-SERVICE QUERY SHIPPED; UNOWNED)**
+### LANE-019 · conquest-design-law — **DRIVE (D522 DETACHED CONQUEST IDENTITY/STATE SERIALIZATION FOUNDATION; CHATGPT/CODEX)**
 
-- **Owning tool:** none. ChatGPT/Codex shipped D521 and released the D520 lock. No simultaneous edits.
-- **State:** CONTRACT/unowned. D521 ships only the exact Slice-2B pure reader below; it does not
-  authorize stateful or playable transport. Any fresh-start conquest identity/state/save foundation
-  requires a separate committed contract and DRIVE take. D511 completed the fourth road-evidence pass and retained exact
+- **Owning tool:** ChatGPT/Codex. D522 takes DRIVE from the clean D521 head
+  `ef85725b2e7ea55fba96b4c7996a0d70abb6a56f` for only the detached Slice-3A foundation below.
+  No simultaneous edits by any provider.
+- **State:** DRIVE/ChatGPT-Codex. D522 authorizes only a new sole state owner, exact campaign
+  identity/ruleset serialization, and a detached factory/view; it authorizes no live campaign
+  start, load, UI, migration, topology, control, service condition, army, date, order, movement,
+  or operational default. D521 remains the shipped pure physical-service reader. D511 completed the fourth road-evidence pass and retained exact
   verdict `NEEDS_MORE_RESEARCH`.
   The packet now records 65 sources, 37 nodes, 18 candidate rows (14 Verified,
   4 Inferred, 0 Disputed), six Potomac rows, 13 Sherman interval rows (11 Verified,
@@ -3968,12 +3971,78 @@ next green commit and confer through this ledger instead of permitting simultane
   battery is owed before the first playable transport loop. Restored source/game MD5 is
   `4a00eee8ffce00acdb9463ea34f8adaf` / `345772de75bb0f59f9b24947796398bb`;
   source-tree MD5 is `797c266b8b94b601a6738072c79561ef`. D521 releases this lane unowned.
-- **Resume pointer:** inventory the live campaign constructor/ruleset, save/apply,
-  slot/import/undo/Ironman, and turn-register owners. Then write and push a separate LANE-019
-  contract/DRIVE take for the smallest fresh-start conquest identity/state/save foundation with
-  exact fields, old-save isolation, discriminator/version law, probes, binds, allowlist, and
-  exclusions before any runtime edit. Do not infer opening control, node operation, service
-  condition, armies, Historical availability windows, or migration behavior.
+- **D522 architecture/representation verdict:** the absent prerequisite is not a transport
+  registry, topology, action, or generic save lifecycle. It is a detached, fresh-start conquest
+  identity/state representation that cannot be confused with an existing ladder campaign or
+  accepted as a live save. Create exactly `src/116-conquest-state.js` as the sole owner; it may
+  neither import nor reuse generic `applySave`, migration, run-id, Ironman, bookmarks, slots,
+  import, undo, campaign-construction, or UI paths. Existing `mayhemInit` remains the exact owner
+  of immutable `C.ruleset`. Invoke it only on the disposable local carrier defined below, then
+  transfer its verified frozen ruleset descriptor/value; never initialize the exact final root
+  directly and never create a conquest-owned ruleset.
+- **Slice-3A exact contract — detached conquest identity/state serialization foundation:** expose
+  exactly `conquestCampaignFoundation(startView)` and
+  `conquestCampaignFoundationView(candidate)`. `startView` and nested `ruleset` may have only
+  `Object.prototype` or `null` prototype and exact own-data keys `{side,ruleset}` / `{id,version}`.
+  Inspect prototypes, all own names/symbols, and own descriptors before reading only descriptor
+  `.value`; custom prototypes, inherited enumerable authority, hidden/symbol extras, accessors,
+  missing/extra fields, and wrong values fail without invoking an accessor. Side is exactly `"US"`
+  or `"CS"`; ruleset id is `"historical"` or `"mayhem"` at version `1`. Create a disposable local
+  plain `carrier`, call `mayhemInit(carrier,id,"new")`, verify its exact frozen non-writable,
+  non-configurable, enumerable `ruleset` descriptor/value, and transfer only that same descriptor/
+  value to the final root. Discard the carrier and all incidental receipt/sequence fields; never
+  call `mayhemInit` on the returned root. The factory returns only an exact root
+  `{side,campaignKind,ruleset,conquest}`. `campaignKind` is the immutable exact
+  `{id:"conquest",version:1}`; `ruleset` is that verified existing Mayhem-owned value;
+  `campaignKind`, `ruleset`, and `conquest` are non-writable/non-configurable root properties;
+  `campaignKind` and `ruleset` are frozen; `conquest` is an empty plain object and deliberately
+  not frozen for later separately contracted fields. No other root or nested field exists.
+- **Slice-3A view/serialization law:** `conquestCampaignFoundationView(candidate)` accepts only
+  `Object.prototype` candidates carrying either all locked factory descriptors above or all
+  ordinary enumerable own-data descriptors produced by an exact JSON round trip. It inspects
+  prototypes/names/symbols/descriptors before values and rejects null/custom prototypes, mixed
+  descriptor modes, hidden/extra fields, symbols, and accessors without invocation or mutation.
+  Legacy, malformed, mixed, operational, or noncanonical candidates fail `null`.
+  Success returns a new deeply frozen exact four-field snapshot with the locked root descriptors;
+  its empty `conquest` snapshot is frozen while the factory namespace remains extensible. The
+  only controlled serialization-adjacent proof may carry this view through a test-local
+  `serializeSave` fixture and restore it; no production save
+  acceptance, load, migration, slot, bookmark, Ironman, import, undo, runId, or generic
+  `applySave` integration is authorized.
+- **Slice-3A prohibited behavior:** no reads or writes of `G`, settings, storage, DOM, UI, live
+  campaign/start/load paths, topology/adjacency, territory control, node operation, service
+  condition, armies, dates, orders, movement, transport legality, economy, AI, battle, tactical,
+  Chronicle, War Career, Custom Builder, or result authority. Do not add operational fields or
+  actions such as control, services, armies, dates, orders, movement, slots, bookmarks, undo,
+  Ironman, import, migration, runId, or generic save application.
+- **Slice-3A implementation allowlist:** `src/116-conquest-state.js`, `src/00-manifest.json`,
+  new `tools/probe-conquest-state.mjs`, existing conquest-layer/transport-plan proof only for
+  mechanically necessary boundary pins, generated `civil_war_generals.html` only via normal
+  build, mechanical Mayhem/War-Career planning pins only with verbatim evidence, and routing/law
+  closeout documents (`AUTONOMOUS-RUN.md`, `COORDINATION.md`, `DECISIONS.md`, `HANDOFF.md`,
+  `RUN-LOG.md`, `START-HERE.md`, `V1-CHECKLIST.md`, `WAKE-UP.md`, this law, and
+  `legacy/HANDOFF-ARCHIVE.md`). Routing also permits only the live-boundary tooth in
+  `tools/probe-conquest-transport-plan.mjs`. Do not touch build source, data,
+  `src/91-save-slots.js`, `src/105-save-guard.js`, `src/107-mayhem-rules.js`,
+  `src/114-conquest-board.js`, `src/115-conquest-transport.js`, `tools/save-shape.json`, frozen
+  base, tactical/UI sources, or any existing save owner.
+  Data remains 65; implementation moves manifest to 112 with 116 last; suite remains 140;
+  `_SAVE_VER=1` and save shape remain unchanged; the focused probe is suite-excluded.
+- **Slice-3A probe/bind/gates:** `tools/probe-conquest-state.mjs` has exactly ten steps: API and
+  manifest enrollment; strict input rejection; exact root for both sides; campaignKind
+  descriptors; ruleset owner/immutability; empty namespace plus JSON round-trip/view; legacy,
+  malformed, mixed rejection with no mutation; controlled serializeSave carry and restore;
+  purity; and prohibited operational fields/actions/UI. Bind A removes only
+  `campaignKind.version === 1` validation; exactly one invalid-discriminator tooth must red,
+  then bytes restore before the clean rerun. Required evidence is normal build `GATE OK`, syntax,
+  doc coherence, focused state probe, conquest plan/board/transport (including 18-step transport),
+  Mayhem mode/plan, save-slots as serialization-adjacent proof, War Career plan, fresh artifacts,
+  Bind A exact-red/restore, allowlist audit, and `git diff --check`.
+- **Resume pointer:** implement only D523 Slice-3A under the exact contract above; after its
+  clean focused evidence, documentation, commit, push, fetch, and HEAD/origin parity, release
+  this lane to CONTRACT/unowned. D524 must separately adjudicate any next
+  dependency; it may not infer opening control, node operation, service condition, armies,
+  Historical availability windows, migration, topology, or movement.
 - **Last-touched commits:** D503 standalone design-lock `a3403da`; D503 final-law
   commit `44ffac5`; Slice-1 DRIVE take `7a0ca42`; allowlist/gate HALT ledger
   `cb46f55`; D504 Slice-1 implementation `74237b9`; D505 docs-only contract ships in
@@ -3985,7 +4054,8 @@ next green commit and confer through this ledger instead of permitting simultane
   D509 packet/lane release; D510 final-pass DRIVE transfer `be54d4a`; D511 packet
   and lane release ship in the commit containing that entry; D519 cleared the ARC 9 dependency
   reorder at `9cea762`; D520 pure-query DRIVE take is `685c1f6`; D521 pure-query shipment and
-  CONTRACT/unowned release are the current milestone.
+  CONTRACT/unowned release precede the D522 detached-state DRIVE take from
+  `ef85725b2e7ea55fba96b4c7996a0d70abb6a56f`.
 - **History:** D502 created the design-only contract. Aaron chose Package A. D503
   completed the final law. D504 shipped the read-only territory board. D505 audits
   every rail/water evidence row, contracts the read-only substrate, and D506 ships
@@ -4003,7 +4073,9 @@ next green commit and confer through this ledger instead of permitting simultane
   D519 releases blocked ARC 9 and selects this lane. D520 takes DRIVE only for the state-free
   physical-service evidence query and repairs the obsolete pre-D514 plan-boundary assertion.
   D521 ships that query under its exact 18-step proof and releases the lane to CONTRACT/unowned
-  before any conquest identity, state, save, topology, legal-now, order, or movement work.
+  before any conquest identity, state, save, topology, legal-now, order, or movement work. D522
+  then takes DRIVE for only the detached exact campaign identity/ruleset/empty-namespace factory
+  and view, with controlled serialization proof but no live save or campaign path.
 
 ### LANE-020 · desk-to-battle-pacing — **CONTRACT (D519 SLICE-5 DEPENDENCY; UNOWNED)**
 

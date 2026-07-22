@@ -4,6 +4,82 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D522 — CONTRACT_DETACHED_CONQUEST_IDENTITY_FOUNDATION: LANE-019 TAKES DRIVE FOR ONE DETACHED FRESH-START CONQUEST IDENTITY/STATE SERIALIZATION FOUNDATION — [CHATGPT/CODEX 5.6 SOL ULTRA, ARCHITECTURE/CONTRACT] (2026-07-22)
+
+**VERDICT: `CONTRACT_DETACHED_CONQUEST_IDENTITY_FOUNDATION`.** From clean, pushed D521
+`ef85725b2e7ea55fba96b4c7996a0d70abb6a56f`, the live campaign constructor, Mayhem
+ruleset wrapper, save/apply pipeline, named slots/import/undo/Ironman, and turn-register
+owners were re-inventoried. The legacy ladder constructor immediately launches a battle and
+the generic apply path is a protected broad surface; neither can become a conquest owner.
+LANE-019 therefore takes ChatGPT/Codex DRIVE for exactly one detached, fresh-start-only,
+serializable campaign identity/state foundation. D521 remains the product/runtime head.
+
+**Selected representation:** add new `src/116-conquest-state.js` after the shipped board and
+transport owners as the sole conquest-state foundation owner. Preserve the existing immutable
+`C.ruleset`; add separate immutable versioned `C.campaignKind = {id:"conquest",version:1}`;
+and create exactly one empty plain future-expandable `C.conquest` namespace. This cleanly
+separates campaign kind from Historical/Mayhem ruleset identity, supplies versioned save
+discrimination without moving global `_SAVE_VER`, and refuses operational defaults. Rejected:
+overloading `C.ruleset`; a scalar kind plus an invented nested schema; attaching conquest to
+the battle ladder; placing the owner in `src/107-mayhem-rules.js` or
+`src/115-conquest-transport.js`; and broadening `applySave`,
+slots, import, undo, bookmarks, or Ironman before a lawful public conquest path exists.
+
+**Exact detached API and shape:** expose only
+`conquestCampaignFoundation(startView)` and `conquestCampaignFoundationView(candidate)`.
+Factory `startView` and nested `ruleset` accept only `Object.prototype` or `null` prototype and
+exact own-data keys `{side,ruleset}` / `{id,version}`. Validation inspects prototypes, all own
+names/symbols, and own descriptors before reading only descriptor `.value`, so custom prototypes,
+inherited enumerable authority, hidden/symbol extras, accessors, extra/missing keys, wrong scalar
+types, and unsupported values return `null` without accessor invocation or input mutation. Side
+is `US` or `CS`; ruleset is exact `{id:"historical"|"mayhem",version:1}`. Call
+`mayhemInit(carrier,id,"new")` only on a disposable local plain carrier, verify its exact frozen
+non-writable/non-configurable enumerable `ruleset` descriptor/value, transfer only that same
+descriptor/value, and discard the carrier plus every incidental field; never initialize the final
+root directly. The result has only `side`, `campaignKind`, `ruleset`, and `conquest`; the last
+three root properties are non-writable/non-configurable, `campaignKind` and `ruleset` are frozen,
+and factory `conquest` is exact empty `Object.prototype` plain and intentionally extensible. The
+view accepts only `Object.prototype` candidates in one consistent mode: locked factory descriptors
+or ordinary enumerable own-data JSON-round-trip descriptors. It rejects null/custom prototypes,
+mixed modes, symbols, hidden/extras, and accessors before reading values. Success returns a deeply
+frozen exact four-field snapshot with locked descriptors and frozen empty `conquest`; all malformed,
+mixed-legacy, and unsupported-version candidates fail without attachment or migration.
+
+**Hard boundary:** no `G`, settings, localStorage, DOM, board, transport, alternate authority,
+or UI read/write; no live start/load/continue, migration, topology, adjacency, control,
+node/service condition, Historical availability, army, turn/date, order, movement, capacity,
+cut/repair, economy, AI, battle/resolver, Chronicle, career, or tactical field. Existing
+`serializeSave` may naturally carry a controlled detached campaign object; D522/D523 do not
+change `_SAVE_VER`, `tools/save-shape.json`, `serializeSave`, `applySave`, named slots,
+import/export, undo, bookmarks, Ironman, War Career `runId`, or old-save behavior.
+
+**D523 proof/allowlist/pins/gates:** implementation may touch only new
+`src/116-conquest-state.js`, `src/00-manifest.json`, new suite-excluded
+`tools/probe-conquest-state.mjs`, the existing conquest-layer and transport planning probes for
+exact module/count/current-contract pins, generated `civil_war_generals.html` via normal build,
+mechanical Mayhem/War Career generated/source pins only with byte evidence, and milestone
+law/routing/archive docs. Data, build source, `src/91-save-slots.js`, `src/105-save-guard.js`,
+`src/107-mayhem-rules.js`, `src/114-conquest-board.js`, `src/115-conquest-transport.js`,
+`tools/save-shape.json`, `build/base.html`, tactical/runtime UI, and every unlisted surface are
+barred. Pins: data 65, suite 140, save shape and `_SAVE_VER=1` unchanged; manifest 111→112 with
+116 last. `D523 focused conquest-state proof` has exactly ten steps: API/manifest ownership;
+strict input; exact root/both sides; immutable campaign-kind descriptors; existing ruleset owner;
+empty namespace plus JSON round-trip/view; legacy/malformed/mixed rejection without mutation;
+controlled serialization then byte/state restoration; repeated-call `G`/storage/DOM/board/
+transport purity; and prohibited-field/action/UI absence. Bind A removes only the view's
+`campaignKind.version === 1` validation: exactly invalid-discriminator must red; then source and
+generated bytes restore before clean rerun. Required gates: syntax; normal build `GATE OK`; doc
+coherence; fresh focused artifact; conquest layer/board/transport plan plus existing transport
+18/18; Mayhem mode/plan; save-slot adjacency; War Career plan; isolated bind/restore; exact
+allowlist; and `git diff --check`. The 140-row battery remains deferred to the first playable
+conquest loop unless a shared gate exposes a real regression.
+
+**EXACT NEXT:** after D522 commits, pushes, fetches, and proves clean, implement only the
+detached factory/view as D523; grow/read back the ten-step proof, execute Bind A and byte
+restore, rerun every declared adjacent gate, synchronize evidence, commit/push/fetch/clean
+parity, then reload the D514 ledger. Never infer operational conquest state or broaden a live
+campaign/save path inside this foundation. No simultaneous edits.
+
 ## D521 — ARC 7 TRANSPORT MOVEMENT SLICE 2B SHIPS THE PURE PHYSICAL-SERVICE EVIDENCE QUERY; LANE-019 RELEASES BEFORE STATEFUL TRANSPORT — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION/VERIFY] (2026-07-22)
 
 **VERDICT: `SHIPPED_PURE_PHYSICAL_SERVICE_QUERY`.** Existing

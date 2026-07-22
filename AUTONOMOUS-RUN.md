@@ -1,12 +1,12 @@
 # AUTONOMOUS-RUN.md — the 12-hour max-productivity build plan ("The Civil War")
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D521 next-lane=LANE-019 state=CONTRACT owner=none -->
-> **Live status (D521, 2026-07-22):** ARC 7 Transport Movement Slice 2B ships one pure, deeply frozen physical-service evidence query inside the existing transport owner. Focused proof is 18/18; Bind 2B isolates only the Mayhem physical-filter tooth at 17/18.
+<!-- LIVE-HEAD decision=D522 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D522, 2026-07-22):** LANE-019 is under ChatGPT/Codex DRIVE for one detached fresh-start conquest identity/state serialization foundation in a new sole state owner after the shipped board and transport owners.
 >
-> **Boundary:** LANE-019 returns to `CONTRACT` / `none`. The slice creates no topology, legal-now claim, state, save, UI, order, movement, capacity, economy, AI, or battle coupling; roads remain unavailable. Exact next is a separately committed contract and DRIVE take for the smallest fresh-start conquest identity/state/save foundation required before any movement mutation.
+> **Boundary:** D522 changes only routing/law plus the transport plan's live-boundary tooth; D521 remains the runtime head. The contracted factory is detached and may establish only exact immutable `C.campaignKind`, existing immutable `C.ruleset`, and one empty `C.conquest` namespace—no live start/load/UI, migration, topology, control, service condition, army, order, movement, or operational default.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block owns D521 evidence; LANE-019 owns the next contract. D514's work-conserving loop remains binding, and LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D522 exact contract own the slice. D514's work-conserving loop remains binding; LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **D514 completion rule:** `HANDOFF.md` owns the work-conserving loop and terminal condition. This manual executes the whole live ledger, not one bundle; each slice remains independently contracted, gated, documented, committed, and pushed.
