@@ -1,11 +1,13 @@
 /* ==========================================================================
    D506 / LANE-019 Slice 2A — immutable read-only transport evidence.
+   D521 / Slice 2B — pure ruleset-filtered physical-service evidence.
 
    This module normalizes one injected evidence owner. It creates no UI and owns
    no campaign behavior. Any shape, mapping, source, or territory drift fails the
    complete value closed to null.
    ========================================================================== */
 var conquestTransportNormalized = null;
+var conquestTransportPhysicalServices = null;
 
 (function conquestTransportModule() {
   var _trRootKeys = ["schema","version","enablement","sourcePackets","railServices","waterServices","seaServices","interchanges","nonLinks","roadStatus"];
@@ -26,6 +28,18 @@ var conquestTransportNormalized = null;
   var _trAllowedHistorical = { eligible:1, conditional:1, "operation-specific":1 };
 
   function _trPlain(v) { return !!v && typeof v === "object" && !Array.isArray(v); }
+  function _trRulesetId(v) {
+    if (!_trPlain(v)) return null;
+    try {
+      var proto=Object.getPrototypeOf(v), names=Object.getOwnPropertyNames(v).sort();
+      if ((proto!==Object.prototype && proto!==null) || names.length!==2 || names[0]!=="id" || names[1]!=="version" ||
+          (typeof Object.getOwnPropertySymbols==="function" && Object.getOwnPropertySymbols(v).length)) return null;
+      var id=Object.getOwnPropertyDescriptor(v,"id"), version=Object.getOwnPropertyDescriptor(v,"version");
+      if (!id || !version || !Object.prototype.hasOwnProperty.call(id,"value") || !Object.prototype.hasOwnProperty.call(version,"value") ||
+          (id.value!=="historical" && id.value!=="mayhem") || version.value!==1) return null;
+      return id.value;
+    } catch (e) { return null; }
+  }
   function _trExactKeys(o, keys) {
     if (!_trPlain(o)) return false;
     var got=Object.keys(o).sort(), want=keys.slice().sort();
@@ -161,6 +175,22 @@ var conquestTransportNormalized = null;
           ix.mayhemPhysicalEligibility!==true || !_trAllowedProvenance[ix.provenance] || !_trText(ix.handlingLimit,700)) return null;
     }
     var clone=_trClone(raw);
+    return clone ? _trFreeze(clone) : null;
+  };
+
+  conquestTransportPhysicalServices = function (rulesetView) {
+    var rulesetId=_trRulesetId(rulesetView);
+    if (!rulesetId) return null;
+    var pack=conquestTransportNormalized();
+    if (!_trExactKeys(pack,_trRootKeys) || !Array.isArray(pack.railServices) || pack.railServices.length!==27 ||
+        !Array.isArray(pack.waterServices) || pack.waterServices.length!==15 ||
+        !Array.isArray(pack.seaServices) || pack.seaServices.length!==2 ||
+        !Array.isArray(pack.interchanges) || pack.interchanges.length!==4 ||
+        !Array.isArray(pack.nonLinks) || pack.nonLinks.length!==18 ||
+        pack.roadStatus!=="ROAD_REQUIRES_BOUNDED_SOURCE_PASS") return null;
+    var services=pack.railServices.concat(pack.waterServices,pack.seaServices);
+    if (rulesetId==="mayhem") services=services.filter(function(row){ return row.mayhemPhysicalEligibility===true; });
+    var clone=_trClone({rulesetId:rulesetId,services:services});
     return clone ? _trFreeze(clone) : null;
   };
 })();

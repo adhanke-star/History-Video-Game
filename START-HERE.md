@@ -1,12 +1,12 @@
 # START HERE — "The Civil War" (master index)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D520 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D520, 2026-07-22):** existing LANE-019 is under ChatGPT/Codex DRIVE for one state-free ARC 7 Transport Movement foundation: a pure physical-service evidence query inside the existing read/freeze transport owner.
+<!-- LIVE-HEAD decision=D521 next-lane=LANE-019 state=CONTRACT owner=none -->
+> **Live status (D521, 2026-07-22):** ARC 7 Transport Movement Slice 2B ships one pure, deeply frozen physical-service evidence query inside the existing transport owner. Focused proof is 18/18; Bind 2B isolates only the Mayhem physical-filter tooth at 17/18.
 >
-> **Boundary:** D520 changes only routing/law documents plus the stale D506 plan-boundary tooth; runtime remains untouched. The slice may expose sourced rail, inland-water, and bounded-sea rows by immutable ruleset view, but may create no topology, adjacency, current-availability claim, state, save, UI, order, movement, capacity, receipt, AI, economy, or battle coupling. Roads remain unavailable.
+> **Boundary:** LANE-019 returns to `CONTRACT` / `none`. The slice creates no topology, legal-now claim, state, save, UI, order, movement, capacity, economy, AI, or battle coupling; roads remain unavailable. Exact next is a separately committed contract and DRIVE take for the smallest fresh-start conquest identity/state/save foundation required before any movement mutation.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D520 exact contract own the slice. D514's work-conserving loop remains binding; LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
+> **Authority:** `HANDOFF.md`'s first ⚡ block owns D521 evidence; LANE-019 owns the next contract. D514's work-conserving loop remains binding, and LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **D514 completion rule:** the project now runs a work-conserving completion loop. `HANDOFF.md` owns the algorithm and terminal condition; `V1-CHECKLIST.md` owns every live item; ordinary milestone/phase/browser boundaries do not stop a healthy run.

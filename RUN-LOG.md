@@ -1,17 +1,41 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D520 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D520, 2026-07-22):** existing LANE-019 is under ChatGPT/Codex DRIVE for one state-free ARC 7 Transport Movement foundation: a pure physical-service evidence query inside the existing read/freeze transport owner.
+<!-- LIVE-HEAD decision=D521 next-lane=LANE-019 state=CONTRACT owner=none -->
+> **Live status (D521, 2026-07-22):** ARC 7 Transport Movement Slice 2B ships one pure, deeply frozen physical-service evidence query inside the existing transport owner. Focused proof is 18/18; Bind 2B isolates only the Mayhem physical-filter tooth at 17/18.
 >
-> **Boundary:** D520 changes only routing/law documents plus the stale D506 plan-boundary tooth; runtime remains untouched. The slice may expose sourced rail, inland-water, and bounded-sea rows by immutable ruleset view, but may create no topology, adjacency, current-availability claim, state, save, UI, order, movement, capacity, receipt, AI, economy, or battle coupling. Roads remain unavailable.
+> **Boundary:** LANE-019 returns to `CONTRACT` / `none`. The slice creates no topology, legal-now claim, state, save, UI, order, movement, capacity, economy, AI, or battle coupling; roads remain unavailable. Exact next is a separately committed contract and DRIVE take for the smallest fresh-start conquest identity/state/save foundation required before any movement mutation.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D520 exact contract own the slice. D514's work-conserving loop remains binding; LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
+> **Authority:** `HANDOFF.md`'s first ⚡ block owns D521 evidence; LANE-019 owns the next contract. D514's work-conserving loop remains binding, and LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-22 — D521: ARC 7 SLICE 2B PURE PHYSICAL-SERVICE EVIDENCE QUERY SHIPPED
+
+The existing immutable transport owner now exposes one state-free
+`conquestTransportPhysicalServices` reader. It accepts only an exact Historical/Mayhem
+version-1 plain own-data view and returns only cloned, deeply frozen sourced service rows in
+27 rail / 15 inland-water / 2 bounded-sea order. Historical qualitative/date evidence remains
+verbatim; Mayhem filters only the existing physical-eligibility flag. Roads, interchanges,
+non-links, topology, legal-now, state, save, UI, order, movement, capacity, economy, AI, and
+battle authority remain absent.
+
+The malformed-substrate tooth first hardened a partial-normalizer throw to `null`. Independent
+adversarial review then found inherited/custom-prototype plus hidden/symbol-extra inputs slipping
+through `Object.keys`; final validation checks prototype, all own names/symbols, and own data
+descriptors before values. Focused proof is 18/18; Bind 2B is exactly 17/18 with only the
+Mayhem false-eligibility tooth red, followed by byte restoration and a clean rerun. Transport
+plan 11/11, conquest plan 8/8, board 13/13, Mayhem plan 13/13, and War Career plan 24/24 are
+green. Protected counts, owners, frozen base, save shape/version, and suite 140 hold; no full
+battery is owed before the first playable transport loop.
+
+LANE-019 releases to CONTRACT/unowned. The next work is a separately committed contract/DRIVE
+take for the smallest fresh-start conquest identity/state/save foundation; no initial control,
+node/service status, armies, Historical windows, migration, topology, or movement law may be
+invented.
 
 ## 2026-07-22 — D520: LANE-019 PURE PHYSICAL-SERVICE QUERY CONTRACT TAKEN
 
