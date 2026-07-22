@@ -3684,11 +3684,13 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **CONTRACT (D525 PURE DETACHED CONQUEST CALENDAR SHIPPED; UNOWNED)**
+### LANE-019 · conquest-design-law — **CONTRACT (D526 HISTORICAL WINDOW PREREQUISITE FINDING; UNOWNED)**
 
-- **Owning tool:** none. D525 ships the detached Slice-3B calendar and releases the lane; any D526
-  work requires its own committed owner/contract transfer. No simultaneous edits.
-- **State:** CONTRACT/unowned. D525 ships only a pure detached campaign-calendar query in the
+- **Owning tool:** none. D526 records the bounded Historical-window prerequisite and leaves the
+  lane unowned; any D527 work requires its own committed owner/contract transfer. No simultaneous edits.
+- **State:** CONTRACT/unowned. D526 authorizes no runtime/data change: all 44 service dates and
+  four interchange dates require mode-bounded source adjudication before machine-readable
+  Historical windows. D525 ships only a pure detached campaign-calendar query in the
   existing sole conquest-state owner. D523's strict factory/view remains exact and D525 adds no
   live or operational authority. D523 ships only a new sole state owner, exact campaign
   identity/ruleset serialization, and detached factory/view; no live campaign start, load, save
@@ -4140,13 +4142,43 @@ next green commit and confer through this ledger instead of permitting simultane
   24/24, and save slots 17/17 with clean fresh artifacts. `_SAVE_VER=1`, save shape, frozen base,
   build/data sources, existing owners, and every live entry/load/save/UI surface hold. The full
   140-row battery remains deferred until the first playable conquest loop.
-- **Resume pointer:** D525 releases this lane to CONTRACT/unowned. Under D514, D526 must re-read
-  Package A, this full lane, the existing foundation/calendar/transport owners, and live/save
-  owners; separately adjudicate the smallest dependency-ready prerequisite and either commit a
-  precise owner-safe contract/DRIVE take or record a bounded prerequisite. D526 may not infer
-  opening control, node operation, service condition, armies, Historical availability windows,
-  receipt grammar, current/default turn, migration, topology, movement, or a live
-  start/load/save-acceptance path.
+- **D526 Historical physical-window prerequisite finding:** the complete candidate surface is
+  27 rail, 15 inland-water, two bounded-sea services, and four separate interchanges. Current
+  service evidence divides into ten `eligible`, 21 `conditional`, and 13 `operation-specific`
+  qualitative rows. The 31 eligible-or-conditional rows are
+  `QUALITATIVE_OR_MIXED_EVIDENCE_ONLY`; their date prose may
+  combine physical existence with control, use, damage, rebuilding, endpoint loss, fragmentation,
+  or condition. The 13 operation-specific rows are `OPERATION_OBSERVATION_ONLY`; an actual
+  bounded passage does not establish standing service. `CTI-01` through `CTI-04` are
+  `INTERCHANGE_WINDOW_UNADJUDICATED`; no service date may be inherited by a handling connection.
+  These labels are docs-only audit dispositions, not JSON/runtime enums. Package A §8.30 carries
+  the exact ID partition.
+- **D526 semantic and ownership binds:** `CTS-S-02` / `WE-26` is the decisive parser negative:
+  “through 15 Jan. 1865; closed thereafter” describes Cape Fear closing to blockade runners after
+  Fort Fisher; the same row separately records the joint operation's actual Union landing and fort
+  capture. Treating that phrase as a generic physical-service end date reverses the history.
+  Control, capture, operation, damage, service
+  condition, blockade state, and named passage cannot substitute for physical existence. Exact
+  dates remain separate from the two-month calendar. No new packet, table, registry, schema,
+  parser, cursor, state, receipt, route query, live/save integration, or runtime owner is
+  authorized. New claims belong in the existing D497 rail or D499 water packet; unresolved or
+  disputed claims remain unavailable.
+- **D526 proof and protected pins:** normal build/check is `GATE OK` at data 65, territories 36,
+  transport 27/15/2/4/18, manifest 112 with 116 last, and suite 140. Doc coherence is 5/5;
+  transport plan 12/12; conquest plan 8/8; Mayhem plan 13/13; War Career plan 24/24. Syntax,
+  `git diff --check`, exact 11-file allowlist, protected no-diff audit, and byte-verbatim
+  5,870-byte D524 archive comparison pass. No product source/data/generated/save/base/suite owner
+  moved. Independent Sol-high re-audit reports PASS with no remaining blocker, so no browser or
+  full 140-row battery is owed before the first playable conquest loop.
+- **Resume pointer:** D526 leaves this lane CONTRACT/unowned with D525 still the product head.
+  D527 must separately contract a docs/research-only, mode-bounded source adjudication beginning
+  with the 27 rail services. It must use and, only for genuinely new claims, amend the existing
+  rail packet; separate construction/existence from canonical control, operation, and service
+  condition; preserve exact source dates and unresolved rows; include the rail-facing limits of
+  `CTI-01` through `CTI-04` without declaring those interchanges ready; define a source-floor and
+  row-by-row audit artifact/probe; and stop before data, runtime, current-turn, state, receipt,
+  topology, movement, or live/save behavior. If that research cannot establish a row, quarantine
+  it and continue under D514 rather than inferring an interval.
 - **Last-touched commits:** D503 standalone design-lock `a3403da`; D503 final-law
   commit `44ffac5`; Slice-1 DRIVE take `7a0ca42`; allowlist/gate HALT ledger
   `cb46f55`; D504 Slice-1 implementation `74237b9`; D505 docs-only contract ships in
@@ -4161,8 +4193,8 @@ next green commit and confer through this ledger instead of permitting simultane
   CONTRACT/unowned release precede the D522 detached-state DRIVE take from
   `ef85725b2e7ea55fba96b4c7996a0d70abb6a56f`; D522 routing/contract is `bfbe64b`; D523
   implementation and CONTRACT/unowned release are `b59532c`; D524's pure-calendar DRIVE contract
-  is `7adcc28`; D525 implementation and CONTRACT/unowned release ship in the commit containing
-  this entry.
+  is `7adcc28`; D525 implementation and CONTRACT/unowned release are `9b94e3f`; D526's bounded
+  Historical-window finding ships in the commit containing this entry.
 - **History:** D502 created the design-only contract. Aaron chose Package A. D503
   completed the final law. D504 shipped the read-only territory board. D505 audits
   every rail/water evidence row, contracts the read-only substrate, and D506 ships
@@ -4184,7 +4216,10 @@ next green commit and confer through this ledger instead of permitting simultane
   strict factory/view under the exact ten-step proof and releases the lane to CONTRACT/unowned
   before any live entry, save acceptance, or operational state. D524 takes DRIVE only for the
   law-fixed detached 25-interval calendar query; D525 ships that pure query under exact 15-step
-  proof and releases the lane to CONTRACT/unowned. Operational state and integration remain closed.
+  proof and releases the lane to CONTRACT/unowned. D526 proves that the qualitative date strings
+  cannot become machine-readable physical windows or legal-now authority, records the exact
+  44-service/four-interchange prerequisite, and keeps the lane unowned. Operational state and
+  integration remain closed.
 
 ### LANE-020 · desk-to-battle-pacing — **CONTRACT (D519 SLICE-5 DEPENDENCY; UNOWNED)**
 

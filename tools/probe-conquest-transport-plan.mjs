@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// D506 substrate + D520-D524 historical contracts + D525 LANE-019 calendar shipment/release probe.
+// D506 substrate + D520-D525 historical contracts/shipments + D526 window-prerequisite probe.
 import { readFileSync, writeFileSync, mkdirSync, readdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -27,7 +27,7 @@ step("Historical dates and Mayhem physical eligibility preserve packet semantics
 step("bounded sea and zero-road verdicts are exact",()=>{need(pack.seaServices[0].evidenceRowIds[0]==="WE-24"&&pack.seaServices[0].direction==="one-way","WE-24 one-way sea bound lost");need(pack.seaServices[1].evidenceRowIds[0]==="WE-26"&&pack.seaServices[1].scope==="operation-specific"&&pack.seaServices[1].historicalEligibility.status==="operation-specific","WE-26 operation bound lost");need(pack.roadStatus==="ROAD_REQUIRES_BOUNDED_SOURCE_PASS"&&!Object.hasOwn(pack,"roadServices"),"road verdict/service zero lost");need(read("DECISIONS.md").includes("SEA_READY_BOUNDED_ROWS_WE_24_WE_26_ONLY"),"sea verdict missing");return {sea:"WE-24/WE-26",roadServices:0};});
 step("existing owners stay separate and module creates no behavior or UI",()=>{const src=read("src/115-conquest-transport.js");for(const token of ["blockadeInit","logisticsInit","westernTheaterInit","bridgeArmy","bridgeAutoResolve","warCareerStart","fldCustom","openSheet","document.","localStorage","settings","applySave","saveLocal","importSave","exportSave"])need(!src.includes(token),"owner/UI token leaked: "+token);need(!/\bG\b|\bC\b/.test(src),"G/C authority leaked");need(src.includes("conquestTransportNormalized")&&src.includes("Object.freeze"),"read/freeze helper missing");return {ownerLeaks:0,uiTrace:0};});
 step("exact allowed fields exclude later gameplay authority",()=>{for(const r of [...pack.railServices,...pack.waterServices,...pack.seaServices]){need(exact(r,serviceKeys)&&exact(r.historicalEligibility,["dateText","status"]),r.id+" service fields drifted");}for(const r of pack.interchanges)need(exact(r,interchangeKeys)&&exact(r.historicalEligibility,["dateText","status"]),r.id+" interchange fields drifted");for(const r of pack.nonLinks)need(exact(r,nonLinkKeys),r.id+" non-link fields drifted");const text=JSON.stringify(pack);for(const key of ["movement","adjacency","ownership","control","condition","capacity","economy","reinforcement","reward","save","state","ai","battle","winner","score","surrender","tacticalOutput"])need(!new RegExp('"'+key+'"','i').test(text),"later field "+key);return {serviceFields:13,interchangeFields:10,nonLinkFields:9};});
-step("current LANE-019 D525 CONTRACT release retains the pure detached calendar proof",()=>{
+step("current LANE-019 D526 CONTRACT finding retains the pure detached calendar proof",()=>{
   const lane=read("COORDINATION.md"),segment=(/### LANE-019 · conquest-design-law[\s\S]*?(?=\n### LANE-\d+ ·|\n## 6 ·|$)/.exec(lane)||[])[0]||"";
   need(segment,"LANE-019 segment missing");
   const state=/- \*\*State:\*\*\s*(LAW-DRAFT|CONTRACT|DRIVE|VERIFY|SHIPPED)\b/m.exec(segment),owner=/- \*\*Owning tool:\*\*\s*([^\n]+)/m.exec(segment);
@@ -50,12 +50,40 @@ step("current LANE-019 D525 CONTRACT release retains the pure detached calendar 
     need(segment.includes(token),"LANE-019 D524 calendar contract missing: "+token);
   need(/no `C\.conquest` attachment/i.test(segment),"LANE-019 D524 must prohibit C.conquest attachment");
   need(/D523's\s+strict factory\/view and empty extensible `conquest` namespace remain exact/i.test(segment),"LANE-019 D523 factory/view preservation missing");
-  need(/operational state and integration remain closed/i.test(segment),"LANE-019 D524 operational boundary missing");
-  for(const token of ["CONTRACT (D525 PURE DETACHED CONQUEST CALENDAR SHIPPED; UNOWNED)","7adcc28","D525 delivery record — pure detached conquest campaign calendar:","D525 evidence and protected pins:","focused state proof is 15/15","bounded endgame interval drifted","45246d89bb479f7a7c5934c38cd78f65","269ecc62eed83e6220c42c0efab40d38","9f4ffbff132bf2b22b1174538b9a9311","D525 releases this lane to CONTRACT/unowned"])
+  need(/operational state and\s+integration remain closed/i.test(segment),"LANE-019 D524 operational boundary missing");
+  for(const token of ["CONTRACT (D526 HISTORICAL WINDOW PREREQUISITE FINDING; UNOWNED)","7adcc28","D525 delivery record — pure detached conquest campaign calendar:","D525 evidence and protected pins:","focused state proof is 15/15","bounded endgame interval drifted","45246d89bb479f7a7c5934c38cd78f65","269ecc62eed83e6220c42c0efab40d38","9f4ffbff132bf2b22b1174538b9a9311"])
     need(segment.includes(token),"LANE-019 D525 calendar delivery missing: "+token);
   need(/attaches nowhere, branches on no ruleset, transforms no source date/i.test(segment),"LANE-019 D525 detached purity boundary missing");
   need(/no\s+live or operational authority/i.test(segment),"LANE-019 D525 live/operational boundary missing");
-  return {state:state[1],owner:owner[1].trim(),shippedSlice:"pure-detached-conquest-campaign-calendar",runtimeHead:"D525",module:"src/116",roadServices:0};
+  return {state:state[1],owner:owner[1].trim(),currentDecision:"D526",shippedSlice:"pure-detached-conquest-campaign-calendar",runtimeHead:"D525",module:"src/116",roadServices:0};
+});
+step("D526 partitions every service and interchange without authorizing a Historical window",()=>{
+  const law=read("docs/design/unlocked-but-judged-design.md"),d=read("DECISIONS.md"),lane=read("COORDINATION.md");
+  const section=(/### 8\.30 D526 Historical physical-window prerequisite finding[\s\S]*?(?=\n### 8\.\d+|\s*$)/.exec(law)||[])[0]||"";
+  need(section,"D526 Package A finding missing");
+  const eligible=["CTS-R-02","CTS-R-04","CTS-R-08","CTS-R-09","CTS-R-10","CTS-R-11","CTS-R-13","CTS-R-18","CTS-R-26","CTS-W-02"];
+  const conditional=["CTS-R-01","CTS-R-03","CTS-R-05","CTS-R-06","CTS-R-07","CTS-R-12","CTS-R-14","CTS-R-15","CTS-R-16","CTS-R-17","CTS-R-19","CTS-R-20","CTS-R-21","CTS-R-22","CTS-R-23","CTS-R-24","CTS-R-25","CTS-R-27","CTS-W-06","CTS-W-08","CTS-W-09"];
+  const operationOnly=["CTS-W-01","CTS-W-03","CTS-W-04","CTS-W-05","CTS-W-07","CTS-W-10","CTS-W-11","CTS-W-12","CTS-W-13","CTS-W-14","CTS-W-15","CTS-S-01","CTS-S-02"];
+  const partition=[...eligible,...conditional,...operationOnly],expected=[...pack.railServices,...pack.waterServices,...pack.seaServices].map(r=>r.id);
+  const byId=new Map([...pack.railServices,...pack.waterServices,...pack.seaServices].map(r=>[r.id,r]));
+  need(eligible.length===10&&conditional.length===21&&operationOnly.length===13,"D526 disposition counts moved");
+  need(new Set(partition).size===44&&JSON.stringify([...partition].sort())===JSON.stringify([...expected].sort()),"D526 does not partition the exact 44 services");
+  need(eligible.every(id=>byId.get(id)?.historicalEligibility.status==="eligible"),"D526 eligible disposition disagrees with substrate");
+  need(conditional.every(id=>byId.get(id)?.historicalEligibility.status==="conditional"),"D526 conditional disposition disagrees with substrate");
+  need(operationOnly.every(id=>byId.get(id)?.historicalEligibility.status==="operation-specific"),"D526 operation disposition disagrees with substrate");
+  const idsIn=block=>Array.from(block.matchAll(/`(CTS-[RWS]-\d{2})`/g),m=>m[1]);
+  const qualitativeBlock=(/- `QUALITATIVE_OR_MIXED_EVIDENCE_ONLY`[\s\S]*?(?=\n- `OPERATION_OBSERVATION_ONLY`)/.exec(section)||[])[0]||"";
+  const operationBlock=(/- `OPERATION_OBSERVATION_ONLY`[\s\S]*?(?=\n- `INTERCHANGE_WINDOW_UNADJUDICATED`)/.exec(section)||[])[0]||"";
+  const interchangeBlock=(/- `INTERCHANGE_WINDOW_UNADJUDICATED`[\s\S]*?(?=\n\nThe strongest semantic counterexample)/.exec(section)||[])[0]||"";
+  need(JSON.stringify(idsIn(qualitativeBlock))===JSON.stringify([...eligible,...conditional]),"D526 qualitative/mixed law list drifted");
+  need(JSON.stringify(idsIn(operationBlock))===JSON.stringify(operationOnly),"D526 operation-only law list drifted");
+  need(JSON.stringify(Array.from(interchangeBlock.matchAll(/`(CTI-\d{2})`/g),m=>m[1]))===JSON.stringify(ids("CTI-",4)),"D526 interchange law list drifted");
+  for(const id of [...partition,"CTI-01","CTI-02","CTI-03","CTI-04"])need(section.includes("`"+id+"`"),"D526 finding missing "+id);
+  for(const token of ["NEEDS_PHYSICAL_WINDOW_ADJUDICATION","QUALITATIVE_OR_MIXED_EVIDENCE_ONLY","OPERATION_OBSERVATION_ONLY","INTERCHANGE_WINDOW_UNADJUDICATED","audit dispositions only","not future runtime/data enum values","CTS-S-02` / `WE-26","closure of the Cape Fear approach to blockade runners","No separate cross-mode packet, table, registry, or runtime schema is authorized","beginning with the 27 rail services"])
+    need(section.includes(token),"D526 Package A bind missing: "+token);
+  need(d.includes("## D526 — NEEDS_PHYSICAL_WINDOW_ADJUDICATION:")&&d.includes("No audited row or interchange is authorized for runtime conversion"),"D526 decision finding missing");
+  need(lane.includes("D526 Historical physical-window prerequisite finding:")&&lane.includes("D527 must separately contract a docs/research-only, mode-bounded source adjudication"),"D526 lane finding/resume pointer missing");
+  return {eligible:10,conditional:21,operationOnly:13,interchanges:4,runtimeReadyWindows:0};
 });
 step("D523 shipment enrolls the detached state foundation without moving build, data, or suite pins",()=>{const manifest=JSON.parse(read("src/00-manifest.json")),build=read("tools/build.mjs"),vet=read("tools/vet-no-regression.mjs");const suite=(/const SUITE = \[([\s\S]*?)\n\];/.exec(vet)||[null,""])[1].match(/^\s*\['/gm)||[];need(readdirSync(join(ROOT,"data")).filter(f=>f.endsWith(".json")).length===65,"data count not 65");need(manifest.modules.length===112&&manifest.modules.at(-1)==="116-conquest-state.js","D523 shipment must enroll manifest 112/116-last");need(suite.length===140,"suite membership moved");need(build.includes("D506 read-only conquest transport evidence gate")&&build.includes("transport: ' + conquestTransportCounts.rail"),"build validation/readback missing");return {data:65,modules:112,last:manifest.modules.at(-1),suite:suite.length};});
 step("planning pin chains document D506 without owner expansion",()=>{const a=read("tools/probe-open-history-mayhem-plan.mjs"),b=read("tools/probe-war-career-loop-plan.mjs"),m=read("tools/probe-mayhem-mode.mjs");need(/D506 re-pin/.test(a)&&/schemas:\s*65/.test(a),"Mayhem planning D506 chain missing");need(/D506 re-pin/.test(b)&&/schemaCount !== 65/.test(b),"War Career planning D506 chain missing");need(/D506/.test(m)&&/dataCount === 65/.test(m),"Mayhem runtime mechanical D506 pin missing");return {openHistory:true,warCareer:true,mayhemMechanical:true};});

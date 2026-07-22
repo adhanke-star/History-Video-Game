@@ -1,17 +1,42 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D525 next-lane=LANE-019 state=CONTRACT owner=none -->
-> **Live status (D525, 2026-07-22):** the pure detached conquest campaign calendar is shipped and focused-green; LANE-019 is `CONTRACT` / `none` for separate next-dependency adjudication.
+<!-- LIVE-HEAD decision=D526 next-lane=LANE-019 state=CONTRACT owner=none -->
+> **Live status (D526, 2026-07-22):** the Historical transport-window prerequisite is source-blocked; LANE-019 is `CONTRACT` / `none` after a bounded 44-service plus four-interchange audit.
 >
-> **Boundary:** existing sole owner `src/116-conquest-state.js` now additionally exposes one strict zero-argument query returning a fresh deeply frozen exact 25-interval schedule. It attaches nowhere and creates no current/default/legal turn, live start/load/save/UI, eligibility, control, service, army, order, movement, or operational behavior.
+> **Boundary:** the shipped 10 `eligible`, 21 `conditional`, and 13 `operation-specific` date strings are qualitative evidence, not machine-readable physical windows or legal-now authority. No runtime/data/state/save/UI behavior moved; D525 remains the product head.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D525 delivery record own the boundary. D514's work-conserving loop remains binding; D526 must separately adjudicate the next dependency, while LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D526 finding own the boundary. D514 remains binding; the next ARC 7 work requires a separately contracted, mode-bounded source adjudication, while LANE-020 stays `CONTRACT` / `none` at its independent-turn dependency.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-22 — D526: HISTORICAL TRANSPORT-WINDOW PREREQUISITE RECORDED
+
+The full shipped candidate surface—27 rail, 15 inland-water, two bounded-sea services, and four
+interchanges—was audited against Package A's physical-availability/control separation. The 44
+service rows divide into ten `eligible`, 21 `conditional`, and 13 `operation-specific` qualitative
+records. None currently supplies a machine-readable physical window or legal-now authority. The
+31 eligible-or-conditional rows mix or may mix physical evidence with control/use/condition; the
+13 operation-specific rows prove only bounded operations. All four interchanges require their own
+built-connection date adjudication.
+
+The Fort Fisher row is the decisive negative: “closed thereafter” means closed to blockade
+runners, while the same row separately records the joint operation's actual Union landing and fort
+capture. A generic service-end parser would reverse the history. D526 therefore creates no
+parallel packet, enum, date parser, runtime, data, state, save,
+UI, topology, receipt, or movement surface. Package A §8.30 records the exact partition and the
+existing transport-plan proof binds it. LANE-019 remains CONTRACT/unowned with D525 still the
+product head; D527 must separately contract a rail-first docs/research adjudication before any
+machine window can exist.
+
+Normal build/check is `GATE OK`; doc coherence 5/5, transport plan 12/12, conquest plan 8/8,
+Mayhem plan 13/13, and War Career plan 24/24 are green. Syntax, diff, exact 11-file allowlist,
+protected no-diff, and the 5,870-byte D524 archive comparison pass. No browser/full-suite work is
+owed for this docs/planning-only finding; the first playable-loop 140-row checkpoint stays deferred.
+Independent Sol-high re-audit reports PASS with no remaining blocker.
 
 ## 2026-07-22 — D525: PURE DETACHED CONQUEST CALENDAR SHIPPED
 

@@ -1316,3 +1316,58 @@ is 15/15; Bind B is exact one-tooth 14/15 and byte-restored; declared adjacent p
 proofs are green. Data 65, manifest 112/116-last, suite 140, save version/shape, frozen base, and
 existing owners hold. LANE-019 releases to CONTRACT/unowned; D526 must separately adjudicate the
 next dependency before any operational or live integration work.
+
+### 8.30 D526 Historical physical-window prerequisite finding
+
+D526 audits the complete shipped physical-candidate surface: 27 rail, 15 inland-water, and two
+bounded-sea service descriptors plus the four separate interchanges. The audit does not change
+the evidence substrate or reinterpret a source claim. Its result is
+`NEEDS_PHYSICAL_WINDOW_ADJUDICATION`: the existing `historicalEligibility.status` and verbatim
+`dateText` fields preserve qualitative packet evidence, but they are not machine-readable
+physical-availability windows and authorize no current/legal availability.
+
+The following labels are audit dispositions only. They are not future runtime/data enum values:
+
+- `QUALITATIVE_OR_MIXED_EVIDENCE_ONLY` covers the ten current `eligible` rows
+  `CTS-R-02`, `CTS-R-04`, `CTS-R-08`, `CTS-R-09`, `CTS-R-10`, `CTS-R-11`, `CTS-R-13`,
+  `CTS-R-18`, `CTS-R-26`, and `CTS-W-02`, plus the 21 current `conditional` rows
+  `CTS-R-01`, `CTS-R-03`, `CTS-R-05`, `CTS-R-06`, `CTS-R-07`, `CTS-R-12`, `CTS-R-14`,
+  `CTS-R-15`, `CTS-R-16`, `CTS-R-17`, `CTS-R-19`, `CTS-R-20`, `CTS-R-21`, `CTS-R-22`,
+  `CTS-R-23`, `CTS-R-24`, `CTS-R-25`, `CTS-R-27`, `CTS-W-06`, `CTS-W-08`, and
+  `CTS-W-09`. Their prose may combine a broad evidence interval with control, military use,
+  damage, rebuilding, endpoint loss, fragmentation, or condition. None may be converted to a
+  continuous physical window without source-level adjudication of the narrower existence claim.
+- `OPERATION_OBSERVATION_ONLY` covers `CTS-W-01`, `CTS-W-03`, `CTS-W-04`, `CTS-W-05`,
+  `CTS-W-07`, `CTS-W-10`, `CTS-W-11`, `CTS-W-12`, `CTS-W-13`, `CTS-W-14`, `CTS-W-15`,
+  `CTS-S-01`, and `CTS-S-02`. Each row proves only a bounded passage, approach, or observation
+  under its stated limitations. It may preserve that exact observation; it may not become a
+  standing or routine service window.
+- `INTERCHANGE_WINDOW_UNADJUDICATED` covers `CTI-01`, `CTI-02`, `CTI-03`, and `CTI-04`.
+  Co-location and
+  operation evidence do not establish when the built handling connection itself physically
+  existed or functioned. No interchange may piggyback on a service-row date.
+
+The strongest semantic counterexample is `CTS-S-02` / `WE-26`. Its phrase “through 15 Jan.
+1865; closed thereafter” describes closure of the Cape Fear approach to blockade runners after
+Fort Fisher fell; the same row separately records the joint operation's actual Union landing and
+fort capture. Treating the prose end date as a generic physical-service closure would reverse the
+source meaning. The same prohibition applies
+to any parser that substitutes control, capture, use, damage, service condition, blockade state,
+or a named operation for physical existence.
+
+No separate cross-mode packet, table, registry, or runtime schema is authorized. New historical
+claims belong in the existing D497 rail or D499 water packet; only a later, separately contracted
+and source-proved pass may extend the existing transport evidence registry and its owner/probes.
+Exact source dates must remain exact and separate from the two-month campaign calendar; no day or
+month may be rounded into a turn boundary. An unresolved or disputed claim remains unavailable
+rather than receiving an inferred interval.
+
+Calendar-cursor state, opening territory/node/service state, receipt grammar, route/path queries,
+and live/save integration remain premature: the first has no lawful current-state owner, the
+second lacks sourced opening values, the third lacks exact payload/precondition/transition law,
+and the fourth would require forbidden topology or prose parsing. D527 must separately contract a
+docs/research-only, mode-bounded source adjudication, beginning with the 27 rail services because
+built-line existence can be examined without inventing water seasonality. It must use the existing
+rail packet, preserve control/condition separation, retain every unresolved row honestly, and stop
+before data/runtime behavior. Any probe work remains filesystem-first planning/research validation,
+not product behavior or suite enrollment. LANE-019 remains CONTRACT/unowned until that take.

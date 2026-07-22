@@ -4,6 +4,54 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D526 — NEEDS_PHYSICAL_WINDOW_ADJUDICATION: QUALITATIVE TRANSPORT DATES CANNOT BECOME HISTORICAL LEGALITY — [CHATGPT/CODEX 5.6 SOL ULTRA, ARCHITECTURE/EVIDENCE AUDIT] (2026-07-22)
+
+**VERDICT: `NEEDS_PHYSICAL_WINDOW_ADJUDICATION`.** A row-by-row audit covers the complete
+shipped candidate surface: 27 rail, 15 inland-water, two bounded-sea services, and four separate
+interchanges. The 44 service descriptors currently divide into ten `eligible`, 21 `conditional`,
+and 13 `operation-specific` qualitative records. Their verbatim `dateText` is deliberate source
+evidence, not a machine-readable physical window, current/legal availability, opening condition,
+or transition receipt. No audited row or interchange is authorized for runtime conversion.
+
+The ten `eligible` and 21 `conditional` rows are classified only as
+`QUALITATIVE_OR_MIXED_EVIDENCE_ONLY`; their prose can combine an evidence interval with control,
+operation, damage, rebuilding, endpoint loss, fragmentation, or condition. The thirteen
+operation-specific water/sea rows are `OPERATION_OBSERVATION_ONLY`; they prove bounded passages
+or approaches, not routine standing service. `CTI-01` through `CTI-04` are
+`INTERCHANGE_WINDOW_UNADJUDICATED`; a shared place or operation does not prove a built handling
+connection's dates. These three labels are audit dispositions, not a future JSON/runtime enum.
+The exact ID partition and limitations are normative in Package A §8.30.
+
+`CTS-S-02` / `WE-26` is the decisive parser counterexample. “Through 15 Jan. 1865; closed
+thereafter” describes Fort Fisher closing the Cape Fear approach to blockade runners; the same row
+separately records the joint operation's actual Union landing and fort capture. Mapping that phrase
+to a generic service end date reverses the history. Control, capture, military use, cut/damage,
+service condition, blockade state, and a
+named operation therefore cannot stand in for physical existence. Exact source dates also remain
+separate from the two-month calendar; no day/month rounding or turn inference is permitted.
+
+**Overlap and dependency ruling:** create no cross-mode packet, parallel table, second registry,
+or new runtime owner. New source claims belong in the existing D497 rail and D499 water packets;
+only a later source-proved contract may extend the existing evidence JSON and transport owner.
+A current-turn cursor has no state holder; opening territory/node/service values are unsourced;
+receipt payloads/preconditions/transitions are unchosen; and a route query would require forbidden
+topology or prose parsing. Each remains closed rather than becoming an empty mechanical slice.
+
+D526 changes only Package A law, routing/history/checklist documents, the existing planning proof,
+and the required byte-verbatim HANDOFF archive. Product head D525 remains unchanged: data 65,
+territories 36, transport 27/15/2/4/18, manifest 112 with 116 last, suite 140, save shape/version,
+frozen base, source/data trees, generated game, and every runtime owner hold. LANE-019 stays
+CONTRACT/unowned. D527 must separately contract a docs/research-only, mode-bounded source
+adjudication beginning with the 27 rail rows, using the existing rail packet and preserving every
+unresolved claim; it may not mutate data/runtime or claim legal movement.
+
+Normal build/check is `GATE OK`. Doc coherence is 5/5; transport plan 12/12; conquest plan 8/8;
+Mayhem plan 13/13; War Career plan 24/24. Syntax, `git diff --check`, the exact 11-file allowlist,
+protected no-diff audit, and byte-verbatim 5,870-byte D524 archive comparison pass. This
+docs/planning-only finding owes no browser or full-suite run; the 140-row release battery remains
+deferred to the first playable conquest loop. Independent Sol-high re-audit reports PASS with no
+remaining blocker.
+
 ## D525 — SHIPPED_DETACHED_CONQUEST_CALENDAR: EXACT FRESH IMMUTABLE 25-INTERVAL LAW QUERY SHIPS WITHOUT STATE OR INTEGRATION — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION/ADVERSARIAL VERIFY] (2026-07-22)
 
 **VERDICT: `SHIPPED_DETACHED_CONQUEST_CALENDAR`.** D524's exact contract is implemented in
