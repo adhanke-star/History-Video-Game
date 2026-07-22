@@ -124,7 +124,8 @@ const PIN = {
 // D504 re-pin: game 19489898 -> ba68ebfd, manifest d686e44e -> 8e9d8987; the 36-row conquest territory data owner, read-only board/H0 entry, build validator, and focused probes. Base/suite hold; schema 63 -> 64.
 // D506 re-pin: game ba68ebfd -> d278c30f, manifest 8e9d8987 -> 309a7bc1; the read-only transport evidence owner, final no-UI module, exact build validator, and focused probes. Base/suite hold; schema 64 -> 65.
 // D513 re-pin (Aaron-authorized one-file cross-plan exception): the pure source-106 care-context reader and normal rebuild move only generated-game MD5 d278c30f -> 4c775fd1; base, data, manifest, suite, scenario/schema counts, save version, Mayhem authority, and public readiness remain unchanged.
-game: "4c775fd1881ff9763efb42bcd2258a2d",
+// D515 re-pin: ARC 9 Slice 1 adds only ephemeral resolver timing and the honest long-work Desk status; game 4c775fd1 -> 09cc00e6. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
+game: "09cc00e6c639c52627edfc3cfeb01d9a",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "309a7bc1eb43407f405e12323af7638d",
   suite: "69681d6f2216fe1dcfd594ffc4a757b7",

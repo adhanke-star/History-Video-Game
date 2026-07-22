@@ -51,16 +51,94 @@ function _t1InitAll(C) {
   try { if (typeof bridgeInit === "function") bridgeInit(C); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1InitAll bridgeInit:", e); }     // S5-seed: pre-battle conditioning prep
 }
 
+/* ARC9_PACING_RUNTIME_V1 — D515 / LANE-020 Slice 1.
+   Measurements are process-only diagnostics: no campaign/settings/save/RNG
+   owner receives them. A monotonic clock is required; unsupported runtimes
+   simply run the unchanged resolver without a snapshot. */
+var _ARC9_PACING_THRESHOLD_MS = 50;
+var _ARC9_PACING_GROUPS = [
+  "calendar-politics",
+  "economy-logistics",
+  "human-cost-theaters",
+  "leadership-people",
+  "decisions-outcome"
+];
+var _arc9PacingEnabled = true;
+var _arc9PacingLast = null;
+
+function _arc9PacingNow() {
+  try {
+    if (typeof performance === "undefined" || !performance || typeof performance.now !== "function") return null;
+    var n = performance.now();
+    return (typeof n === "number" && isFinite(n)) ? n : null;
+  } catch (e) { return null; }
+}
+function _arc9PacingBegin() {
+  if (!_arc9PacingEnabled) return null;
+  _arc9PacingLast = null;
+  var now = _arc9PacingNow();
+  return now === null ? null : { started: now, marked: now, groups: [], invalid: false };
+}
+function _arc9PacingMark(run, name) {
+  if (!run || run.invalid) return;
+  var expected = _ARC9_PACING_GROUPS[run.groups.length];
+  var now = _arc9PacingNow();
+  if (name !== expected || now === null) { run.invalid = true; return; }
+  run.groups.push({ name: name, ms: Math.max(0, now - run.marked) });
+  run.marked = now;
+}
+function arc9PacingIsLong(totalMs) {
+  return typeof totalMs === "number" && isFinite(totalMs) && totalMs >= _ARC9_PACING_THRESHOLD_MS;
+}
+function arc9PacingSnapshot() {
+  if (!_arc9PacingLast) return null;
+  return {
+    completed: _arc9PacingLast.completed,
+    totalMs: _arc9PacingLast.totalMs,
+    thresholdMs: _arc9PacingLast.thresholdMs,
+    long: _arc9PacingLast.long,
+    groups: _arc9PacingLast.groups.map(function (row) { return { name: row.name, ms: row.ms }; })
+  };
+}
+function arc9PacingSetEnabled(enabled) {
+  _arc9PacingEnabled = enabled !== false;
+  _arc9PacingLast = null;
+  return _arc9PacingEnabled;
+}
+function _arc9PacingFinish(run) {
+  if (!run || run.invalid || run.groups.length !== _ARC9_PACING_GROUPS.length) {
+    _arc9PacingLast = null;
+    return null;
+  }
+  var now = _arc9PacingNow();
+  if (now === null) {
+    _arc9PacingLast = null;
+    return null;
+  }
+  var total = Math.max(0, now - run.started);
+  _arc9PacingLast = {
+    completed: true,
+    totalMs: total,
+    thresholdMs: _ARC9_PACING_THRESHOLD_MS,
+    long: arc9PacingIsLong(total),
+    groups: run.groups.map(function (row) { return { name: row.name, ms: row.ms }; })
+  };
+  return arc9PacingSnapshot();
+}
+
 function _t1Resolve(winnerSide, type, B, C, win) {
   if (!C) return;
+  var _arc9Run = _arc9PacingBegin();
   try { if (typeof clkOnResolve === "function") clkOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve clkOnResolve:", e); }
   try { if (typeof politicsOnResolve === "function") politicsOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve politicsOnResolve:", e); }
+  _arc9PacingMark(_arc9Run, "calendar-politics");
   try { if (typeof econOnResolve === "function") econOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve econOnResolve:", e); }  // S1a: after clk → feeds clock.weariness
   try { if (typeof wrOnResolve  === "function") wrOnResolve(winnerSide, type, B, C, win);  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve wrOnResolve:", e); }
   try { if (typeof blockadeOnResolve === "function") blockadeOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve blockadeOnResolve:", e); }  // S1c: BEFORE prod → sets importFactor + funds + clock.intervention
   try { if (typeof prodOnResolve === "function") prodOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve prodOnResolve:", e); }  // S1b: after wr (reads nodes + blockade.importFactor)
   try { if (typeof engOnResolve === "function") engOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve engOnResolve:", e); }  // A2: AFTER prod → Construction Corps repairs rail (slows CS decay)
   try { if (typeof logisticsOnResolve === "function") logisticsOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve logisticsOnResolve:", e); }  // D159: AFTER eng -> reads repaired rail, blockade imports, War Room nodes
+  _arc9PacingMark(_arc9Run, "economy-logistics");
   try { if (typeof manpowerOnResolve === "function") manpowerOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve manpowerOnResolve:", e); }  // S1d: reads B.casualties + year → army strength
   try { if (typeof prisonerExchangeOnResolve === "function") prisonerExchangeOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve prisonerExchangeOnResolve:", e); }  // D161: AFTER manpower -> records detained/returned pressure and optional relief
   try { if (typeof medicalOnResolve === "function") medicalOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve medicalOnResolve:", e); }  // D169: AFTER POW -> records disease/wound pressure and optional relief
@@ -72,15 +150,19 @@ function _t1Resolve(winnerSide, type, B, C, win) {
   try { if (typeof realDiplomacyOnResolve === "function") realDiplomacyOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve realDiplomacyOnResolve:", e); }  // D189: AFTER finance -> records recognition/intervention pressure and optional priorities
   try { if (typeof humanCostOnResolve === "function") humanCostOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve humanCostOnResolve:", e); }  // D190: AFTER cost-bearing ledgers -> readout-only human-cost snapshot
   try { if (typeof westernTheaterOnResolve === "function") westernTheaterOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve westernTheaterOnResolve:", e); }  // D191: AFTER cost/logistics ledgers -> readout-only Western snapshot
+  _arc9PacingMark(_arc9Run, "human-cost-theaters");
   try { if (typeof mrOnResolve  === "function") mrOnResolve(winnerSide, type, B, C, win);  } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve mrOnResolve:", e); }
   try { if (typeof presOnResolve === "function") presOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve presOnResolve:", e); }  // S0: after clk (interlink)
   try { if (typeof cabOnResolve === "function") cabOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve cabOnResolve:", e); }  // S2 m1: AFTER pres (date+turn advanced) -> detect cabinet churn
   try { if (typeof cmdOnResolve === "function") cmdOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve cmdOnResolve:", e); }  // S2 m5: AFTER cab, BEFORE morale -> evolve the general's reputation; it feeds the leader-morale layer this turn
   try { if (typeof campOnResolve === "function") campOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve campOnResolve:", e); }  // Q8: AFTER cmd -> rest sheds fatigue, a delegated army auto-drills, combat seasons / attrition erodes the training
   try { if (typeof lootOnResolve === "function") lootOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve lootOnResolve:", e); }  // D148: deterministic loot reward; survival tick only when active
+  _arc9PacingMark(_arc9Run, "leadership-people");
   try { if (typeof decOnResolve === "function") decOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve decOnResolve:", e); }  // S2 m2: AFTER pres -> surface/expire decision cards (owns pendingChoices)
   try { if (typeof pressOnResolve === "function") pressOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve pressOnResolve:", e); }  // S2 m4: BEFORE morale -> the day's press sentiment feeds public will
   try { if (typeof moraleOnResolve === "function") moraleOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve moraleOnResolve:", e); }  // S2 m3: AFTER clk (weariness/election set), BEFORE vic (enemyWill change seen by victoryReady)
   try { if (typeof vicOnResolve === "function") vicOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve vicOnResolve:", e); }  // S1e: LAST — enemy will, lever upkeep, victory detection
   try { if (typeof bridgeOnResolve === "function") bridgeOnResolve(winnerSide, type, B, C, win); } catch (e) { if (typeof console !== "undefined" && console.warn) console.warn("_t1Resolve bridgeOnResolve:", e); }  // S5-seed: reset pre-battle prep
+  _arc9PacingMark(_arc9Run, "decisions-outcome");
+  _arc9PacingFinish(_arc9Run);
 }

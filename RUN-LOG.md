@@ -1,17 +1,48 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D514 next-lane=LANE-020 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D514, 2026-07-22):** Aaron authorized the work-conserving completion loop for every remaining feature and issue. LANE-020 is DRIVE under ChatGPT/Codex for ARC 9 pacing after the fresh owed D513 browser rerun passed 47/47 plus static 30/30. LANE-019 may advance source-backed rail/water/sea conquest without inventing road service; unsupported roads remain unavailable.
+<!-- LIVE-HEAD decision=D515 next-lane=LANE-020 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D515, 2026-07-22):** ARC 9 Slice 1 ships measured, outcome-inert resolver timing plus an honest long-work Desk status. The clean baseline stayed below 50 ms at both p95s, so optimization is `NOT_NEEDED`; focused proof is 8/8 and LANE-020 remains DRIVE under ChatGPT/Codex.
 >
-> **Boundary:** Each slice still requires a complete Contract Relay take, focused gates and artifact readback, docs sync, commit, push, and clean parity. After every green milestone, immediately select the next eligible item across phases; ordinary phase changes, browser gates, and reversible design decisions are not stop conditions. Quarantine a blocked item and continue independent work. No simultaneous edits.
+> **Boundary:** Exact next is Slice 2: extend the existing pure Chief-of-Staff brief into at most one validated live Desk-tab action, with neutral failure for missing, ambiguous, or stale authority. No queue, state mutation, spending, time advance, hidden-state prediction, or simultaneous edits.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block owns the full D514 loop and terminal condition; `V1-CHECKLIST.md` is the completion ledger and `COORDINATION.md` owns per-lane contracts. Stop only for a destructive/irreversible or paid/account action, a genuine source/design contradiction, all remaining work sharing one hard blocker, or capacity requiring a load-bearing relay.
+> **Authority:** `HANDOFF.md`'s first ⚡ block owns D515's evidence and exact next; D514's work-conserving completion loop remains binding. `V1-CHECKLIST.md` is the ledger and `COORDINATION.md` owns the Slice 2 contract and lock.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-22 — D515: ARC 9 SLICE 1 MEASURED STATUS SHIPPED
+
+The untouched `dc16547` resolver baseline ran 60 fresh-campaign and 36 sequential
+samples. Fresh p95 was 25.2 ms; sequential p95 was 15.4 ms. Both were below the 50 ms
+long-work threshold and no isolated outlier repeated, so optimization closed as
+`NOT_NEEDED` rather than earning speculative churn.
+
+The sole `_t1Resolve` owner now records five monotonic, ephemeral timing groups around
+the unchanged 30-hook order. A copy-safe reader exposes only the latest completed run;
+unsupported/invalid clocks and new runs clear stale status. Enabled/disabled A/B paths
+preserve campaign, settings, receipts, save bytes, `RND`, and `Math.random` tails. No
+campaign, save, settings, receipt, RNG, schema, queue, resolver, module, manifest, or
+release-suite authority was added.
+
+The live H0 Desk renders one measured completion status only at or above 50 ms, below
+the header and outside tab content. Short and invalid work remains silent. The final
+semantic surface uses native `role=status` with atomic text, no duplicate live-region
+label, percentage, animation, or focus move. The proactive WCAG audit caught and removed
+the redundant label/live attribute; the 1366×850 screenshot was visually inspected with
+clean reflow, contrast, focus, and non-color meaning.
+
+Focused proof is 8/8 with clean JSON and zero failed/page/real errors. Bind S1 removed
+one group mark and isolated only the five-group phase-order tooth at 2/3, then `cmp` and
+SHA-256 proved source/generated restoration before a fresh 8/8 rerun. Planning, Mayhem,
+and War Career gates pass 9/9, 13/13, and 24/24; adjacent Desk, H0 Desk, accessibility,
+decisions, full-campaign, and campaign-link gates pass 13/13, 3/3, 27/27, 19/19, 4/4,
+and 19/19 with fresh `ok:true` artifacts and no failed/page-error rows. The normal build
+is `GATE OK`. Exact next
+is Slice 2's pure Chief-of-Staff action, growing the focused probe 8→14 under the retained
+LANE-020 DRIVE lock.
 
 ## 2026-07-22 — D514: WORK-CONSERVING COMPLETION LOOP AUTHORIZED
 

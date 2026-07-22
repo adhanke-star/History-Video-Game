@@ -43,6 +43,22 @@
     try { return _pdMonthName(P.date.month) + " " + P.date.year; } catch (e) { return ""; }
   }
 
+  function h0DeskPacingStatusHtml() {
+    try {
+      if (typeof arc9PacingSnapshot !== "function") return "";
+      var snap = arc9PacingSnapshot();
+      if (!snap || snap.completed !== true || snap.long !== true ||
+          typeof snap.totalMs !== "number" || !isFinite(snap.totalMs) ||
+          typeof snap.thresholdMs !== "number" || snap.totalMs < snap.thresholdMs ||
+          !Array.isArray(snap.groups) || snap.groups.length !== 5) return "";
+      /* role=status already supplies a polite live region; an author label can
+         replace the rendered resolution text in some assistive technologies. */
+      return '<p class="h0-desk-pacing-status" role="status" aria-atomic="true">'
+        + '<strong>Strategic resolution complete.</strong> '
+        + Math.round(snap.totalMs) + ' ms across five ordered system groups.</p>';
+    } catch (e) { return ""; }
+  }
+
   function h0DeskCampaignYear(C) {
     try {
       if (typeof campaignYear === "function") return campaignYear(C || {});
@@ -246,6 +262,8 @@
       ".h0-desk-kicker{margin:0 0 4px;color:var(--h0d-brass);font-size:11px;text-transform:uppercase;font-weight:900;}",
       ".h0-desk-header h1{margin:0;color:#fff8dc;font-size:34px;line-height:1;font-weight:950;}",
       ".h0-desk-sub{margin:6px 0 0;color:var(--h0d-muted);font-size:13px;line-height:1.4;}",
+      ".h0-desk-pacing-status{position:relative;z-index:1;margin:0;padding:10px 16px;border-bottom:1px solid var(--h0d-line);background:rgba(216,180,88,.10);color:var(--h0d-ink);font-size:12px;line-height:1.4;}",
+      ".h0-desk-pacing-status strong{color:#fff3d1;}",
       ".h0-desk-header-actions{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap;justify-content:flex-end;}",
       ".h0-desk-chip{display:inline-flex;min-height:34px;align-items:center;gap:7px;padding:7px 10px;border-radius:8px;border:1px solid rgba(216,180,88,.28);background:rgba(255,255,255,.06);color:var(--h0d-ink);font-size:12px;font-weight:850;}",
       ".h0-desk-chip b{color:var(--h0d-brass);font-size:10px;text-transform:uppercase;}",
@@ -294,7 +312,7 @@
       ".h0-desk-shell #wdClose{border-radius:8px!important;background:linear-gradient(180deg,rgba(216,180,88,.24),rgba(216,180,88,.08))!important;color:#fff5d8!important;border:1px solid rgba(216,180,88,.5)!important;font-family:inherit!important;}",
       "@media (max-width:920px){#overlay .sheet:has(.h0-desk-shell){width:min(820px,96vw);}.h0-desk-header{grid-template-columns:1fr;}.h0-desk-header-actions{justify-content:flex-start;}.h0-desk-overview-grid{grid-template-columns:1fr;}.h0-desk-statusline{grid-template-columns:repeat(2,minmax(0,1fr));}.h0-desk-scene img,.h0-desk-map-fallback{height:210px;}}",
       "@media (max-width:540px){.sheet .pad{padding:10px;}.h0-desk-header{padding:13px;}.h0-desk-header h1{font-size:28px;}.h0-desk-sub{font-size:12px;}.h0-desk-body{padding:0 10px 10px;}.h0-desk-tabs-wrap{padding:9px 10px 0;}.h0-desk-statusline,.h0-desk-meter-grid,.h0-desk-resource-grid{grid-template-columns:1fr;}.h0-desk-leader{align-items:flex-start;}.h0-desk-portrait{width:58px;height:58px;}.h0-desk-field-copy{display:block;}.h0-desk-field-copy span{text-align:left;display:block;margin-top:3px;}.h0-desk-scene img,.h0-desk-map-fallback{height:168px;}}",
-      "html[data-a11y-contrast='high'] .h0-desk-shell,html[data-a11y-contrast='high'] .h0-desk-panel,html[data-a11y-contrast='high'] .h0-desk-shell #wdTabs button,html[data-a11y-contrast='high'] .h0-desk-metric{background:#000!important;color:#fff!important;border-color:#ffe27a!important;}",
+      "html[data-a11y-contrast='high'] .h0-desk-shell,html[data-a11y-contrast='high'] .h0-desk-panel,html[data-a11y-contrast='high'] .h0-desk-shell #wdTabs button,html[data-a11y-contrast='high'] .h0-desk-metric,html[data-a11y-contrast='high'] .h0-desk-pacing-status{background:#000!important;color:#fff!important;border-color:#ffe27a!important;}",
       "html[data-a11y-contrast='high'] .h0-desk-sub,html[data-a11y-contrast='high'] .h0-desk-leader p,html[data-a11y-contrast='high'] .h0-desk-dispatches ul{color:#f2e6c8!important;}"
     ].join("");
     document.head.appendChild(s);
@@ -350,6 +368,7 @@
           + '<span class="h0-desk-chip"><b>Date</b>' + h0DeskEsc(dateLine) + '</span>'
         + '</div>'
       + '</header>'
+      + h0DeskPacingStatusHtml()
       /* GEA-08 (D445 / D453 audit root-fix): the Chief of Staff morning brief rides the LIVE h0
          desk — the D445 seam sat only in src/30's superseded shell (dead code under this
          override). Composed above wdTabs, OUTSIDE wdContent so deep links survive refreshes;

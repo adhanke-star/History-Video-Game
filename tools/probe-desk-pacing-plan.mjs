@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // D514 / LANE-020 filesystem-first ARC 9 pacing contract probe.
 // Planning mode is intentionally green against the untouched runtime. Each shipped
-// slice must update its declared owner hash/mode in the same commit as the green fix.
+// slice updates its declared owner hash/mode in the same commit as the green fix.
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { dirname, join, resolve } from "node:path";
@@ -134,18 +134,18 @@ step("resolver order and the battle-bound Slice-5 dependency are pinned", () => 
   return { hooks: order.length, campaignResolveCalls: 1, batchRuntimeAuthorized: false };
 });
 
-step("untouched runtime owner and protected-boundary hashes are exact", () => {
+step("Slice 1 runtime owners and protected-boundary hashes are exact", () => {
   const expected = {
-    "src/90-president-register.js": "81e8996cba77b2c38acf22193969eb1999eaf29c3ff002af306c93e4f815e962",
-    "src/99-h0-president-desk.js": "2170b60bb648bbddcb7ff77b6ec0c217ff64182d5cfcb3e204a88420d7ce449e",
+    "src/90-president-register.js": "3e9f44a1b9c78e7ff66cab1c4ed79cc839b55914d49fe075fe0ae3ea73e1ba19",
+    "src/99-h0-president-desk.js": "ca44e0fd6c74def8c43f8efdba060a2524bd0f4288966279072b27e04b356078",
     "src/109-chief-of-staff.js": "a0c319fcf314a65c921e6b2b0d6e3ce020e62e2876beb78135a77f56a969211d",
     "src/91-save-slots.js": "8ef7b23d95ed076bd527a2c43f045a2eacef4c7810dec755dde5827f53ceb208",
     "src/00-manifest.json": "a94ae7f0bd5f09d9749195f88a5517fe4aeb45f41541a958713b1515273c8ace",
     "tools/save-shape.json": "548ab27f7d25aa006922e781ee0cd4d16b666ee070809174cef2719d4a92d33d",
     "build/base.html": "2531e68d2ed34250ba522a358009802076c7f55f54c78c8a560287dfa0bb96e7",
-    "civil_war_generals.html": "aab9552aad87f88ef4cea23ad86c11f2305cd6f7ed52f41c3609fa43c3ec8b53"
+    "civil_war_generals.html": "b148894f247fa94619563ed7ee23f9a9127e717a43c5a58256509f442c8efd9d"
   };
-  for (const [rel, value] of Object.entries(expected)) need(hash(rel) === value, rel + " hash moved before Slice 1");
+  for (const [rel, value] of Object.entries(expected)) need(hash(rel) === value, rel + " Slice 1 hash moved");
   return { files: Object.keys(expected).length };
 });
 
@@ -176,13 +176,16 @@ step("all known literal/hash pin transitions are declared before runtime", () =>
   return { sourceGamePins: 2, futureSuiteCountPins: 6 };
 });
 
-step("planning mode is green only while runtime and focused teeth are absent", () => {
-  need(mode === "planning", "initial plan boundary unexpectedly entered runtime mode");
-  need(!focusedExists, focusedRel + " must not exist in the plan-only commit");
-  need(!runtimeMarker, "ARC 9 runtime marker exists before Slice 1");
-  need(!vet.includes(focusedRel), "focused ARC 9 probe must remain unenrolled before release");
-  need(read("V1-CHECKLIST.md").includes("[ ] Profile turn-processing latency and add honest progress feedback."), "Slice 1 checklist moved early");
-  return { focusedExists: false, suiteEnrolled: false, runtimeMarker: false };
+step("Slice 1 runtime mode has exactly eight focused teeth and remains suite-excluded", () => {
+  const focused = read(focusedRel);
+  need(mode === "runtime", "Slice 1 runtime mode missing");
+  need(focusedExists, focusedRel + " missing after Slice 1");
+  need(runtimeMarker, "ARC 9 Slice 1 runtime marker missing");
+  need(count(focused, "step(\"") === 3 && count(focused, "run(\"") === 5,
+    "Slice 1 focused probe must carry exactly three static plus five browser steps");
+  need(!vet.includes(focusedRel), "focused ARC 9 probe must remain unenrolled before Slice 5 release");
+  need(read("V1-CHECKLIST.md").includes("[x] Profile turn-processing latency and add honest progress feedback."), "Slice 1 checklist not closed");
+  return { focusedExists: true, focusedSteps: 8, suiteEnrolled: false, runtimeMarker: true };
 });
 
 step("gates, binds, artifacts, and restoration law are complete", () => {

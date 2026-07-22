@@ -4,6 +4,69 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D515 — ARC 9 SLICE 1 SHIPS MEASURED, OUTCOME-INERT RESOLVER TIMING AND AN HONEST LONG-WORK DESK STATUS; OPTIMIZATION IS NOT NEEDED — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION/VERIFY] (2026-07-22)
+
+**VERDICT: `SHIPPED_PROFILE_STATUS_OPTIMIZATION_NOT_NEEDED`.** The filesystem-first
+ARC 9 contract shipped clean at `dc1654750079920f365b40ce9eb7e9595483f586`, then the
+untouched resolver was profiled before any runtime edit. Sixty fresh-campaign samples
+measured p95 25.2 ms; 36 sequential samples measured p95 15.4 ms. Both sit below the
+declared 50 ms long-work threshold, and isolated maximums did not repeat. No measured
+bottleneck earned a code-path optimization, so the binding decision is `NOT_NEEDED`.
+
+### Runtime and state boundary
+
+`src/90-president-register.js` now measures the unchanged 30-hook `_t1Resolve` order in
+five named groups: calendar/politics, economy/logistics, human-cost/theaters,
+leadership/people, and decisions/outcome. The clock is monotonic `performance.now()`
+only; unsupported or invalid clocks fail closed, and beginning an invalid/new run clears
+stale presentation data. Timing and its copy-safe snapshot remain ephemeral. They never
+write `C`, `G.settings`, RNG, receipts, serialization, save data, `_SAVE_VER`, hook order,
+or campaign outcomes. Disabled and enabled paths preserve campaign bytes, settings,
+receipts, save serialization, `RND`, and `Math.random` tails exactly.
+
+`src/99-h0-president-desk.js` reads that snapshot without owning it. Only a completed
+finite measurement at or above 50 ms with all five groups renders one plain status below
+the Desk header: “Strategic resolution complete. N ms across five ordered system groups.”
+Short, disabled, incomplete, malformed, or unsupported-clock paths render nothing. The
+status uses native `role=status` implicit polite semantics with `aria-atomic=true`; it has
+no duplicate author label/live attribute, percentage, animation, focusability, autofocus,
+or focus movement. It remains outside `#wdContent`, so tab refreshes do not erase it.
+
+### Proof and protected boundary
+
+The focused probe is exactly 8/8 with `ok:true`, no failed/page/real errors, and a fresh
+1366×850 PNG: the status is readable, non-overlapping, non-color-only,
+and reflows without horizontal overflow. A proactive WCAG 2.2 AA audit found one semantic
+issue—the initial duplicate live-region labeling could obscure or repeat visible text—and
+the shipped version removes it while retaining the native status role. The plan is 9/9 in
+runtime mode; the Mayhem plan is 13/13; the War Career plan is 24/24; syntax, build
+`GATE OK`, and diff checks pass. The six declared adjacent browser gates are green:
+Desk 13/13, H0 Desk 3/3 viewports, accessibility 27/27, decisions 19/19, full campaign
+4/4, and campaign-link 19/19. Every artifact is fresh and `ok:true` with no failed or
+page-error rows; their older schemas expose no `realErrors` field.
+
+Bind S1 removed exactly the `human-cost-theaters` group mark. The bind-only static path
+returned the required expected red at 2/3 with only `five contiguous marks are exact and
+timing remains ephemeral`; page/real errors stayed empty. Source and generated HTML then
+restored byte-for-byte by `cmp` at SHA-256
+`3e9f44a1b9c78e7ff66cab1c4ed79cc839b55914d49fe075fe0ae3ea73e1ba19` and
+`b148894f247fa94619563ed7ee23f9a9127e717a43c5a58256509f442c8efd9d`, followed by a
+fresh normal 8/8 run. Mechanical MD5 pins move only as declared: generated game
+`4c775fd1`→`09cc00e6` in both dependent plans, and source tree
+`9711d3d7`→`f6d83f59` in the War Career plan. Data 65, modules 111, suite 140, three
+named slots, twenty Desk tabs, Chief cap three, manifest, frozen base, save shape, and
+`_SAVE_VER=1` remain exact; the focused probe stays suite-excluded through Slice 4.
+
+**EXACT NEXT:** LANE-020 remains ChatGPT/Codex DRIVE. Slice 2 changes only
+`src/109-chief-of-staff.js` plus the growing focused probe, generated build, declared
+mechanical pins, and milestone documents. It derives zero or one action from existing
+`cosBriefLines` priority, validates a currently present H0 Desk tab, and routes only
+through `_wdTab/_wdRefresh`. Missing, tied, invalid, or stale authority yields neutral
+orientation. Derivation must remain deterministic and pure: no domain renderer call,
+queue, decision mutation, spending, time advance, settings/storage write, hidden-state
+prediction, or focus theft. Grow the focused gate exactly 8→14, isolate Bind S2, then
+document/commit/push/clean-parity and continue Slice 3 under D514.
+
 ## D514 — AARON AUTHORIZES THE WORK-CONSERVING COMPLETION LOOP; EVERY REMAINING FEATURE AND ISSUE MUST SHIP OR CLOSE WITH EVIDENCE — [AARON + CHATGPT/CODEX 5.6 SOL ULTRA, EXECUTION GOVERNANCE] (2026-07-22)
 
 **VERDICT: `LOOP_UNTIL_LEDGER_EMPTY`.** The prior D171/D307 cadence preserved clean

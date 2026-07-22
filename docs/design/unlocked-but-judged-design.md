@@ -326,6 +326,16 @@ clock, resolver, settings store, save snapshot, or notification bus is authorize
    `CONTRACT`/unowned without suite enrollment, SHIPPED claim, or release battery. The
    completion loop advances ARC 7 under its own lane and later re-takes LANE-020 here.
 
+**D515 Slice 1 delivery:** the untouched `dc16547` resolver baseline measured 60 fresh
+campaign samples and 36 sequential samples. Fresh p95 was 25.2 ms and sequential p95
+was 15.4 ms, both below the declared 50 ms long-work threshold; isolated maximums did
+not repeat. The optimization verdict is therefore `NOT_NEEDED`. The shipped seam adds
+only five ephemeral monotonic measurement groups around the existing 30-hook order and
+a copy-safe reader. No timing enters campaign state, settings, receipts, RNG,
+serialization, or saves. The live Desk renders one semantic measured-completion status
+only for completed work at or above 50 ms; short, disabled, invalid, or unsupported-clock
+paths render nothing. Exact next remains the pure Chief-of-Staff action in item 2.
+
 ## 5. THE CONQUEST LAYER — Risk-style player-authored alt-history (R9-R11)
 
 **Thesis:** break the rung system. The campaign becomes a map you play ON, not a
