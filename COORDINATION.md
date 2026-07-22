@@ -3587,10 +3587,17 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **CONTRACT (D509 FIVE-FAMILY ROAD EVIDENCE PASS SHIPPED; UNOWNED)**
+### LANE-019 · conquest-design-law — **DRIVE (FOURTH ROAD EVIDENCE PASS ACTIVE; CHATGPT/CODEX 5.6 SOL ULTRA TOP LOOP)**
 
-- **Owning tool:** none. No simultaneous edits.
-- **State:** CONTRACT after D509's third docs/research-only pass adjudicated the five
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. No simultaneous edits.
+- **State:** DRIVE for the fourth docs/research-only pass, bounded to RD-E17's
+  Harpers Ferry crossing plus second family; RD-E18's second family plus lawful
+  D503 endpoint treatment; a qualifying New Orleans-origin operation; RD-E11's
+  Marshall-Shreveport military passage, crossings, and corroboration; an exact
+  two-family CT-36 road row; and Sherman handling claims below the two-family
+  floor. Road substrate, runtime, data, movement, state, save, UI, capacity,
+  repair, economy, AI, terrain, battle, tactical behavior, and all gameplay remain
+  closed. D509's third docs/research-only pass adjudicated the five
   evidence families D508 left open and retained exact verdict
   `NEEDS_MORE_RESEARCH`. The packet now records 59 sources, 37 nodes, 18 candidate
   rows (14 Verified, 4 Inferred, 0 Disputed), six Potomac rows, 13 Sherman interval

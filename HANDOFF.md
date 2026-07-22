@@ -1,8 +1,10 @@
 # HANDOFF — "The Civil War"
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D510 next-lane=LANE-019 state=CONTRACT owner=none -->
-> **Live status (D510, 2026-07-21):** The canonical-doc coherence repair is shipped. Product state remains D509: LANE-019 is CONTRACT/unowned; road runtime, data, and gameplay are closed. The only immediate product work allowed is a separately chartered fourth road-evidence research pass on the six named D509 gaps.
+<!-- LIVE-HEAD decision=D510 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D510, 2026-07-21):** LANE-019 is DRIVE under the ChatGPT/Codex 5.6 Sol Ultra TOP LOOP for the fourth docs/research-only road-evidence pass. Work is limited to RD-E17's Harpers Ferry crossing plus second family; RD-E18's second family plus lawful D503 endpoint treatment; a qualifying New Orleans-origin operation; RD-E11's Marshall-Shreveport military passage, crossings, and corroboration; an exact two-family CT-36 road row; and Sherman handling claims below the two-family floor.
+>
+> **Boundary:** Road substrate, runtime, data, movement, state, save, UI, capacity, repair, economy, AI, terrain, battle, tactical behavior, and all gameplay remain closed. This pass authorizes research only. No simultaneous edits.
 >
 > **Authority:** `HANDOFF.md`'s first ⚡ block owns the full live boundary. This exact summary is build-checked across the routing docs; historical `NEXT` language records an old boundary and is never current authority.
 <!-- LIVE-HEAD-SUMMARY:END -->
