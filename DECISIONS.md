@@ -4,6 +4,35 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D519 — LANE-020 RELEASES UNOWNED AT THE REAL ARC 9 SLICE-5 DEPENDENCY; NO BATCH-TURN SHIPMENT IS CLAIMED — [CHATGPT/CODEX 5.6 SOL ULTRA, BLOCKER/RELAY] (2026-07-22)
+
+**VERDICT: `BLOCKED_NO_INDEPENDENT_STRATEGIC_TURN_ENTRYPOINT`.** D518 is pushed at
+`3fef22515c097bc48c013984b391030c4a6bd880` with clean fetched parity. Slices 1–4 remain
+shipped under D515–D518, but production still has no lawful independent sequential-turn
+entrypoint before the next real battle. `campaignAdvance` reaches the sole ordered
+`_t1Resolve` only after a real battle result, and the next campaign boundary is another
+battle. Fabricating winner/type/battle data or silently delegating combat would violate
+the exact-resolver, stop-before-battle, no-hidden-consequence, historical-consequence,
+and D74 laws.
+
+The contracted response is a blocker release, not an implementation or release checkpoint.
+LANE-020 moves from ChatGPT/Codex `DRIVE` to `CONTRACT` / `none`; Slice 5 remains unchecked,
+unenrolled, and unclaimed. Its future focused transition stays 31→43 and its future suite
+transition stays 140→141. Re-take requires an independently gated sequential-turn owner
+with explicit pending-choice, battle, war-end, election/dated-hinge, error, and historical-
+consequence stop signals.
+
+D519 changes only the ten approved routing/history/law documents. It moves no runtime,
+probe, generated deliverable, plan pin, protected count, save shape/version, suite row, or
+product behavior; it runs no browser or full release battery and never labels LANE-020
+`SHIPPED`. The D518 proof and the 140-row suite remain the last executable evidence.
+
+**EXACT NEXT:** under D514, amend and take existing LANE-019 in a separate committed routing
+boundary for the smallest dependency-ready Transport Movement slice using only Verified rail,
+inland-water, and the two bounded-sea registries. Preserve every explicit non-link and leave
+road service visibly unavailable; no road edge, capacity, interchange, eligibility, or
+geography may be inferred.
+
 ## D518 — ARC 9 SLICE 4 SHIPS STRICT SESSION-BOOKMARK POINTERS OVER THE EXISTING NAMED-SLOT AUTHORITY — [CHATGPT/CODEX 5.6 SOL ULTRA, IMPLEMENTATION/VERIFY] (2026-07-22)
 
 **VERDICT: `SHIPPED_STRICT_SESSION_BOOKMARK_POINTERS`.** `src/91-save-slots.js`

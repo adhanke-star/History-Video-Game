@@ -3914,18 +3914,16 @@ next green commit and confer through this ledger instead of permitting simultane
   substrate or transport gameplay was authorized. D514 supersedes only the global blocker by
   authorizing non-road conquest and further adjudication; it changes no D511 evidence classification.
 
-### LANE-020 · desk-to-battle-pacing — **DRIVE (D514 FIVE-SLICE ARC 9; CHATGPT/CODEX)**
+### LANE-020 · desk-to-battle-pacing — **CONTRACT (D519 SLICE-5 DEPENDENCY; UNOWNED)**
 
-- **Owning tool:** ChatGPT/Codex. The full-access 5.6 Sol Ultra session took the lock after freshly
-  discharging D513's clean-pushed focused rerun. No simultaneous edits.
-- **State:** DRIVE. D514 authorizes all five ARC 9 slices and continuous execution across
-  their green commit boundaries. Each slice is separately implemented, focused-gated, documented,
-  committed, pushed, and proven clean before the next begins. The present DRIVE lock covers Slices 1-4.
-  If Slice 5's resolver dependency still exists after Slice 4, a standalone blocker commit changes this
-  lane's first live fields to `CONTRACT` / `none`, records the exact dependency and resume owner, and does
-  not claim `SHIPPED`, enroll the suite, or run the post-Slice-5 release battery. A later routing take
-  returns the lane to DRIVE for Slice 5; only Slice 5 plus the selected release checkpoint may release it
-  SHIPPED/unowned.
+- **Owning tool:** none. D519 releases the completed Slice-1-to-4 DRIVE lock at the contracted
+  Slice-5 dependency. No simultaneous edits.
+- **State:** CONTRACT/unowned. D515–D518 shipped Slices 1–4 in separately focused-green,
+  documented, committed, and pushed milestones. Slice 5 remains contracted but unchecked,
+  unenrolled, and unclaimed because the required independent sequential strategic-turn owner does
+  not exist at this head. A later standalone routing take may return the lane to DRIVE only after
+  that dependency is supplied and independently gated; only Slice 5 plus the selected release
+  checkpoint may release LANE-020 SHIPPED/unowned.
 - **Design/owner law:** extend the existing President's Desk, Chief of Staff, campaign turn,
   save-slot/settings, and H0 shell owners. Create no second task queue, clock, save system, campaign
   resolver, notification bus, or settings store. D74, historical consequences, pending decisions,
@@ -4146,20 +4144,17 @@ next green commit and confer through this ledger instead of permitting simultane
   the named bind per slice, hash/`cmp` every temporary source/generated mutation, rerun the clean focused
   gate, inspect all fresh JSON/stdout/PNGs for `ok:true`, empty failed/page/real errors, then doc coherence,
   `git diff --check`, commit/push/fetch/clean parity. Browser gates remain serialized.
-- **Resume pointer:** D518 Slice 4 is complete: strict six-field pointers, exact independent-oracle-locked
-  fingerprinting, target-settings validation, post-confirmation re-read, accessible manager controls,
-  31/31 focused proof, isolated Bind S4, and every declared adjacent gate are green. Exact next is the
-  standalone blocker-only relay commit. Change no runtime, probe, generated output, pin, or suite row;
-  run no browser/full release battery; claim neither Slice 5 nor LANE-020 `SHIPPED`. Move the lane's first
-  live fields to `CONTRACT` / `none`, preserve the no-independent-strategic-turn dependency verbatim,
-  leave Slice 5 unchecked and unenrolled, commit/push/fetch/clean parity, then reload the ledger and take
-  ARC 7 under its own lane pursuant to D514.
-- **Last-touched commit:** executable plan boundary `dc16547`; D518 Slice 4 delivery is the current milestone.
+- **Resume pointer:** D519 completed the blocker-only release with no runtime, probe, generated,
+  pin, count, suite, or release-battery movement. Do not implement Slice 5. Re-take this lane only
+  when ARC 7 or another owner supplies the independently gated sequential-turn entrypoint and all
+  contracted stop signals above. D514 exact next is a separate committed LANE-019 amendment and
+  DRIVE take for the smallest dependency-ready Verified non-road Transport Movement slice.
+- **Last-touched commit:** D518 Slice 4 delivery `3fef225`; D519 blocker release is the current milestone.
 - **History:** D514 CONTRACT/unowned at `6ca0fba` → full-access ChatGPT/Codex DRIVE after the fresh
   D513 War Career verification-debt rerun (47/47 + static 30/30, zero failed/page/real errors) → D515
   Slice 1 measured-status delivery → D516 Slice 2 pure live-action delivery → D517 Slice 3 safe one-click
-  return delivery → D518 Slice 4 strict session-bookmark delivery; ownership remains ChatGPT/Codex DRIVE
-  only for the standalone Slice-5 blocker release.
+  return delivery → D518 Slice 4 strict session-bookmark delivery → D519 dependency release to
+  CONTRACT/unowned with Slice 5 unchecked and unenrolled pending its independent turn owner.
 
 ---
 

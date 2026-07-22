@@ -1,17 +1,33 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D518 next-lane=LANE-020 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D518, 2026-07-22):** ARC 9 Slice 4 ships at most three strict session-bookmark metadata pointers over the existing named-slot authority. Focused proof is 31/31, every stale, foreign, corrupt, Ironman, and malformed path fails before apply, and LANE-020 remains DRIVE only for its contracted Slice-5 blocker release.
+<!-- LIVE-HEAD decision=D519 next-lane=LANE-020 state=CONTRACT owner=none -->
+> **Live status (D519, 2026-07-22):** ARC 9 Slices 1–4 are green, committed, and pushed; LANE-020 is released to `CONTRACT` / `none` because Slice 5 has no lawful independent strategic-turn entrypoint.
 >
-> **Boundary:** Slice 5 has no authorized runtime owner at this head: production exposes no independent sequential strategic-turn entrypoint before the next real battle. Exact next is the standalone blocker-only relay commit that moves LANE-020 to `CONTRACT` / `none`, leaves Slice 5 unchecked and unenrolled, and then advances ARC 7 under D514.
+> **Boundary:** Slice 5 stays unchecked, unenrolled, and unclaimed at future 31→43 focused steps and 140→141 suite rows. No runtime, probe, generated deliverable, count pin, or suite row moved. Exact next is a separately committed ARC 7 non-road conquest lane contract and DRIVE take under D514.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block owns D518's evidence and blocker boundary; D514's work-conserving completion loop remains binding. `V1-CHECKLIST.md` is the ledger and `COORDINATION.md` owns the release dependency.
+> **Authority:** `HANDOFF.md`'s first ⚡ block owns D519's dependency release; D514's work-conserving completion loop remains binding. `V1-CHECKLIST.md` is the ledger and `COORDINATION.md` preserves LANE-020's exact re-take dependency.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-22 — D519: LANE-020 BLOCKER RELEASED UNOWNED; ARC 9 SLICE 5 REMAINS UNCLAIMED
+
+D518 pushed clean at `3fef22515c097bc48c013984b391030c4a6bd880`. The contracted
+post-Slice-4 inventory still finds no independent sequential strategic-turn entrypoint:
+`campaignAdvance` reaches `_t1Resolve` only after a real battle result, and the next campaign
+boundary is another battle. Invented result authority or silent delegated combat would violate
+the exact-resolver, stop-before-battle, no-hidden-consequence, historical-consequence, and D74
+contracts.
+
+This docs-only relay therefore moves LANE-020 from ChatGPT/Codex DRIVE to CONTRACT/unowned.
+Slice 5 stays unchecked, unenrolled, and unclaimed at future 31→43 focused steps and 140→141
+suite rows; re-take requires an independently gated turn owner with every contracted stop signal.
+No runtime, probe, generated game, pin, protected count, save shape/version, suite row, product
+behavior, browser gate, or full battery moved. D514 now advances the separately contracted
+Verified non-road Transport Movement work through existing LANE-019 while roads remain unavailable.
 
 ## 2026-07-22 — D518: ARC 9 SLICE 4 STRICT SESSION BOOKMARKS SHIPPED
 

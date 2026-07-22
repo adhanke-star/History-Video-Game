@@ -379,6 +379,17 @@ unchecked because no independent strategic-turn entrypoint exists before the nex
 LANE-020 moves to `CONTRACT`/unowned without suite enrollment, SHIPPED claim, or release
 battery, and D514 advances ARC 7 under its own lane.
 
+**D519 Slice 5 dependency release:** the post-D518 production inventory still exposes no
+independent sequential strategic-turn entrypoint before the next real battle.
+`campaignAdvance` reaches `_t1Resolve` only after a real battle result, so invented result
+authority or silent delegated combat would violate the exact-resolver, stop-before-battle,
+no-hidden-consequence, historical-consequence, and D74 laws. LANE-020 is therefore
+`CONTRACT`/unowned, not `SHIPPED`; Slice 5 stays unchecked, unenrolled, and unclaimed at
+future 31→43 focused steps and 140→141 suite rows. No runtime, probe, generated output,
+pin, count, save version, or product behavior changes in D519. A later re-take requires an
+independently gated sequential-turn owner with every contracted stop signal. D514 advances
+the separately contracted Verified non-road ARC 7 movement work in the meantime.
+
 ## 5. THE CONQUEST LAYER — Risk-style player-authored alt-history (R9-R11)
 
 **Thesis:** break the rung system. The campaign becomes a map you play ON, not a
