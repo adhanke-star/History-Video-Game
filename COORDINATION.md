@@ -3512,11 +3512,15 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **CONTRACT (D508 NINE-GAP ROAD EVIDENCE PASS SHIPPED; UNOWNED)**
+### LANE-019 · conquest-design-law — **DRIVE (THIRD FIVE-FAMILY ROAD EVIDENCE PASS; CHATGPT/CODEX-OWNED)**
 
-- **Owning tool:** Unowned. No simultaneous edits.
-- **State:** CONTRACT after D508's second docs/research-only pass adjudicated D507's
-  nine named evidence gaps and retained exact verdict `NEEDS_MORE_RESEARCH`. The
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra TOP LOOP. No simultaneous edits.
+- **State:** DRIVE for one third docs/research-only pass limited to the five evidence
+  families D508 left open: Potomac crossings; Sherman road/bridge/ferry intervals;
+  a New Orleans road row outside May 1863 and the Feb.-Mar. 1864 Meridian operation;
+  exact Marshall-Shreveport passage plus the separate completed-Union-movement
+  question; and exact CT-29/CT-36 rows. D508 retained exact verdict
+  `NEEDS_MORE_RESEARCH`. The
   packet now records 42 sources, 33 nodes, 15 candidate rows (13 Verified, 2
   Inferred, 0 Disputed), 11 non-links, nine interchange candidates, and all seven
   theaters. Four questions resolved: Stony Creek/Dinwiddie/Boydton, omission of
@@ -3528,7 +3532,9 @@ next green commit and confer through this ledger instead of permitting simultane
   shipped the read-only transport-evidence substrate at
   `932fb89e7e2f3e47eaf87e88e99a740cab240062`. No road data, runtime, gameplay,
   movement, state, save, UI, cost, capacity, repair, bonus, AI, or terrain work is
-  authorized. D504 Slice
+  authorized. D503 retains exact territory boundaries/anchors, D497/D499 retain
+  rail/water evidence, and D506 retains the immutable read-only transport substrate.
+  D504 Slice
   1 shipped at `74237b9273f4640f031a8c46041a98e1d96809a3`. Transport gameplay/runtime,
   movement, and state remain prohibited.
 - **D504 shipped evidence:** exact 36/36 registry in D503 order; all 35 RN, 41 WN,
@@ -3614,14 +3620,15 @@ next green commit and confer through this ledger instead of permitting simultane
   RE-29 to service or erases its non-link/provenance and exactly evidence integrity
   reds. All other teeth stay green; data and generated output restore byte-identically.
 - **Gate sequence and resume pointer:** D506 completes Slice 2A, D507 completes the
-  first bounded road source pass, and D508 completes the nine-gap follow-up. There
-  is no active road slice. A future docs/research pass may take standalone DRIVE
-  only for the five remaining evidence families named above, must preserve exact
-  endpoint/operation/non-link limits, and must again declare exactly one
+  first bounded road source pass, and D508 completes the nine-gap follow-up. The
+  active pass must research only the five remaining evidence families named above,
+  update the existing 12-section packet, preserve exact endpoint/operation/non-link
+  limits, and declare exactly one
   `READY_FOR_READ_ONLY_SUBSTRATE` / `NEEDS_MORE_RESEARCH` / `DO_NOT_MODEL` verdict.
-  No road data/runtime or transport gameplay is authorized. It may not infer endpoints,
-  compose operation-specific passages into routine service, or treat a later READY
-  verdict as playable authorization. Any later
+  It must synchronize D509/HANDOFF, release this lane to CONTRACT/unowned, and stop.
+  No road substrate, data, runtime, or transport gameplay is authorized. It may not
+  infer endpoints, compose operation-specific passages into routine service, or
+  treat a later READY verdict as playable authorization. Any later
   playable slice needs a separate full contract. For D506 verification, `node --check` all touched JS/probes; build
   `GATE OK` at 65 data, 36 territories, 111 modules, suite 140; run/read both focused
   artifacts; run board 13/13, accessibility 27/27, Mayhem 24/24, Custom Builder 16/16
@@ -3723,15 +3730,16 @@ next green commit and confer through this ledger instead of permitting simultane
   commit containing that entry; D507 DRIVE take `f54d1d4`; D507 packet/closeout
   `c547bb4`; whitespace-gate cleanup `ba127f8`; final lane reconciliation
   `d0dcf84`; second nine-gap road-evidence DRIVE transfer `3da0de9`; D508 packet and
-  lane release ship in the commit containing this edit.
+  lane release `27df304`; third five-family road-evidence DRIVE transfer ships in the
+  commit containing this edit.
 - **History:** D502 created the design-only contract. Aaron chose Package A. D503
   completed the final law. D504 shipped the read-only territory board. D505 audits
   every rail/water evidence row, contracts the read-only substrate, and D506 ships
   it. D507 ships the first bounded road source pass with `NEEDS_MORE_RESEARCH` and
   releases the lane unowned. D508 completes the second pass over D507's nine gaps,
   retains `NEEDS_MORE_RESEARCH`, and again releases the lane unowned without changing
-  any authorization boundary. No read-only road substrate or transport gameplay is
-  authorized.
+  any authorization boundary. The third pass takes DRIVE only for D508's five named
+  evidence families. No read-only road substrate or transport gameplay is authorized.
 
 ---
 
