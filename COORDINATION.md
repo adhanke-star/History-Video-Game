@@ -5117,18 +5117,19 @@ risk and lane routing rather than on the rulings themselves.)*
   D536 contract exactly (the D535 bullets above); after D536, the lane is `CONTRACT` / `none` and the next
   parked slice (the E61 collapse-terminal fork recommended) needs its own contract section.
 
-### LANE-022 · conquest-mayhem-supply-ladder — **CONTRACT (D543 SLICE 3 SHIPPED; UNOWNED)**
+### LANE-022 · conquest-mayhem-supply-ladder — **DRIVE (D544 SLICE 4 CONTRACT; CLAUDE CODE)**
 
-- **Owning tool:** none. D543 releases the D542 Claude Code DRIVE lock at the shipped Slice-3 boundary; no
-  simultaneous edits by any provider. Slice 4 requires its own committed contract section and DRIVE take here
-  before any runtime edit. Lock history: D537 opened the lane at `CONTRACT` / `none`; D538 took DRIVE at
+- **Owning tool:** Claude Code (Opus 4.8 `[1m]` xhigh), DRIVE for the D544 Slice-4 blockade/sea-edge contract,
+  taken in this ledger-only commit at the clean pushed D543 boundary; no simultaneous edits by any provider.
+  Lock history: D537 opened the lane at `CONTRACT` / `none`; D538 took DRIVE at
   `0829d8d`; D539 shipped Slice 1 and released; D540 took DRIVE at
   `7e48ca813be39a9db9df565e5af4976547b55a80`; D541 shipped Slice 2 and released at
   `5ecc00bdb6f5fc65d9e26c32d51fb49371e81d2b`; D542 took DRIVE for Slice 3 at
-  `475543cebc4d9026b382c61cfef51283396183cc`; D543 shipped Slice 3 and released.
-- **State:** CONTRACT/unowned — **D543 shipped Slice 3 (repair plus finite engineering capacity) exactly as
-  D542 contracted; repair costs finite engineering capacity governed by the B-5 slider, the Engineering Corps
-  is load-bearing, and non-conquest play stays byte-identical.** This lane owns the ARC 7 transport/supply ladder that D537 ratified onto
+  `475543cebc4d9026b382c61cfef51283396183cc`; D543 shipped Slice 3 and released; D544 takes DRIVE for Slice 4
+  at the pushed `caf3855162c666a677ff58fa85373edb9a2e6f13` boundary.
+- **State:** DRIVE — **D544 takes Claude Code DRIVE for Slice 4 (the blockade / sea edge) as a committed
+  contract-only take; the complete Slice-4 acceptance contract is committed prose below and NO runtime byte has
+  moved.** This lane owns the ARC 7 transport/supply ladder that D537 ratified onto
   the **Mayhem** ruleset. **LANE-019 is deliberately not rewritten by this lane** — its segment is pinned
   tooth-for-tooth by `tools/probe-conquest-transport-plan.mjs` and every one of its boundary sentences
   remains exact. LANE-019 keeps the historical-evidence contract; LANE-022 owns buildable Mayhem product.
@@ -5586,3 +5587,87 @@ risk and lane routing rather than on the rulings themselves.)*
   blockade state across its existing consumers with no new owner) needs its own committed contract section and
   DRIVE take here before any runtime edit. D543 replaces D541 as the ARC 7 product head. ARC 7 Historical
   transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
+
+- **D544 Slice-4 packet-vs-disk finding (surfaced, Aaron-ratified 2026-07-23):** the Slice-4 packet assumed a
+  CS supply route already traverses a sea service; live disk contradicts it. The two sourced sea services are
+  `CTS-S-01` (CT-12 Savannah → CT-11 Charleston — the ONLY sea edge, and the ONLY in-edge to CT-11) and
+  `CTS-S-02` (CT-10 Wilmington, a single-territory service that projects NO graph edge). The sea edge sits in
+  the 18-node Deep-South component while both fixed depots (CS `CT-05`, US `CT-01`) sit in other components, so
+  no `conquestSupplyTrace` from either depot uses either sea service — gating the sea mode in the `blocked`
+  predicate alone would be a byte-for-byte no-op. Per the HALT rule (trust disk over the packet) this was
+  surfaced; Aaron ratified the **sea-import-port source model** — the import edge is modelled as blockade-gated
+  coastal SOURCES, not a bare predicate gate.
+- **D544 exact Slice-4 objective:** blockade state gates the two sourced sea services as the Confederate import
+  edge, so tightening the blockade CLOSES a supply mode rather than only moving an economy number. For a CS
+  carrier, the held coastal ports that ORIGINATE a sourced sea service become supply sources; the shipped
+  blockade lever opens or closes them. Non-conquest play stays byte-identical; the bounded channel is unchanged;
+  no new combat channel is created.
+- **D544 exact Slice-4 seam (`src/61-logistics-rail.js` only):** `conquestSupplyTrace` gains a source list —
+  the interior depot `_LG_TRACE_DEPOT[side]` FIRST (depot-preferred, so every shipped depot route is
+  byte-identical), then, for a CS carrier only, every held coastal port that is the from-end of a sea-mode edge
+  in the base projection. The first source whose OPEN-graph walk reaches the target wins. A sea-import source is
+  gated by the blockade in the LIVE walk: when the blockade is open the walk runs as usual; when it is sealed
+  the import source cannot source, so a base-reachable target becomes `SEVERED` (never `SUBSTRATE_GAP` — the
+  substrate CAN carry it, the blockade closed it). The interior depot is never gated.
+- **D544 exact Slice-4 blockade lever (invariant I — the live symbol confirmed from src/60, not invented):** a
+  pure reader `_lgSeaImportOpen(C)` reads the shipped `C.blockade.portsOpen` (0..4). `portsOpen > 0` ⇒ at least
+  one runner port open ⇒ import carries; `portsOpen 0` ⇒ the sealed "last runner port is closed; the South is
+  sealed" state (src/60) ⇒ import closed. A missing or malformed blockade defaults OPEN (the Confederate 1861
+  opening), so a bare conquest carrier behaves like an unsealed South. No new blockade scalar is invented; the
+  gate reads the shipped state, never a service's `dateText` (D526's Fort Fisher counterexample stays exact).
+- **D544 exact Slice-4 containment seam (the declared bind target):** the sea-import logic lives entirely inside
+  `conquestSupplyTrace`, which already gates through the D539 `_lgTraceRuleset` allowlist and `_lgConquestKind`,
+  so authored sea-import state is structurally unreachable on the evidence-gated ruleset and fails CLOSED at the
+  ruleset seam BEFORE any board read. `CONTAINMENT-A` gains the open-ruleset sea-import assertion;
+  `CONTAINMENT-B` stays the ONE tooth owning the gated-ruleset query and the allowlist source assertion — a
+  bind that reds two teeth is too broad (the D539/D541/D543 lesson). Blockade state is control-class and NEVER
+  enters the CF-2 memo (`_lgTraceBase`/`_lgTraceMemo`).
+- **D544 Slice-4 authored content (none new):** Slice 4 authors NO new constant, NO new geography, and NO new
+  save field. The import ports are DERIVED from the sourced sea edges in the base projection, and the gate reads
+  the shipped `C.blockade` state, so the `authored, not sourced` provenance count in the seam is unchanged (6)
+  and `src/115`/`src/114`/the evidence pack stay byte-frozen. The two `seaServices` are READ, never rewritten.
+- **D544 Slice-4 bounded-channel law (unchanged from shipped):** `logisticsBridgeBonus` keeps its caps
+  (`supply ≤ 7`, `fatigueRelief ≤ 5`, `overall ≤ 2`) and `wr.supply` keeps its 0.15 troop-morale weight in
+  `src/33-morale.js`. The sea edge is a bounded CONDITIONING INPUT: it never writes casualties, morale, victory,
+  score or RNG, and Slice 4 creates NO new combat channel. The only sim-affecting movement is a CS import route
+  flipping `TRACED`⇄`SEVERED` as the blockade opens and seals, feeding the already-capped bridge through the
+  single shipped `_lgRoute` adoption line.
+- **D544 Slice-4 save law (invariant E, the GEA-12/D447 precedent):** the sea edge reads `C.blockade`, which
+  already rides the existing `serializeSave` envelope, so `C.conquest` gains NO field, none of the seven
+  functions hashed in `tools/save-shape.json` is touched, and `_SAVE_VER` stays 1 as a CONSCIOUS decision. Save
+  is purely additive with NOTHING to serialize; `tools/save-shape.json` does NOT move.
+- **D544 Slice-4 finite-choice law (design law §4/§5 — the point of the slice):** a tightened blockade must make
+  the CS sea route unusable (`SEVERED`-class) so the Confederate player feels the import edge close, and a
+  loosened blockade must reopen it. Both directions are probed: `CS→CT-11` (Charleston via `CTS-S-01`, 1 sea
+  segment: open `TRACED` friction 8 / sealed `SEVERED` friction 40, `severedBy` naming `CTS-S-01`) and the
+  Western front `CS→CT-20` (import-sourced rail from Savannah: open `TRACED` / sealed `SEVERED`). `CS→CT-19`
+  stays a gap (Cairo is not reachable from CT-12 in the directed substrate) and the default CS/E route stays
+  `SUBSTRATE_GAP`.
+- **D544 Slice-4 probe design:** `tools/probe-conquest-supply.mjs` grows: `CONTAINMENT-A` proves the
+  open-ruleset sea-import route (`CS→CT-11` `TRACED` via `CTS-S-01`); `CONTAINMENT-B` (extended `stateClosed`)
+  proves the sea-import query closed on every non-admitted ruleset and keeps the ONE allowlist source assertion;
+  ONE new step proves the blockade sea edge both directions (open `TRACED` / sealed `SEVERED`, `severedBy` names
+  the sea service, US unaffected, caps hold, the read path is pure over `C.blockade`) with a matching in-page
+  tooth. No probe is added, so the suite STAYS 142 and the twelve suite-count, two suite-md5 and two focused-md5
+  pins do NOT move. `tools/probe-conquest-supply-plan.mjs` gains the Slice-4 contract clauses; every tooth stays
+  anchored on durable law/history, never on the current lock holder (D391).
+- **D544 Slice-4 gate contract:** `node --check` on every touched JS/MJS; `node tools/build.mjs` GATE OK;
+  artifact readback of the new sea-import symbols inside the built 61 module region; the two LANE-022 probes;
+  adjacent logistics-rail, logistics, bridge, conditioning, **blockade**, conquest-board 13/13, conquest-state
+  15/15, conquest-transport 18/18, campaign-link, auto-resolve, save-slots 17/17, command and presets probes;
+  plan probes Mayhem 13/13, War Career 24/24, transport 12/12, conquest layer 8/8, doc coherence 5/5; **A/B leg
+  1** — the standing 24-scenario × 8-seed direction battery byte-identical to the `caf3855` baseline
+  `18f609d07b1190904ec0c11e4ca64675`; **A/B leg 2** — `probe-full-campaign` byte-identical to
+  `a38185fd371a7f181250eff3a6cbf76a`; **A/B leg 3** — the conquest-ON leg which WILL move as the blockade opens
+  and seals the CS sea route: both columns logged for every measured row, the direction stated, adjudicated
+  under D92 as an accurate-inputs consequence, never tuned toward a preferred number and never gated on an
+  output. ONE declared negative bind on the containment allowlist redding ONLY `CONTAINMENT-B`, with an
+  md5-proven byte-identical restore; `git diff --check`; docs/ledger sync; commit, push and clean parity. Five
+  pin sites re-anchor (three generated-game, two srcTree); suite/focused/manifest/base pins hold. The full
+  serialized 142-row battery stays owed at Slice 7. The suite-excluded D528/D530/D532 research guards are
+  neither rerun nor edited.
+- **Resume pointer (D544):** LANE-022 is `DRIVE` / Claude Code with the complete Slice-4 acceptance contract
+  committed above and NO runtime byte moved. Implement the seam in `src/61-logistics-rail.js` only (plus the two
+  LANE-022 probes and the five mechanical pin re-anchors), ship it under its own D### with the three A/B legs
+  and the one declared bind, then release LANE-022 and contract Slice 5 (the authored Mayhem road layer). ARC 7
+  Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
