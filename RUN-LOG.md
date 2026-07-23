@@ -1,17 +1,39 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D542 next-lane=LANE-022 state=DRIVE owner=Claude -->
-> **Live status (D542, 2026-07-23):** `LANE-022` **takes Claude Code DRIVE for Slice 3** — repair plus finite engineering capacity, the slice where Aaron's logged Engineering Corps directive lands **load-bearing** rather than decorative. This is the contract-before-teeth commit the Contract Relay's hard rule requires: the lane carries the complete Slice-3 acceptance contract as committed prose and **NO runtime byte moved**. Game `4764b1fccb40c473edd871621497f62b`, srcTree `5f6d33325fa5feb04f6d5b11e3f5a3b7`, suite **142**, manifest 112, data 65, `_SAVE_VER` 1 and the frozen base `c9db83fa99230ffb95bdfdfe059f3fb9` all HOLD and are NOT re-pinned. **D541 remains the ARC 7 product head until Slice 3 ships.**
+<!-- LIVE-HEAD decision=D543 next-lane=LANE-022 state=CONTRACT owner=none -->
+> **Live status (D543, 2026-07-23):** `LANE-022` **Slice 3 SHIPS** — repair costs FINITE engineering capacity, and the logged Engineering Corps directive is now load-bearing. Clearing a cut runs through the shipped `conquestSupplySetCondition`, consulting a pure capacity reader over `C.engineering.levels` scaled by the **B-5 slider** (`fldPresetResolve().attrition`, `[0.6,1.4]`) plus a per-pass ledger `C.conquest.supply.repair`; a repair the corps cannot afford, or lacks the branch for, is REFUSED so the cut stands — the standing decision (a Construction-1 corps restores only **2 of 27** cut rail arteries per pass). **Non-conquest play stays byte-identical.** The lane releases to `CONTRACT` / `none`.
 >
-> **What Slice 3 contracts.** Clearing a cut costs finite engineering capacity: the Construction Corps rebuilds a cut rail line, the Pontoon Train restores a cut water crossing (roads stay absent until Slice 5, so "clearing" acts on a Slice-2 cut rail/water service condition, never on a road). Capacity is derived from the shipped `C.engineering.levels` (Construction + Pontoon branches), and the **B-5 effectiveness/realism slider** (`fldPresetResolve().attrition`, clamped `[0.6, 1.4]` exactly as `T13`'s `fldEngRealism`) governs magnitude. Repair EXTENDS the shipped `conquestSupplySetCondition` clear-path plus a capacity ledger `C.conquest.supply.repair` — no fourth mutator, no second owner. Multiple simultaneous cuts exceed one pass's capacity, forcing the standing decision "which artery do you restore, or accept the longer water route?" (design law §5). Save stays **purely additive** (`_SAVE_VER` 1, the D447/GEA-12 precedent); containment fails CLOSED both directions at the same `_lgTraceRuleset` seam; non-conquest play stays byte-identical.
+> **Boundary:** `src/61-logistics-rail.js` only, plus its two probes and five mechanical pin re-anchors. Game `4764b1fc`→`98f3feaf0de89b3b47eda6b1347dacd0`, srcTree `5f6d3332`→`c4fc64ebe6d49d9cdfc79885b4c05d8b`, suite **142** (no probe added), manifest 112, data 65, `_SAVE_VER` **1** (purely additive save), `build/base.html` frozen. **D543 replaces D541 as the ARC 7 product head**; LANE-019 stays unrewritten.
 >
-> **Authority:** design-law §4 Slice 3 + Aaron's logged Engineering Corps + B-5-slider directive. Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
+> **Authority:** design-law §4 Slice 3 + the logged Engineering Corps / B-5 directive. Three A/B legs — two zero-diff (direction battery `18f609d0…`, `probe-full-campaign` `a38185fd…`) and one honest conquest-ON leg adjudicated under D92 (a repair restores friction 40→7 and depotReach toward TRACED; pontoons restore water, Construction restores rail; Historian 28 / Balanced 37 / Arcade 40 capacity). Containment fails CLOSED at the ruleset seam both directions; Bind D542-B1 redded only `CONTAINMENT-B` with a byte-identical restore. Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-23 — D543 LANE-022 Slice 3 ships: repair costs finite engineering capacity, the Engineering Corps is load-bearing, the B-5 slider governs magnitude
+
+Shipped exactly as D542 contracted, from the clean pushed `475543c` boundary. The seam is
+`src/61-logistics-rail.js` only: clearing a cut runs through the shipped `conquestSupplySetCondition`
+clear-path, which now consults a pure capacity reader `conquestRepairCapacity` over `C.engineering.levels`
+(read purely, no `engInit` mutation) scaled by the B-5 lever `fldPresetResolve().attrition` `[0.6,1.4]`, plus a
+per-pass ledger `C.conquest.supply.repair`; a repair the corps cannot afford, or lacks the branch for, is
+refused so the cut stands. Construction clears rail, pontoons restore water. `conquestSupplyRepairReport` +
+`_lgSupplyBlockHTML` teach the standing decision; the unwired `_lgSupplyRepairReset` is the future pass
+boundary. No fourth mutator, no second owner, no new clock; `_lgSupplyView` gained `repairSpent`.
+
+Finite capacity is the point: a Construction-1 corps (capacity 10) restores only 2 of 27 cut rail arteries per
+pass — the standing decision. B-5 capacity for a full corps: 37 Balanced / 28 Historian / 40 Arcade. Three A/B
+legs: legs 1-2 byte-identical (`18f609d0…`/`a38185fd…`), leg 3 conquest-ON repaired the US/E rail line SEVERED
+friction 40 → TRACED friction 7 (depotReach 58→70), water restored only with pontoons — under D92. Bind
+D542-B1 redded only `CONTAINMENT-B` with a byte-identical `src/61` restore. Save purely additive
+(`_SAVE_VER` 1; 13 malformed payloads fail closed). Focused 18/18, plan 10/10, full adjacent battery green
+(`probe-engineering` fonts-stall screenshot timeout dispositioned as environmental — engineering-corps 23/23
+cross-validates, surface byte-unchanged). Game `4764b1fc`→`98f3feaf`, srcTree `5f6d3332`→`c4fc64eb`, five pin
+sites re-anchored; suite/focused/manifest/base HOLD. LANE-022 released to `CONTRACT` / `none`; **next:** Slice
+4 (blockade/sea edge).
 
 ## 2026-07-23 — D542 LANE-022 takes Claude Code DRIVE for Slice 3 (repair + finite engineering capacity; contract only)
 

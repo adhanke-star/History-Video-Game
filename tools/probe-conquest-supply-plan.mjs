@@ -97,8 +97,25 @@ step("LANE-022 carries the complete D538 Slice-1 acceptance contract", () => {
     "D540 carry-forward obligations",
     "`C.conquest.supply`",
     "SUBSTRATE_GAP",
-    "purely additive"
+    "purely additive",
+    // D542 Slice-3 contract clauses
+    "D542 exact Slice-3 objective:",
+    "D542 exact Slice-3 state seam",
+    "D542 exact Slice-3 repair seam",
+    "D542 exact Slice-3 B-5 slider",
+    "D542 exact Slice-3 containment seam (the declared bind target):",
+    "D542 Slice-3 finite-capacity law",
+    "D542 Slice-3 probe design:",
+    "D542 Slice-3 gate contract:",
+    "conquestRepairCapacity",
+    "conquestSupplyRepairReport",
+    "C.conquest.supply.repair",
+    "fldPresetResolve().attrition"
   ]) need(LANE.includes(token.split("\n")[0]), "LANE-022 contract clause missing: " + token.replace(/\n\s*/g, " "));
+  need(/which artery do you restore/.test(LANE.replace(/\s+/g, " ")),
+    "the Slice-3 finite-capacity standing decision is not contracted in the lane");
+  need(/no fourth (public )?mutator, no second (logistics\/engineering )?owner, no (new )?clock/i.test(LANE.replace(/\s+/g, " ")),
+    "the Slice-3 no-second-owner / no-new-clock law is not contracted in the lane");
   const flat = LANE.replace(/\s+/g, " ");
   need(/`applied:false`\*{0,2}, `friction` keeps its shipped static number/.test(flat),
     "the load-bearing substrate-gap ruling is not contracted in the lane");
@@ -124,9 +141,9 @@ step("the authored Mayhem content lives ONLY in the seam and never in sourced da
   // D540 re-anchor: Slice 2 adds the severed ceiling and the authored opening control map, and the
   // derived friction is now CONSUMED, so the "unconsumed" marker is retired rather than carried stale.
   const authored = ["_LG_TRACE_RULESETS", "_LG_TRACE_DEPOT", "_LG_TRACE_FRONT", "_LG_TRACE_COST",
-    "_LG_SUPPLY_SEVERED", "_LG_SUPPLY_OPENING", "_LG_SUPPLY_SCHEMA"];
+    "_LG_SUPPLY_SEVERED", "_LG_SUPPLY_OPENING", "_LG_SUPPLY_SCHEMA", "_LG_REPAIR"];   // D542: + _LG_REPAIR
   for (const sym of authored) need(count(SRC61, "var " + sym + " =") === 1, "authored constant not declared exactly once: " + sym);
-  need(count(SRC61, "authored, not sourced") === 5 && count(SRC61, "authored, unconsumed") === 0,
+  need(count(SRC61, "authored, not sourced") === 6 && count(SRC61, "authored, unconsumed") === 0,   // D542: 5 -> 6 (the repair config constant)
     "the authored-vs-sourced provenance markers moved in the seam");
   const opening = (SRC61.match(/"CT-\d\d": "(US|CS)"/g) || []);
   need(opening.length === 28 && opening.filter(r => r.endsWith('"US"')).length === 4,

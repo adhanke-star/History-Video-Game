@@ -46,7 +46,9 @@ function diskSeam() {
   const ctx = createContext({});
   runInContext("var GAME_DATA=" + JSON.stringify(DATA) + "; function gameData(n){return GAME_DATA[n]||null;}"
     + " function htmlEsc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}"
-    + " function logPush(){}", ctx);
+    + " function logPush(){}"
+    // D542: a settable B-5 realism stub so the repair-capacity slider math is deterministic node-side.
+    + " var __preset=null; function fldPresetResolve(){return __preset;}", ctx);
   for (const f of ["src/115-conquest-transport.js", "src/114-conquest-board.js", SRC61]) runInContext(read(f), ctx);
   runInContext([
     "function mkPlain(side){return {side:side};}",
@@ -59,7 +61,7 @@ const SHIPPED_ROUTE_KEYS = ["id", "label", "theater", "theaterName", "friction",
 const TRACE_KEYS = ["rulesetId", "authored", "applied", "supplyState", "side", "theater", "depot", "depotName",
   "depotHeld", "target", "targetName", "reachable", "segments", "territories", "modeMix", "segmentCount",
   "reachedCount", "severedBy", "cutCount", "tracedFriction", "label", "reason"];
-const SUPPLY_KEYS = ["schema", "control", "cut", "adopted", "cutCount"];
+const SUPPLY_KEYS = ["schema", "control", "cut", "adopted", "cutCount", "repairSpent"];  // D542: + repairSpent
 
 let server = null, browser = null;
 try {
@@ -127,11 +129,14 @@ try {
       "closed.push(conquestSupplyTrace({side:'US',campaignKind:{id:'conquest',version:1},ruleset:accessor},'CT-03')===null&&calls===0);",
       "var partial={side:'US',campaignKind:{id:'conquest',version:1},ruleset:Object.assign(Object.create({version:1}),{id:'mayhem'})};",
       "closed.push(conquestSupplyTrace(partial,'CT-03')===null);",
-      // D540: the SAME gate must close the authored control/condition state and both mutators.
-      "var G2=mkConquest('US','historical');",
+      // D540/D542: the SAME gate must close authored control/condition/repair state and every writer AND reader.
+      "var G2=mkConquest('US','historical');G2.engineering={levels:{construction:3,pontoons:3}};",
       "var stateClosed=[_lgSupplyView(G2)===null,",
       " conquestSupplySetCondition(G2,'CTS-R-02',true)===null,",
       " conquestSupplySetControl(G2,'CT-03','CS')===null,",
+      " conquestRepairCapacity(G2)===null,",
+      " conquestSupplyRepairReport(G2)===null,",
+      " _lgSupplyRepairReset(G2)===null,",
       " _lgSupplyBlockHTML(G2)==='',",
       " Object.keys(G2.conquest).length===0];",
       "return {trace:conquestSupplyTrace(C,'CT-03'),routeKeys:Object.keys(r),hasTrace:Object.prototype.hasOwnProperty.call(r,'trace'),closed:closed,stateClosed:stateClosed};"
@@ -140,8 +145,8 @@ try {
     need(v.hasTrace === false, "_lgRoute attached a trace on the evidence-gated ruleset — CONTAINMENT LEAK");
     need(JSON.stringify(v.routeKeys) === JSON.stringify(SHIPPED_ROUTE_KEYS), "evidence-gated route keys drifted");
     need(v.closed.length === 11 && v.closed.every(Boolean), "a non-admitted ruleset shape opened the gate: " + JSON.stringify(v.closed));
-    need(v.stateClosed.length === 5 && v.stateClosed.every(Boolean),
-      "authored control/condition state surfaced on the evidence-gated ruleset — CONTAINMENT LEAK: " + JSON.stringify(v.stateClosed));
+    need(v.stateClosed.length === 8 && v.stateClosed.every(Boolean),
+      "authored control/condition/repair state surfaced on the evidence-gated ruleset — CONTAINMENT LEAK: " + JSON.stringify(v.stateClosed));
     return { absent: true, closedShapes: v.closed.length, stateClosed: v.stateClosed.length, allowlist: "single-id", accessorsInvoked: 0 };
   });
 
@@ -192,7 +197,7 @@ try {
       // an unrelated service cut must not touch the CT-03 line at all
       "var U=mkConquest('US','mayhem');conquestSupplySetCondition(U,'CTS-R-20',true);",
       "var unrelated=conquestSupplyTrace(U,'CT-03');",
-      "var restored=mkConquest('US','mayhem');conquestSupplySetCondition(restored,'CTS-R-02',true);conquestSupplySetCondition(restored,'CTS-R-02',false);",
+      "var restored=mkConquest('US','mayhem');restored.engineering={levels:{construction:3}};conquestSupplySetCondition(restored,'CTS-R-02',true);conquestSupplySetCondition(restored,'CTS-R-02',false);",
       "var back=conquestSupplyTrace(restored,'CT-03');",
       "var rejected=[conquestSupplySetCondition(mkConquest('US','mayhem'),'CTS-R-99',true),conquestSupplySetCondition(mkConquest('US','mayhem'),'nonsense',true),conquestSupplySetControl(mkConquest('US','mayhem'),'CT-99','US')];",
       "return {beforeE:{s:beforeE.supplyState,f:beforeE.tracedFriction},afterE:{s:afterE.supplyState,f:afterE.tracedFriction,by:afterE.severedBy,cutCount:afterE.cutCount},",
@@ -331,15 +336,18 @@ try {
       "var bad=[view({schema:'wrong',cut:{'CTS-R-02':1}}),view({schema:'cw_conquest_supply_v1',control:{'CT-01':'XX'},cut:{}}),",
       " view({schema:'cw_conquest_supply_v1',control:{'nope':'US'},cut:{}}),view({schema:'cw_conquest_supply_v1',control:{},cut:{'CTS-R-02':2}}),",
       " view({schema:'cw_conquest_supply_v1',control:{},cut:{'bogus':1}}),view({schema:'cw_conquest_supply_v1',control:[],cut:{}}),",
-      " view('nonsense'),view(null),view(42)];",
-      "var good=view({schema:'cw_conquest_supply_v1',control:{'CT-03':'CS'},cut:{'CTS-R-02':1}});",
+      " view('nonsense'),view(null),view(42),",
+      // D542: a malformed repair ledger fails CLOSED exactly like a malformed control/cut — the whole payload is rejected.
+      " view({schema:'cw_conquest_supply_v1',control:{},cut:{},repair:{spent:-1}}),view({schema:'cw_conquest_supply_v1',control:{},cut:{},repair:{spent:'x'}}),",
+      " view({schema:'cw_conquest_supply_v1',control:{},cut:{},repair:[]}),view({schema:'cw_conquest_supply_v1',control:{},cut:{},repair:5})];",
+      "var good=view({schema:'cw_conquest_supply_v1',control:{'CT-03':'CS'},cut:{'CTS-R-02':1},repair:{spent:7}});",
       // a sealed conquest namespace must fail closed rather than throw
       "var sealed=mkConquest('US','mayhem');Object.freeze(sealed.conquest);",
       "var sealedWrite=conquestSupplySetCondition(sealed,'CTS-R-02',true);",
       "var sealedTrace=conquestSupplyTrace(sealed,null);",
       "return {legacyRoundTrip:before===roundTrip,legacyUntouched:before===afterCalls,gainedConquest:gainedConquest,movedKeys:movedKeys,",
-      " badAdopted:bad.map(function(b){return b.adopted;}),badCuts:bad.map(function(b){return b.cutCount;}),",
-      " goodAdopted:good.adopted,goodCut:good.cutCount,goodControl:good.control['CT-03'],",
+      " badAdopted:bad.map(function(b){return b.adopted;}),badCuts:bad.map(function(b){return b.cutCount;}),badSpent:bad.map(function(b){return b.repairSpent;}),",
+      " goodAdopted:good.adopted,goodCut:good.cutCount,goodControl:good.control['CT-03'],goodSpent:good.repairSpent,",
       " sealedWrite:sealedWrite,sealedTraceState:sealedTrace?sealedTrace.supplyState:null};"
     ].join("")));
     need(v.legacyRoundTrip === true, "a legacy campaign did not round-trip byte-identically");
@@ -347,10 +355,11 @@ try {
     need(v.gainedConquest === false, "the logistics path created a conquest namespace on a legacy campaign");
     need(JSON.stringify(v.movedKeys) === JSON.stringify(["logistics"]),
       "the shipped logistics owners touched a namespace other than their own: " + JSON.stringify(v.movedKeys));
-    need(v.badAdopted.length === 9 && v.badAdopted.every(a => a === false),
-      "a malformed control/condition payload was adopted: " + JSON.stringify(v.badAdopted));
+    need(v.badAdopted.length === 13 && v.badAdopted.every(a => a === false),
+      "a malformed control/condition/repair payload was adopted: " + JSON.stringify(v.badAdopted));
     need(v.badCuts.every(c => c === 0), "a malformed payload leaked a cut into the live view: " + JSON.stringify(v.badCuts));
-    need(v.goodAdopted === true && v.goodCut === 1 && v.goodControl === "CS", "a well-formed payload was not adopted");
+    need(v.badSpent.every(s => s === 0), "a malformed repair payload leaked spent into the live view: " + JSON.stringify(v.badSpent));
+    need(v.goodAdopted === true && v.goodCut === 1 && v.goodControl === "CS" && v.goodSpent === 7, "a well-formed control/cut/repair payload was not adopted");
     need(v.sealedWrite === null, "a sealed conquest namespace accepted a write");
     need(v.sealedTraceState === "TRACED", "a sealed conquest namespace must still read the authored opening");
     const shape = JSON.parse(read("tools/save-shape.json"));
@@ -359,7 +368,56 @@ try {
     const region = read(SRC61).slice(read(SRC61).indexOf("LANE-022 Slices 1-2"), read(SRC61).indexOf("function _lgWord("));
     need(!/_SAVE_VER|saveLocal|applySave|importSave|exportSave|localStorage/.test(region),
       "the LANE-022 region touches a save owner — the state must ride the shipped envelope");
-    return { saveVer: 1, additive: true, legacyByteIdentical: true, badPayloadsRejected: 9, signatures: 7 };
+    return { saveVer: 1, additive: true, legacyByteIdentical: true, badPayloadsRejected: 13, signatures: 7 };
+  });
+
+  await step("REPAIR + FINITE CAPACITY (D542): repair costs bounded capacity, exhaustion forces the standing decision, the reset regenerates, and the B-5 slider governs magnitude", () => {
+    const run = diskSeam();
+    const v = JSON.parse(run([
+      "function mkC(cons,pon){var C=mkConquest('US','mayhem');C.engineering={levels:{construction:cons,pontoons:pon}};return C;}",
+      "__preset=null;",
+      // capacity derives from the shipped engineering levels; the B-5 realism lever scales it
+      "var cap0=conquestRepairCapacity(mkC(0,0)),cap32=conquestRepairCapacity(mkC(3,2)),capMax=conquestRepairCapacity(mkC(3,3));",
+      "__preset={attrition:1.3};var capHi=conquestRepairCapacity(mkC(3,3));",
+      "__preset={attrition:0.7};var capLo=conquestRepairCapacity(mkC(3,3));",
+      "__preset=null;",
+      // a rail repair clears the cut and charges the rail mode-cost through the ledger
+      "var C=mkC(3,0);conquestSupplySetCondition(C,'CTS-R-02',true);var before=_lgSupplyView(C).cutCount;var r=conquestSupplySetCondition(C,'CTS-R-02',false);",
+      "var railRepaired={before:before,after:r.cutCount,spent:r.repairSpent};",
+      // no corps -> refused, the cut stands, nothing charged
+      "var N=mkC(0,0);conquestSupplySetCondition(N,'CTS-R-02',true);var nr=conquestSupplySetCondition(N,'CTS-R-02',false);var refused={after:nr.cutCount,spent:nr.repairSpent};",
+      // finite capacity: cut every rail service with a small corps -> only SOME restorable this pass
+      "var g=_lgTraceBase({id:'mayhem',version:1});var rail=[];for(var k in g.services)if(g.services[k]==='rail')rail.push(k);",
+      "var F=mkC(1,0);for(var i=0;i<rail.length;i++)conquestSupplySetCondition(F,rail[i],true);",
+      "var fcap=conquestRepairCapacity(F).capacity;",
+      "var cleared=0;for(var i=0;i<rail.length;i++){var b=_lgSupplyView(F).cutCount;conquestSupplySetCondition(F,rail[i],false);if(_lgSupplyView(F).cutCount<b)cleared++;}",
+      "var remAfter=_lgSupplyView(F).cutCount;var repExhausted=conquestSupplyRepairReport(F);",
+      // the pass reset regenerates the budget and lets more repair proceed
+      "_lgSupplyRepairReset(F);var spentReset=_lgSupplyView(F).repairSpent;for(var i=0;i<rail.length;i++)conquestSupplySetCondition(F,rail[i],false);var remReset=_lgSupplyView(F).cutCount;",
+      // a water cut routes to the Pontoon branch and is unrepairable with zero pontoons
+      "var W=mkC(3,0);var water=null;for(var k in g.services)if(g.services[k]==='inland-water'){water=k;break;}",
+      "var waterRep=null;if(water){conquestSupplySetCondition(W,water,true);var wr=conquestSupplyRepairReport(W);waterRep={hasCut:_lgSupplyView(W).cutCount,firstBranch:wr.cuts[0].branch,firstRepairable:wr.cuts[0].repairable};}",
+      "return {cap0:cap0.capacity,cap32:cap32.capacity,capMax:capMax.capacity,capHi:capHi.capacity,capLo:capLo.capacity,realismHi:capHi.realism,realismLo:capLo.realism,",
+      " railRepaired:railRepaired,refused:refused,fcap:fcap,railCount:rail.length,cleared:cleared,remAfter:remAfter,",
+      " repExhausted:repExhausted.exhausted,repRemaining:repExhausted.remaining,spentReset:spentReset,remReset:remReset,waterRep:waterRep};"
+    ].join("")));
+    need(v.cap0 === 4, "capacity with no engineering must be the authored base: " + v.cap0);
+    need(v.cap32 === 32 && v.capMax === 37, "capacity must derive from Construction+Pontoon levels: " + JSON.stringify([v.cap32, v.capMax]));
+    need(v.realismHi === 1.3 && v.realismLo === 0.7 && v.capHi < v.capMax && v.capLo >= v.capMax,
+      "the B-5 slider (fldPresetResolve().attrition) must scale capacity — higher realism rebuilds slower: hi " + v.capHi + " mid " + v.capMax + " lo " + v.capLo);
+    need(v.railRepaired.before === 1 && v.railRepaired.after === 0 && v.railRepaired.spent === 4,
+      "a repair must clear the cut and charge the rail mode-cost: " + JSON.stringify(v.railRepaired));
+    need(v.refused.after === 1 && v.refused.spent === 0,
+      "a repair with no engineering corps must be refused, leaving the cut: " + JSON.stringify(v.refused));
+    need(v.cleared > 0 && v.cleared < v.railCount && v.remAfter > 0,
+      "finite capacity must clear SOME but not ALL cuts in one pass (the standing decision): fcap " + v.fcap + " cleared " + v.cleared + " of " + v.railCount);
+    need(v.repExhausted === true && v.repRemaining < 4,
+      "the report must mark the pass exhausted when a cut remains over budget: " + JSON.stringify([v.repExhausted, v.repRemaining]));
+    need(v.spentReset === 0 && v.remReset < v.remAfter,
+      "the pass reset must zero spent and let more repair proceed: " + JSON.stringify([v.spentReset, v.remReset, v.remAfter]));
+    need(!v.waterRep || (v.waterRep.hasCut === 1 && v.waterRep.firstBranch === "pontoons" && v.waterRep.firstRepairable === false),
+      "a water cut must route to the Pontoon branch and be unrepairable with zero pontoons: " + JSON.stringify(v.waterRep));
+    return { capacity: [v.cap0, v.cap32, v.capMax], b5: [v.capHi, v.capMax, v.capLo], cleared: v.cleared, railCount: v.railCount, exhausted: v.repExhausted, resetWorks: v.spentReset === 0 };
   });
 
   await step("SUBSTRATE IMMUTABILITY: tracing never writes the evidence pack, the board, or module 115", () => {
@@ -495,6 +553,41 @@ try {
     if (severed.supplyState !== "SEVERED" || severed.applied !== true) throw new Error("in-page cut did not sever the line");
     if (_lgRoute(cut, null).friction <= r.friction) throw new Error("in-page severed friction did not rise");
     return { open: open.segments[0].id, gated: null, routeKeys: [7, 6, 6], traced: r.friction, severed: _lgRoute(cut, null).friction };
+  }));
+
+  await step("IN PAGE (D542): repair costs finite engineering capacity, exhaustion forces a choice, and the live B-5 preset governs magnitude", () => page.evaluate(() => {
+    if (typeof conquestRepairCapacity !== "function" || typeof conquestSupplyRepairReport !== "function" || typeof _lgSupplyRepairReset !== "function")
+      throw new Error("the D542 repair surface is absent from the built game");
+    if (typeof G === "undefined" || !G) throw new Error("no live G to read the B-5 preset from");
+    const mk = (cons, pon) => ({ side: "US", campaignKind: { id: "conquest", version: 1 }, ruleset: { id: "mayhem", version: 1 }, conquest: {}, engineering: { levels: { construction: cons, pontoons: pon } } });
+    const saved = G.settings ? G.settings.tacticalPreset : undefined;
+    G.settings = G.settings || {};
+    try {
+      // a corps clears a rail cut and charges the ledger; no corps refuses and the cut stands
+      const rep = mk(3, 0); conquestSupplySetCondition(rep, "CTS-R-02", true);
+      const done = conquestSupplySetCondition(rep, "CTS-R-02", false);
+      if (done.cutCount !== 0 || done.repairSpent !== 4) throw new Error("in-page repair did not clear and charge: " + JSON.stringify(done));
+      const noCorps = mk(0, 0); conquestSupplySetCondition(noCorps, "CTS-R-02", true);
+      if (conquestSupplySetCondition(noCorps, "CTS-R-02", false).cutCount !== 1) throw new Error("in-page repair with no corps was not refused");
+      // the LIVE B-5 preset scales capacity: a stricter realism rebuilds slower
+      G.settings.tacticalPreset = { attrition: 1.3 };
+      const capHi = conquestRepairCapacity(mk(3, 3)).capacity;
+      G.settings.tacticalPreset = { attrition: 0.7 };
+      const capLo = conquestRepairCapacity(mk(3, 3)).capacity;
+      if (!(capHi < capLo)) throw new Error("in-page B-5 slider did not scale repair capacity: hi " + capHi + " lo " + capLo);
+      // finite capacity in page: a small corps clears only SOME of many cuts, then the reset regenerates
+      const g = _lgTraceBase({ id: "mayhem", version: 1 });
+      const rail = Object.keys(g.services).filter(k => g.services[k] === "rail");
+      const F = mk(1, 0); for (const k of rail) conquestSupplySetCondition(F, k, true);
+      let cleared = 0; for (const k of rail) { const b = _lgSupplyView(F).cutCount; conquestSupplySetCondition(F, k, false); if (_lgSupplyView(F).cutCount < b) cleared++; }
+      const remAfter = _lgSupplyView(F).cutCount, rep2 = conquestSupplyRepairReport(F);
+      _lgSupplyRepairReset(F);
+      if (_lgSupplyView(F).repairSpent !== 0) throw new Error("in-page reset did not zero the pass ledger");
+      if (!(cleared > 0 && cleared < rail.length && remAfter > 0 && rep2.exhausted === true)) throw new Error("in-page finite capacity failed: cleared " + cleared + " of " + rail.length);
+      return { capHi, capLo, cleared, railCount: rail.length, remAfter, refused: true, exhausted: rep2.exhausted };
+    } finally {
+      if (saved === undefined) delete G.settings.tacticalPreset; else G.settings.tacticalPreset = saved;
+    }
   }));
 
   await step("IN PAGE: repeated tracing is pure — no G, C, save, storage, DOM, or board movement", () => page.evaluate(() => {

@@ -5117,16 +5117,18 @@ risk and lane routing rather than on the rulings themselves.)*
   D536 contract exactly (the D535 bullets above); after D536, the lane is `CONTRACT` / `none` and the next
   parked slice (the E61 collapse-terminal fork recommended) needs its own contract section.
 
-### LANE-022 · conquest-mayhem-supply-ladder — **DRIVE (D542 SLICE 3 — CLAUDE CODE)**
+### LANE-022 · conquest-mayhem-supply-ladder — **CONTRACT (D543 SLICE 3 SHIPPED; UNOWNED)**
 
-- **Owning tool:** Claude Code (Opus 4.8 `[1m]` xhigh) — DRIVE for Slice 3 (repair plus finite engineering
-  capacity) from the D542 committed contract below; no simultaneous edits by any provider. Lock history:
-  D537 opened the lane at `CONTRACT` / `none`; D538 took DRIVE at `0829d8d`; D539 shipped Slice 1 and
-  released; D540 took DRIVE at `7e48ca813be39a9db9df565e5af4976547b55a80`; D541 shipped Slice 2 and released
-  at `5ecc00bdb6f5fc65d9e26c32d51fb49371e81d2b`; D542 takes DRIVE for Slice 3.
-- **State:** DRIVE — **D542 takes Claude Code DRIVE for Slice 3 (repair plus finite engineering capacity);
-  the complete acceptance contract is committed below and NO runtime byte has moved. Slices 1-2 are shipped
-  (D539/D541); supply BITES inside a conquest campaign while non-conquest play stays byte-identical.** This lane owns the ARC 7 transport/supply ladder that D537 ratified onto
+- **Owning tool:** none. D543 releases the D542 Claude Code DRIVE lock at the shipped Slice-3 boundary; no
+  simultaneous edits by any provider. Slice 4 requires its own committed contract section and DRIVE take here
+  before any runtime edit. Lock history: D537 opened the lane at `CONTRACT` / `none`; D538 took DRIVE at
+  `0829d8d`; D539 shipped Slice 1 and released; D540 took DRIVE at
+  `7e48ca813be39a9db9df565e5af4976547b55a80`; D541 shipped Slice 2 and released at
+  `5ecc00bdb6f5fc65d9e26c32d51fb49371e81d2b`; D542 took DRIVE for Slice 3 at
+  `475543cebc4d9026b382c61cfef51283396183cc`; D543 shipped Slice 3 and released.
+- **State:** CONTRACT/unowned — **D543 shipped Slice 3 (repair plus finite engineering capacity) exactly as
+  D542 contracted; repair costs finite engineering capacity governed by the B-5 slider, the Engineering Corps
+  is load-bearing, and non-conquest play stays byte-identical.** This lane owns the ARC 7 transport/supply ladder that D537 ratified onto
   the **Mayhem** ruleset. **LANE-019 is deliberately not rewritten by this lane** — its segment is pinned
   tooth-for-tooth by `tools/probe-conquest-transport-plan.mjs` and every one of its boundary sentences
   remains exact. LANE-019 keeps the historical-evidence contract; LANE-022 owns buildable Mayhem product.
@@ -5533,3 +5535,54 @@ risk and lane routing rather than on the rulings themselves.)*
   two LANE-022 probes and the five mechanical pin re-anchors), ship it under its own D### with the three A/B
   legs and the one declared bind, then release LANE-022 and contract Slice 4 (blockade/sea edge). ARC 7
   Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
+
+- **D543 delivery record — Slice 3, repair plus finite engineering capacity:** shipped exactly as D542
+  contracted. The seam is `src/61-logistics-rail.js` only. Clearing a cut runs through the shipped
+  `conquestSupplySetCondition` clear-path, which now consults a pure capacity reader `conquestRepairCapacity`
+  over the shipped `C.engineering.levels` (Construction + Pontoon branches, read purely via `_lgEngLevel` — no
+  `engInit` mutation on a read path) scaled by the B-5 realism lever, plus a per-pass ledger
+  `C.conquest.supply.repair` materialized lazily by `_lgRepairLedger`. A repair the corps cannot afford this
+  pass, or lacks the branch for, is REFUSED so the cut stands. `conquestSupplyRepairReport` and the extended
+  `_lgSupplyBlockHTML` teach the standing decision; the unwired internal `_lgSupplyRepairReset` is the per-pass
+  boundary the Slice 6/7 loop will call. `_lgSupplyView` gained one field, `repairSpent`. One authored config
+  constant `_LG_REPAIR` (`authored, not sourced`). No fourth public mutator, no second logistics/engineering
+  owner, no second save owner, no new clock (invariant F); the capacity/repair state stays out of the CF-2
+  memo. No module added (manifest 112), no data change (65), `_SAVE_VER` stays 1 (purely additive save),
+  `build/base.html` untouched.
+- **D543 B-5 slider and finite capacity:** repair magnitude reads `fldPresetResolve().attrition` clamped
+  `[0.6,1.4]` (the exact `T13 fldEngRealism` lever). A Construction-3 / Pontoon-3 corps has capacity 37 at
+  Balanced, 28 at Historian, 40 (clamped) at Arcade. A Construction-1 corps (capacity 10) restores only 2 of
+  27 cut rail arteries in one pass and the report marks the pass exhausted — the standing decision. A water
+  cut needs a Pontoon Train; Construction alone cannot clear it.
+- **D543 containment:** the SAME `_lgTraceRuleset` allowlist gate now also guards `conquestRepairCapacity`,
+  `conquestSupplyRepairReport` and `_lgSupplyRepairReset` (all gate through `_lgSupplyView`), so authored
+  repair/capacity state is structurally unreachable on the evidence-gated ruleset and fails CLOSED before any
+  substrate read. `CONTAINMENT-B` owns the gated-ruleset query and the allowlist source assertion and now
+  proves eleven closed ruleset shapes plus eight closed state paths.
+- **D543 A/B — three legs.** Leg 1 (conquest OFF) the direction battery `18f609d07b1190904ec0c11e4ca64675`
+  BYTE-IDENTICAL to the `5ecc00b` baseline (0 diffs); leg 2 `probe-full-campaign`
+  `a38185fd371a7f181250eff3a6cbf76a` BYTE-IDENTICAL (0 diffs); leg 3 (conquest ON, in-page, both columns) the
+  US/E rail line SEVERED friction 40 / depotReach 58 → REPAIRED TRACED friction 7 / depotReach 70 (spent 4);
+  27 cuts / capacity 10 → 2 restored, exhausted; B-5 37/28/40; water cut restored only with pontoons —
+  adjudicated under D92 as accurate-inputs consequences, caps held.
+- **D543 bind — Bind D542-B1, exact scope:** mutated the containment allowlist
+  (`{ mayhem: 1 }` → `{ mayhem: 1, historical: 1 }`) and ran the focused probe WITHOUT rebuilding; ONLY
+  `CONTAINMENT-B` redded (17/18, exit 1), every other tooth held. Restore byte-identical (`src/61` md5
+  `1ccd972e5a4f71407d37ddd0d0eb0eaa` pre == post), rebuild returned the identical game md5 at 18/18 green.
+- **D543 gates, all green with every artifact read:** build `GATE OK`; focused 18/18 (0 pageerrors, 0
+  realErrors); plan 10/10; adjacent logistics-rail 8, logistics 15, bridge 6, conditioning 9,
+  engineering-corps 23/23, conquest-board 13/13, conquest-state 15/15, conquest-transport 18/18, campaign-link
+  19, auto-resolve 10, save-slots 17/17, command 100, presets 27 — all exit 0, 0 pageerrors; plan probes
+  Mayhem 13/13, War Career 24/24, transport 12/12, conquest layer 8/8, doc coherence 5/5; `git diff --check`
+  clean. `probe-engineering` FATALs on the reproducible headless-Chrome fonts-stall screenshot timeout
+  (environmental — its gameplay steps ran, the engineering surface is byte-unchanged, and engineering-corps
+  23/23 cross-validates it); recorded honestly, not a Slice 3 regression. Game
+  `4764b1fccb40c473edd871621497f62b` → `98f3feaf0de89b3b47eda6b1347dacd0`, srcTree
+  `5f6d33325fa5feb04f6d5b11e3f5a3b7` → `c4fc64ebe6d49d9cdfc79885b4c05d8b`, re-anchored at FIVE disk-verified
+  sites (three generated-game, two srcTree); suite md5, focused md5, manifest and frozen base HOLD (no probe
+  or module added).
+- **Resume pointer (D543):** LANE-022 is `CONTRACT` / `none` with Slices 1-3 shipped. Slice 4 (blockade/sea
+  edge — blockade state gates the two bounded sea services as the Confederate import edge, reusing shipped
+  blockade state across its existing consumers with no new owner) needs its own committed contract section and
+  DRIVE take here before any runtime edit. D543 replaces D541 as the ARC 7 product head. ARC 7 Historical
+  transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.

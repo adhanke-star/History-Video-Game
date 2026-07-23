@@ -4,6 +4,93 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D543 — SHIPPED_CONQUEST_SUPPLY_REPAIR_AND_ENGINEERING_CAPACITY: LANE-022 SLICE 3 MAKES REPAIR COST FINITE ENGINEERING CAPACITY WITH THE ENGINEERING CORPS LOAD-BEARING AND THE B-5 SLIDER GOVERNING MAGNITUDE, WHILE NON-CONQUEST PLAY STAYS BYTE-IDENTICAL; LANE-022 RELEASES — [CLAUDE CODE / Opus 4.8 `[1m]` xhigh, IMPLEMENTATION+GATES] (2026-07-23)
+
+D542 is committed and pushed clean at `475543cebc4d9026b382c61cfef51283396183cc`. Slice 3 shipped exactly
+as that contract specified. **D543 replaces D541 as the ARC 7 product head.**
+
+**The seam is `src/61-logistics-rail.js` only.** Clearing a cut now costs FINITE engineering capacity.
+`conquestSupplySetCondition`'s clear-path consults a pure capacity reader `conquestRepairCapacity(C)` —
+built from the shipped `C.engineering.levels` (Construction + Pontoon branches, read purely via `_lgEngLevel`,
+a 0..3 mirror of `engBranchLevel` that omits the mutating `engInit` so a read path never touches the carrier)
+divided by the B-5 realism lever and clamped to an authored ceiling — plus a per-pass ledger
+`C.conquest.supply.repair` (`{spent}`) materialized LAZILY by `_lgRepairLedger` only on a repair op. A repair
+the corps cannot afford this pass, or lacks the branch for, is REFUSED so the cut stands. The Construction
+Corps clears a cut RAIL line and the Pontoon Train restores a cut WATER crossing; roads stay absent until
+Slice 5, so "clearing restores a road" is implemented as clearing a Slice-2 cut condition, never as authoring
+a road. `conquestSupplyRepairReport(C)` (pure, frozen) and the extended `_lgSupplyBlockHTML` teach the
+standing decision; the unwired internal `_lgSupplyRepairReset(C)` is the per-pass boundary the Slice 6/7
+sequential-turn loop will call at turn advance. `_lgSupplyView` gained one field, `repairSpent`. One authored
+config constant `_LG_REPAIR` (base 4 / +6 per Construction / +5 per Pontoon / cap 40 / rail 4 · water 6 · sea
+9 / realism `[0.6,1.4]`), marked `authored, not sourced`. No module added (manifest 112), no data change (65),
+`build/base.html` frozen at `c9db83fa99230ffb95bdfdfe059f3fb9`.
+
+**Invariant F held: no second owner, no fourth mutator, no new clock.** The two public mutators
+(`conquestSupplySetControl`/`conquestSupplySetCondition`) are unchanged in count; the repair readers and
+the reset are helpers, not a parallel store; `C.logistics` stays the sole logistics store and `engInit`/
+`engBuy` stay the sole owners of `C.engineering` (Slice 3 only reads it). The capacity/repair state is
+control/condition-class and never enters the CF-2 memo (`_lgTraceBase`/`_lgTraceMemo`). `src/115`/`src/114`
+and the sourced data stay byte-frozen; `roadStatus` stays `ROAD_REQUIRES_BOUNDED_SOURCE_PASS`, the four
+`CTI-*` faces stay `INTERCHANGE_WINDOW_UNADJUDICATED`, and no `dateText` is parsed.
+
+**The B-5 slider governs magnitude (invariant I).** Repair magnitude reads `fldPresetResolve().attrition` —
+the exact lever `src/tactical/T13-engineering.js`'s `fldEngRealism()` couples engineering dig speed to —
+clamped identically to `[0.6,1.4]`, guarded (`typeof fldPresetResolve === "function"`, neutral 1.0 when no
+preset). A full Construction-3 / Pontoon-3 corps has capacity **37** at Balanced (1.0), **28** at Historian
+(1.3, harder/slower) and **40** (clamped) at Arcade (0.7) — proven both node-side (a stubbed `fldPresetResolve`
+in the vm probe half) and in-page (setting `G.settings.tacticalPreset`).
+
+**Finite capacity is the point (design law §5), probed and taught.** A Construction-1 corps has capacity 10
+and each rail repair costs 4, so it restores only **2 of 27** cut rail arteries in one pass and the report
+marks the pass `exhausted`; the reset regenerates the budget. A water cut routes to the Pontoon branch and is
+unrepairable with zero pontoons. This is the standing decision — *which artery do you restore, or accept the
+longer water route?*
+
+**A/B — three legs, all logged.** Leg 1 (conquest OFF), the 24-scenario × 8-seed direction battery, artifact
+`18f609d07b1190904ec0c11e4ca64675` BYTE-IDENTICAL to the `5ecc00b` baseline (`ok=true failures=0
+pageerrors=0`, 0 diffs). Leg 2, `probe-full-campaign`, artifact `a38185fd371a7f181250eff3a6cbf76a`
+BYTE-IDENTICAL to the baseline (`ok=true steps=4 pageerrors=0`, 0 diffs) — outcomes move ONLY inside conquest.
+Leg 3 (conquest ON, in-page, 0 pageerrors), both columns per row: the US/E traced line SEVERED (friction 40,
+depotReach 58) → REPAIRED (TRACED, friction **7**, depotReach **70**, spent 4); finite capacity 27 cuts /
+capacity 10 → restored **2**, 25 remain, exhausted; B-5 Balanced 37 / Historian 28 / Arcade 40; the water
+crossing CTS-W-01 unrepairable with Construction only → restored with pontoons. Adjudicated under D92 as
+accurate-inputs consequences — a restored line lowers friction toward its TRACED value, every number derived
+from the graph walk plus the control/cut/repair/engineering/B-5 state, never tuned, every state inside the
+shipped caps.
+
+**Bind D542-B1 (one declared, exact scope).** Mutated the containment allowlist
+(`{ mayhem: 1 }` → `{ mayhem: 1, historical: 1 }`) and ran the focused probe WITHOUT rebuilding: ONLY
+`CONTAINMENT-B` redded (17/18, exit 1) — CONTAINMENT-A, the new REPAIR step, SAVE SHAPE and every other tooth
+held. Restore byte-identical (`src/61` md5 `1ccd972e5a4f71407d37ddd0d0eb0eaa` pre == post), rebuild returned
+the identical game md5 at 18/18 clean.
+
+**Save shape (invariant E, the D447/GEA-12 precedent).** Purely additive: `C.conquest.supply.repair` rides
+the existing envelope, none of the seven `tools/save-shape.json` functions is touched, `_SAVE_VER` stays 1 as
+a CONSCIOUS decision. A legacy campaign loads, round-trips and re-serializes BYTE-IDENTICALLY, and thirteen
+malformed payloads — including four malformed repair ledgers (`spent:-1`, `spent:'x'`, `repair:[]`,
+`repair:5`) — each fail CLOSED to the authored opening with `repairSpent` 0.
+
+**Gates, all green with every artifact read:** build `GATE OK · doc-coherence ✓ · … · save-shape ✓`; focused
+**18/18** (0 pageerrors, 0 realErrors); plan 10/10; adjacent logistics-rail 8, logistics 15, bridge 6,
+conditioning 9, engineering-corps 23/23, conquest-board 13/13, conquest-state 15/15, conquest-transport 18/18,
+campaign-link 19, auto-resolve 10, save-slots 17/17, command 100, presets 27 — all exit 0, 0 pageerrors; plan
+probes Mayhem 13/13, War Career 24/24, transport 12/12, conquest layer 8/8, doc coherence 5/5; `git diff
+--check` clean. `probe-engineering` FATALs on the reproducible headless-Chrome fonts-stall screenshot timeout
+(environmental; its gameplay steps ran, the engineering surface `src/57`/`src/85`/`src/86` +
+`data/engineering.json` is byte-unchanged, and `probe-engineering-corps` 23/23 cross-validates the corps) —
+recorded honestly, not a Slice 3 regression, not marked green. Repair-path cost is negligible
+(`conquestRepairCapacity` 0.04 ms, `conquestSupplyRepairReport` 0.07 ms per call). Game `4764b1fc` →
+`98f3feaf0de89b3b47eda6b1347dacd0`, srcTree `5f6d3332` → `c4fc64ebe6d49d9cdfc79885b4c05d8b`, re-anchored at
+FIVE disk-verified sites (three generated-game, two srcTree); suite md5, focused md5, manifest and frozen base
+HOLD (no probe or module added). LANE-019 deliberately unrewritten (transport plan 12/12).
+
+**Reversibility.** Reversible: the seam is one guarded field plus pure readers behind the shipped
+conquest-kind + allowlist gate; deleting it returns Slice 2. No data, no module, no save-owner, no base
+change. **EXACT NEXT (D514):** reload the ledger and contract LANE-022 Slice 4 (blockade/sea edge — blockade
+state gates the two bounded sea services as the Confederate import edge, reusing shipped blockade state with
+no new owner) in a committed DRIVE take, or issue the capacity relay. ARC 7 Historical transport movement,
+Historical roads, the four `CTI-*` faces and E46 remain blocked.
+
 ## D542 — CONTRACT_CONQUEST_SUPPLY_REPAIR_AND_ENGINEERING_CAPACITY: LANE-022 TAKES CLAUDE CODE DRIVE FOR SLICE 3 — REPAIR PLUS FINITE ENGINEERING CAPACITY, THE ENGINEERING CORPS MADE LOAD-BEARING (CONTRACT ONLY; NO RUNTIME BYTE MOVED) — [CLAUDE CODE / Opus 4.8 `[1m]` xhigh, CONTRACT] (2026-07-23)
 
 D541 is committed and pushed clean at `5ecc00bdb6f5fc65d9e26c32d51fb49371e81d2b`. This is the
