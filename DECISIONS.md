@@ -4,6 +4,69 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D540 — CONTRACT_CONQUEST_SUPPLY_RECEIPTS_AND_CUTS: LANE-022 TAKES CLAUDE CODE DRIVE FOR SLICE 2 — THE FIRST SIM-AFFECTING SLICE (CONTRACT ONLY; NO RUNTIME BYTE MOVED) — [CLAUDE CODE / Opus 4.8 `[1m]` xhigh, CONTRACT] (2026-07-23)
+
+D539 is committed and pushed clean at `a613bacb2e369fbac335ca0fb9611c4bce89c1ea`. This is the
+contract-before-teeth commit the Contract Relay's hard rule (COORDINATION §1) requires: the lane carries the
+full Slice 2 acceptance contract as committed prose, and the acceptance teeth land in the SAME commit as the
+code that greens them. Nothing in `src/`, `data/`, `build/`, the manifest, the suite, the save shape or the
+generated deliverable moved here, so the pinned game/srcTree/suite/focused hashes do NOT move and are NOT
+re-pinned. D539 remains the ARC 7 product head until Slice 2 ships.
+
+**Why this slice is different.** Slices 1 proved the trace read-only, exactly so its correctness proof was
+never mixed with a sim-affecting A/B (Aaron, D537 ruling 4). Slice 2 spends that proof: `applied` flips true,
+`tracedFriction` is adopted into `_lgRoute`'s `friction`, and outcomes MOVE inside a conquest campaign. It is
+therefore the first slice that owns a three-leg A/B — two zero-diff legs proving non-conquest play is
+untouched, and one honest leg logging both columns of the movement it deliberately causes.
+
+**The contract in one paragraph.** Territory control and per-segment service condition become real state in
+ONE namespace, `C.conquest.supply`, read by one pure fail-closed reader and written by exactly two guarded
+mutators. The trace computes a BASE walk over the full open graph and a LIVE walk filtered by cuts and
+control, resolving to three bounded states: `TRACED` (applied, live friction), `SEVERED` (applied, a flat
+authored bounded ceiling, carrying the exact service ids that broke the line), and `SUBSTRATE_GAP` (NOT
+applied — friction keeps its shipped number). Containment reuses the D539 allowlist gate so authored
+control/condition state is structurally unreachable on the evidence-gated ruleset.
+
+**THE JUDGMENT THAT SHAPES THE SLICE — the eleven-component gap must not become a penalty.** D539 measured
+that the 44 sourced services project into ELEVEN disconnected components, so most traced pairs have no path
+at all; `CS`/`E` does not resolve. The tempting implementation flips `applied` unconditionally and lets an
+unreachable route carry `tracedFriction:100`, collapsing supply for any army the sparse substrate cannot
+reach. That is wrong on the project's own terms. The gap is OUR evidence gap — five research passes returned
+zero established physical windows and the authored road layer is not built until Slice 5 — while roads were
+in fact universal and always available (design law §5). Penalising a player because our data lacks roads
+would invent history in reverse, and it is precisely the "output gate forcing a result" that D92 forbids.
+So `SUBSTRATE_GAP` leaves `applied:false` and the shipped friction untouched, and TEACHES the reason. A cut
+the player can actually cause is a real, bounded consequence; a hole in our sources is not.
+
+**Save decision, made consciously (invariant E / the GEA-12 · D447 precedent).** `serializeSave` returns
+`{ver, when, settings:G.settings, campaign:G.campaign}`, so `C.conquest.supply` rides the existing envelope.
+The change is **purely additive**: none of the seven functions hashed in `tools/save-shape.json` is touched,
+so `saveVer` stays 1 and `_SAVE_VER` is NOT bumped. Legacy-save byte identity is the gating tooth, and the
+sanitizer must fail CLOSED on a malformed payload rather than adopt it.
+
+**CF-2 resolved by measurement, not assumption (the D515 precedent).** At `a613bac`, `logisticsSnapshot`
+costs **0.037 ms** on a non-conquest carrier and **15.44 ms** on a conquest carrier — a 414× blowup, roughly
+89 ms per conquest turn, doubling once Slice 2 adds the live walk. The packet suspected the adjacency
+rebuild; measurement refutes that specific diagnosis. The adjacency build over 44 services / 27 keys /
+51 edges costs **0.14 ms**. The real cost is substrate re-normalization inside
+`conquestTransportNormalized()` — full validation, five signature-pin passes, a JSON clone of the whole
+evidence pack and a deep freeze — at **12.10 ms** per call. The memo is therefore authorized and is scoped to
+the immutable, control/condition-INDEPENDENT base projection only, keyed on ruleset id plus the reference
+identity of the injected packs, so a stale memo across a cut is structurally impossible rather than merely
+unlikely.
+
+**CF-1 adjudicated against git, not against the packet.** `tools/probe-desk-pacing-plan.mjs` reads 5/9 today.
+Checking `0829d8d` (the pre-D539 head) directly: LANE-020 was ALREADY `CONTRACT`/unowned after its own D519
+release, the manifest was ALREADY 112 with `116-conquest-state.js` last after D523, and
+`src/00-manifest.json`'s sha256 was ALREADY `d85bc76c…` against the pinned `a94ae7f0…`. Those three reds
+predate D539. The suite was 140 there and D539 moved it to 142, so exactly ONE red is this session's doing.
+Resolution: option (a) RE-PIN — bump only the two 140s with a chained comment, restoring 6/9, and leave the
+three structural reds named rather than silently rewritten, because they belong to LANE-020 and this session
+does not own that lane.
+
+**Reversibility.** Fully reversible — this commit is prose only. Reverting it restores the D539 boundary
+exactly.
+
 ## D539 — SHIPPED_CONQUEST_TRACED_SUPPLY_ROUTE: LANE-022 SLICE 1 REPLACES THE STATIC `_lgRoute` LOOKUP WITH A REAL TRACE OVER THE 36-TERRITORY BOARD, READ-ONLY AND BYTE-IDENTICAL; LANE-022 RELEASES — [CLAUDE CODE / Opus 4.8 `[1m]` xhigh, IMPLEMENTATION+GATES] (2026-07-23)
 
 D538 is committed and pushed clean at `f4df08e302d3ff057f99110e22fd14068ab53ed7`. Slice 1 shipped exactly

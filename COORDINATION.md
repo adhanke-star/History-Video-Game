@@ -5117,13 +5117,15 @@ risk and lane routing rather than on the rulings themselves.)*
   D536 contract exactly (the D535 bullets above); after D536, the lane is `CONTRACT` / `none` and the next
   parked slice (the E61 collapse-terminal fork recommended) needs its own contract section.
 
-### LANE-022 · conquest-mayhem-supply-ladder — **CONTRACT (D539 SLICE 1 SHIPPED; UNOWNED)**
+### LANE-022 · conquest-mayhem-supply-ladder — **DRIVE (D540 SLICE 2 CONTRACT; CLAUDE CODE)**
 
-- **Owning tool:** none. D539 releases the D538 Claude Code DRIVE lock at the shipped Slice-1 boundary;
-  no simultaneous edits by any provider. Slice 2 requires its own committed contract section and DRIVE
-  take here before any runtime edit. D537 opened the lane at `CONTRACT` / `none`; D538 took DRIVE at the
-  clean pushed `0829d8dedabbc8e8943ea534eaa279c713d06b81` boundary (retained history).
-- **State:** CONTRACT/unowned — **D539 shipped Slice 1 exactly as D538 contracted.** This lane owns the ARC 7 transport/supply ladder that D537 ratified onto
+- **Owning tool:** Claude Code (Opus 4.8 `[1m]`, xhigh) — DRIVE for the D540 Slice-2 contract, taken in
+  this ledger-only commit at the clean pushed `a613bacb2e369fbac335ca0fb9611c4bce89c1ea` boundary. No
+  simultaneous edits by any provider. Lock history: D537 opened the lane at `CONTRACT` / `none`; D538 took
+  DRIVE at `0829d8dedabbc8e8943ea534eaa279c713d06b81`; D539 shipped Slice 1 and released to
+  `CONTRACT` / `none`; D540 re-takes DRIVE for Slice 2.
+- **State:** DRIVE — **D540 contracts Slice 2 (control/service receipts and cuts), the FIRST sim-affecting
+  slice of the ladder.** D539 shipped Slice 1 exactly as D538 contracted. This lane owns the ARC 7 transport/supply ladder that D537 ratified onto
   the **Mayhem** ruleset. **LANE-019 is deliberately not rewritten by this lane** — its segment is pinned
   tooth-for-tooth by `tools/probe-conquest-transport-plan.mjs` and every one of its boundary sentences
   remains exact. LANE-019 keeps the historical-evidence contract; LANE-022 owns buildable Mayhem product.
@@ -5291,8 +5293,115 @@ risk and lane routing rather than on the rulings themselves.)*
   command 100 — all exit 0, 0 pageerrors; plan probes Mayhem 13/13, War Career 24/24, transport 12/12,
   conquest 8/8; doc coherence 5/5; `git diff --check` clean. The full serialized 142-row battery stays owed
   at Slice 7. `tools/probe-desk-pacing-plan.mjs` was deliberately not touched and is not a gate.
-- **Resume pointer (D539):** LANE-022 is `CONTRACT` / `none` with Slice 1 shipped. Slice 2
+- **Resume pointer (D539, retained history):** LANE-022 is `CONTRACT` / `none` with Slice 1 shipped. Slice 2
   (control/service receipts and cuts — the first slice where supply bites) needs its own committed contract
   section and DRIVE take here before any runtime edit; it is also the first slice that must adopt
   `tracedFriction` and flip `applied`, so it owns the first sim-affecting A/B. D539 replaces D525 as the ARC 7
   product head.
+
+- **D540 exact Slice-2 objective:** territory control and per-segment service condition become REAL STATE,
+  and a cut segment degrades `depotReach` for every army downstream of it. This is the FIRST slice where
+  supply bites: `applied` flips true and `tracedFriction` is adopted into `_lgRoute`'s `friction`, so
+  outcomes MOVE inside a conquest campaign. Non-conquest play stays byte-identical; the bounded channel is
+  unchanged; no new combat channel is created.
+- **D540 exact Slice-2 state seam:** ONE namespace, `C.conquest.supply` — the namespace `src/116`'s factory
+  already creates and the design law §6 names as the place every added conquest field goes. Shape:
+  `{schema:"cw_conquest_supply_v1", control:{"CT-nn":"US"|"CS"}, cut:{"CTS-X-nn":1}}`. `C.logistics` remains
+  the sole logistics store and is NOT touched; `logisticsInit` / `logisticsSnapshot` / `logisticsBridgeBonus`
+  / `logisticsSetPriority` / `logisticsOnResolve` / `logisticsWireOverview` keep their shipped ownership.
+  Reads go through ONE pure fail-closed reader that never writes; writes go through exactly TWO guarded
+  mutators. The reader defaults a missing/absent/malformed payload to the authored opening, so the shipped
+  Slice-1 conquest carrier behaves correctly with no state at all.
+- **D540 exact Slice-2 resolution law — THREE bounded states, and the substrate gap is FIRST-CLASS:** the
+  trace computes a BASE walk over the full open graph (Slice 1's walk, unchanged) and a LIVE walk over the
+  graph filtered by `cut` and by control. (a) BASE unreachable → `supplyState:"SUBSTRATE_GAP"`,
+  **`applied:false`**, `friction` keeps its shipped static number. The eleven-component gap is OUR evidence
+  gap, not the player's doing; roads were universal in 1861-65 (design law §5), so penalising the player for
+  a missing authored road layer would invent history in reverse. It is TAUGHT with a reason string naming
+  Slice 5, never silently zero and never a penalty. (b) BASE reachable and LIVE reachable →
+  `supplyState:"TRACED"`, `applied:true`, `friction = tracedFriction` from the LIVE walk. (c) BASE reachable
+  and LIVE unreachable → `supplyState:"SEVERED"`, `applied:true`, `friction = _LG_SUPPLY_SEVERED_CAP`, a
+  flat AUTHORED bounded constant standing in for the wagon-road detour until Slice 5 computes it for real,
+  carrying `severedBy` — the exact cut/enemy-held service ids that broke the base path — so the player can
+  always see WHY. No state combination may push the capped bridge outside `[0, cap]`.
+- **D540 exact Slice-2 containment seam (the declared bind target):** the SAME `_lgTraceRuleset` allowlist
+  gate that D539 shipped guards the authored opening control map, the reader, both mutators and the trace,
+  so authored control/condition state is structurally unreachable on the evidence-gated ruleset and fails
+  CLOSED at the ruleset seam BEFORE any board or transport-evidence read. Exactly ONE tooth owns the
+  gated-ruleset query, and the source-text allowlist assertion lives INSIDE that same tooth — a bind that
+  reds two teeth means the tooth is too broad (the D539 lesson, learned the hard way).
+- **D540 Slice-2 authored Mayhem content (openly authored game content, never a Historical claim):** one
+  opening control map over the 36 territories (four Union, twenty-four Confederate, eight left contested/
+  unassigned as the 1861 frontier) and one severed-friction ceiling. Both are marked `authored, not sourced`
+  in the seam exactly as D539's four constants are. D526 closed "unsourced opening control/service values"
+  as a HISTORICAL obligation; Mayhem — public and separately ruled since D420 — carries none of it, and this
+  content is structurally barred from Historical per the containment contract above.
+- **D540 Slice-2 traversal law:** a segment is usable by side S iff its service id is not `cut` AND neither
+  endpoint territory is controlled by S's ENEMY (uncontrolled/contested passes; friendly passes), and the
+  depot must be controlled by S. Supply lines extend INTO contested ground — an army does not have to own
+  the territory it is fighting in — but an enemy-held territory astride the line severs it. That is the
+  historically correct model (Grant cutting loose at Vicksburg; Sherman's rail line raided to Atlanta) and
+  it keeps the shipped default `US`/`E` route resolving, so the conquest A/B moves by an explainable delta
+  rather than collapsing at turn one.
+- **D540 Slice-2 bounded-channel law (unchanged from shipped):** `logisticsBridgeBonus` keeps its caps
+  (`supply ≤ 7`, `fatigueRelief ≤ 5`, `overall ≤ 2` from `_lgCfg().bridgeCaps`) and `wr.supply` keeps its
+  0.15 troop-morale weight in `src/33-morale.js`. Supply stays a bounded CONDITIONING INPUT: it never writes
+  casualties, morale, victory, score or RNG, and Slice 2 creates NO new combat channel. The only
+  sim-affecting line in the whole slice is `_lgRoute` adopting a clamped `tracedFriction` into `friction`.
+- **D540 Slice-2 save law (invariant E, the GEA-12 / D447 precedent):** `serializeSave` returns
+  `{ver, when, settings:G.settings, campaign:G.campaign}`, so `C.conquest.supply` rides the existing
+  envelope with no new save owner and no `saveLocal()` call from the seam. The change is **purely additive**
+  — none of the seven functions hashed in `tools/save-shape.json` is touched, so `saveVer` stays 1 and
+  `_SAVE_VER` is NOT bumped. That is a CONSCIOUS decision, not an omission. A pre-Slice-2 legacy save must
+  load, round-trip and re-serialize BYTE-IDENTICALLY, and the sanitizer must fail CLOSED on a malformed
+  control/condition payload rather than adopting it.
+- **D540 Slice-2 CF-2 performance law (measured, not assumed):** measurement at `a613bac` shows
+  `logisticsSnapshot` costs **0.037 ms** on a non-conquest carrier and **15.44 ms** on a conquest carrier —
+  a 414× blowup, ~89 ms per conquest turn at 6 route calls, doubling under Slice 2's base+live walks. The
+  cost is NOT the adjacency build (0.14 ms for 44 services / 27 keys / 51 edges) but substrate
+  re-normalization: `conquestTransportNormalized()` at **12.10 ms** per call. A module-scoped memo is
+  therefore authorized, under a hard correctness rule: it caches ONLY the control/condition-INDEPENDENT
+  base projection, keyed on the ruleset id plus the reference identity of the injected evidence and
+  territory packs. A stale memo across a cut is then structurally impossible, not merely unlikely. The memo
+  is never save state, never survives a ruleset change, and carries a tooth proving it deep-equals a cold
+  recompute. No second store and no new owner (invariant F binds the memo too).
+- **D540 Slice-2 probe design:** `tools/probe-conquest-supply.mjs` grows from 12 teeth; no probe is added,
+  so the suite STAYS 142 and the twelve suite-count pins do NOT move. Updated: `CONTAINMENT-A` (authored
+  control/condition reachable on the open ruleset), `CONTAINMENT-B` (the declared bind target — the
+  identical query absent on every non-admitted ruleset, keeping the eleven closed shapes and owning the
+  allowlist source assertion), the outcome tooth (non-conquest byte-identical; conquest friction moves but
+  the caps hold), trace correctness, substrate immutability, no-new-authority, D74, enrolment, and the
+  in-page readout tooth (byte-identical on a NON-conquest carrier; exactly one guarded block added on a
+  conquest carrier). New: cut-degrades-downstream, substrate-gap-is-first-class, boundedness sweep, legacy
+  save byte identity + fail-closed sanitizer, and the CF-2 memo-equals-cold tooth.
+  `tools/probe-conquest-supply-plan.mjs` gains the Slice-2 contract clauses, the authored-control provenance
+  split and the unchanged-counts assertions. Every tooth stays anchored on durable law/history, never on the
+  current lock holder (D391).
+- **D540 Slice-2 gate contract:** `node --check` on every touched JS/MJS; `node tools/build.mjs` GATE OK;
+  artifact readback of the new control/condition symbols inside the built 61 module region; the two
+  LANE-022 probes; adjacent logistics-rail, logistics, bridge, conditioning, conquest-board 13/13,
+  conquest-state 15/15, conquest-transport 18/18, campaign-link, auto-resolve, save-slots 17/17, command and
+  presets probes; plan probes Mayhem 13/13, War Career 24/24, transport 12/12, conquest layer 8/8, doc
+  coherence 5/5; **A/B leg 1** — the standing 24-scenario × 8-seed direction battery byte-identical to the
+  `a613bac` baseline `18f609d07b1190904ec0c11e4ca64675`; **A/B leg 2** — `probe-full-campaign` byte-identical
+  to `a38185fd371a7f181250eff3a6cbf76a`; **A/B leg 3** — the conquest-ON leg, which WILL move: both columns
+  logged for every measured row with the direction stated and adjudicated under D92 as an accurate-inputs
+  consequence, never tuned toward a preferred number and never gated on an output. ONE declared negative
+  bind on the containment allowlist redding ONLY `CONTAINMENT-B`, with an md5-proven byte-identical restore;
+  `git diff --check`; docs/ledger sync; commit, push and clean parity. Five pin sites re-anchor (three
+  generated-game, two srcTree); suite/focused/manifest/base pins hold. The full serialized 142-row battery
+  stays owed at Slice 7. The suite-excluded D528/D530/D532 research guards are neither rerun nor edited.
+- **D540 carry-forward obligations (surfaced at D539, now gated work with recorded outcomes):** **CF-1** —
+  `tools/probe-desk-pacing-plan.mjs` regressed 6/9 → 5/9 because D539 moved the suite 140 → 142 while that
+  probe pins 140 in two places. Disk/git adjudication at `0829d8d` proves three of its four reds PREDATE
+  D539 (LANE-020 already `CONTRACT` not `DRIVE` after its own D519 release; manifest already 112 /
+  `116-conquest-state.js` after D523; the `src/00-manifest.json` sha256 already drifted) and exactly one is
+  D539's doing. Resolution is option (a) RE-PIN: bump only the two 140s with a chained comment, restoring
+  6/9, and leave the three structural reds — which belong to LANE-020, a lane this session does not own —
+  named rather than silently rewritten. **CF-2** — resolved by measurement above.
+- **Resume pointer (D540):** LANE-022 is `DRIVE` / Claude Code with the complete Slice-2 acceptance contract
+  committed above and NO runtime byte moved. EXACT NEXT: implement Slice 2 exactly as contracted, land the
+  acceptance teeth in the SAME commit as the code that greens them, ship under its own D###, then release
+  the lane and contract Slice 3 (repair + finite engineering capacity) or issue the capacity relay. D539
+  remains the ARC 7 product head until Slice 2 ships. ARC 7 Historical transport movement, Historical roads,
+  the four `CTI-*` faces and E46 remain blocked permanently.

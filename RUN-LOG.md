@@ -1,17 +1,37 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D539 next-lane=LANE-022 state=CONTRACT owner=none -->
-> **Live status (D539, 2026-07-23):** `LANE-022` **Slice 1 SHIPS** — `_lgRoute`'s static per-battle lookup becomes a REAL TRACE over the read-only 36-territory board for conquest carriers on the open ruleset, closing the GEA-11 defect at its named seam. Read-only: `applied:false`, `friction` unmoved, every downstream logistics owner untouched, and **both A/B legs zero-diff**. The lane releases to `CONTRACT` / `none`.
+<!-- LIVE-HEAD decision=D540 next-lane=LANE-022 state=DRIVE owner=Claude -->
+> **Live status (D540, 2026-07-23):** `LANE-022` takes **Claude Code DRIVE for Slice 2 — control/service receipts and cuts**, the FIRST sim-affecting slice of the ARC 7 ladder. **CONTRACT ONLY — no runtime byte moved here.** Territory control and per-segment service condition become real state in one namespace; a cut segment degrades `depotReach` for every army downstream; `applied` flips true and `tracedFriction` is adopted into `_lgRoute`'s `friction`.
 >
-> **Boundary:** `src/61-logistics-rail.js` only, plus two new probes and mechanical pin re-anchors. Game `859637ed`→`45278110cb73ea4719fa41ffef7682f9`, srcTree `003d308a`→`08f95d9e9311e90313cc5b7a930f9380`, suite **140 → 142**, manifest 112, data 65, `_SAVE_VER` 1, `build/base.html` frozen. **D539 replaces D525 as the ARC 7 product head**; LANE-019 is deliberately unrewritten and every one of its boundary sentences stays exact.
+> **Boundary:** contract-before-teeth per the Contract Relay hard rule — `src/`, `data/`, `build/`, the manifest, the suite, the save shape and the generated deliverable are untouched, so game `45278110cb73ea4719fa41ffef7682f9`, srcTree `08f95d9e9311e90313cc5b7a930f9380`, suite **142**, manifest 112, data 65, `_SAVE_VER` 1 and the frozen base `c9db83fa99230ffb95bdfdfe059f3fb9` do NOT move and are NOT re-pinned. **D539 remains the ARC 7 product head until Slice 2 ships.**
 >
-> **Authority:** D537 ruling 4 — read-only first, so the trace's correctness proof is never mixed with a sim-affecting A/B. Containment fails CLOSED at the ruleset seam on OWN, data-valued descriptors; the honest ELEVEN-component result is recorded, not cured. Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
+> **Authority:** D537 ruling 1 and `docs/design/conquest-supply-chain-design.md` §4 Slice 2. Containment stays fail-closed at the ruleset seam in BOTH directions; the ELEVEN-component substrate gap is made a first-class, TAUGHT case that never becomes a penalty, not cured. Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-23 — D540 LANE-022 takes Claude Code DRIVE for Slice 2: control/service receipts and cuts (contract only)
+
+Contract-before-teeth commit from the clean pushed `a613bac` boundary. Nothing in `src/`, `data/`, `build/`,
+the manifest, the suite, the save shape or the generated deliverable moved, so no pinned hash moved and none
+was re-pinned. LANE-022 carries the complete Slice 2 acceptance contract as committed prose: `C.conquest.supply`
+as the one state namespace, one pure fail-closed reader plus exactly two guarded mutators, a BASE walk over the
+full open graph and a LIVE walk filtered by cuts and control, and three bounded resolution states.
+
+The load-bearing design judgment is that the eleven-component substrate gap must NOT become a penalty.
+`SUBSTRATE_GAP` therefore leaves `applied:false` and the shipped friction untouched and teaches the reason,
+because that gap is our evidence gap rather than the player's doing and roads were universal in 1861-65;
+`SEVERED` (a cut the player can actually cause) is a real bounded consequence carrying the exact service ids
+that broke the line. Both carry-forwards were closed with evidence: CF-2 by measurement that refuted the
+suspected diagnosis — the adjacency build costs 0.14 ms while `conquestTransportNormalized()` costs 12.10 ms,
+so the memo is scoped to the immutable base projection only — and CF-1 by git adjudication at `0829d8d`
+showing three of its four reds predate D539.
+
+**Next:** implement Slice 2 exactly as contracted, landing the acceptance teeth in the same commit as the code
+that greens them.
 
 ## 2026-07-23 — D539 LANE-022 Slice 1 ships: `_lgRoute`'s static lookup becomes a real trace over the 36-territory board
 
