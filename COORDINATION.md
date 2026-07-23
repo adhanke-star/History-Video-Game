@@ -5268,8 +5268,9 @@ risk and lane routing rather than on the rulings themselves.)*
   `003d308af7cbaa8d3512df17a0d8d72b` → `08f95d9e9311e90313cc5b7a930f9380`, suite md5
   `69681d6f2216fe1dcfd594ffc4a757b7` → `a1cb6e7347155b8705614b83cc0c32d3`, focused
   `a4be754c3338ee5776e98a92d74a3e54` → `fe99b4b06a1264e12015359bb1a5aded`, re-anchored with chained D538
-  comments at EIGHTEEN sites across six files (twelve suite-count pins plus three game, two srcTree and one
-  suite-md5), with the old values grepped out of `tools/` before push.
+  comments at TWENTY-ONE disk-verified sites across six files (twelve suite-count, three generated-game, two
+  srcTree, two suite-md5 and two focused-md5), with the old values grepped out of `tools/` before push. *(The
+  D539 commit message says "eighteen" — an undercount corrected here against disk.)*
 - **D539 A/B — both legs ZERO-DIFF, the load-bearing read-only proof:** leg 1, the standing 24-scenario ×
   8-seed direction battery, artifact `18f609d07b1190904ec0c11e4ca64675` at `0829d8d` AND at this head
   (`ok=true failures=0 pageerrors=0`, byte-identical, 0 diffs); leg 2, `tools/probe-full-campaign.mjs`,

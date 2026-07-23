@@ -41,7 +41,7 @@ resolve at all. That is pinned as a tooth and is the measured reason Slice 5 aut
 Gates: `GATE OK`; focused 12/12; plan 10/10; eleven adjacent probes green with 0 pageerrors; Mayhem 13/13,
 War Career 24/24, transport 12/12, conquest 8/8, doc coherence 5/5; `git diff --check` clean. Game
 `859637ed`→`45278110cb73ea4719fa41ffef7682f9`, srcTree `003d308a`→`08f95d9e9311e90313cc5b7a930f9380`, suite
-140 → 142, eighteen pin sites re-anchored across six files with the old values grepped out. LANE-022 releases
+140 → 142, TWENTY-ONE disk-verified pin sites re-anchored across six files with the old values grepped out (the commit message's "eighteen" undercounted; corrected here). LANE-022 releases
 to `CONTRACT` / `none`; D539 replaces D525 as the ARC 7 product head.
 
 ## 2026-07-23 — D538 LANE-022 takes Claude Code DRIVE: the Slice 1 read-only traced supply route is contracted

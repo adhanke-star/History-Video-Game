@@ -96,10 +96,10 @@ injecting a host `Object` breaks the substrate's prototype-identity check and wo
 closed — a harness trap worth recording. NEW `tools/probe-conquest-supply-plan.mjs` (10 steps) is
 filesystem-first and anchored only on durable law, history, immutable hashes and live counts, never on a
 lane's current owner or state. Both enrolled at the END of `tools/vet-no-regression.mjs`, suite **140 → 142**
-(war career row 38 and mayhem row 57 hold). Pins re-anchored with chained D538 comments at EIGHTEEN sites
+(war career row 38 and mayhem row 57 hold). Pins re-anchored with chained D538 comments at TWENTY-ONE disk-verified sites
 across six files: twelve suite-count pins (`probe-conquest-transport-plan`, `probe-mayhem-mode`,
 `probe-open-history-mayhem-plan`, `probe-war-career-loop-plan` ×4, `probe-women-in-war-arc-plan`,
-`probe-war-career` ×4), three generated-game pins, two srcTree pins and one suite-md5 pin. Game
+`probe-war-career` ×4), three generated-game pins, two srcTree pins, two suite-md5 pins and two focused-md5 pins. *(The D539 commit message says "eighteen"; the disk-verified count is TWENTY-ONE — the message undercounted by omitting one suite-md5 and both focused-md5 sites. Every pin is green, and the plan probe's coherence tooth binds the suite-count, game and srcTree families.)* Game
 `859637edd920e386dd9008d5dfc647bb` → `45278110cb73ea4719fa41ffef7682f9`; srcTree
 `003d308af7cbaa8d3512df17a0d8d72b` → `08f95d9e9311e90313cc5b7a930f9380`; suite md5
 `69681d6f2216fe1dcfd594ffc4a757b7` → `a1cb6e7347155b8705614b83cc0c32d3`; focused
