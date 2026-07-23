@@ -4929,10 +4929,18 @@ D372/D373 reconciliation lesson — every handoff commit sweeps the canonical he
 
 ↳ **[Fable, 2026-07-12] — D381 CHECKPOINT + S-03 AMENDMENT PROPOSAL.** The stretch-ladder release checkpoint is discharged: 124/124 across evidenced segments, every artifact read, sweep 19×8 `failures:[]`, one slow-Mac tactical-visuals timeout root-caused and standalone-green, the eighth optional 404 (`ford_albedo`) confirmed as the frozen engine's documented absent-asset class. Proposed floor amendment (9): **a provider-transfer commit that rewrites a lane MUST re-run every plan probe that greps that lane before pushing** — the `2f3da4a` transfer landed two LANE reds and D380's pin bump dropped a required pin-history fragment, all caught only at D381's final gates; the reshaped teeth now bind role rosters and durable history, never the current lock holder. Also: Aaron's 2026-07-12 popup Q&A ratified a large forward slate (D382) — Fort Donelson spec-first remains next, then Women-in-War arc, Elkhorn, an Overland/attrition extension, the war-career loop, surrender/no-quarter (consequence-only, never scored), four system-integrated teaching threads, the procedural sandbox + Chronicle, a committed naval engine, and a post-ladder media/audio session. Sol's parked queue (E71/C72/GEA-01/S44) runs after the ladder per Aaron.
 
-### LANE-021 · parked-review-closeout — **DRIVE (D533 E51 copy-amend contract; Claude Code)**
+### LANE-021 · parked-review-closeout — **CONTRACT (D534 E51 SHIPPED; UNOWNED)**
 
-- **Owning tool:** Claude Code / Fable 5 (xhigh), DRIVE for the D533 E51 copy-amend slice only; no simultaneous edits.
-- **State:** DRIVE — this entry IS the acceptance contract (committed at the clean pushed D532 boundary
+- **Owning tool:** none. D534 releases the D533 DRIVE lock; no simultaneous edits.
+- **State:** CONTRACT/unowned. D534 shipped the E51 copy-amend exactly as contracted: the one
+  `src/85-battle-bridge.js:33` hint string, game `269ecc62`→`c6f9699a86268d3677049e1982cc2a61`,
+  srcTree `9f4ffbff`→`7f2a5e6f1f8995970d82a10fbd587d50`, five chained re-pins, Bind E1 exact
+  red/restore, and the full contracted gate set green with zero pageerrors (conditioning 9,
+  logistics 15/15, bridge 6, briefing 3/3, Mayhem 13/13, War Career 24/24, transport 12/12,
+  conquest 8/8, doc coherence 5/5). REVIEW-QUEUE E51 is FIXED-in-D534. The next parked slice
+  (S39 recommended, then the E61 collapse-terminal fork, E57, R-7/E33, the D460 option) requires
+  its own contract section here before implementation.
+- **D533 contract (retained history):** this entry was the acceptance contract (committed at the clean pushed D532 boundary
   `4bd45a542d4dc45716e0798687875297b7b5f1c4`). The lane hosts successive small closeout slices from the V1
   “formerly parked” queue, one committed contract at a time; each later slice (S39, the E61 collapse-terminal
   fork, E57, R-7/E33, the D460 option) requires its own contract section here before implementation.

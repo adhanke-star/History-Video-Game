@@ -30,7 +30,7 @@ var _brgPREP = [
   { key: "forcedMarch",label: "Forced march",    hint: "Seize the ground first. An edge in position, paid for in fatigue and morale." },
   { key: "concentrate",label: "Concentrate force", hint: "Mass your brigades at the point of decision — heavier punch, less flexibility." },
   { key: "feint",      label: "Feint & flank", hint: "Demonstrate on one wing, strike the other. Rewards good intelligence." },   /* S00 (D232): plain text — sinks escape; the pre-escaped '&amp;' double-escaped on the H0 briefing */
-  { key: "raidSupply", label: "Raid enemy supply", hint: "Cavalry against the depots — the enemy fights hungry and short of ammunition." }
+  { key: "raidSupply", label: "Raid enemy supply", hint: "Cavalry against the depots — the enemy opens the fight hungry and stays short of ammunition all day." }
 ];
 
 /* S2 m5: re-entrancy guard. bridgeArmy -> commandLeadership -> cabinetLeadership can call back into

@@ -129,7 +129,8 @@ const PIN = {
 // D521 re-pin: ARC 7 Slice 2B adds only the pure ruleset-filtered physical-service evidence reader in existing src/115; game 2249daa3 -> 345772de. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
 // D523 re-pin: the detached conquest identity/state foundation enrolls src/116 only; game 345772de -> c2a7b0cb and manifest 309a7bc1 -> 4cc09491. Base, data, suite, Mayhem authority, and public readiness hold.
 // D525 re-pin: the pure detached calendar extends only existing src/116; game c2a7b0cb -> 269ecc62. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
-game: "269ecc62eed83e6220c42c0efab40d38",
+// D534 re-pin: the E51 raidSupply honesty copy in src/85-battle-bridge.js only; game 269ecc62 -> c6f9699a. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
+  game: "c6f9699a86268d3677049e1982cc2a61",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "4cc094911506cf5af9929cf79d25dc6c",
   suite: "69681d6f2216fe1dcfd594ffc4a757b7",

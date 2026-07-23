@@ -4,6 +4,29 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D534 — E51_SHIPPED_COPY_AMEND: THE RAIDSUPPLY HINT IS HONEST IN BOTH ENGINES; LANE-021 RELEASES — [CLAUDE CODE / FABLE 5, IMPLEMENTATION+GATES] (2026-07-23)
+
+**VERDICT: `E51_SHIPPED_COPY_AMEND`.** From clean pushed D533
+`d32a0642cd28276ba8807fc9873ce629b1a76cef`, the contracted one-string edit landed:
+`src/85-battle-bridge.js:33` now reads “Cavalry against the depots — the enemy opens the fight
+hungry and stays short of ammunition all day.” The -6 launch morale applies in both engines; the
+ammunition shortage persists in both; persistent hunger — which D249 measured as washed out by
+T0 `MOR_RECOVER` in real time — is no longer asserted. No mechanic, formula, datum, or D74
+surface moved; T2's per-file pin `57e82cd4b9873d8b56ecba51f05a4111` is untouched.
+
+**Gate record:** build `GATE OK`; new-string-present/old-string-absent artifact readback; game
+`269ecc62`→`c6f9699a86268d3677049e1982cc2a61` and srcTree `9f4ffbff`→
+`7f2a5e6f1f8995970d82a10fbd587d50` re-pinned at the five contracted sites with chained D534
+comments; Bind E1 red/restore exact (Mayhem plan 12/13 with only `EXCLUSIONS + BASELINES` red,
+byte-identical restore, 13/13 clean); probe-conditioning 9 steps ok; probe-logistics 15/15
+(enemy raid reserve 285→180; a first-run server-startup timeout was a harness race, rerun
+clean); probe-bridge 6 steps ok; probe-h0-battle-briefing 3/3; Mayhem 13/13; War Career 24/24;
+transport 12/12; conquest 8/8; doc coherence 5/5; zero pageerrors everywhere; `git diff --check`
+clean. No 140-row battery owed under D160 for a copy-only string.
+
+**Release:** REVIEW-QUEUE E51 → FIXED-in-D534; the V1 queue line checks; LANE-021 →
+`CONTRACT` / `none`; the next parked slice needs its own contract. The D514 ledger reloads.
+
 ## D533 — CONTRACT_E51_COPY_AMEND: LANE-021 PARKED-REVIEW-CLOSEOUT OPENS WITH CLAUDE DRIVE FOR THE ONE-STRING HONESTY SLICE — [CLAUDE CODE / FABLE 5, ADJUDICATION+CONTRACT] (2026-07-23)
 
 **VERDICT: `CONTRACT_E51_COPY_AMEND`.** From clean pushed D532

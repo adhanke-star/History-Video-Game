@@ -1,17 +1,27 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D533 next-lane=LANE-021 state=DRIVE owner=Claude -->
-> **Live status (D533, 2026-07-23):** LANE-021 parked-review-closeout opens with a committed Claude Code DRIVE contract for the E51 raidSupply honesty slice; the fork is adjudicated copy-amend, never a combat-model change.
+<!-- LIVE-HEAD decision=D534 next-lane=LANE-021 state=CONTRACT owner=none -->
+> **Live status (D534, 2026-07-23):** E51 shipped — the raidSupply hint is honest (“opens the fight hungry and stays short of ammunition all day”); LANE-021 is `CONTRACT` / `none`.
 >
-> **Boundary:** D525 remains the product head. Only the `src/85-battle-bridge.js` hint copy, mechanical game/srcTree re-pins, and closeout docs may move in D534; the -6 morale and x0.8 ammo formulas, T2/T4/86 mechanics, all data, and every D74 surface are barred.
+> **Boundary:** D525 remains the ARC 7 product head. D534 moved exactly one hint string in `src/85-battle-bridge.js` plus the mechanical game/srcTree re-pins (game `c6f9699a`, srcTree `7f2a5e6f`); no mechanics, data, or D74 surface moved.
 >
-> **Authority:** D514 authorizes the formerly parked queue. ARC 7 Historical movement (D526/D528/D530 zero proved windows), ARC 9 Slice 5, and E46 remain blocked; the D249 washout receipt and D266 re-measure ground the copy-amend adjudication.
+> **Authority:** D514 continues on the formerly parked queue (S39 recommended next). ARC 7 Historical movement, ARC 9 Slice 5, and E46 remain blocked; the D533 contract and the Bind E1 red/restore are the shipped evidence.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-23 — D534 E51 ships: the raidSupply hint is honest (copy-amend)
+
+The contracted one-string edit landed and gated green: the briefing hint now says the enemy
+“opens the fight hungry and stays short of ammunition all day” — launch morale applies in both
+engines, the ammunition shortage persists in both, and the D249-measured real-time morale
+washout is no longer over-claimed. Game `269ecc62`→`c6f9699a`, srcTree `9f4ffbff`→`7f2a5e6f`,
+five chained re-pins; Bind E1 red/restore exact; conditioning/logistics/bridge/briefing probes,
+four plan probes, doc coherence, and `git diff --check` all green with zero pageerrors.
+REVIEW-QUEUE E51 flips to FIXED-in-D534 and LANE-021 releases to `CONTRACT` / `none`.
 
 ## 2026-07-23 — D533 LANE-021 opens; E51 adjudicated copy-amend (contract)
 

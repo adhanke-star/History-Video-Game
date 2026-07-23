@@ -1,12 +1,12 @@
 # AUTONOMOUS-RUN.md — the 12-hour max-productivity build plan ("The Civil War")
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D533 next-lane=LANE-021 state=DRIVE owner=Claude -->
-> **Live status (D533, 2026-07-23):** LANE-021 parked-review-closeout opens with a committed Claude Code DRIVE contract for the E51 raidSupply honesty slice; the fork is adjudicated copy-amend, never a combat-model change.
+<!-- LIVE-HEAD decision=D534 next-lane=LANE-021 state=CONTRACT owner=none -->
+> **Live status (D534, 2026-07-23):** E51 shipped — the raidSupply hint is honest (“opens the fight hungry and stays short of ammunition all day”); LANE-021 is `CONTRACT` / `none`.
 >
-> **Boundary:** D525 remains the product head. Only the `src/85-battle-bridge.js` hint copy, mechanical game/srcTree re-pins, and closeout docs may move in D534; the -6 morale and x0.8 ammo formulas, T2/T4/86 mechanics, all data, and every D74 surface are barred.
+> **Boundary:** D525 remains the ARC 7 product head. D534 moved exactly one hint string in `src/85-battle-bridge.js` plus the mechanical game/srcTree re-pins (game `c6f9699a`, srcTree `7f2a5e6f`); no mechanics, data, or D74 surface moved.
 >
-> **Authority:** D514 authorizes the formerly parked queue. ARC 7 Historical movement (D526/D528/D530 zero proved windows), ARC 9 Slice 5, and E46 remain blocked; the D249 washout receipt and D266 re-measure ground the copy-amend adjudication.
+> **Authority:** D514 continues on the formerly parked queue (S39 recommended next). ARC 7 Historical movement, ARC 9 Slice 5, and E46 remain blocked; the D533 contract and the Bind E1 red/restore are the shipped evidence.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **D514 completion rule:** `HANDOFF.md` owns the work-conserving loop and terminal condition. This manual executes the whole live ledger, not one bundle; each slice remains independently contracted, gated, documented, committed, and pushed.
