@@ -1,17 +1,31 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D532 next-lane=LANE-019 state=CONTRACT owner=none -->
-> **Live status (D532, 2026-07-22):** The exact six-row claim-specific road audit closed with `2 ROAD_GAP_CURED`, `4 ROAD_GAP_UNRESOLVED`, and `0 ROAD_GAP_DISPUTED`; LANE-019 is `CONTRACT` / `none`.
+<!-- LIVE-HEAD decision=D533 next-lane=LANE-021 state=DRIVE owner=Claude -->
+> **Live status (D533, 2026-07-23):** LANE-021 parked-review-closeout opens with a committed Claude Code DRIVE contract for the E51 raidSupply honesty slice; the fork is adjudicated copy-amend, never a combat-model change.
 >
-> **Boundary:** D525 remains the product head; D528/D530's zero established rail/water/sea windows, all four unadjudicated interchanges, and zero road services remain exact. No data, runtime, state, save, UI, topology, route, movement, or generated product is authorized.
+> **Boundary:** D525 remains the product head. Only the `src/85-battle-bridge.js` hint copy, mechanical game/srcTree re-pins, and closeout docs may move in D534; the -6 morale and x0.8 ammo formulas, T2/T4/86 mechanics, all data, and every D74 surface are barred.
 >
-> **Authority:** D532 cures `RD-SI06` and `RD-SI13` from independent Platter and Corse exact-unit/date handling evidence; `RD-E11`, `RD-E15`, `RD-E17`, and `RD-E18` remain unresolved, with zero disputed rows. D503 endpoint and every mode-separation negative remain binding.
+> **Authority:** D514 authorizes the formerly parked queue. ARC 7 Historical movement (D526/D528/D530 zero proved windows), ARC 9 Slice 5, and E46 remain blocked; the D249 washout receipt and D266 re-measure ground the copy-amend adjudication.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-23 — D533 LANE-021 opens; E51 adjudicated copy-amend (contract)
+
+The D514 ledger reload after D532 finds every larger branch blocked (ARC 7 Historical movement:
+zero proved physical windows; ARC 9 Slice 5: no sequential-turn owner; LANE-002 5b: no selected
+candidate set; E46: E53-class mechanics), so the formerly parked queue is the dependency-ready
+work. New LANE-021 parked-review-closeout opens and takes Claude Code DRIVE for E51: the fork
+closes COPY-AMEND on the unrefuted D249 washout receipt and D266 re-measure — only the
+ammunition half of raidSupply persists in the real-time engine, so the hint will honestly say
+“opens the fight hungry and stays short of ammunition all day” instead of claiming persistent
+hunger. Sole D534 edit: the `src/85-battle-bridge.js:33` hint string plus mechanical game/srcTree
+re-pins and closeout docs; contract, allowlist, Bind E1, and gates are in LANE-021. The same commit re-anchors the transport-plan
+current-boundary tooth's D531 checks to the byte-verbatim archive block (bind-tested), since the
+two-head rule archived the D531 head.
 
 ## 2026-07-22 — D532 claim-specific road-gap research complete
 

@@ -4,6 +4,40 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D533 — CONTRACT_E51_COPY_AMEND: LANE-021 PARKED-REVIEW-CLOSEOUT OPENS WITH CLAUDE DRIVE FOR THE ONE-STRING HONESTY SLICE — [CLAUDE CODE / FABLE 5, ADJUDICATION+CONTRACT] (2026-07-23)
+
+**VERDICT: `CONTRACT_E51_COPY_AMEND`.** From clean pushed D532
+`4bd45a542d4dc45716e0798687875297b7b5f1c4`, the D514 ledger reload finds ARC 7 Historical
+movement blocked (D526/D528/D530: zero source-proved physical windows, four unadjudicated
+interchanges, zero road services), ARC 9 Slice 5 blocked (no independent sequential-turn owner),
+LANE-002 5b without a selected citation-grade candidate set, and E46 parked behind the E53-class
+attacker mechanics. The dependency-ready work is the authorized formerly parked queue; E51 is its
+smallest item. LANE-021 opens to host parked-queue closeout slices one committed contract at a
+time and takes Claude Code DRIVE for E51 only.
+
+**Fork adjudication:** COPY-AMEND beats ceiling-form. The measured record is unrefuted — D249
+proved the -6 launch-morale half outcome-identical at 1e-6 on 10/10 seeds once T0 `MOR_RECOVER`
+washes it out, and D266 re-confirmed that only the ammunition half persists in real time (T2
+×0.8 `e.ammo`, T4 0.6 reserve multiplier) while the Classic `_a6Condition` leg keeps both
+halves. Adding a ceiling mechanism solely to make old copy true is D74-adjacent outcome
+engineering; the honest, conservative fix is the copy. The D534 replacement hint is exactly
+“Cavalry against the depots — the enemy opens the fight hungry and stays short of ammunition
+all day.” — the -6 launch morale applies in both engines (opens hungry), the ammunition
+shortage persists in both (stays short all day), and persistent hunger is no longer asserted.
+
+**Contract decision:** sole runtime edit `src/85-battle-bridge.js:33`; T2 (per-file frozen
+`57e82cd4b9873d8b56ecba51f05a4111`), 86-battle-conditioning, T4-logistics, all mechanics, data,
+and manifest barred; mechanical game/srcTree re-pins with chained D534 comments only in the
+Mayhem and War Career plan probes; Bind E1 red/restore through the Mayhem-plan game tooth; gates
+per the LANE-021 contract (browser probe-bridge + probe-h0-battle-briefing, node conditioning +
+logistics, four plan probes, doc coherence, build, `git diff --check`); no 140-row battery for a
+copy-only string under D160. The suite-excluded D528/D530/D532 research guards are point-in-time
+proofs pinned to their own heads (per the rail/water precedent) and are neither rerun nor edited.
+The D533 commit itself re-anchors the transport-plan
+current-boundary tooth's D531 checks to the byte-verbatim archive block (bind-tested red/restore),
+because the two-head rule lawfully archives each superseded head — the tooth's own archived
+D529/D530 checks are the precedent. At D534 the lane releases to `CONTRACT` / `none` and the D514 ledger reloads.
+
 ## D532 — CLAIM_SPECIFIC_ROAD_GAP_RESEARCH_COMPLETE: RD-SI06/SI13 CURED; FOUR UNRESOLVED; ZERO DISPUTED; LANE-019 RELEASES — [CHATGPT/CODEX 5.6 SOL ULTRA, HISTORICAL RESEARCH/JUDGMENT] (2026-07-22)
 
 **VERDICT: `CLAIM_SPECIFIC_ROAD_GAP_RESEARCH_COMPLETE`.** The exact D531 audit closes at

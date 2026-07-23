@@ -4928,3 +4928,56 @@ D372/D373 reconciliation lesson — every handoff commit sweeps the canonical he
 ↳ **[ChatGPT/Codex 5.6 Sol Ultra, 2026-07-14] — D398 RELEASE CHECKPOINT.** The full Petersburg release is green 129/129 across exact segments 78+51; all 128 JSONs, 153 images, and the schema report were read; schema is 54/54, sweep is 24×8=192 with no failures, and Army Register is 1512. Presets' post-green close-callback hang and Gettysburg's 357.9-second near-timeout are root-fixed by bounded terminal Playwright cleanup without weaker teeth; focused confirmations exit at 99.65s and 59.30s. No game/data/simulation byte moved. LANE-003 returns to CONTRACT/unowned. Floor lesson: a green artifact is not a green harness until the owning process exits; repair teardown at the probe boundary before increasing an outer timeout. Next is the D382 war-career planning contract only.
 
 ↳ **[Fable, 2026-07-12] — D381 CHECKPOINT + S-03 AMENDMENT PROPOSAL.** The stretch-ladder release checkpoint is discharged: 124/124 across evidenced segments, every artifact read, sweep 19×8 `failures:[]`, one slow-Mac tactical-visuals timeout root-caused and standalone-green, the eighth optional 404 (`ford_albedo`) confirmed as the frozen engine's documented absent-asset class. Proposed floor amendment (9): **a provider-transfer commit that rewrites a lane MUST re-run every plan probe that greps that lane before pushing** — the `2f3da4a` transfer landed two LANE reds and D380's pin bump dropped a required pin-history fragment, all caught only at D381's final gates; the reshaped teeth now bind role rosters and durable history, never the current lock holder. Also: Aaron's 2026-07-12 popup Q&A ratified a large forward slate (D382) — Fort Donelson spec-first remains next, then Women-in-War arc, Elkhorn, an Overland/attrition extension, the war-career loop, surrender/no-quarter (consequence-only, never scored), four system-integrated teaching threads, the procedural sandbox + Chronicle, a committed naval engine, and a post-ladder media/audio session. Sol's parked queue (E71/C72/GEA-01/S44) runs after the ladder per Aaron.
+
+### LANE-021 · parked-review-closeout — **DRIVE (D533 E51 copy-amend contract; Claude Code)**
+
+- **Owning tool:** Claude Code / Fable 5 (xhigh), DRIVE for the D533 E51 copy-amend slice only; no simultaneous edits.
+- **State:** DRIVE — this entry IS the acceptance contract (committed at the clean pushed D532 boundary
+  `4bd45a542d4dc45716e0798687875297b7b5f1c4`). The lane hosts successive small closeout slices from the V1
+  “formerly parked” queue, one committed contract at a time; each later slice (S39, the E61 collapse-terminal
+  fork, E57, R-7/E33, the D460 option) requires its own contract section here before implementation.
+- **D533 ledger reconciliation:** ARC 7 Historical movement stays blocked (D526/D528/D530: zero source-proved
+  rail/water/sea physical windows, four unadjudicated CTIs, zero road services), ARC 9 Slice 5 stays blocked
+  (no lawful independent sequential-turn entrypoint), LANE-002 5b has no selected citation-grade candidate
+  set, and E46 stays parked behind the E53-class attacker mechanics. The dependency-ready queue is the
+  formerly parked list; E51 is its smallest item and goes first.
+- **D533 adjudication — the E51 fork closes COPY-AMEND:** the D249 receipt (a launch-morale-only enemy debuff
+  outcome-identical at 1e-6 on 10/10 seeds under T0 `MOR_RECOVER`) stands unrefuted and the D266 re-measure
+  confirms only the ammunition half persists in real time (T2 ×0.8 `e.ammo` at
+  `src/tactical/T2-campaign-link.js:208` plus the T4 0.6 reserve multiplier at
+  `src/tactical/T4-logistics.js:131`), while the Classic `_a6Condition` leg
+  (`src/86-battle-conditioning.js:92-97`) keeps both halves. Ceiling-forming the debuff would add a sim
+  mechanism solely to make old copy true — rejected as D74-adjacent outcome engineering. The honest fix is
+  the player-facing hint.
+- **D534 exact contract:** the sole runtime edit replaces the `src/85-battle-bridge.js:33` hint string
+  “Cavalry against the depots — the enemy fights hungry and short of ammunition.” with exactly
+  “Cavalry against the depots — the enemy opens the fight hungry and stays short of ammunition all day.”
+  The new copy is honest in both engines: the -6 launch morale applies in both (opens hungry); the ammunition
+  shortage persists in both (stays short all day); persistent hunger is no longer asserted. The `label`
+  “Raid enemy supply”, the key, mechanics, formulas, manifest, and every data byte are barred.
+  `src/tactical/T2-campaign-link.js` (frozen per-file at `57e82cd4b9873d8b56ecba51f05a4111` by
+  `tools/probe-war-career.mjs:103`), `src/86-battle-conditioning.js`, and `src/tactical/T4-logistics.js` are
+  expressly untouched; the generated game moves only through `node tools/build.mjs`.
+- **Mechanical re-pins (chained D534 comments only):** `tools/probe-open-history-mayhem-plan.mjs` game
+  `269ecc62eed83e6220c42c0efab40d38`→new; `tools/probe-war-career-loop-plan.mjs` game (both sites) the same
+  transition plus srcTree `9f4ffbff132bf2b22b1174538b9a9311`→new (both sites). No other pin, count, or tooth
+  may move; LANE-019's historical D525 pin record is history and stays byte-identical.
+- **Bind E1:** after re-pinning, revert only the hint string, rebuild, and the Mayhem-plan game tooth must red
+  exactly; restore the source byte-identical and rebuild to the pinned hash before the final clean green.
+- **Gates:** `node --check` on the three touched files; `node tools/build.mjs` GATE OK; artifact readback (new
+  string present, old string absent in `civil_war_generals.html`); focused browser probes probe-bridge and
+  probe-h0-battle-briefing (serialized, full-access, fresh `ok:true`, zero pageerrors); node probes
+  probe-conditioning and probe-logistics; plan probes Mayhem 13/13, War Career 24/24, transport 12/12,
+  conquest layer 8/8; doc coherence 5/5; `git diff --check`. No full 140-row battery is owed for a copy-only
+  string under D160 tiered vetting. The suite-excluded D528/D530/D532 research guards are point-in-time
+  proofs pinned to their own heads (rail/water precedent) and are neither rerun nor edited.
+- **Docs and release:** at D534, REVIEW-QUEUE E51 flips to FIXED-in-D534, the V1 queue line updates,
+  DECISIONS/RUN-LOG/HANDOFF/mirrors sync, D532's HANDOFF head archives byte-verbatim, and LANE-021 releases
+  to `CONTRACT` / `none`.
+- **D533 tooth re-anchor:** the D533 commit itself re-anchors `tools/probe-conquest-transport-plan.mjs`'s
+  current-boundary tooth: the D531 contract checks move from the live HANDOFF to the byte-verbatim
+  `legacy/HANDOFF-ARCHIVE.md` block (the tooth's own archived D529/D530 pattern), bind-tested red/restore
+  in the same commit. No other tooth moves at D533.
+- **Resume pointer:** if a session ends before D534 ships, a successor re-takes DRIVE here and executes the
+  D534 contract exactly; after D534, the lane is `CONTRACT` / `none` and the next parked slice needs its own
+  contract section.

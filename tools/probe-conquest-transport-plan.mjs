@@ -96,7 +96,8 @@ step("current LANE-019 D532 terminal CONTRACT/unowned preserves the six-gap road
   const roadRows=["RD-E11","RD-E15","RD-E17","RD-E18","RD-SI06","RD-SI13"];
   const norm=s=>s.replace(/\s+/g," ").trim();
   const laneD531=segment.slice(segment.indexOf("- **D531 DRIVE take and dependency verdict:"),segment.indexOf("- **Last-touched commits:"));
-  const handoffD531=(/\*\*⚡ AMENDMENT — 2026-07-22, D531:[\s\S]*?(?=\n\*\*⚡ AMENDMENT|$)/.exec(handoff)||[])[0]||"";
+  // D533 re-anchor: D531 head archived under the two-head rule; its contract checks read the byte-verbatim archive block (D532 precedent for superseded heads).
+  const handoffD531=(/<!-- D533 SUPERSEDED HANDOFF HEAD D531 \(BYTE-VERBATIM\):BEGIN -->\n([\s\S]*?)<!-- D533 SUPERSEDED HANDOFF HEAD D531 \(BYTE-VERBATIM\):END -->/.exec(handoffArchive)||[])[1]||"";
   const decisionD531=(/## D531 — CONTRACT_CLAIM_SPECIFIC_ROAD_GAP_RESEARCH:[\s\S]*?(?=\n## D530 —)/.exec(decisions)||[])[0]||"";
   need(laneD531&&handoffD531&&decisionD531,"D531 current contract segment missing");
   const laneRoadScope=segment.slice(segment.indexOf("- **D531 exact road-gap scope and sole artifact:"),segment.indexOf("- **D531 claim/source law and dispositions:"));
@@ -110,7 +111,7 @@ step("current LANE-019 D532 terminal CONTRACT/unowned preserves the six-gap road
   for(const token of ["The existing road packet is the sole claim home.","Exactly one normative audit section/table may","Existing `RDS-01`..`RDS-65` remain byte-identical and ordered","must be\nmanually accessed and read back","ROAD_GAP_DISPUTED","ROAD_GAP_CURED","ROAD_GAP_UNRESOLVED","Zero cures is\nvalid","The six floors are exact.","New Orleans-origin and CT-36 road claims remain closed","Boonville, Arrow Rock, and Glasgow remain unassigned","Bind G removes enough support","first unresolved row without curing it","Only `DISPOSITION / SOURCE-ENDPOINT FLOOR` may\nred","exact eleven-file allowlist","exact thirteen-file allowlist","D525 still the product head"])
     need(lawD531.includes(token),"D531 Package A critical law moved: "+token.replace(/\n/g," "));
   for(const token of ["D531: LANE-019 TAKES DOCS/RESEARCH DRIVE FOR THE SIX REMAINING CLAIM-SPECIFIC ROAD GAPS","Sole artifact and preservation law:","Exact six floors:","Permanent negatives:","Probe and Bind G:","exact thirteen-file allowlist","D525 remains the product head"])
-    need(handoff.includes(token),"D531 HANDOFF contract missing: "+token);
+    need(handoffD531.includes(token),"D531 HANDOFF contract missing: "+token);
   for(const token of ["## D531 — CONTRACT_CLAIM_SPECIFIC_ROAD_GAP_RESEARCH:","existing sole claim home","ROAD_GAP_DISPUTED","ROAD_GAP_CURED","ROAD_GAP_UNRESOLVED","Exact six floors:","New Orleans-origin and CT-36 claims remain closed","DISPOSITION / SOURCE-ENDPOINT FLOOR","D525 remains the product head"])
     need(decisions.includes(token),"D531 decision contract missing: "+token.replace(/\n/g," "));
   const floorTokens=["Marshall-Waskom-Shreveport Stagecoach Road","crossing set","Rolla-Lebanon-Springfield","6-8 June 1862 sixty-team","loading-side","14 October 1864","Boonville, Arrow Rock, and Glasgow remain unassigned","`RD-SI06` and `RD-SI13`","unit/date","broad itinerary"];
