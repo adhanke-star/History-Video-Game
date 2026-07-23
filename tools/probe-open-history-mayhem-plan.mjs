@@ -130,15 +130,23 @@ const PIN = {
 // D523 re-pin: the detached conquest identity/state foundation enrolls src/116 only; game 345772de -> c2a7b0cb and manifest 309a7bc1 -> 4cc09491. Base, data, suite, Mayhem authority, and public readiness hold.
 // D525 re-pin: the pure detached calendar extends only existing src/116; game c2a7b0cb -> 269ecc62. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
 // D534 re-pin: the E51 raidSupply honesty copy in src/85-battle-bridge.js only; game 269ecc62 -> c6f9699a. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
+// D538 re-pin (LANE-022 Slice 1, the read-only traced conquest supply route): the guarded _lgRoute
+// tail plus the ruleset-gated pure trace helpers in src/61-logistics-rail.js only — game
+// 859637ed -> 45278110 and srcTree 003d308a -> 08f95d9e. Suite md5 69681d6f -> a1cb6e73 (the two
+// LANE-022 rows enrol at the END of tools/vet-no-regression.mjs; rows 140 -> 142, war career 38 /
+// mayhem 57 hold). Base, data, manifest, scenario/schema/register counts, save version, Mayhem
+// authority and public readiness hold. Read-only by construction: no live campaign sets
+// campaignKind, so the seam is a guarded no-op for 100% of shipped play and the sim is
+// byte-identical (both A/B legs zero-diff).
 // D536 re-pin: the S39 --h0d-* token unification in src/95-playstyle.js only (presentation); game c6f9699a -> 859637ed. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
-  game: "859637edd920e386dd9008d5dfc647bb",
+  game: "45278110cb73ea4719fa41ffef7682f9",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "4cc094911506cf5af9929cf79d25dc6c",
-  suite: "69681d6f2216fe1dcfd594ffc4a757b7",
+  suite: "a1cb6e7347155b8705614b83cc0c32d3",
   scenarios: 29,   // D436: 24 -> 25 atlanta; D442: 25 -> 26 coldHarbor; D463: 26 -> 27 fortPillow (LANE-013 P4, the D455 SS3 row 6 unlock); D469: 27 -> 28 crater at rank 71.5 (LANE-015); D470: 28 -> 29 olustee at rank 65.5 between chattanooga (65) and fortPillow (66) (LANE-016)
   schemas: 65,   // D418: 54 -> 55 mayhem-rules.json; D436: 55 -> 56 atlanta.json; D442: 56 -> 57 cold-harbor.json; D445: 57 -> 58 chief-of-staff.json; D446: 58 -> 59 concept-links.json; D463: 59 -> 60 fort-pillow.json; D469: 60 -> 61 crater.json (LANE-015); D470: 61 -> 62 olustee.json (LANE-016); LANE-018 Slice 3: 62 -> 63 politics.json; D504: 63 -> 64 conquest-territories.json; D506: 64 -> 65 conquest-transport-evidence.json
   armyRegister: 1710,   // D436: 1512 -> 1566 — Atlanta adds 18 unique side-unit ids x 3 slots. D442: 1566 -> 1614 — Cold Harbor adds 16 unique side-unit ids x 3 slots. D460: 1614 -> 1617 — Elkhorn Cherokee OOB (D455 SS3 row 7) adds 1 unique side-unit id x 3 slots. D463: 1617 -> 1632 — Fort Pillow adds 5 unique side-unit ids x 3 slots (LANE-013 P4). D469: 1632 -> 1671 — The Crater adds 13 unique side-unit ids x 3 slots (LANE-015, the D464 spec). D470: 1671 -> 1710 — Olustee adds 13 unique side-unit ids x 3 slots (LANE-016, the D465 spec).
-  suiteRows: 140,   // D418: 130 -> 131; D436: 131 -> 132; D442: 132 -> 133; D444: 133 -> 134; D445: 134 -> 135; D446: 135 -> 136; D447: 136 -> 137; D463: 137 -> 138; D469: 138 -> 139 crater; D470: 139 -> 140 olustee (each appended at the END so row 38 holds)
+  suiteRows: 142,   // D418: 130 -> 131; D436: 131 -> 132; D442: 132 -> 133; D444: 133 -> 134; D445: 134 -> 135; D446: 135 -> 136; D447: 136 -> 137; D463: 137 -> 138; D469: 138 -> 139 crater; D470: 139 -> 140 olustee (each appended at the END so row 38 holds) · D538: 140 -> 142 (two LANE-022 Slice 1 conquest-supply rows appended at the END; war career 38 / mayhem 57 hold)
   warCareerRow: 38,
   saveVersion: 1
 };

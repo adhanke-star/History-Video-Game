@@ -460,8 +460,8 @@ step("IMPLEMENTATION LADDER", () => {
   if (/"campaignAdvance"/.test(overrides)) {
     throw new Error("assignment wrapper must not register campaignAdvance as a declaration override");
   }
-  if (suite.length !== 140) {   // D470: 139 -> 140 — the olustee row appends at the END (LANE-016). D469: 138 -> 139 — the crater row appends at the END (LANE-015). AD-7 re-pin (D443): 130 -> 131 D418 mayhem row; 131 -> 132 D436 atlanta; 132 -> 133 D442 cold harbor; D444: 133 -> 134 learn-battle; D445: 134 -> 135 chief-of-staff; D446: 135 -> 136 concept-links; D447: 136 -> 137 memory-chain; D463: 137 -> 138 fort-pillow — each appended at the END so the War Career row 38 holds
-    throw new Error("complete Slice A requires suite 140, got " + suite.length);
+  if (suite.length !== 142) {   // D470: 139 -> 140 — the olustee row appends at the END (LANE-016). D469: 138 -> 139 — the crater row appends at the END (LANE-015). AD-7 re-pin (D443): 130 -> 131 D418 mayhem row; 131 -> 132 D436 atlanta; 132 -> 133 D442 cold harbor; D444: 133 -> 134 learn-battle; D445: 134 -> 135 chief-of-staff; D446: 135 -> 136 concept-links; D447: 136 -> 137 memory-chain; D463: 137 -> 138 fort-pillow — each appended at the END so the War Career row 38 holds · D538: 140 -> 142 (two LANE-022 Slice 1 conquest-supply rows appended at the END; war career 38 / mayhem 57 hold)
+    throw new Error("complete Slice A requires suite 142, got " + suite.length);
   }
   return { mode: "runtime", suite: suite.length, marker: MARKER };
 });
@@ -510,7 +510,7 @@ step("EXCLUSIONS + BASELINES", () => {
     }
     if (!e71.includes("PENDING")) throw new Error("planning boundary must leave E71 pending");
   } else {
-    if (suite.length !== 140) throw new Error("Slice-A suite must be 140, got " + suite.length);   // D470: 139 -> 140 — the olustee row appends at the END (LANE-016). D469: 138 -> 139 — the crater row appends at the END (LANE-015). AD-7 re-pin (D443): 130 -> 133 (D418 mayhem, D436 atlanta, D442 cold harbor rows append at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links). D447: 136 -> 137 (memory-chain). D463: 137 -> 138 (fort-pillow, at the END)
+    if (suite.length !== 142) throw new Error("Slice-A suite must be 142, got " + suite.length);   // D470: 139 -> 140 — the olustee row appends at the END (LANE-016). D469: 138 -> 139 — the crater row appends at the END (LANE-015). AD-7 re-pin (D443): 130 -> 133 (D418 mayhem, D436 atlanta, D442 cold harbor rows append at the END). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links). D447: 136 -> 137 (memory-chain). D463: 137 -> 138 (fort-pillow, at the END)
     if (!e71.includes("FIXED")) throw new Error("Slice A marker exists but E71 is not FIXED");
   }
 
@@ -898,6 +898,17 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
     // D480 re-pin (LANE-017 slice 3): srcTree 4eed52e8 -> 7c23e51d (the badge presentation
     // layer — T14 gallery/showcase/disclosure + the src/35 pool-row dev-trait chip;
     // presentation-only, no war-career surface).
+        // D538 re-pin, second wave: focused a4be754c -> fe99b4b0 and suite a1cb6e73 (probe-war-career and
+        // tools/vet-no-regression.mjs carry the mechanical 140 -> 142 suite-count re-anchors only; no war
+        // career surface, tooth or count moved).
+        // D538 re-pin (LANE-022 Slice 1, the read-only traced conquest supply route): the guarded _lgRoute
+        // tail plus the ruleset-gated pure trace helpers in src/61-logistics-rail.js only — game
+        // 859637ed -> 45278110 and srcTree 003d308a -> 08f95d9e. Suite md5 69681d6f -> a1cb6e73 (the two
+        // LANE-022 rows enrol at the END of tools/vet-no-regression.mjs; rows 140 -> 142, war career 38 /
+        // mayhem 57 hold). Base, data, manifest, scenario/schema/register counts, save version, Mayhem
+        // authority and public readiness hold. Read-only by construction: no live campaign sets
+        // campaignKind, so the seam is a guarded no-op for 100% of shipped play and the sim is
+        // byte-identical (both A/B legs zero-diff).
         // D484 re-pin (LANE-017 slice 6, soldier-tier badges SS4d.3): game e7ff100e -> e99e6ac5 · dataTree 00f8c1fe -> c3c28fd6 (data/ratings.json gains soldierBadgeDefs 14 + soldierBadges 48 rows on 39 Verified carriers + _soldierBadgeNote) · srcTree 15570ebc -> d79696ce (T14 soldier-badge accessors + the fldSoldierBadgeFactor capped gateway; src/37 cwCareerBadges/cwSoldierBadgeRows/_ssSoldierBadgesHTML register/journey chips; the src/22 comment-token reword — the D482 class, fifth instance) · journey 1689c4a2 -> 9655bfff (src/37) · focused 65e9c873 -> e2acf99a (probe-war-career gains the D484 career-badge step; the stale 138 suite.expected DISPLAY fields aligned to the 140 teeth). Presentation + data + the capped gateway only — no combat line consumes the keys, sim inputs did not move; both binds md5-proven; base/manifest/suite/runtime/command hold.
     // D485 re-pin (LANE-017 slice 7, named legendary artifacts SS4c.1): srcTree d79696ce -> b7648a67
     // (src/37 mode-split eligibility — _lootItemEligible + the C/B-aware weighted pick through the
@@ -932,7 +943,7 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
 // D525 re-pin: the pure detached calendar moves srcTree 45aea5f8 -> 9f4ffbff in existing src/116 only; protected War Career owners hold.
 // D534 re-pin: the E51 raidSupply honesty copy moves srcTree 9f4ffbff -> 7f2a5e6f in existing src/85-battle-bridge.js only; protected War Career owners hold.
 // D536 re-pin: the S39 --h0d-* token unification moves srcTree 7f2a5e6f -> 003d308a in existing src/95-playstyle.js only (presentation); protected War Career owners hold.
-srcTree:"003d308af7cbaa8d3512df17a0d8d72b",
+srcTree:"08f95d9e9311e90313cc5b7a930f9380",
     runtime:"dfee8d9c3a6b8c8caa414366302214a7",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
@@ -974,7 +985,7 @@ srcTree:"003d308af7cbaa8d3512df17a0d8d72b",
     // D470 battery root-fix re-pin: focused 78633570 -> 65e9c8730dfa6cb0250feddd3adabf6f — the probe's own suite-count
     // tooth (138 -> 140) missed by the D469/D470 sweeps, fixed at its exact label (the
     // D443 AD-6 precedent); the war-career runtime surface held.
-    focused:"a4be754c3338ee5776e98a92d74a3e54",
+    focused:"fe99b4b06a1264e12015359bb1a5aded",
     // D490 re-pin (LANE-018 slice 2): commandProbe 048bfed3 -> d861722c (probe-command grows
     // 94 -> 99 with the five persona/friction/save/setup teeth; the four D406 tooth names this
     // probe scans are unmoved).
@@ -1227,7 +1238,7 @@ step("BASELINES + LANE", () => {
       normalize(rosterExpected.join(" ")) !== normalize(builderExpected.join(" "))) {
     throw new Error("coverage baselines moved");
   }
-  if (suite.length !== 140 || !suite[37] || suite[37][1] !== "tools/probe-war-career.mjs") {   // D436: 130 -> 132 (mayhem row D418 missed this pin; atlanta row appends at the end so row 38 holds). D442: 132 -> 133 (cold harbor row appends at the end; row 38 still holds). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links). D447: 136 -> 137 (memory-chain). D463: 137 -> 138 (fort-pillow, each at the end; row 38 still holds)
+  if (suite.length !== 142 || !suite[37] || suite[37][1] !== "tools/probe-war-career.mjs") {   // D436: 130 -> 132 (mayhem row D418 missed this pin; atlanta row appends at the end so row 38 holds). D442: 132 -> 133 (cold harbor row appends at the end; row 38 still holds). D444: 133 -> 134 (learn-battle). D445: 134 -> 135 (chief-of-staff). D446: 135 -> 136 (concept-links). D447: 136 -> 137 (memory-chain). D463: 137 -> 138 (fort-pillow, each at the end; row 38 still holds)
     throw new Error("suite 137 / War Career row 38 moved");
   }
   if (!read(SWEEP).includes("var reg = fldScenarioRegistry()") ||
@@ -1323,7 +1334,7 @@ step("BASELINES + LANE", () => {
     // D525 re-pin: game c2a7b0cb -> 269ecc62 for the pure detached calendar in existing src/116 only; protected War Career owners hold.
     // D534 re-pin: game 269ecc62 -> c6f9699a for the E51 raidSupply honesty copy in existing src/85-battle-bridge.js only; protected War Career owners hold.
     // D536 re-pin: game c6f9699a -> 859637ed for the S39 --h0d-* token unification in existing src/95-playstyle.js only (presentation); protected War Career owners hold.
-    game:"859637edd920e386dd9008d5dfc647bb",
+    game:"45278110cb73ea4719fa41ffef7682f9",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     // D478 re-pin: dataTree 4bbdebe5 -> b3b323fa (LANE-017 slice 1: rarity glyphs + reserved tier
     // hexes + rungTiers in data/loot-survival.json — presentation data only, no war-career data).
@@ -1333,7 +1344,7 @@ step("BASELINES + LANE", () => {
     // amendment in data/ratings.json — free text only, no numeric movement, no war-career data).
     dataTree:"2e9e4df430eaaaeca4ce6f58f51a3b2e",
     manifest:"4cc094911506cf5af9929cf79d25dc6c",
-    suite:"69681d6f2216fe1dcfd594ffc4a757b7"
+    suite:"a1cb6e7347155b8705614b83cc0c32d3"
   };
   for (const key of Object.keys(expectedHashes)) {
     if (hashes[key] !== expectedHashes[key]) throw new Error(key + " baseline moved: " + hashes[key]);
@@ -1803,7 +1814,7 @@ step("REACHABILITY BASELINES", () => {
     // D525 re-pin: game c2a7b0cb -> 269ecc62 for the pure detached calendar in existing src/116 only; protected War Career owners hold.
     // D534 re-pin: game 269ecc62 -> c6f9699a for the E51 raidSupply honesty copy in existing src/85-battle-bridge.js only; protected War Career owners hold.
     // D536 re-pin: game c6f9699a -> 859637ed for the S39 --h0d-* token unification in existing src/95-playstyle.js only (presentation); protected War Career owners hold.
-    game:"859637edd920e386dd9008d5dfc647bb",
+    game:"45278110cb73ea4719fa41ffef7682f9",
     dataTree:"2e9e4df430eaaaeca4ce6f58f51a3b2e",
         // D484 re-pin (LANE-017 slice 6, soldier-tier badges SS4d.3): game e7ff100e -> e99e6ac5 · dataTree 00f8c1fe -> c3c28fd6 (data/ratings.json gains soldierBadgeDefs 14 + soldierBadges 48 rows on 39 Verified carriers + _soldierBadgeNote) · srcTree 15570ebc -> d79696ce (T14 soldier-badge accessors + the fldSoldierBadgeFactor capped gateway; src/37 cwCareerBadges/cwSoldierBadgeRows/_ssSoldierBadgesHTML register/journey chips; the src/22 comment-token reword — the D482 class, fifth instance) · journey 1689c4a2 -> 9655bfff (src/37) · focused 65e9c873 -> e2acf99a (probe-war-career gains the D484 career-badge step; the stale 138 suite.expected DISPLAY fields aligned to the 140 teeth). Presentation + data + the capped gateway only — no combat line consumes the keys, sim inputs did not move; both binds md5-proven; base/manifest/suite/runtime/command hold.
     // D486 re-pin (LANE-017 slice 8): srcTree b7648a67 -> 8174d79d (src/37 sets/salvage/
@@ -1826,7 +1837,7 @@ step("REACHABILITY BASELINES", () => {
 // D525 re-pin: game c2a7b0cb -> 269ecc62 and srcTree 45aea5f8 -> 9f4ffbff for the pure detached calendar in existing src/116 only; War Career runtime/journey/focused remain exact.
 // D534 re-pin: game 269ecc62 -> c6f9699a and srcTree 9f4ffbff -> 7f2a5e6f for the E51 raidSupply honesty copy in existing src/85-battle-bridge.js only; War Career runtime/journey/focused remain exact.
 // D536 re-pin: game c6f9699a -> 859637ed and srcTree 7f2a5e6f -> 003d308a for the S39 --h0d-* token unification in existing src/95-playstyle.js only (presentation); War Career runtime/journey/focused remain exact.
-srcTree:"003d308af7cbaa8d3512df17a0d8d72b",
+srcTree:"08f95d9e9311e90313cc5b7a930f9380",
     runtime:"dfee8d9c3a6b8c8caa414366302214a7",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
@@ -1843,7 +1854,7 @@ srcTree:"003d308af7cbaa8d3512df17a0d8d72b",
     // D469 re-pin: focused 3da0dbc0 -> bb7a1bc9 (the 1632 -> 1671 Crater register chain).
     // D470 re-pin: focused bb7a1bc9 -> 78633570 (the 1671 -> 1710 Olustee register chain).
     // D470 battery root-fix: focused 78633570 -> 65e9c8730dfa6cb0250feddd3adabf6f (the suite-count tooth 138 -> 140 AND its silent list.length conjunct in result.ok).
-    focused:"a4be754c3338ee5776e98a92d74a3e54"
+    focused:"fe99b4b06a1264e12015359bb1a5aded"
   };
   for (const key of Object.keys(expected)) {
     if (hashes[key] !== expected[key]) throw new Error("D411 shipped baseline moved: " + key + " " + hashes[key]);

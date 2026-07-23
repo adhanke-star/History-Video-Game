@@ -105,6 +105,17 @@ possible D74 proof, and every later slice inherits a verified path. This is the 
 landed D521, D523 and D525.
 **Gating proof:** conquest-OFF byte-identity leg + fresh-campaign A/B, both zero-diff.
 
+> **BUILD STATUS — SHIPPED (contract D538, delivered D539, 2026-07-23).** Both gating legs returned ZERO
+> diffs (direction battery `18f609d07b1190904ec0c11e4ca64675`, `probe-full-campaign`
+> `a38185fd371a7f181250eff3a6cbf76a`, byte-identical at `0829d8d` and at the shipped head). Containment
+> fails closed at the ruleset seam on OWN, data-valued descriptors — hardened mid-slice after the acceptance
+> teeth caught an inherited-prototype leak. **Recorded finding for Slice 5:** projecting the 44 sourced
+> services yields ELEVEN disconnected components, so most traced pairs are `reachable:false`; the default
+> `US`/`E` route resolves in one rail segment (`CTS-R-02`) and `CS`/`E` does not resolve at all. That gap is
+> the measured reason the authored road layer exists, and it was not cured by inventing a service, window,
+> interchange or endpoint. Slice 2 is the first slice that adopts `tracedFriction`, flips `applied`, and
+> therefore owns the first sim-affecting A/B.
+
 ### Slice 2 — control/service receipts and cuts
 Territory control and per-segment service condition become real state; a cut segment degrades
 `depotReach` for every army downstream of it. First slice where supply has teeth.

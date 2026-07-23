@@ -150,7 +150,9 @@ const SUITE = [
   ['memory chain', 'tools/probe-memory-chain.mjs'],   // D447: suite 136 -> 137 — GEA-12 appends at the END likewise
   ['fort pillow', 'tools/probe-fort-pillow.mjs'],   // D463: suite 137 -> 138 — LANE-013 P4 appends at the END so every existing row pin (war career 38, mayhem 57) holds
   ['crater', 'tools/probe-crater.mjs'],   // D469: suite 138 -> 139 — LANE-015 appends at the END so every existing row pin (war career 38, mayhem 57) holds
-  ['olustee', 'tools/probe-olustee.mjs']   // D470: suite 139 -> 140 — LANE-016 appends at the END likewise
+  ['olustee', 'tools/probe-olustee.mjs'],   // D470: suite 139 -> 140 — LANE-016 appends at the END likewise
+  ['conquest supply plan', 'tools/probe-conquest-supply-plan.mjs'],   // D538: suite 140 -> 141 — LANE-022 Slice 1 appends at the END so every existing row pin (war career 38, mayhem 57) holds
+  ['conquest supply', 'tools/probe-conquest-supply.mjs']   // D538: suite 141 -> 142 — LANE-022 Slice 1 appends at the END likewise
 ];
 
 const listOnly = process.argv.includes('--list');

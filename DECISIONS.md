@@ -4,6 +4,135 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D539 — SHIPPED_CONQUEST_TRACED_SUPPLY_ROUTE: LANE-022 SLICE 1 REPLACES THE STATIC `_lgRoute` LOOKUP WITH A REAL TRACE OVER THE 36-TERRITORY BOARD, READ-ONLY AND BYTE-IDENTICAL; LANE-022 RELEASES — [CLAUDE CODE / Opus 4.8 `[1m]` xhigh, IMPLEMENTATION+GATES] (2026-07-23)
+
+D538 is committed and pushed clean at `f4df08e302d3ff057f99110e22fd14068ab53ed7`. Slice 1 shipped exactly
+as that contract specified, with one contracted-scope hardening the acceptance teeth forced (below).
+
+**What shipped.** The GEA-11 defect is closed at its named seam. `_lgRoute(C, bd)` in
+`src/61-logistics-rail.js` keeps its shipped six keys (`id`/`label`/`theater`/`theaterName`/`friction`/
+`note`) computed exactly as before and gains ONE guarded tail —
+`var traced = conquestSupplyTrace(C, null); if (traced) out.trace = traced;` — backed by eight pure new
+helpers (`_lgConquestKind`, `_lgTraceRuleset`, `_lgTraceEdgeOrder`, `_lgTraceGraph`, `_lgTraceWalk`,
+`_lgTraceTheater`, `_lgTraceFreeze`, `conquestSupplyTrace`) and four authored constants
+(`_LG_TRACE_RULESETS`, `_LG_TRACE_DEPOT`, `_LG_TRACE_FRONT`, `_LG_TRACE_COST`). For a carrier declaring an
+exact conquest campaign kind on the open ruleset, the trace projects each sourced evidence row's existing
+`territoryRefs` into a directed graph honouring that row's existing `direction`, then walks source depot →
+segments → the army's territory with sorted, deterministic neighbour order, returning one deeply frozen
+value. `logisticsSnapshot`, `logisticsBridgeBonus`, `logisticsSetPriority`, `logisticsOnResolve`,
+`presLogisticsBlock` and `logisticsWireOverview` are textually and behaviourally UNCHANGED — the trace is
+surfaced on the route object at the seam the design law names, and nothing downstream is touched.
+
+**Read-only, by construction as well as by measurement.** `applied` is `false` and `tracedFriction` is
+carried but consumed by nothing; `friction` keeps its shipped static number in every campaign, so the capped
+bridge (`supply ≤ 7`, `fatigueRelief ≤ 5`, `overall ≤ 2`), the 0.15 `wr.supply` troop-morale weight, camp and
+loot are byte-identical. The stronger fact: **`campaignKind` exists on disk only inside
+`src/116-conquest-state.js`'s detached factory/view** — no live campaign, save, load or menu path sets it —
+so the new branch is unreachable from 100% of shipped play. The seam is therefore the non-negotiable #2
+guarded no-op-when-inactive idiom, and the A/B legs confirm rather than establish the result.
+
+**THE DEFECT THE TEETH CAUGHT — fixed in the code, never in the tooth.** The first implementation read
+`rv.id` / `rv.version` directly, so an INHERITED ruleset prototype (`Object.create({id:"mayhem",version:1})`)
+opened the containment gate: an object that merely *inherits* a ruleset identity is not an authoritative
+ruleset declaration, and the shipped `_trRulesetId` (`src/115`) and `_ccsRecord` (`src/116`) already refuse
+exactly that class. `_lgTraceRuleset` now requires OWN, DATA-VALUED property descriptors on both `id` and
+`version` before consulting the allowlist, which also refuses accessor properties without invoking them. The
+tooth now proves ELEVEN non-admitted shapes fail closed — both sides on the gated ruleset, wrong case, wrong
+version, two prototype-key names (`constructor`, `toString`), null, absent, inherited, accessor (with an
+invocation counter proving zero calls), and a half-inherited pair. A new gate may not fall short of the
+discipline the modules beside it already hold.
+
+**Containment, both directions, structural.** `_LG_TRACE_RULESETS` is an ALLOWLIST, never a denylist: the
+gate admits only the id it carries and returns `null` for every other value BEFORE any board or evidence read
+happens. `src/61-logistics-rail.js` contains no literal for the gated ruleset id at all, so containment
+cannot decay into a name-matching filter. `src/115-conquest-transport.js` is READ, never written and never
+namespace-shared; the probe proves the evidence pack, the board and `GAME_DATA` are byte-unchanged across
+repeated tracing.
+
+**No Historical authority created.** The trace consumes services only. `CTI-01`..`CTI-04` never enter it and
+stay `INTERCHANGE_WINDOW_UNADJUDICATED`; the eighteen explicit non-links never become segments; roads stay
+absent with `ROAD_REQUIRES_BOUNDED_SOURCE_PASS` exact; no `dateText`, `historicalEligibility`, window,
+eligibility, capacity or availability field is read or manufactured. New Orleans-origin, `CT-36`, the D503
+endpoint quarantine, the Potomac / operation-composition / Sherman-chain negatives, and the permanent
+unassignment of Boonville, Arrow Rock and Glasgow all remain binding. **LANE-019 is deliberately unrewritten
+and every one of its boundary sentences stays byte-exact** — `tools/probe-conquest-transport-plan.mjs` holds
+12/12.
+
+**THE HONEST RESULT, recorded rather than cured.** Projecting the 44 sourced services yields **ELEVEN
+disconnected components** over the 36 territories — `CT-11..CT-28` (18), `CT-05/06/07/09/10` (5),
+`CT-01..CT-04` (4), `CT-35/36` (2) and seven singletons — because 16 of the 44 rows name a single territory
+and contribute no edge. The default `US`/`E` route therefore resolves in ONE rail segment (`CTS-R-02`, the
+Verified `RN-02`→`RN-03` Washington–Manassas corridor, `tracedFriction` 7) while `CS`/`E` does not resolve at
+all (`reachable:false`, reached 5, `tracedFriction` 100), and every cross-component target is unreachable.
+That is the correct outcome of tracing a substrate five research passes left sparse, it is pinned as a probe
+tooth, and it is the measured reason Slice 5 authors the road layer. It was NOT cured by inventing a service,
+a window, an interchange or an endpoint.
+
+**Authored Mayhem content, openly marked.** Two source depots (`US` → `CT-01` Baltimore-Washington Corridor,
+`CS` → `CT-05` Richmond Capital District), four theatre fronts (`E` → `CT-03`, `W` → `CT-20`, `TM` → `CT-32`,
+`N` → `CT-19`), four per-mode segment costs, and the topology projection itself. Each constant carries an
+`authored, not sourced` / `authored, unconsumed` marker in source, and the plan probe proves none of it
+appears in any of the 65 data files or in `src/114`/`src/115`.
+
+**A/B — both legs ZERO-DIFF (the load-bearing proof).** Leg 1, the standing 24-scenario × 8-seed direction
+battery: artifact md5 `18f609d07b1190904ec0c11e4ca64675` captured at `0829d8d` BEFORE any edit and
+`18f609d07b1190904ec0c11e4ca64675` at this head — byte-identical, 0 diffs, `ok=true failures=0 pageerrors=0`
+in both columns. Leg 2, `tools/probe-full-campaign.mjs`: `a38185fd371a7f181250eff3a6cbf76a` at both heads —
+0 diffs, `ok=true steps=4 pageerrors=0`, with the US chain 31/32 resolved 31-1 and the CS chain stalling at
+idx 17 identically in both columns.
+
+**Bind D538-B1 — declared before running, exact scope.** One value mutated in the containment allowlist
+(`{ mayhem: 1 }` → `{ mayhem: 1, historical: 1 }`), focused probe run WITHOUT rebuilding: **ONLY
+`CONTAINMENT-B` redded** (exit 1, 11/12); `CONTAINMENT-A` and all ten other teeth held. Restore was
+byte-identical — md5 `b33c131501dbd38096d79916ca6c3b3c` pre == post — and the rebuild returned the identical
+game md5 with 12/12 clean green. The tooth redded on its source conjunct, so the behavioural half was
+demonstrated separately: with the mutation the gated ruleset produces a real authored trace
+(`rulesetId:"historical"`, 1 segment, route 7 keys) where the restored source produces `null` and 6 keys.
+
+**Probes and pins.** NEW `tools/probe-conquest-supply.mjs` (12 steps) proves the seam twice — node-side in a
+`node:vm` context rebuilt from the on-disk `src/115` + `src/114` + `src/61`, so a source mutation reds it
+without a rebuild, and in-page against the built deliverable. The vm context is created EMPTY deliberately:
+injecting a host `Object` breaks the substrate's prototype-identity check and would silently fail every query
+closed — a harness trap worth recording. NEW `tools/probe-conquest-supply-plan.mjs` (10 steps) is
+filesystem-first and anchored only on durable law, history, immutable hashes and live counts, never on a
+lane's current owner or state. Both enrolled at the END of `tools/vet-no-regression.mjs`, suite **140 → 142**
+(war career row 38 and mayhem row 57 hold). Pins re-anchored with chained D538 comments at EIGHTEEN sites
+across six files: twelve suite-count pins (`probe-conquest-transport-plan`, `probe-mayhem-mode`,
+`probe-open-history-mayhem-plan`, `probe-war-career-loop-plan` ×4, `probe-women-in-war-arc-plan`,
+`probe-war-career` ×4), three generated-game pins, two srcTree pins and one suite-md5 pin. Game
+`859637edd920e386dd9008d5dfc647bb` → `45278110cb73ea4719fa41ffef7682f9`; srcTree
+`003d308af7cbaa8d3512df17a0d8d72b` → `08f95d9e9311e90313cc5b7a930f9380`; suite md5
+`69681d6f2216fe1dcfd594ffc4a757b7` → `a1cb6e7347155b8705614b83cc0c32d3`; focused
+`a4be754c3338ee5776e98a92d74a3e54` → `fe99b4b06a1264e12015359bb1a5aded`. Every old value was grepped out of
+`tools/` before push; only 8-character history fragments survive inside re-pin comment chains, as the idiom
+intends. The plan probe now also carries a standing coherence tooth asserting every re-anchored pin equals
+the live suite/game hash — the class of miss D443/D469/D470 recorded honestly at the time.
+
+**Gates, all green with every artifact read.** `node --check` on every touched JS/MJS; `node tools/build.mjs`
+→ `GATE OK · doc-coherence ✓ · parse ✓ · hex ✓ · collision ✓ · no-fudge ✓ · citations ✓ · women-in-war ✓ ·
+save-shape ✓`; artifact readback confirmed all twelve trace symbols inside the built 61 module region
+(14,147 bytes) and zero gated-ruleset literal there; focused 12/12 (0 pageerrors, 0 realErrors); plan 10/10;
+adjacent probe-logistics-rail 8, probe-logistics, probe-bridge 6, probe-conditioning 9, probe-conquest-board
+13/13, probe-conquest-state 15/15, probe-conquest-transport 18/18, probe-campaign-link 19,
+probe-auto-resolve 10, probe-save-slots 17/17, probe-command 100 — all exit 0 with 0 pageerrors; plan probes
+Mayhem 13/13, War Career 24/24, transport 12/12, conquest 8/8; doc coherence 5/5; `git diff --check` clean.
+The full serialized 142-row battery stays owed at Slice 7 per the lane's gate contract. The suite-excluded
+D528/D530/D532 research guards were neither rerun nor edited. `tools/probe-desk-pacing-plan.mjs` was
+deliberately not touched: it is a superseded, non-enrolled LANE-020 DRIVE-era contract probe released by
+D519, already red at this head, and its own suite pin now reads stale at 140 — recorded honestly rather than
+edited, exactly as the D538 contract said.
+
+**D74.** No write to men, morale, casualties, captured, victory, score or RNG state from any new path; a
+region-scoped source tooth enforces it alongside the build's unrelaxed no-fudge OUTPUT WALL. No field added
+to `C.conquest`; `tools/save-shape.json` untouched; `_SAVE_VER` unchanged; `build/base.html` frozen at
+`c9db83fa99230ffb95bdfdfe059f3fb9`; manifest 112 with `116-conquest-state.js` last; data 65.
+
+**Reversibility:** fully reversible — one source file plus two new probes and mechanical pin re-anchors.
+Reverting `src/61-logistics-rail.js` and rebuilding restores `859637edd920e386dd9008d5dfc647bb` exactly.
+**D539 replaces D525 as the ARC 7 product head.** LANE-022 releases to `CONTRACT` / `none`; ARC 7 Historical
+transport movement, Historical roads and the four `CTI-*` interchange faces remain blocked permanently on the
+Historical side.
+
 ## D538 — CONTRACT_CONQUEST_TRACED_SUPPLY_ROUTE: LANE-022 TAKES CLAUDE CODE DRIVE FOR SLICE 1, THE READ-ONLY TRACE OVER THE 36-TERRITORY BOARD — [CLAUDE CODE / Opus 4.8 `[1m]` xhigh, ARCHITECTURE/CONTRACT; ledger-only commit] (2026-07-23)
 
 D537 is committed and pushed clean at `0829d8dedabbc8e8943ea534eaa279c713d06b81`. This entry is the

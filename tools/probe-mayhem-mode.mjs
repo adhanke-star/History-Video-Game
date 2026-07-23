@@ -1027,7 +1027,7 @@ async function inspectNarrowLayout(browser, probeUrl) {
       evidence.rosterIds.length === 29 &&   // D436: 24 -> 25 — atlanta. D442: 25 -> 26 — coldHarbor. D463: 26 -> 27 — fortPillow (LANE-013 P4). D469: 27 -> 28 — crater (LANE-015); D470: 28 -> 29 — olustee (LANE-016)
       evidence.builderIds.length === 29 &&
       JSON.stringify(evidence.rosterIds) === JSON.stringify(evidence.builderIds) &&
-      evidence.suiteCount === 140 &&   // D436: 131 -> 132 — the atlanta row appends at the suite end so the row-38/57 pins hold. D442: 132 -> 133 — the cold harbor row appends at the end likewise. D444: 133 -> 134 — learn-battle. D445: 134 -> 135 — chief-of-staff. D446: 135 -> 136 — concept-links, each at the end likewise. D447: 136 -> 137 — memory-chain. D463: 137 -> 138 — fort-pillow; D469: 138 -> 139 — crater (LANE-015); D470: 139 -> 140 — olustee (LANE-016) (LANE-013 P4), each at the END so the row-38/57 pins hold
+      evidence.suiteCount === 142 &&   // D436: 131 -> 132 — the atlanta row appends at the suite end so the row-38/57 pins hold. D442: 132 -> 133 — the cold harbor row appends at the end likewise. D444: 133 -> 134 — learn-battle. D445: 134 -> 135 — chief-of-staff. D446: 135 -> 136 — concept-links, each at the end likewise. D447: 136 -> 137 — memory-chain. D463: 137 -> 138 — fort-pillow; D469: 138 -> 139 — crater (LANE-015); D470: 139 -> 140 — olustee (LANE-016) (LANE-013 P4), each at the END so the row-38/57 pins hold · D538: 140 -> 142 (two LANE-022 Slice 1 conquest-supply rows appended at the END; war career 38 / mayhem 57 hold)
       evidence.mayhemRow === 57 &&
       evidence.mayhemFile === "tools/probe-mayhem-mode.mjs" &&
       evidence.warCareerRow === 38 &&

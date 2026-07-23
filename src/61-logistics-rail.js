@@ -48,6 +48,171 @@ function _lgBattle(C) {
   } catch (e) { return null; }
 }
 
+/* --- LANE-022 Slice 1 (D538) · the traced conquest supply route -------------
+   A guarded seam. Every carrier that does not declare an exact conquest
+   campaign kind takes none of this and gets the shipped static route with its
+   object untouched, so the capped bridge, the troop-morale weight, camp and
+   loot stay byte-identical. A conquest carrier on the open ruleset gains ONE
+   extra derived field holding a real path across the read-only 36-territory
+   board; the identical query on the evidence-gated ruleset fails CLOSED at the
+   gate below and gains nothing, because five research passes established no
+   physical window for that side. The board and the transport evidence are READ
+   here, never written and never namespace-shared. Nothing below is consumed by
+   the sim in this slice: `applied` stays false and the shipped friction number
+   is untouched, which is exactly what makes the read-only proof total.
+   ------------------------------------------------------------------------ */
+
+var _LG_TRACE_RULESETS = { mayhem: 1 };                                            // LANE022_CONTAINMENT_ALLOWLIST
+var _LG_TRACE_DEPOT = { US: "CT-01", CS: "CT-05" };                                // authored, not sourced
+var _LG_TRACE_FRONT = { E: "CT-03", W: "CT-20", TM: "CT-32", N: "CT-19" };         // authored, not sourced
+var _LG_TRACE_COST = { "inland-water": 2, rail: 3, sea: 4, road: 6 };              // authored, unconsumed
+
+function _lgConquestKind(C) {
+  var k = C && C.campaignKind;
+  if (!k || typeof k !== "object" || Array.isArray(k)) return false;
+  return k.id === "conquest" && k.version === 1;
+}
+
+/* THE CONTAINMENT GATE (the D538 declared bind target). An ALLOWLIST, never a
+   denylist: it admits only the id carried in _LG_TRACE_RULESETS and returns null
+   for every other value BEFORE any board or evidence read happens, so authored
+   content is structurally unreachable on any other ruleset. The declaration must
+   be OWN and DATA-VALUED on both sides — an inherited name or an accessor is not
+   an authoritative ruleset declaration and never opens the gate (the shipped
+   _trRulesetId / _ccsRecord discipline, which this must not fall short of). */
+function _lgTraceRuleset(C) {
+  var rv = C && C.ruleset, own = Object.prototype.hasOwnProperty, id, version;
+  if (!rv || typeof rv !== "object" || Array.isArray(rv)) return null;
+  if (!own.call(rv, "id") || !own.call(rv, "version")) return null;
+  try {
+    id = Object.getOwnPropertyDescriptor(rv, "id");
+    version = Object.getOwnPropertyDescriptor(rv, "version");
+  } catch (e) { return null; }
+  if (!id || !own.call(id, "value") || !version || !own.call(version, "value")) return null;
+  if (typeof id.value !== "string" || version.value !== 1) return null;
+  if (!own.call(_LG_TRACE_RULESETS, id.value) || _LG_TRACE_RULESETS[id.value] !== 1) return null;
+  return { id: id.value, version: 1 };
+}
+
+function _lgTraceEdgeOrder(a, b) {
+  if (a.to !== b.to) return a.to < b.to ? -1 : 1;
+  if (a.id !== b.id) return a.id < b.id ? -1 : 1;
+  return 0;
+}
+
+/* Projects each evidence row's existing territoryRefs into a directed graph,
+   honouring that row's existing direction. A row naming a single territory
+   contributes no edge. Neighbour order is sorted so the walk is deterministic. */
+function _lgTraceGraph(view) {
+  if (typeof conquestTransportPhysicalServices !== "function") return null;
+  var pack = conquestTransportPhysicalServices(view);
+  if (!pack || !Array.isArray(pack.services) || !pack.services.length) return null;
+  var adj = {}, i, j, k, row, refs, keys;
+  for (i = 0; i < pack.services.length; i++) {
+    row = pack.services[i];
+    refs = row && row.territoryRefs;
+    if (!Array.isArray(refs) || refs.length < 2) continue;
+    for (j = 0; j < refs.length; j++) {
+      for (k = 0; k < refs.length; k++) {
+        if (j === k) continue;
+        if (row.direction === "one-way" && k < j) continue;
+        if (!adj[refs[j]]) adj[refs[j]] = [];
+        adj[refs[j]].push({ to: refs[k], id: row.id, mode: row.mode });
+      }
+    }
+  }
+  keys = Object.keys(adj);
+  for (i = 0; i < keys.length; i++) adj[keys[i]].sort(_lgTraceEdgeOrder);
+  return adj;
+}
+
+function _lgTraceWalk(adj, from, to) {
+  var prev = {}, seen = {}, queue = [from], reached = 1, node, edges, i, e, segs, terr, cur, p;
+  seen[from] = 1;
+  if (from === to) return { reachable: true, segments: [], territories: [from], reached: 1 };
+  while (queue.length) {
+    node = queue.shift();
+    edges = adj[node] || [];
+    for (i = 0; i < edges.length; i++) {
+      e = edges[i];
+      if (seen[e.to]) continue;
+      seen[e.to] = 1; reached++;
+      prev[e.to] = { from: node, id: e.id, mode: e.mode };
+      if (e.to === to) {
+        segs = []; terr = [to]; cur = to;
+        while (cur !== from) {
+          p = prev[cur];
+          segs.unshift({ id: p.id, mode: p.mode, from: p.from, to: cur });
+          terr.unshift(p.from);
+          cur = p.from;
+        }
+        return { reachable: true, segments: segs, territories: terr, reached: reached };
+      }
+      queue.push(e.to);
+    }
+  }
+  return { reachable: false, segments: [], territories: [from], reached: reached };
+}
+
+function _lgTraceTheater(C) {
+  var bd = null, D = _lgData(), routes = D.routes || {}, r, th;
+  try { bd = _lgBattle(C); } catch (e) { bd = null; }
+  r = (bd && routes[bd.id]) ? routes[bd.id] : null;
+  th = (r && r.theater) || (bd && bd.th) || "E";
+  return _LG_TRACE_FRONT[th] ? th : "E";
+}
+
+function _lgTraceFreeze(v) {
+  if (!v || typeof v !== "object") return v;
+  var keys = Object.keys(v), i;
+  for (i = 0; i < keys.length; i++) _lgTraceFreeze(v[keys[i]]);
+  try { return Object.freeze(v); } catch (e) { return v; }
+}
+
+function conquestSupplyTrace(C, targetId) {
+  if (!_lgConquestKind(C)) return null;
+  var view = _lgTraceRuleset(C);
+  if (!view) return null;
+  if (typeof conquestBoardNormalized !== "function") return null;
+  var board = conquestBoardNormalized();
+  if (!board || !Array.isArray(board.territories) || board.territories.length !== 36) return null;
+  var own = Object.prototype.hasOwnProperty, names = {}, i, m, cost = 0;
+  for (i = 0; i < board.territories.length; i++) names[board.territories[i].id] = board.territories[i].name;
+  var side = (C && C.side === "CS") ? "CS" : "US";
+  var depot = _LG_TRACE_DEPOT[side], theater = _lgTraceTheater(C);
+  var target = (typeof targetId === "string" && own.call(names, targetId)) ? targetId : _LG_TRACE_FRONT[theater];
+  if (!own.call(names, depot) || !own.call(names, target)) return null;
+  var adj = _lgTraceGraph(view);
+  if (!adj) return null;
+  var walk = _lgTraceWalk(adj, depot, target);
+  var mix = { rail: 0, "inland-water": 0, sea: 0, road: 0 };
+  for (i = 0; i < walk.segments.length; i++) {
+    m = walk.segments[i].mode;
+    if (typeof mix[m] === "number") mix[m]++;
+    cost += (typeof _LG_TRACE_COST[m] === "number") ? _LG_TRACE_COST[m] : 6;
+  }
+  return _lgTraceFreeze({
+    rulesetId: view.id,
+    authored: true,
+    applied: false,
+    side: side,
+    theater: theater,
+    depot: depot,
+    depotName: names[depot],
+    target: target,
+    targetName: names[target],
+    reachable: walk.reachable === true,
+    segments: walk.segments,
+    territories: walk.territories,
+    modeMix: mix,
+    segmentCount: walk.segments.length,
+    reachedCount: walk.reached,
+    tracedFriction: walk.reachable ? _lgClamp(4 + cost, 0, 100) : 100,
+    label: names[depot] + " to " + names[target]
+      + (walk.reachable ? (" (" + walk.segments.length + (walk.segments.length === 1 ? " segment)" : " segments)")) : " (no traced path)")
+  });
+}
+
 function _lgRoute(C, bd) {
   var D = _lgData(), routes = D.routes || {}, theaters = D.theaters || {};
   var th = (bd && bd.th) || "E";
@@ -56,7 +221,7 @@ function _lgRoute(C, bd) {
   var side = (C && C.side === "CS") ? "CS" : "US";
   var rf = (r && r.friction && typeof r.friction[side] === "number") ? r.friction[side]
     : (t.routeFriction && typeof t.routeFriction[side] === "number") ? t.routeFriction[side] : (side === "CS" ? 16 : 10);
-  return {
+  var out = {
     id: bd ? bd.id : "",
     label: (r && r.label) || (bd ? bd.name + " railheads" : "Next army railheads"),
     theater: (r && r.theater) || th,
@@ -64,6 +229,9 @@ function _lgRoute(C, bd) {
     friction: rf,
     note: t.note || ""
   };
+  var traced = conquestSupplyTrace(C, null);
+  if (traced) out.trace = traced;
+  return out;
 }
 
 function _lgWord(v) {
