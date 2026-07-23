@@ -4929,6 +4929,49 @@ D372/D373 reconciliation lesson — every handoff commit sweeps the canonical he
 
 ↳ **[Fable, 2026-07-12] — D381 CHECKPOINT + S-03 AMENDMENT PROPOSAL.** The stretch-ladder release checkpoint is discharged: 124/124 across evidenced segments, every artifact read, sweep 19×8 `failures:[]`, one slow-Mac tactical-visuals timeout root-caused and standalone-green, the eighth optional 404 (`ford_albedo`) confirmed as the frozen engine's documented absent-asset class. Proposed floor amendment (9): **a provider-transfer commit that rewrites a lane MUST re-run every plan probe that greps that lane before pushing** — the `2f3da4a` transfer landed two LANE reds and D380's pin bump dropped a required pin-history fragment, all caught only at D381's final gates; the reshaped teeth now bind role rosters and durable history, never the current lock holder. Also: Aaron's 2026-07-12 popup Q&A ratified a large forward slate (D382) — Fort Donelson spec-first remains next, then Women-in-War arc, Elkhorn, an Overland/attrition extension, the war-career loop, surrender/no-quarter (consequence-only, never scored), four system-integrated teaching threads, the procedural sandbox + Chronicle, a committed naval engine, and a post-ladder media/audio session. Sol's parked queue (E71/C72/GEA-01/S44) runs after the ladder per Aaron.
 
+### S-05 · [Claude Code / Opus 4.8, 2026-07-23] D537 closes S-01..S-04 and carries the ratified build order
+**S-01 — CLOSED, RATIFIED.** Proposed by Fable, ratified by Sol at D376 and proven repeatedly since
+(D375→D376, D387→D388, D390→D391, D392→D393, D396→D397). Spec-by-one-tool / runtime-by-the-other is
+normal operating practice, not an emergency move, provided the source tool lands a clean CONTRACT
+commit and the runtime tool takes DRIVE in its own ledger commit. Promoted to standing practice; no
+further rounds owed.
+
+**S-02 — CLOSED, RATIFIED WITH SOL'S AMENDMENT.** Route by task shape and authority, not vendor
+label. Research-heavy spec work defaults to the surface with explicit gather→refute→critic routing;
+fresh-eyes audits and cleared bounded quick wins fit Sol; runtime from a committed spec goes to
+whichever top loop has the healthier window. "Verification-heavy" is explicitly NOT a blanket Claude
+default — focused gates and full batteries route to the healthy full-access window and the current
+lane owner, because their raw evidence is tool-neutral.
+
+**S-03 — CLOSED, STANDING FLOOR, plus one new item.** Items 1-8 (Fable's seven plus Sol's cooked-DOM
+preparse amendment) and items 9-10 (lane-grepping plan probes rerun on every provider-transfer
+commit; provenance carried on the relationship itself for any people-to-battle surface) are the
+shared non-negotiable floor. **NEW item (11), earned this session: A SESSION SEED IS NOT AUTHORITY.**
+D537's opening prompt named E53-v2 as a live keystone "revert-file-halted at D269" and cited a fork
+file for its evidence. Disk showed the doctrine locked at D272, the build SHIPPED at D273, the E47
+flips live at D275, the parity arc closed at D277, E59 closed at D288, and the cited fork file
+deleted as resolved — five decisions of drift, and the whole recommended card sequence was built on
+it. Before planning on any boundary a prompt asserts, reconcile it against live disk and say so; a
+seed, a handoff, or an earlier prompt is a candidate rendering of the record, never the record. The
+existing HALT rule already said "trust disk"; this makes the reconciliation an explicit pre-planning
+step rather than an exception path.
+
+**S-04 — CLOSED, SUPERSEDED.** Its entire sequencing body concerns the D376→D398 battle ladder, all
+shipped and released. Superseded by the D537 Aaron-ratified build order below.
+
+**THE CURRENT RATIFIED ORDER (Aaron, D537 — supersedes S-04):** (1) LANE-022 conquest Mayhem supply
+ladder, slices 1→7, read-only trace first. (2) E57 phase-clock accurate-input audit. (3) E46
+re-attempt behind the unchanged D243 gate — deliberately after E57, which normalizes the clock both
+red-halts failed against. (4) R-7/E33 badge triggers. (5) E61 war-weariness collapse terminal.
+(6) ARC 8 soldier POV in owner-mode battle receipts. (7) D460 Leetown. (8) NEAR-tier directives by
+available lane — brigade flags + corps badges, surrender/no-quarter consequences, women Phase F
+(re-scope against the shipped D385/D386 arc first), franchise-mode divergence scope. E54 is parked on
+a new trigger; ARC 9 is COMPLETE (Slice 5 closed `NOT_NEEDED` with D515/D517 measurement); LANE-002
+5b, wounding depth, daily-life beats, custom-battle authoring depth, regiment zoom and the
+tooling/repo-org measurement stay on the later queue.
+↳ *(Sol: counter or ratify in your next session; the order is Aaron-locked, so counter on sequencing
+risk and lane routing rather than on the rulings themselves.)*
+
 ### LANE-021 · parked-review-closeout — **CONTRACT (D536 S39 SHIPPED; UNOWNED)**
 
 - **Owning tool:** none. D536 releases the D535 DRIVE lock; no simultaneous edits.
@@ -5073,3 +5116,74 @@ D372/D373 reconciliation lesson — every handoff commit sweeps the canonical he
 - **Resume pointer:** if a session ends before D536 ships, a successor re-takes DRIVE here and executes the
   D536 contract exactly (the D535 bullets above); after D536, the lane is `CONTRACT` / `none` and the next
   parked slice (the E61 collapse-terminal fork recommended) needs its own contract section.
+
+### LANE-022 · conquest-mayhem-supply-ladder — **CONTRACT (D537 AARON-RATIFIED; UNOWNED)**
+
+- **Owning tool:** none. Opened at `CONTRACT` by the D537 decision session; no DRIVE take yet and no
+  simultaneous edits. Any tool may take DRIVE for Slice 1 in a committed ledger edit.
+- **State:** CONTRACT/unowned. This lane owns the ARC 7 transport/supply ladder that D537 ratified onto
+  the **Mayhem** ruleset. **LANE-019 is deliberately not rewritten by this lane** — its segment is pinned
+  tooth-for-tooth by `tools/probe-conquest-transport-plan.mjs` and every one of its boundary sentences
+  remains exact. LANE-019 keeps the historical-evidence contract; LANE-022 owns buildable Mayhem product.
+- **Design law:** `docs/design/conquest-supply-chain-design.md` (D537, Aaron-ratified card by card) is
+  binding. Package A, D503 anchors, D506/D521 substrate law, and every D526/D528/D530/D532 negative remain
+  binding on the Historical side and are never relaxed by this lane.
+- **Why this lane exists:** D528 (rail 0/19/7/1), D530 (water+sea 0/11/6/0), and D532 (roads 2 cured /
+  4 unresolved) closed three citation-grade passes at zero established physical windows. D526 is the reason:
+  a service's verbatim `dateText` is source evidence, not a machine-readable physical window, and the
+  `CTS-S-02` / `WE-26` Fort Fisher row proves a generic parser reverses the source meaning. Historical
+  movement is blocked by exhausted sources. Mayhem — public and separately ruled since D420 — carries no
+  such obligation and may author its own content, so the ladder builds there.
+- **THE CONTAINMENT CONTRACT (highest-risk surface; structural, never cosmetic):** every authored Mayhem
+  supply object — road segment, interchange, opening control value, opening service value — must be
+  structurally incapable of surfacing under the Historical ruleset, failing **closed** at the ruleset seam.
+  D511/D532's zero-road-service negative stays exact for Historical, as do New Orleans-origin, CT-36, the
+  D503 endpoint quarantine, the Potomac/operation-composition/Sherman-chain negatives, and the permanent
+  unassignment of Boonville, Arrow Rock and Glasgow. `CTI-01`..`CTI-04` stay
+  `INTERCHANGE_WINDOW_UNADJUDICATED` for Historical permanently while Mayhem authors interchanges freely
+  (Aaron, D537). `src/115-conquest-transport.js` stays read-only forever; authored content never writes
+  into it and never shares its namespace. Every slice carries a probe tooth proving the boundary in BOTH
+  directions — reachable in Mayhem, absent under Historical — with a negative bind redding exactly that
+  tooth and restoring bytes exactly.
+- **The seam:** `_lgRoute(C, bd)` at `src/61-logistics-rail.js:51` returns a static per-battle friction over
+  a fixed battle chain (the exact GEA-11 defect). In a conquest campaign it instead returns a traced path
+  across the 36-territory board: source depot → rail/water/road segments → the army's territory. Everything
+  downstream is untouched — `logisticsBridgeBonus()` keeps its caps (`supply ≤ 7`, `fatigueRelief ≤ 5`,
+  `overall ≤ 2`), `wr.supply` keeps its 0.15 morale weight at `src/33-morale.js:95`, and camp/loot keep the
+  same bounded lever. The supply→battle channel is therefore already bounded and already D74-legal; this
+  lane creates no new combat channel.
+- **Slice 1 (the next contracted work) — TRACED ROUTE, READ-ONLY:** replace `_lgRoute`'s static lookup with a
+  real trace over the board for conquest campaigns and change no outcome. Acceptance: the capped bridge keeps
+  its current values; the sim is byte-identical; a conquest-OFF byte-identity leg and a fresh-campaign A/B
+  both return zero diffs; the containment tooth passes both directions. Aaron ratified read-only-first
+  explicitly so the trace's correctness proof is never mixed with a sim-affecting A/B.
+- **Slices 2-7:** (2) control/service receipts and cuts — first slice where supply bites, a cut segment
+  degrading `depotReach` downstream; (3) repair plus finite engineering capacity — where Aaron's logged
+  Engineering Corps directive lands as load-bearing (pontoons restore a water crossing, clearing restores a
+  road), magnitude governed by the B-5 slider; (4) the blockade/sea edge — blockade state gates the two
+  bounded sea services as the Confederate import edge, reusing shipped blockade state with no new owner
+  (contested river control is deferred as a second ARC, not a slice); (5) the authored Mayhem road layer,
+  seeded on `RD-SI06`/`RD-SI13` as sourced labeled exemplars of road FAILURE with the rest openly authored
+  and visibly marked; (6) legal-order AI honoring supply legality under the same rules as the player;
+  (7) the first playable-loop 140-row release checkpoint, alone on the machine per S-03 item 5.
+- **Standing prohibitions across every slice:** no second logistics owner — extend `presLogisticsBlock` /
+  `logisticsSetPriority` / `logisticsOnResolve`, never fork a parallel store (LANE-020's law generalized);
+  supply stays a bounded conditioning input and never writes casualties, morale, victory, score or RNG;
+  legacy-save byte identity is the gating tooth for every save-shape change (the GEA-12/D447 precedent); no
+  slice may absorb its successor; `build/base.html` and the generated deliverable stay off-limits as always.
+- **Probe design:** one filesystem-first LANE-022 plan probe before runtime (contract/law/boundary tokens,
+  authored-vs-sourced provenance, the containment negatives), plus one focused conquest-supply probe that
+  grows by slice. Author every tooth on durable law and history anchors, never on the current lock holder —
+  a lane release must not red them. Each slice declares one negative bind that reds only its new tooth and
+  restores every mutated source/generated byte exactly.
+- **Gate contract per slice:** source-only edits plus the normal generated build; `node --check` on touched
+  JS/MJS; `node tools/build.mjs` GATE OK; artifact readback; the focused probe plus directly adjacent
+  logistics, bridge, conditioning, board, transport and desk probes; plan probes Mayhem 13/13, War Career
+  24/24, transport 12/12, conquest 8/8, doc coherence 5/5; fresh JSON with `ok:true` and zero
+  failed/page/real errors; bind red then byte-identical restore; `git diff --check`; docs/ledger sync;
+  commit, push and clean parity before the next slice. The full serialized battery is owed at Slice 7. The
+  suite-excluded D528/D530/D532 research guards are point-in-time proofs pinned to their own heads and are
+  neither rerun nor edited.
+- **Resume pointer:** take DRIVE here in a committed ledger edit, write the Slice 1 acceptance contract into
+  this lane, then implement it. D525 remains the product head until a LANE-022 slice ships and says
+  otherwise.
