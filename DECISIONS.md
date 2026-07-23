@@ -4,6 +4,83 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D531 — CONTRACT_CLAIM_SPECIFIC_ROAD_GAP_RESEARCH: LANE-019 TAKES DOCS/RESEARCH DRIVE FOR EXACT RD-E11/E15/E17/E18/SI06/SI13 — [CHATGPT/CODEX 5.6 SOL ULTRA, ARCHITECTURE/RESEARCH CONTRACT] (2026-07-22)
+
+**VERDICT: `CONTRACT_CLAIM_SPECIFIC_ROAD_GAP_RESEARCH`.** From clean, pushed D530
+`5b0af8eb72b4d24e7efc9c88c5e4cc383e8792cc`, the D514 completion ledger, Package A, D511 road
+finding, D528/D530 zero-positive physical-window results, and current conquest owners were
+reconciled. A Historical transport slice has no established rail/water/sea legal-now window, while
+a Mayhem-only product slice would require uncontracted control, service condition, receipt,
+topology, order, opening-value, and live/save owners. D514 and V1 expressly permit further
+claim-specific road research. The smallest independent prerequisite is therefore the exact six
+remaining road gaps in the existing sole claim home. LANE-019 takes ChatGPT/Codex DRIVE for this
+docs/research contract only; D525 remains the product head.
+
+**Sole artifact and exact scope:** D532 works only in existing
+`docs/design/strategic-road-transport-research-packet.md` and audits exact ordered `RD-E11`,
+`RD-E15`, `RD-E17`, `RD-E18`, `RD-SI06`, and `RD-SI13`. It appends exactly one normative audit
+section/table. Existing `RDS-01`..`RDS-65` remain byte-identical and ordered; only genuinely
+accessed, used, and claim-resolved new sources may append contiguously from `RDS-66`. Every existing
+node, candidate-edge, Potomac, Sherman-interval, non-link, interchange, theater, known-gap,
+eligibility, validation-concept, verdict, transport-JSON, and product-owner surface remains
+byte-identical. No new packet, cross-mode table, schema, registry, parser, data field, or runtime
+owner is authorized.
+
+**Source and disposition law:** every claim resolves a canonical underlying-work `familyKey`,
+`RDS-*`, role, source type, precise locator, and verbatim or bounded precision. Every counted source
+and locator is manually accessed and read back; different hosts or editions of one work count once.
+Search snippets, inaccessible citations, modern highways, and generic context do not count.
+Deterministic precedence is material conflict → `ROAD_GAP_DISPUTED`; complete row-specific floor →
+`ROAD_GAP_CURED`; otherwise → `ROAD_GAP_UNRESOLVED`. Zero cures is valid. These are docs-only
+research dispositions and cannot create a road service, eligibility, adjacency, topology, route,
+movement, control, condition, capacity, interchange, or runtime/data enum.
+
+**Exact six floors:** `RD-E11` needs two independent non-tertiary families placing a dated Civil War
+army or military-wagon passage on the exact Marshall-Waskom-Shreveport Stagecoach Road, including
+direction and the load-bearing crossing set. `RD-E15` needs an exact named Rolla-Lebanon-Springfield
+military supply route plus an independent family for that same route and operation. `RD-E17` needs a
+second family for the exact 6-8 June 1862 sixty-team Winchester-Harpers Ferry-return movement plus
+the loading-side/depot handling; no team Potomac crossing may be inferred. `RD-E18` needs two
+families for the detached force's 14 October 1864 named-road passage, but Boonville, Arrow Rock, and
+Glasgow remain unassigned under D503, the candidate ends at Arrow Rock, and a source cure creates no
+product row or water interchange. `RD-SI06` and `RD-SI13` each need a second family for the same
+unit/date and exact bridge, ferry, corduroy, weather, wagon, or delay chain—not broad itinerary.
+
+**Permanent negatives:** New Orleans-origin and CT-36 claims remain closed. Harpers Ferry bridge
+loss, Breck's skiff crossing, Williamsport, Shepherdstown, Boteler's Ford, and later depot activity
+remain distinct. Rail, water, port, ferry, telegraph, civilian-stage, and modern-highway evidence
+cannot piggyback into a military road claim or interchange. No segment, operation, Sherman unit,
+date, or handling chain may be composed. Any conflict with D503 anchors or an existing candidate,
+non-link, interchange, or D511 corrected fact HALTs instead of rewriting the inherited record.
+
+**Probe, bind, allowlists, and gates:** D532 may add only suite-excluded
+`tools/probe-conquest-road-gap-research.mjs` and update only the transport-plan current-boundary
+tooth. The guard proves singular-audit/source/section preservation, appended-source access/use/
+claim/manual-readback resolution, exact six-row order and inherited facts, source metadata,
+dispositions/floors, permanent negatives, D503 endpoint quarantine, and no product authority. Bind G
+removes enough support from the first cured row—or falsely promotes the first unresolved row at zero
+cures—so only `DISPOSITION / SOURCE-ENDPOINT FLOOR` reds, then restores packet/probe bytes exactly.
+D531 changes exactly the eleven routing/law/archive/current-boundary-probe paths named in HANDOFF;
+D532 may additionally change only the road packet and new guard. Data, every `src/`, runtime probe,
+manifest/build/suite/save owner, rail/water packet, generated HTML, frozen base, and every unlisted
+file are barred. D531 proves transport plan 12/12, doc coherence, conquest/Mayhem/War-Career plans,
+normal build/check, the exact D529 archive, allowlist, protected/artifact checks, and diff check.
+D532 adds manual source readback, dedicated proof, Bind G/restore, terminal routing proof, and the
+exact D530 archive. No browser or full 140-row battery is owed unless a protected shared product
+surface moves.
+
+**Routing verification decision:** transport plan 12/12, doc coherence 5/5, conquest plan 8/8,
+Mayhem plan 13/13, War Career plan 24/24, normal build/check `GATE OK`, exact D529 archive, exact
+eleven-file allowlist, protected/artifact checks, and `git diff --check` pass. Independent Sol-high
+review initially blocked the generic floor/allowlist tooth. The final tooth now extracts the current
+LANE/HANDOFF/Package-A/DECISIONS contract surfaces, pins every route/date/handling marker, and
+exact-compares the literal eleven/thirteen-file arrays. Fresh independent re-audit reports PASS.
+
+**EXACT NEXT:** commit, push, fetch, and prove D531 clean; then execute only D532's six-row research
+pass. Record the honest cured/unresolved/disputed result without lowering a floor, prove every
+source/probe/bind/restore/gate requirement, release LANE-019 to `CONTRACT` / `none` with D525 still
+the product head, and immediately reload D514. No product authority follows from this contract.
+
 ## D530 — WATER_SEA_PHYSICAL_CORRIDOR_RESEARCH_COMPLETE: ZERO ESTABLISHED WINDOWS; ELEVEN SNAPSHOTS; SIX UNRESOLVED; LANE-019 RELEASES — [CHATGPT/CODEX 5.6 SOL ULTRA, HISTORICAL RESEARCH/JUDGMENT] (2026-07-22)
 
 **VERDICT: `WATER_SEA_PHYSICAL_CORRIDOR_RESEARCH_COMPLETE`.** The exact D529 audit closes at

@@ -1,17 +1,46 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D530 next-lane=LANE-019 state=CONTRACT owner=none -->
-> **Live status (D530, 2026-07-22):** LANE-019 is `CONTRACT` / `none` after the exact 15 inland-water plus two bounded-sea audit closed with zero established physical-corridor windows, 11 snapshot-only rows, six unresolved rows, and zero disputed rows.
+<!-- LIVE-HEAD decision=D531 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D531, 2026-07-22):** LANE-019 is `DRIVE` / `ChatGPT/Codex` solely for a docs/research-only claim-specific audit of `RD-E11`, `RD-E15`, `RD-E17`, `RD-E18`, `RD-SI06`, and `RD-SI13` in the existing road packet.
 >
-> **Boundary:** D525 remains the product head; D528's rail result and all four unadjudicated interchanges remain exact. No data, runtime, state, save, UI, topology, route, movement, or generated product is authorized.
+> **Boundary:** D525 remains the product head; D528/D530's zero established rail/water/sea windows, all four unadjudicated interchanges, and zero road services remain exact. No data, runtime, state, save, UI, topology, route, movement, or generated product is authorized.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block owns the boundary. Under D514, reload the live ledger and separately contract the next dependency-ready prerequisite; roads remain unavailable and LANE-020 remains independently blocked.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D531 contract own the boundary. D532 executes only the six-row claim-specific research pass; closed New Orleans, CT-36, endpoint, and mode-separation negatives remain binding.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-22 — D531 claim-specific road-gap research contract taken
+
+From clean pushed D530 at `5b0af8e`, the D514 ledger, Package A, D511 road result, D528/D530
+zero-positive physical-window results, and current conquest owners were reconciled. Historical
+transport still has no established rail/water/sea legal-now window, while Mayhem-only product work
+would require uncontracted control, service-condition, receipt, topology, order, opening-value, and
+live/save owners. D514 and V1 expressly authorize further claim-specific road research, so
+LANE-019 takes ChatGPT/Codex docs/research DRIVE only for exact `RD-E11`, `RD-E15`, `RD-E17`,
+`RD-E18`, `RD-SI06`, and `RD-SI13`. D525 remains the product head.
+
+D532 may append exactly one normative audit to the existing road packet, preserve every existing
+packet section and `RDS-01`..`RDS-65`, and append only genuinely accessed, used, claim-resolved
+sources contiguously from `RDS-66`. The row-specific two-family, named-route, exact-operation,
+loading-side/handling, and D503-endpoint floors are fail-closed; zero cures is valid. New Orleans,
+CT-36, unassigned Boonville/Arrow Rock/Glasgow, distinct Potomac crossings, and mode/operation/
+segment-composition negatives remain binding. Research dispositions are docs-only and create no
+service, interchange, eligibility, topology, route, movement, state, save, UI, or runtime authority.
+
+D531's exact eleven-file routing allowlist and D532's exact thirteen-file research allowlist are
+closed in HANDOFF and LANE-019. D532 adds only the existing road packet and one suite-excluded
+filesystem guard. Bind G must make only `DISPOSITION / SOURCE-ENDPOINT FLOOR` red by breaking the
+first cured row or falsely promoting the first unresolved row, then restore packet/probe bytes
+exactly. D531 commits and pushes only after transport 12/12, coherence 5/5, conquest 8/8, Mayhem
+13/13, War Career 24/24, normal build/check, exact D529 archive, exact allowlist, protected/artifact
+audits, and `git diff --check` are green. D532 then executes immediately under D514.
+Independent Sol-high review first blocked the generic floor/allowlist tooth. The repaired tooth now
+extracts all four D531 contract surfaces, pins every route/date/handling marker, and exact-compares
+the eleven/thirteen-file arrays; fresh independent re-audit reports PASS.
 
 ## 2026-07-22 — D530 water/sea physical-corridor research complete
 

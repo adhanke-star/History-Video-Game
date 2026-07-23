@@ -3684,15 +3684,15 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **CONTRACT (D530 WATER/SEA RESEARCH COMPLETE; UNOWNED)**
+### LANE-019 · conquest-design-law — **DRIVE (D531 CLAIM-SPECIFIC ROAD EVIDENCE RESEARCH CONTRACT)**
 
-- **Owning tool:** none. No simultaneous edits.
-- **State:** CONTRACT. D530 completed the exact 15 inland-water plus two bounded-sea physical
-  corridor/landing existence-window adjudication in the existing D499 packet. The result is zero
-  established windows, 11 snapshot-only rows, six unresolved rows, and zero disputed rows. D528's
-  rail result remains zero established with every unresolved/disputed row quarantined. D525 remains
-  the product head. The four interchanges remain unadjudicated. No service or interchange now has a
-  machine-readable Historical window, and D530 authorizes no product change.
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra, solely for the exact D531 docs/research contract
+  below. No simultaneous edits.
+- **State:** DRIVE. D531 takes only the exact `RD-E11`, `RD-E15`, `RD-E17`, `RD-E18`, `RD-SI06`,
+  and `RD-SI13` claim-specific audit in the existing road packet. D530's 0/11/6/0 water/sea result
+  and D528's zero-positive rail result remain exact; every unresolved/disputed row and all four CTIs
+  stay quarantined. D525 remains the product head. No service or interchange has a machine-readable
+  Historical window, road service remains absent, and D531 authorizes no product change.
   D525 remains only a pure detached campaign-calendar query in the existing sole conquest-state
   owner and D525 adds no live or operational authority. D523's strict factory/view remains exact.
   D521 remains the shipped pure physical-service reader. No live
@@ -4419,6 +4419,73 @@ next green commit and confer through this ledger instead of permitting simultane
   contract the next dependency-ready prerequisite. Roads remain unavailable; no Historical rail,
   water, or sea legal-now window or full interchange exists; LANE-020 remains independently blocked.
   Do not infer product authority from this docs/research result.
+- **D531 DRIVE take and dependency verdict:** from clean pushed D530
+  `5b0af8eb72b4d24e7efc9c88c5e4cc383e8792cc`, ChatGPT/Codex owns only the D532 research contract
+  below. Historical rail/water/sea windows remain zero-positive and a Mayhem-only product slice still
+  lacks control, service condition, receipts, topology, orders, opening values, and live/save
+  lifecycle. D514/V1 explicitly permit further claim-specific road research. The smallest owner-safe
+  prerequisite is therefore the six remaining road gaps in the existing sole claim home.
+- **D531 exact road-gap scope and sole artifact:** D532 works only in
+  `docs/design/strategic-road-transport-research-packet.md` and audits exact ordered `RD-E11`,
+  `RD-E15`, `RD-E17`, `RD-E18`, `RD-SI06`, and `RD-SI13`. Append exactly one normative audit
+  section/table. Existing `RDS-01`..`RDS-65` stay byte-identical and ordered; genuinely accessed,
+  used, and claim-resolved new sources append contiguously from `RDS-66`. Existing node, edge,
+  Potomac, Sherman, non-link, interchange, theater, known-gap, eligibility, validation, verdict,
+  transport JSON, and product-owner surfaces remain byte-identical. Create no new packet, table
+  owner, schema, registry, parser, data field, or runtime owner.
+- **D531 claim/source law and dispositions:** every claim carries a canonical underlying-work
+  `familyKey`, resolved `RDS-*`, role, type, precise locator, and verbatim/bounded precision. Every
+  counted source/locator is manually accessed and read back; different hosts/editions of one work
+  count once. Search snippets, inaccessible citations, modern highways, and generic context do not
+  count. Precedence is conflict → `ROAD_GAP_DISPUTED`; complete row floor → `ROAD_GAP_CURED`;
+  otherwise `ROAD_GAP_UNRESOLVED`. Zero cures is valid. All labels are docs-only and create no road
+  service, eligibility, adjacency, topology, route, movement, control, condition, or runtime enum.
+- **D531 exact six floors:** `RD-E11` needs two claim-specific families for a dated military passage
+  on the exact Marshall-Waskom-Shreveport Stagecoach Road plus direction/crossing set. `RD-E15` needs
+  an exact named Rolla-Lebanon-Springfield military supply route and a second family for that route.
+  `RD-E17` needs a second family for the 6-8 June 1862 sixty-team operation and exact loading-side/
+  depot handling, with no inferred Potomac crossing. `RD-E18` needs two families for the detached
+  force's 14 October 1864 named-road passage, but D503 endpoints remain unassigned and source cure
+  creates no product row. `RD-SI06` and `RD-SI13` each need a second family for the same unit/date
+  and exact handling chain, not a broad itinerary.
+- **D531 permanent negatives:** New Orleans-origin and CT-36 road claims stay closed and outside
+  D532. Boonville, Arrow Rock, and Glasgow remain unassigned; `RD-E18` ends at Arrow Rock and Glasgow
+  is only its target. Harpers Ferry, Williamsport, Shepherdstown, and Boteler's Ford remain distinct.
+  Rail/water/ferry/port/telegraph/civilian-stage/modern-highway evidence cannot piggyback into a road
+  claim or interchange. No route segment or Sherman unit/date/handling chain may be composed.
+- **D531 probe and Bind G:** D532 may add suite-excluded
+  `tools/probe-conquest-road-gap-research.mjs` and update only the transport-plan current-boundary
+  tooth. The guard proves singular audit, preservation, appended-source claim/manual-readback
+  resolution, exact six-row order and inherited facts, source metadata, dispositions/floors, named
+  negatives, D503 endpoint quarantine, and no product authority. Bind G breaks enough support from
+  the first cured row, or promotes the first unresolved row without curing it. Only
+  `DISPOSITION / SOURCE-ENDPOINT FLOOR` may red; packet/probe bytes restore exactly.
+- **D531/D532 allowlists and gates:** D531's exact eleven-file allowlist changes only `AUTONOMOUS-RUN.md`, `COORDINATION.md`,
+  `DECISIONS.md`, `HANDOFF.md`, `RUN-LOG.md`, `START-HERE.md`, `V1-CHECKLIST.md`, `WAKE-UP.md`,
+  `docs/design/unlocked-but-judged-design.md`, `legacy/HANDOFF-ARCHIVE.md`, and
+  `tools/probe-conquest-transport-plan.mjs`. D532's exact thirteen-file allowlist may additionally
+  change only `docs/design/strategic-road-transport-research-packet.md` and add
+  `tools/probe-conquest-road-gap-research.mjs`. Data, every `src/`
+  and runtime probe, manifest/build/suite/save owner, rail/water packet, generated HTML, frozen base,
+  and all unlisted files are barred. D531 proves transport plan 12/12, doc coherence, conquest/
+  Mayhem/War-Career plans, build/check, exact 9,695-byte D529 archive at SHA-256
+  `cb8ca5c038b2921962cbdf30a626db84b770c6a5213390b1b434acdc9fc96012`, exact allowlist, protected/
+  artifact/diff audits. D532 adds source readback, dedicated proof, Bind G/restore, terminal proof,
+  and exact 6,365-byte D530 archive at SHA-256
+  `0c7df72906c5801ea936831e35590c2f5720dea29ecbcface6f1a55f77120fdf`. No browser/full battery is
+  owed unless a protected shared surface moves.
+- **D531 resume pointer:** after this contract is committed, pushed, fetched, and clean, execute only
+  D532's six-row research pass. Record every honest cure/unresolved/disputed result and permanent
+  negative; prove source/probe/bind/restore/gates; commit/push/fetch clean; release LANE-019 to
+  `CONTRACT` / `none` with D525 still the product head; and immediately reload D514. D532 may not
+  change data/runtime/current-turn/state/receipt/topology/movement/live-save behavior or make a
+  lane-level `SHIPPED` claim.
+- **D531 routing proof:** transport plan 12/12, doc coherence 5/5, conquest plan 8/8, Mayhem plan
+  13/13, War Career plan 24/24, normal build/check `GATE OK`, exact D529 archive, exact eleven-file
+  allowlist, protected/artifact checks, and `git diff --check` pass. Independent Sol-high review
+  found and forced repair of an initially generic floor/allowlist tooth; the final tooth extracts all
+  four D531 contract surfaces, pins each route/date/handling marker plus exact 11/13 path arrays, and
+  the fresh independent re-audit reports PASS.
 - **Last-touched commits:** D503 standalone design-lock `a3403da`; D503 final-law
   commit `44ffac5`; Slice-1 DRIVE take `7a0ca42`; allowlist/gate HALT ledger
   `cb46f55`; D504 Slice-1 implementation `74237b9`; D505 docs-only contract ships in
@@ -4437,7 +4504,8 @@ next green commit and confer through this ledger instead of permitting simultane
   Historical-window finding is `24c7a2b`; D527's rail-window research DRIVE contract is
   `5330ab4`; D528's rail-window research result and CONTRACT/unowned release are `4ab8440`;
   D529's water/sea research DRIVE contract is `2196d1b`; D530's water/sea research result and
-  CONTRACT/unowned release ship in the commit containing this entry.
+  CONTRACT/unowned release are `5b0af8e`; D531's six-gap road-research DRIVE contract ships in the
+  commit containing this entry.
 - **History:** D502 created the design-only contract. Aaron chose Package A. D503
   completed the final law. D504 shipped the read-only territory board. D505 audits
   every rail/water evidence row, contracts the read-only substrate, and D506 ships
@@ -4468,7 +4536,9 @@ next green commit and confer through this ledger instead of permitting simultane
   SHIPPED claim. D529 takes DRIVE only for the exact 15+2 water/sea physical-corridor research
   contract in the existing D499 packet; it excludes every CTI and all product behavior. D530 closes
   that audit at 0/11/6/0, retains every CTI and product surface behind the boundary, and releases the
-  lane to CONTRACT/unowned.
+  lane to CONTRACT/unowned. D531 then takes DRIVE only for the exact six-row claim-specific road
+  evidence contract in the existing packet; D525 remains the product head and every product surface
+  remains closed.
 
 ### LANE-020 · desk-to-battle-pacing — **CONTRACT (D519 SLICE-5 DEPENDENCY; UNOWNED)**
 

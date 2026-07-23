@@ -27,13 +27,13 @@ step("Historical dates and Mayhem physical eligibility preserve packet semantics
 step("bounded sea and zero-road verdicts are exact",()=>{need(pack.seaServices[0].evidenceRowIds[0]==="WE-24"&&pack.seaServices[0].direction==="one-way","WE-24 one-way sea bound lost");need(pack.seaServices[1].evidenceRowIds[0]==="WE-26"&&pack.seaServices[1].scope==="operation-specific"&&pack.seaServices[1].historicalEligibility.status==="operation-specific","WE-26 operation bound lost");need(pack.roadStatus==="ROAD_REQUIRES_BOUNDED_SOURCE_PASS"&&!Object.hasOwn(pack,"roadServices"),"road verdict/service zero lost");need(read("DECISIONS.md").includes("SEA_READY_BOUNDED_ROWS_WE_24_WE_26_ONLY"),"sea verdict missing");return {sea:"WE-24/WE-26",roadServices:0};});
 step("existing owners stay separate and module creates no behavior or UI",()=>{const src=read("src/115-conquest-transport.js");for(const token of ["blockadeInit","logisticsInit","westernTheaterInit","bridgeArmy","bridgeAutoResolve","warCareerStart","fldCustom","openSheet","document.","localStorage","settings","applySave","saveLocal","importSave","exportSave"])need(!src.includes(token),"owner/UI token leaked: "+token);need(!/\bG\b|\bC\b/.test(src),"G/C authority leaked");need(src.includes("conquestTransportNormalized")&&src.includes("Object.freeze"),"read/freeze helper missing");return {ownerLeaks:0,uiTrace:0};});
 step("exact allowed fields exclude later gameplay authority",()=>{for(const r of [...pack.railServices,...pack.waterServices,...pack.seaServices]){need(exact(r,serviceKeys)&&exact(r.historicalEligibility,["dateText","status"]),r.id+" service fields drifted");}for(const r of pack.interchanges)need(exact(r,interchangeKeys)&&exact(r.historicalEligibility,["dateText","status"]),r.id+" interchange fields drifted");for(const r of pack.nonLinks)need(exact(r,nonLinkKeys),r.id+" non-link fields drifted");const text=JSON.stringify(pack);for(const key of ["movement","adjacency","ownership","control","condition","capacity","economy","reinforcement","reward","save","state","ai","battle","winner","score","surrender","tacticalOutput"])need(!new RegExp('"'+key+'"','i').test(text),"later field "+key);return {serviceFields:13,interchangeFields:10,nonLinkFields:9};});
-step("current LANE-019 D530 terminal preserves the exact water/sea research result and product boundary",()=>{
+step("current LANE-019 D531 DRIVE preserves the six-gap road-research contract and product boundary",()=>{
   const lane=read("COORDINATION.md"),segment=(/### LANE-019 · conquest-design-law[\s\S]*?(?=\n### LANE-\d+ ·|\n## 6 ·|$)/.exec(lane)||[])[0]||"";
   need(segment,"LANE-019 segment missing");
   const state=/- \*\*State:\*\*\s*(LAW-DRAFT|CONTRACT|DRIVE|VERIFY|SHIPPED)\b/m.exec(segment),owner=/- \*\*Owning tool:\*\*\s*([^\n]+)/m.exec(segment);
-  need(state&&state[1]==="CONTRACT","LANE-019 current State must be CONTRACT");
-  need(owner&&/^none\b/.test(owner[1].trim()),"LANE-019 current owner must be none");
-  need(segment.includes("CONTRACT (D530 WATER/SEA RESEARCH COMPLETE; UNOWNED)"),"LANE-019 D530 terminal heading missing");
+  need(state&&state[1]==="DRIVE","LANE-019 current State must be DRIVE");
+  need(owner&&/^ChatGPT\/Codex 5\.6 Sol Ultra\b/.test(owner[1].trim()),"LANE-019 current owner must be ChatGPT/Codex 5.6 Sol Ultra");
+  need(segment.includes("DRIVE (D531 CLAIM-SPECIFIC ROAD EVIDENCE RESEARCH CONTRACT)"),"LANE-019 D531 DRIVE heading missing");
   for(const token of ["D520 architecture/overlap verdict:","Slice-2B exact contract — pure physical-service evidence query:","D521 delivery record — pure physical-service evidence query:","conquestTransportPhysicalServices","exactly 11→18","ROAD_REQUIRES_BOUNDED_SOURCE_PASS","no stateful or playable transport","D522 architecture/representation verdict:","Slice-3A exact contract — detached conquest identity/state serialization foundation:","D523 delivery record — detached conquest identity/state foundation:","focused state proof is 10/10"])
     need(segment.includes(token),"LANE-019 historical D520-D523 contract or delivery missing: "+token);
   need(/roads remain absent/i.test(segment),"LANE-019 road-unavailable boundary missing");
@@ -73,9 +73,10 @@ step("current LANE-019 D530 terminal preserves the exact water/sea research resu
   for(const token of ["`CTS-W-01` through `CTS-W-15`","sole claim\nhome is the existing D499 `docs/design/strategic-water-transport-research-packet.md`","Genuinely\naccessed and used unique sources","Existing `SW-01` through `SW-32` rows remain byte-identical and ordered","physical corridor/landing existence**, not generic navigability","Every source counted toward a claim","must be accessed and manually read back at its locator","requires two independent\nnon-tertiary families for the exact corridor and each asserted bound","at least one direct physical\nfamily supporting physical presence and continuity","Two passages or snapshots do not establish","`CTS-S-02` / `WE-26` remains the\nhard parser negative","blockade\nrunners after Fort Fisher, not the physical disappearance","every appended row resolved from at least one audit claim and its recorded manual\nreadback","removes enough qualifying families or\nclaims from the first established row to deterministically violate the complete positive floor","leaving fewer than two independent families or removing its required direct continuity support"])
     need(lawSection.includes(token),"D529 Package A critical law moved: "+token.replace(/\n/g," "));
   need(/No new packet,[\s\S]{0,160}runtime owner is\s+authorized/.test(lawSection),"D529 Package A sole-artifact/no-new-owner law moved");
-  const handoff=read("HANDOFF.md"),decisions=read("DECISIONS.md");
+  const handoff=read("HANDOFF.md"),handoffArchive=read("legacy/HANDOFF-ARCHIVE.md"),decisions=read("DECISIONS.md");
   for(const token of ["Exact artifact and row scope:","Physical-corridor claim law:","Closed docs-only dispositions:","Permanent semantic negatives:","Interchange exclusion:","Probe and Bind W:"])
-    need(handoff.includes(token),"D529 HANDOFF contract body missing: "+token);
+    need(handoffArchive.includes(token),"archived D529 HANDOFF contract body missing: "+token);
+  need(handoffArchive.includes("D531 SUPERSEDED HANDOFF HEAD D529 (BYTE-VERBATIM):BEGIN")&&handoffArchive.includes("D531 SUPERSEDED HANDOFF HEAD D529 (BYTE-VERBATIM):END"),"D529 HANDOFF archive markers missing");
   for(const token of ["## D529 — CONTRACT_WATER_PHYSICAL_CORRIDOR_WINDOW_RESEARCH:","existing D499","PHYSICAL_CORRIDOR_WINDOW_ESTABLISHED","physical corridor/landing existence, not generic","Every appended source row must resolve","deterministically leave fewer than two independent families or remove required direct continuity"])
     need(decisions.includes(token),"D529 decision contract body missing: "+token);
   for(const token of ["D530 delivery record — water/sea physical-corridor research:","0 PHYSICAL_CORRIDOR_WINDOW_ESTABLISHED","11 PHYSICAL_CORRIDOR_PRESENCE_SNAPSHOTS_ONLY","6 PHYSICAL_CORRIDOR_EXISTENCE_UNRESOLVED","0 PHYSICAL_CORRIDOR_EXISTENCE_DISPUTED","CTS-W-02","CTS-S-01","D530 product boundary:","D530 releases LANE-019 at `CONTRACT` / `none`","D530 resume pointer:"])
@@ -87,11 +88,45 @@ step("current LANE-019 D530 terminal preserves the exact water/sea research resu
     need(handoff.includes(token),"D530 HANDOFF result missing: "+token);
   for(const token of ["## D530 — WATER_SEA_PHYSICAL_CORRIDOR_RESEARCH_COMPLETE:","11 PHYSICAL_CORRIDOR_PRESENCE_SNAPSHOTS_ONLY","6 PHYSICAL_CORRIDOR_EXISTENCE_UNRESOLVED","LANE-019 releases to `CONTRACT` / `none`"])
     need(decisions.includes(token),"D530 decision result missing: "+token);
+  const roadRows=["RD-E11","RD-E15","RD-E17","RD-E18","RD-SI06","RD-SI13"];
+  const norm=s=>s.replace(/\s+/g," ").trim();
+  const laneD531=segment.slice(segment.indexOf("- **D531 DRIVE take and dependency verdict:"),segment.indexOf("- **Last-touched commits:"));
+  const handoffD531=(/\*\*⚡ AMENDMENT — 2026-07-22, D531:[\s\S]*?(?=\n\*\*⚡ AMENDMENT|$)/.exec(handoff)||[])[0]||"";
+  const decisionD531=(/## D531 — CONTRACT_CLAIM_SPECIFIC_ROAD_GAP_RESEARCH:[\s\S]*?(?=\n## D530 —)/.exec(decisions)||[])[0]||"";
+  need(laneD531&&handoffD531&&decisionD531,"D531 current contract segment missing");
+  const laneRoadScope=segment.slice(segment.indexOf("- **D531 exact road-gap scope and sole artifact:"),segment.indexOf("- **D531 claim/source law and dispositions:"));
+  need(JSON.stringify(Array.from(laneRoadScope.matchAll(/`(RD-(?:E\d{2}|SI\d{2}))`/g),m=>m[1]))===JSON.stringify(roadRows),"D531 lane exact six-row order moved");
+  for(const token of ["D531 DRIVE take and dependency verdict:","D531 exact road-gap scope and sole artifact:","existing road packet","Existing `RDS-01`..`RDS-65` stay byte-identical and ordered","D531 claim/source law and dispositions:","ROAD_GAP_DISPUTED","ROAD_GAP_CURED","ROAD_GAP_UNRESOLVED","Zero cures is valid","D531 exact six floors:","D531 permanent negatives:","New Orleans-origin and CT-36 road claims stay closed","Boonville, Arrow Rock, and Glasgow remain unassigned","D531 probe and Bind G:","tools/probe-conquest-road-gap-research.mjs","DISPOSITION / SOURCE-ENDPOINT FLOOR","D531/D532 allowlists and gates:","exact thirteen-file allowlist","D531 resume pointer:","D525 still the product head"])
+    need(segment.includes(token),"LANE-019 D531 contract missing: "+token);
+  const lawD531=(/### 8\.35 D531 claim-specific road evidence research contract[\s\S]*$/.exec(law)||[])[0]||"";
+  need(lawD531,"D531 Package A contract missing");
+  const lawRoadScope=lawD531.slice(0,lawD531.indexOf("The existing road packet is the sole claim home."));
+  need(JSON.stringify(Array.from(lawRoadScope.matchAll(/`(RD-(?:E\d{2}|SI\d{2}))`/g),m=>m[1]))===JSON.stringify(roadRows),"D531 Package A exact six-row order moved");
+  for(const token of ["The existing road packet is the sole claim home.","Exactly one normative audit section/table may","Existing `RDS-01`..`RDS-65` remain byte-identical and ordered","must be\nmanually accessed and read back","ROAD_GAP_DISPUTED","ROAD_GAP_CURED","ROAD_GAP_UNRESOLVED","Zero cures is\nvalid","The six floors are exact.","New Orleans-origin and CT-36 road claims remain closed","Boonville, Arrow Rock, and Glasgow remain unassigned","Bind G removes enough support","first unresolved row without curing it","Only `DISPOSITION / SOURCE-ENDPOINT FLOOR` may\nred","exact eleven-file allowlist","exact thirteen-file allowlist","D525 still the product head"])
+    need(lawD531.includes(token),"D531 Package A critical law moved: "+token.replace(/\n/g," "));
+  for(const token of ["D531: LANE-019 TAKES DOCS/RESEARCH DRIVE FOR THE SIX REMAINING CLAIM-SPECIFIC ROAD GAPS","Sole artifact and preservation law:","Exact six floors:","Permanent negatives:","Probe and Bind G:","exact thirteen-file allowlist","D525 remains the product head"])
+    need(handoff.includes(token),"D531 HANDOFF contract missing: "+token);
+  for(const token of ["## D531 — CONTRACT_CLAIM_SPECIFIC_ROAD_GAP_RESEARCH:","existing sole claim home","ROAD_GAP_DISPUTED","ROAD_GAP_CURED","ROAD_GAP_UNRESOLVED","Exact six floors:","New Orleans-origin and CT-36 claims remain closed","DISPOSITION / SOURCE-ENDPOINT FLOOR","D525 remains the product head"])
+    need(decisions.includes(token),"D531 decision contract missing: "+token.replace(/\n/g," "));
+  const floorTokens=["Marshall-Waskom-Shreveport Stagecoach Road","crossing set","Rolla-Lebanon-Springfield","6-8 June 1862 sixty-team","loading-side","14 October 1864","Boonville, Arrow Rock, and Glasgow remain unassigned","`RD-SI06` and `RD-SI13`","unit/date","broad itinerary"];
+  for(const [name,text] of [["LANE-019",laneD531],["HANDOFF",handoffD531],["Package A",lawD531],["DECISIONS",decisionD531]])for(const token of floorTokens)
+    need(norm(text).includes(token),name+" D531 exact floor moved: "+token);
+  const d531Allowed=["AUTONOMOUS-RUN.md","COORDINATION.md","DECISIONS.md","HANDOFF.md","RUN-LOG.md","START-HERE.md","V1-CHECKLIST.md","WAKE-UP.md","docs/design/unlocked-but-judged-design.md","legacy/HANDOFF-ARCHIVE.md","tools/probe-conquest-transport-plan.mjs"];
+  const d532Allowed=[...d531Allowed,"docs/design/strategic-road-transport-research-packet.md","tools/probe-conquest-road-gap-research.mjs"];
+  const allowedPaths=text=>Array.from(text.matchAll(/`([^`]+\.(?:md|mjs))`/g),m=>m[1]);
+  const handoffAllow=handoffD531.slice(handoffD531.indexOf("**Allowlist and gates:**"),handoffD531.indexOf("Data, every"));
+  const laneAllow=laneD531.slice(laneD531.indexOf("- **D531/D532 allowlists and gates:"),laneD531.indexOf("Data, every"));
+  const lawAllow=lawD531.slice(lawD531.indexOf("D531's exact eleven-file allowlist"),lawD531.indexOf("Data, every"));
+  for(const [name,text] of [["HANDOFF",handoffAllow],["LANE-019",laneAllow],["Package A",lawAllow]]){
+    const paths=allowedPaths(text);
+    need(JSON.stringify(paths.slice(0,11))===JSON.stringify(d531Allowed),name+" D531 exact eleven-file allowlist moved: "+JSON.stringify(paths.slice(0,11)));
+    need(JSON.stringify(paths)===JSON.stringify(d532Allowed),name+" D532 exact thirteen-file allowlist moved: "+JSON.stringify(paths));
+  }
   need(/`CTI-01`\.\.`CTI-04` are excluded and remain `INTERCHANGE_WINDOW_UNADJUDICATED`/i.test(segment),"D529 must exclude every CTI");
   need(/may not\s+change data\/runtime\/current-turn\/state\/receipt\/topology\/movement\/live-save behavior/i.test(segment),"D529/D530 product prohibition missing");
   need(!/^### LANE-019[^\n]*SHIPPED/m.test(segment),"LANE-019 must not claim SHIPPED");
   need(/No live\s+campaign start, load, save acceptance, UI, migration, topology, control, service condition, army,\s+date, order, movement, or operational default exists/i.test(segment),"LANE-019 D528 product boundary missing");
-  return {state:state[1],owner:"none",currentDecision:"D530",researchRows:17,waterSeaWindowsEstablished:0,railWindowsEstablished:0,runtimeHead:"D525",module:"src/116",roadServices:0};
+  return {state:state[1],owner:"ChatGPT/Codex",currentDecision:"D531",roadResearchRows:6,waterSeaResearchRows:17,waterSeaWindowsEstablished:0,railWindowsEstablished:0,runtimeHead:"D525",module:"src/116",roadServices:0};
 });
 step("D526 partitions every service and interchange without authorizing a Historical window",()=>{
   const law=read("docs/design/unlocked-but-judged-design.md"),d=read("DECISIONS.md"),lane=read("COORDINATION.md");

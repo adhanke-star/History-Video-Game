@@ -1,12 +1,12 @@
 # ☀ WAKE-UP — current project state
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D530 next-lane=LANE-019 state=CONTRACT owner=none -->
-> **Live status (D530, 2026-07-22):** LANE-019 is `CONTRACT` / `none` after the exact 15 inland-water plus two bounded-sea audit closed with zero established physical-corridor windows, 11 snapshot-only rows, six unresolved rows, and zero disputed rows.
+<!-- LIVE-HEAD decision=D531 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D531, 2026-07-22):** LANE-019 is `DRIVE` / `ChatGPT/Codex` solely for a docs/research-only claim-specific audit of `RD-E11`, `RD-E15`, `RD-E17`, `RD-E18`, `RD-SI06`, and `RD-SI13` in the existing road packet.
 >
-> **Boundary:** D525 remains the product head; D528's rail result and all four unadjudicated interchanges remain exact. No data, runtime, state, save, UI, topology, route, movement, or generated product is authorized.
+> **Boundary:** D525 remains the product head; D528/D530's zero established rail/water/sea windows, all four unadjudicated interchanges, and zero road services remain exact. No data, runtime, state, save, UI, topology, route, movement, or generated product is authorized.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block owns the boundary. Under D514, reload the live ledger and separately contract the next dependency-ready prerequisite; roads remain unavailable and LANE-020 remains independently blocked.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D531 contract own the boundary. D532 executes only the six-row claim-specific research pass; closed New Orleans, CT-36, endpoint, and mode-separation negatives remain binding.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 Read the first ⚡ amendment in [`HANDOFF.md`](HANDOFF.md) for D514's completion-loop algorithm, authorized queue, road/no-road boundary, stop conditions, and exact next work. Do not stop at ordinary milestone or phase boundaries; preserve per-slice contracts, gates, commits, pushes, and lane ownership.

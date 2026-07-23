@@ -1651,3 +1651,78 @@ default turn, legal-now availability, navigability, control, condition, receipt,
 route, movement, save, UI, or playable conquest. It is not a lane-level `SHIPPED` claim. LANE-019
 releases to `CONTRACT` / `none`; under D514 the next dependency-ready prerequisite must be separately
 adjudicated and contracted.
+
+### 8.35 D531 claim-specific road evidence research contract
+
+D531 takes LANE-019 `DRIVE` from clean D530
+`5b0af8eb72b4d24e7efc9c88c5e4cc383e8792cc` solely for docs/research. D532 audits exact ordered
+`RD-E11`, `RD-E15`, `RD-E17`, `RD-E18`, `RD-SI06`, and `RD-SI13` in the existing
+`docs/design/strategic-road-transport-research-packet.md`. D514 and V1 authorize this further
+claim-specific pass; they do not weaken D511's `NEEDS_MORE_RESEARCH`, D528/D530's zero-positive
+physical-window results, the four unadjudicated CTIs, or the absence of road services.
+
+The existing road packet is the sole claim home. Exactly one normative audit section/table may
+append. Existing `RDS-01`..`RDS-65` remain byte-identical and ordered; genuinely new, accessed,
+used, and claim-resolved unique sources may append contiguously from `RDS-66`. Existing node,
+candidate-edge, Potomac, Sherman-interval, non-link, interchange, theater, known-gap, eligibility,
+validation-concept, and verdict sections remain byte-identical. Transport JSON, every `src/`, and
+every product owner remain byte-identical. No new packet, cross-mode table, schema, registry, parser,
+data field, or runtime owner is authorized.
+
+Each audit row retains its exact D511 route or handling claim, endpoints, D503 mapping, direction,
+date/unit, missing evidence, and status. Every new claim records one canonical underlying-work
+`familyKey`, resolved `RDS-*`, role, type, precise locator, and verbatim or bounded precision.
+Different hosts or editions of one work count once. Every counted source and locator must be
+manually accessed and read back; an inaccessible citation, search snippet, modern highway, or broad
+route context cannot count. Deterministic precedence is material conflict → `ROAD_GAP_DISPUTED`;
+complete row-specific floor → `ROAD_GAP_CURED`; otherwise → `ROAD_GAP_UNRESOLVED`. Zero cures is
+valid. These labels remain research metadata, never service eligibility, adjacency, topology, route,
+movement, control, condition, capacity, or runtime/data enums.
+
+The six floors are exact. `RD-E11` needs two independent non-tertiary families for a dated Civil War
+army or military-wagon passage on the exact Marshall-Waskom-Shreveport Stagecoach Road, including
+direction and the load-bearing crossing set. `RD-E15` needs an exact named Rolla-Lebanon-Springfield
+military supply route plus a second claim-specific family for the same route and operation. `RD-E17`
+needs a second family for the 6-8 June 1862 sixty-team Winchester-Harpers Ferry-return operation and
+evidence locating its loading-side/depot handling, without an inferred Potomac crossing. `RD-E18`
+needs two families for the detached force's 14 October 1864 named-road passage, but source cure does
+not alter D503: Boonville, Arrow Rock, and Glasgow remain unassigned; the candidate ends at Arrow
+Rock; no product edge or interchange may result. `RD-SI06` and `RD-SI13` each need a second family
+for the same unit/date and exact handling chain; a broad itinerary or Carolinas condition does not
+qualify.
+
+New Orleans-origin and CT-36 road claims remain closed and outside D532. Road, rail, water, ferry,
+port, telegraph, modern-highway, and civilian-stage evidence cannot cross modes or piggyback into a
+military road or interchange claim. Harpers Ferry, Williamsport, Shepherdstown, and Boteler's Ford
+remain distinct. Differently sourced road segments and Sherman units/dates/handling chains cannot be
+composed. Contradiction with D503 anchors, an existing candidate/non-link/interchange, or D511's
+corrected facts is a HALT rather than authority to rewrite it.
+
+D532 may add one suite-excluded filesystem guard,
+`tools/probe-conquest-road-gap-research.mjs`, and update only the existing transport-plan current-
+boundary tooth. The guard must pin singular audit; original source/register/section preservation;
+all appended-source access/use/claim/manual-readback resolution; exact six-row order and inherited
+facts; source/family/type/locator/precision resolution; dispositions and complete row-specific floors;
+named negatives; D503 endpoint quarantine; and no product authority. Bind G removes enough support
+from the first cured row to violate its complete source/handling/endpoint floor, or at zero cures
+promotes the first unresolved row without curing it. Only `DISPOSITION / SOURCE-ENDPOINT FLOOR` may
+red; packet/probe bytes restore exactly before clean proof.
+
+D531's exact eleven-file allowlist is `AUTONOMOUS-RUN.md`, `COORDINATION.md`, `DECISIONS.md`,
+`HANDOFF.md`, `RUN-LOG.md`, `START-HERE.md`, `V1-CHECKLIST.md`, `WAKE-UP.md`, this
+`docs/design/unlocked-but-judged-design.md`, `legacy/HANDOFF-ARCHIVE.md`, and
+`tools/probe-conquest-transport-plan.mjs`. D532's exact thirteen-file allowlist additionally permits
+only `docs/design/strategic-road-transport-research-packet.md` and
+`tools/probe-conquest-road-gap-research.mjs`. Data, every `src/` and runtime probe, manifest/build/suite/save owners, rail/water packets,
+frozen base, generated HTML, and all unlisted paths are barred. D531 proof includes transport plan
+12/12; doc coherence; conquest, Mayhem, and War Career plans; build/check; exact 9,695-byte D529
+archive at SHA-256 `cb8ca5c038b2921962cbdf30a626db84b770c6a5213390b1b434acdc9fc96012`;
+allowlist/protected/artifact/diff checks. D532 adds dedicated proof, source readback, Bind G/restore,
+terminal routing, and byte-verbatim archiving of D530's exact 6,365-byte block at SHA-256
+`0c7df72906c5801ea936831e35590c2f5720dea29ecbcface6f1a55f77120fdf`. No browser or full battery
+is owed unless a protected shared surface moves.
+
+After D532 records the honest result, commit/push/fetch clean and return LANE-019 to `CONTRACT` /
+`none` with D525 still the product head. D532 makes no lane-level `SHIPPED` claim and may not extend
+data/runtime/current-turn/state/receipt/topology/movement/live-save behavior. Under D514, reload the
+ledger immediately after that clean research boundary.

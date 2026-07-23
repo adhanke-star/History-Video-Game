@@ -1,12 +1,12 @@
 # V1 CHECKLIST — current approved roadmap
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D530 next-lane=LANE-019 state=CONTRACT owner=none -->
-> **Live status (D530, 2026-07-22):** LANE-019 is `CONTRACT` / `none` after the exact 15 inland-water plus two bounded-sea audit closed with zero established physical-corridor windows, 11 snapshot-only rows, six unresolved rows, and zero disputed rows.
+<!-- LIVE-HEAD decision=D531 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D531, 2026-07-22):** LANE-019 is `DRIVE` / `ChatGPT/Codex` solely for a docs/research-only claim-specific audit of `RD-E11`, `RD-E15`, `RD-E17`, `RD-E18`, `RD-SI06`, and `RD-SI13` in the existing road packet.
 >
-> **Boundary:** D525 remains the product head; D528's rail result and all four unadjudicated interchanges remain exact. No data, runtime, state, save, UI, topology, route, movement, or generated product is authorized.
+> **Boundary:** D525 remains the product head; D528/D530's zero established rail/water/sea windows, all four unadjudicated interchanges, and zero road services remain exact. No data, runtime, state, save, UI, topology, route, movement, or generated product is authorized.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block owns the boundary. Under D514, reload the live ledger and separately contract the next dependency-ready prerequisite; roads remain unavailable and LANE-020 remains independently blocked.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D531 contract own the boundary. D532 executes only the six-row claim-specific research pass; closed New Orleans, CT-36, endpoint, and mode-separation negatives remain binding.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 ## How to read this checklist
@@ -38,7 +38,7 @@ Under D514, every unchecked item in this file—outstanding, formerly parked, or
 - [ ] **ARC 7 — playable conquest layer.**
   - [x] Read-only 36-territory board.
   - [x] Immutable read-only rail/water/sea transport-evidence substrate.
-  - [ ] Road evidence remains unsatisfied after D511: RD-E11/RD-E15/RD-E17/RD-E18 and two Sherman handling rows retain material source gaps; no New Orleans-origin or CT-36 row qualifies. D514 authorizes further claim-specific research, but unsupported roads remain unavailable and no source floor may be lowered.
+  - [ ] Road evidence remains unsatisfied after D511: exact `RD-E11`, `RD-E15`, `RD-E17`, `RD-E18`, `RD-SI06`, and `RD-SI13` retain material source gaps; no New Orleans-origin or CT-36 row qualifies. D531 takes docs/research DRIVE for D532's exact six-row claim-specific pass in the existing packet. Unsupported roads remain unavailable, D503 endpoint/mode negatives remain binding, and no source floor may be lowered.
   - [ ] Transport movement: D514 authorizes a separately contracted non-road ladder, but Historical movement remains blocked until physical windows are source-proved for the Verified rail, inland-water, and two bounded sea registries; explicit non-links and no road service remain binding. The ladder requires control/service receipts; movement, cuts, and repairs; economy/theater/directive integration; fresh-start conquest state and save; legal-order AI; then the first playable-loop 140-row release checkpoint. *(D521 shipped the pure immutable physical-service evidence query in existing `src/115` at focused 18/18 with isolated Bind 2B. D523 shipped the detached `src/116` factory/view at focused 10/10 with isolated Bind A: immutable versioned `C.campaignKind`, preserved immutable `C.ruleset`, and exact empty future-expandable factory `C.conquest`. D525 shipped one pure detached fresh/frozen 25-interval calendar query in the same owner at focused 15/15 with isolated Bind B. D526 audited all 44 services plus four interchanges and found the qualitative date prose unsafe for machine-readable Historical windows; the Fort Fisher row proves a generic parser can reverse the source meaning. D528 closes the exact 27-row rail audit at zero established, 19 snapshot-only, seven unresolved, and one disputed; all four rail faces remain unadjudicated interchanges. D530 water/sea physical-corridor research complete: zero established, 11 snapshot-only, six unresolved, and zero disputed across the exact 15+2 surface; all CTIs remain unadjudicated and no product authority follows. D525 remains the product head, and every live integration or operational default remains excluded—no start/load/save acceptance/UI, migration, current/default turn, eligibility, topology, control/service condition, army, order, or movement.)*
   - [ ] Council of War through existing site, commitment, equipment, doctrine, bridge, and D74 owners.
   - [ ] Terrain pipeline with provenance, transforms, LOD, period surfaces, offline budgets, and textual fallback.
