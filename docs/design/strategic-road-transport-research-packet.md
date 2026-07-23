@@ -393,3 +393,87 @@ and exact road identities still prevent a complete, referentially closed registr
 Shipping a read-only road substrate now would require forbidden endpoint,
 composition, or routine-service inferences. Road data, runtime, and gameplay remain
 unauthorized.
+
+## 13. D532 claim-specific road-gap audit (normative append)
+
+This is the sole D532 audit section and table. The original packet through section 12
+remains an exact 75,108-byte prefix with SHA-256
+`df962dd6addb3a4ec167a3e2b218c1dede0eb4917e7ea4bd81565603f0e418c8`.
+Its `RDS-01`..`RDS-65` rows and every original register, section, and verdict remain
+byte-identical. D532 appends four genuinely new source records contiguously; it does
+not insert them into the frozen section 3 register:
+
+- **RDS-66** — `familyKey=Boyer-diary-1862`; Frederick N. Boyer, wartime diary,
+  National Park Service transcription; `role=RD-E15 claim-specific partial`;
+  `sourceType=primary soldier diary`; locator PDF pp. 3-4, entries 17-23 February
+  1862; `precision=bounded`: Boyer traveled from Rolla through Lebanon to Springfield
+  and encountered one government train and multiple wagon trains, but did not name
+  the road or identify one exact supply operation. `manualReadback=YES:2026-07-22`.
+  Stable reference:
+  https://www.nps.gov/stri/learn/historyculture/upload/Boyer_Fred_N_Diary_Transcription_508-2.pdf
+- **RDS-67** — `familyKey=Piston-Rutherford-Marmaduke-2022`; William Garrett Piston
+  and John Rutherford, *The Civil War Raid of General John S. Marmaduke*, PBS/
+  OzarksWatch transcript; `role=RD-E15 corridor-formulation partial`;
+  `sourceType=public-history interview transcript`; locator PBS page transcript
+  lines 223-248, especially 245-248, and linked closed-caption text line 18;
+  `precision=bounded`: the historians describe the target as the Rolla-Lebanon-
+  Springfield supply line of wagon trains, but do not name a formal road and tie
+  that formulation to Marmaduke's January 1863 raid rather than the 1862
+  Boyer/Monks operation.
+  `manualReadback=YES:2026-07-22`. Stable reference:
+  https://www.pbs.org/video/the-civil-war-raid-of-general-john-s-marmaduke-wmsqde/
+- **RDS-68** — `familyKey=Monks-southern-Missouri-1907`; William Monks, *A History
+  of Southern Missouri and Northern Arkansas* (1907);
+  `role=RD-E15 route-and-supply partial`; `sourceType=participant local history`;
+  locator printed pp. 153-155; `precision=bounded`: in spring 1862, forage and
+  commissaries moved by wagon train from the Rolla rail terminus to Springfield on
+  the Wire Road, but the work does not name Lebanon in that road claim and does not
+  corroborate the later Marmaduke operation. `manualReadback=YES:2026-07-22`.
+  Stable reference: https://www.gutenberg.org/files/51118/51118-h/51118-h.htm
+- **RDS-69** — `familyKey=Chamberlin-81st-Ohio-1865`; W. H. Chamberlin, *History of
+  the Eighty-First Regiment Ohio Infantry Volunteers* (1865);
+  `role=RD-SI06 and RD-SI13 claim-specific partial`;
+  `sourceType=contemporary compiled regimental history`; locator preface pp. 3-4,
+  roster p. 171, narrative pp. 158-159 and 161-162; `precision=bounded`: Chamberlin
+  resigned on 15 September 1864 and says later facts were obtained from others, so
+  his Carolinas narrative is not assumed independent of regimental informants. The
+  history places the 81st Ohio on the Orangeburg Road and “at Benaker's Bridge” on
+  11 February without specifying the crossing method, then records the same regiment
+  passing Laurel Hill in rain and mud on 9 March with trains unable to proceed at
+  night; its eleven corduroy miles are dated 11 March.
+  `manualReadback=YES:2026-07-22`. Stable reference:
+  https://upload.wikimedia.org/wikipedia/commons/4/44/History_of_the_Eighty-first_Regiment_Ohio_Infantry_Volunteers%2C_during_the_War_of_the_Rebellion_%28IA_chamberlin81st00chamrich%29.pdf
+
+Every source treated as claim-bearing below was manually accessed and its precise
+locator read back on 22 July 2026. Existing source family keys remain their canonical
+underlying works: `THC-Marshall-stage-marker` (`RDS-54`), `OR-S1-V34`
+(`RDS-63`), `Breck-columns-ch7` (`RDS-47`), `OR-S1-V12-pt3` (`RDS-61`),
+`Collins-Price-atlas` (`RDS-60`), `Cooper-County-history-1876` (`RDS-65`),
+`Platter-diary` (`RDS-27`), and `OR-S1-V47` (`RDS-50`). A source listed as
+context or exclusion does not silently count toward a positive floor.
+
+| Row (exact order) | Inherited claim, mapping, and status | Claim records, locator readback, and precision | Complete floor evaluation and exclusions | DISPOSITION / SOURCE-ENDPOINT FLOOR |
+|---|---|---|---|---|
+| `RD-E11` | `RD-N26` Marshall to `RD-N25` Shreveport, `CT-35` to `CT-34`; exact Marshall-Waskom-Shreveport Stagecoach Road; civilian route and Civil War stage service; D511 `Inferred`. | `RDS-54`, `familyKey=THC-Marshall-stage-marker`, route-identity role, state-marker source, THC marker 10197 text, manually read: Marshall-Waskom-Shreveport direction, dirt/rain limit, and civilian stage service only. `RDS-63`, `familyKey=OR-S1-V34`, exclusion role, primary official source, printed p. 485, manually read: Keachi/Mansfield road division toward Marshall or Shreveport, not passage on the exact stage road. Precision is bounded to those statements. | Zero family places a dated army or military-wagon passage on the exact road. Two independent non-tertiary passage families, direction, and the load-bearing crossing set are all absent. Civilian stage service, Marshall supply-center context, and the separate Natchitoches-Mansfield-Keachi approach are excluded. | `ROAD_GAP_UNRESOLVED` — `SOURCE-ENDPOINT FLOOR: FAIL`; exact route/endpoints retained, military passage families `0/2`, crossing set absent. |
+| `RD-E15` | `RD-N31` Rolla to `RD-N32` Springfield through Lebanon, `CT-30` internal; Union wagon-supply corridor; exact route name unresolved; D511 `Inferred`. | `RDS-66`, `familyKey=Boyer-diary-1862`, primary diary partial, PDF pp. 3-4 / 17-23 Feb. entries, manually read: Rolla-Lebanon-Springfield travel and several wagon trains, road unnamed. `RDS-67`, `familyKey=Piston-Rutherford-Marmaduke-2022`, public-history interview partial, PBS page transcript lines 223-248 / linked caption line 18, manually read: descriptive Rolla-Lebanon-Springfield supply-line wording for the January 1863 Marmaduke operation, not a formal road name. `RDS-68`, `familyKey=Monks-southern-Missouri-1907`, participant-history partial, printed pp. 153-155, manually read: spring-1862 Rolla-Springfield Wire Road commissary/forage wagon trains, Lebanon not named. | No operation has one family carrying the exact named Rolla-Lebanon-Springfield supply route and an independent family corroborating that same route and operation. Boyer's unnamed February 1862 passage, Monks's spring-1862 route without Lebanon, and the January 1863 Marmaduke target cannot be composed. Railhead, separate Wire-Road segments, broad itineraries, and inaccessible quartermaster microfilm are excluded. | `ROAD_GAP_UNRESOLVED` — `SOURCE-ENDPOINT FLOOR: FAIL`; exact named same-operation family pairing `0/2`; segment/operation composition forbidden. |
+| `RD-E17` | `RD-N05` Harpers Ferry to `RD-N06` Winchester via Charles Town and Berryville, `CT-02` to `CT-04`; exact 6-8 June 1862 sixty-team round trip; loading bounded only to Harpers Ferry; D511 `Inferred`. | `RDS-47`, `familyKey=Breck-columns-ch7`, exact-operation role, primary officer correspondence, Harpers Ferry 7 June and Kernstown 10 June letters, manually read: about sixty commissary/quartermaster teams arrived from Winchester, loaded at undifferentiated Harpers Ferry, and returned via Charles Town/Berryville. `RDS-61`, `familyKey=OR-S1-V12-pt3`, exclusion role, primary official source, printed pp. 350-351, manually read: 6 June bridge/tug and Williamsport train context only. | Breck remains the sole exact team-operation family and does not locate the loading side, depot, storehouse, or handling facility. The Official Records family does not identify those teams or handling. Breck's personal skiff crossing, bridge loss, Williamsport, later depot activity, and any team Potomac crossing inference are excluded. | `ROAD_GAP_UNRESOLVED` — `SOURCE-ENDPOINT FLOOR: FAIL`; exact movement family `1/2`; loading-side/depot handling absent; no Potomac crossing inferred. |
+| `RD-E18` | `RD-N35` Boonville to `RD-N36` Arrow Rock, `Unassigned` to `Unassigned` under D503; named road, detached Clark brigade plus 500 Jackman men ordered to cross at Arrow Rock on 14 Oct. 1864; Glasgow target only; D511 `Inferred`. | `RDS-60`, `familyKey=Collins-Price-atlas`, operation role, federal professional-military history, printed p. 63 and note 24, manually read: 14 Oct. Clark/Jackman detachment and Arrow Rock crossing order, but no named-road passage or Boonville origin. `RDS-65`, `familyKey=Cooper-County-history-1876`, road/crossing-context role, county history, printed p. 106, manually read: the named road and its Lamine bridge in a separate Sept. 1861 military action. Current `RDS-56` PDF could not be manually read cleanly and therefore does not count in D532; its frozen D511 row is not rewritten. | No two families place the detached force on the named road on 14 Oct. 1864. A later post-crossing Boonville Road narrative, Price's main-column movement, general Price-army attribution, and the separate 1861 bridge action do not qualify. Even a source cure could not assign Boonville, Arrow Rock, or Glasgow to a D503 anchor, extend the candidate beyond Arrow Rock, or create a water interchange. | `ROAD_GAP_UNRESOLVED` — `SOURCE-ENDPOINT FLOOR: FAIL`; named-road detached-force families `0/2`; endpoints remain `Unassigned` to `Unassigned`; Glasgow remains target only. |
+| `RD-SI06` | 5-11 Feb. 1865, Corse Fourth Division, XV Corps separated rear column; Robertsville toward Orangeburg; Platter's burned Buford Bridge, unnamed South Edisto ferry, Orangeburg Road, road/corduroy/train chain; D511 `Inferred`. | `RDS-27`, `familyKey=Platter-diary`, exact-handling role, primary diary, DLG pp. 102-104 / 10-11 Feb. entries, manually read: the 81st passed burned Buford Bridge and crossed the South Edisto at “some ferry” near XVII Corps headquarters. `RDS-50`, `familyKey=OR-S1-V47`, independent exact-division handling role, primary official commander report, Series I vol. 47 pt. I, Report No. 32 of Bvt. Maj. Gen. John M. Corse, printed pp. 337-338, manually read: the exact Fourth Division's 5-11 Feb. route through Robertsville/Lawtonville, Coosawhatchie, Hickory Hill, Whippy, and Graham's area; inclement almost-impassable roads, pioneer labor, miles of corduroy, waist-deep work, wagon passage; then Binnaker's Bridge, the rear of XVII Corps, a wait for pontoons, and crossing at 1 p.m. on 11 Feb. `RDS-69`, `familyKey=Chamberlin-81st-Ohio-1865`, compatible-locality partial, contemporary compiled regimental history, preface pp. 3-4, roster p. 171, and narrative pp. 158-159, manually read: Chamberlin resigned before the Carolinas campaign and obtained later facts; the narrative places the same regiment/date “at Benaker's Bridge” but does not state an intact-bridge crossing method. | Platter and Corse are independent exact-unit/date families. Corse supplies the load-bearing same-division route and handling chain, identifies the XVII Corps/Binnaker locality, and records the pontoon crossing, resolving Platter's bounded “some ferry near” wording without composing another unit or operation. Chamberlin's locality wording is compatible, not a material method/site conflict, and is not needed for the two-family floor. Holman's, Kew, and Guignard's crossings remain separate. | `ROAD_GAP_CURED` — `SOURCE-ENDPOINT FLOOR: PASS`; independent exact-unit/date handling families `2/2`; docs-only cure creates no road service or product authority. |
+| `RD-SI13` | 5 and 8-9 Mar. 1865, Platter's Fourth Division XV Corps column, Cheraw toward Fayetteville; Laurensburgh Road failure and Laurel Hill-Juniper Creek rain/corduroy/broken-bridge/slow-wagon chain; D511 `Inferred`. | `RDS-27`, `familyKey=Platter-diary`, exact-handling role, primary diary, DLG pp. 133-135 / 8-9 Mar. entries, manually read: the exact Laurensburgh and Laurel Hill-Juniper chain. `RDS-69`, `familyKey=Chamberlin-81st-Ohio-1865`, compatible same-regiment partial, contemporary compiled regimental history, printed pp. 161-162, manually read: same regiment/date at Laurel Hill in rain/mud with trains unable to proceed; eleven corduroy miles are instead dated 11 Mar. `RDS-50`, `familyKey=OR-S1-V47`, independent exact-division handling role, primary official commander report, Series I vol. 47 pt. I, Report No. 32 of Bvt. Maj. Gen. John M. Corse, printed pp. 340-342, manually read: the Fourth Division reached Laurel Hill on 9 Mar. through violent all-day rain and flooded almost-impassable roads; men and animals were exhausted and the column had to halt at midnight, while additional bridge/road repair and ordnance/supply-train handling followed on 10-11 Mar. | Platter and Corse are independent exact-unit/date families. Corse supplies the load-bearing same-division weather and delay chain at Laurel Hill on 9 March; D531 requires an exact bridge, ferry, corduroy, weather, wagon, or delay chain, not repetition of every Laurensburgh/Juniper microdetail. Chamberlin is compatible but is not needed for the two-family floor. The differently dated 10-11 March handling is additional context, not a substitute or composition. | `ROAD_GAP_CURED` — `SOURCE-ENDPOINT FLOOR: PASS`; independent exact-unit/date handling families `2/2`; docs-only cure creates no road service or product authority. |
+
+Deterministic precedence yields exactly `2 ROAD_GAP_CURED`,
+`4 ROAD_GAP_UNRESOLVED`, and `0 ROAD_GAP_DISPUTED`. The cured labels apply only
+to D532's `RD-SI06` and `RD-SI13` gap audits; they do not rewrite the frozen
+candidate-edge or Sherman-interval registers. Zero road services remain. `NEEDS_MORE_RESEARCH` remains
+the packet's product verdict.
+
+The permanent negatives remain exact. New Orleans-origin and `CT-36` road claims
+stay closed and supply no source to this audit. Boonville, Arrow Rock, and Glasgow
+remain unassigned; `RD-E18` ends at Arrow Rock and Glasgow is only its target. Rail,
+water, port, ferry, telegraph, modern-highway, civilian-stage, and differently dated
+or differently routed evidence cannot cross modes, compose segments, collapse
+Sherman units/dates/handling chains, or create a road/interchange claim. Harpers
+Ferry, Williamsport, Shepherdstown, and Boteler's Ford remain distinct. D532 creates
+no data, registry, schema, parser, runtime enum, Historical window, Mayhem service,
+eligibility, adjacency, topology, route, movement, control, condition, capacity,
+state, save, receipt, UI, or gameplay authority. D503 and D525 remain exact.

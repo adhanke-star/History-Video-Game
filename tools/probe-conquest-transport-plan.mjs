@@ -27,13 +27,18 @@ step("Historical dates and Mayhem physical eligibility preserve packet semantics
 step("bounded sea and zero-road verdicts are exact",()=>{need(pack.seaServices[0].evidenceRowIds[0]==="WE-24"&&pack.seaServices[0].direction==="one-way","WE-24 one-way sea bound lost");need(pack.seaServices[1].evidenceRowIds[0]==="WE-26"&&pack.seaServices[1].scope==="operation-specific"&&pack.seaServices[1].historicalEligibility.status==="operation-specific","WE-26 operation bound lost");need(pack.roadStatus==="ROAD_REQUIRES_BOUNDED_SOURCE_PASS"&&!Object.hasOwn(pack,"roadServices"),"road verdict/service zero lost");need(read("DECISIONS.md").includes("SEA_READY_BOUNDED_ROWS_WE_24_WE_26_ONLY"),"sea verdict missing");return {sea:"WE-24/WE-26",roadServices:0};});
 step("existing owners stay separate and module creates no behavior or UI",()=>{const src=read("src/115-conquest-transport.js");for(const token of ["blockadeInit","logisticsInit","westernTheaterInit","bridgeArmy","bridgeAutoResolve","warCareerStart","fldCustom","openSheet","document.","localStorage","settings","applySave","saveLocal","importSave","exportSave"])need(!src.includes(token),"owner/UI token leaked: "+token);need(!/\bG\b|\bC\b/.test(src),"G/C authority leaked");need(src.includes("conquestTransportNormalized")&&src.includes("Object.freeze"),"read/freeze helper missing");return {ownerLeaks:0,uiTrace:0};});
 step("exact allowed fields exclude later gameplay authority",()=>{for(const r of [...pack.railServices,...pack.waterServices,...pack.seaServices]){need(exact(r,serviceKeys)&&exact(r.historicalEligibility,["dateText","status"]),r.id+" service fields drifted");}for(const r of pack.interchanges)need(exact(r,interchangeKeys)&&exact(r.historicalEligibility,["dateText","status"]),r.id+" interchange fields drifted");for(const r of pack.nonLinks)need(exact(r,nonLinkKeys),r.id+" non-link fields drifted");const text=JSON.stringify(pack);for(const key of ["movement","adjacency","ownership","control","condition","capacity","economy","reinforcement","reward","save","state","ai","battle","winner","score","surrender","tacticalOutput"])need(!new RegExp('"'+key+'"','i').test(text),"later field "+key);return {serviceFields:13,interchangeFields:10,nonLinkFields:9};});
-step("current LANE-019 D531 DRIVE preserves the six-gap road-research contract and product boundary",()=>{
+step("current LANE-019 D532 terminal CONTRACT/unowned preserves the six-gap road-research contract and product boundary",()=>{
   const lane=read("COORDINATION.md"),segment=(/### LANE-019 · conquest-design-law[\s\S]*?(?=\n### LANE-\d+ ·|\n## 6 ·|$)/.exec(lane)||[])[0]||"";
   need(segment,"LANE-019 segment missing");
   const state=/- \*\*State:\*\*\s*(LAW-DRAFT|CONTRACT|DRIVE|VERIFY|SHIPPED)\b/m.exec(segment),owner=/- \*\*Owning tool:\*\*\s*([^\n]+)/m.exec(segment);
-  need(state&&state[1]==="DRIVE","LANE-019 current State must be DRIVE");
-  need(owner&&/^ChatGPT\/Codex 5\.6 Sol Ultra\b/.test(owner[1].trim()),"LANE-019 current owner must be ChatGPT/Codex 5.6 Sol Ultra");
-  need(segment.includes("DRIVE (D531 CLAIM-SPECIFIC ROAD EVIDENCE RESEARCH CONTRACT)"),"LANE-019 D531 DRIVE heading missing");
+  need(state&&state[1]==="CONTRACT","LANE-019 current State must be CONTRACT");
+  need(owner&&/^none\b/.test(owner[1].trim()),"LANE-019 current owner must be none");
+  need(/D532[\s\S]{0,220}`2 ROAD_GAP_CURED`[\s\S]{0,120}`4 ROAD_GAP_UNRESOLVED`[\s\S]{0,120}`0 ROAD_GAP_DISPUTED`/i.test(segment),"LANE-019 D532 terminal road-gap result missing");
+  for(const id of ["RD-SI06","RD-SI13"])
+    need(new RegExp("`"+id+"`[\\s\\S]{0,100}(?:are|is) cured","i").test(segment),"LANE-019 D532 cured row missing: "+id);
+  for(const id of ["RD-E11","RD-E15","RD-E17","RD-E18"])
+    need(new RegExp("`"+id+"`[\\s\\S]{0,100}(?:remain|is) unresolved","i").test(segment),"LANE-019 D532 unresolved row missing: "+id);
+  need(/D532[\s\S]{0,320}(?:releases?|returns?) LANE-019 (?:to|at) `CONTRACT`\s*\/\s*`none`/i.test(segment),"LANE-019 D532 CONTRACT/unowned release missing");
   for(const token of ["D520 architecture/overlap verdict:","Slice-2B exact contract — pure physical-service evidence query:","D521 delivery record — pure physical-service evidence query:","conquestTransportPhysicalServices","exactly 11→18","ROAD_REQUIRES_BOUNDED_SOURCE_PASS","no stateful or playable transport","D522 architecture/representation verdict:","Slice-3A exact contract — detached conquest identity/state serialization foundation:","D523 delivery record — detached conquest identity/state foundation:","focused state proof is 10/10"])
     need(segment.includes(token),"LANE-019 historical D520-D523 contract or delivery missing: "+token);
   need(/roads remain absent/i.test(segment),"LANE-019 road-unavailable boundary missing");
@@ -85,7 +90,7 @@ step("current LANE-019 D531 DRIVE preserves the six-gap road-research contract a
   for(const token of ["0 PHYSICAL_CORRIDOR_WINDOW_ESTABLISHED","11 PHYSICAL_CORRIDOR_PRESENCE_SNAPSHOTS_ONLY","6 PHYSICAL_CORRIDOR_EXISTENCE_UNRESOLVED","CTS-W-02","CTS-S-01","D525 remains the product head","releases to `CONTRACT` / `none`"])
     need(lawResult.includes(token),"D530 Package A result missing: "+token.replace(/\n/g," "));
   for(const token of ["D530: THE EXACT 15+2 WATER/SEA PHYSICAL-CORRIDOR AUDIT CLOSES ZERO-POSITIVE","11 PHYSICAL_CORRIDOR_PRESENCE_SNAPSHOTS_ONLY","6 PHYSICAL_CORRIDOR_EXISTENCE_UNRESOLVED","D525 remains the product head"])
-    need(handoff.includes(token),"D530 HANDOFF result missing: "+token);
+    need(handoffArchive.includes(token),"archived D530 HANDOFF result missing: "+token);
   for(const token of ["## D530 — WATER_SEA_PHYSICAL_CORRIDOR_RESEARCH_COMPLETE:","11 PHYSICAL_CORRIDOR_PRESENCE_SNAPSHOTS_ONLY","6 PHYSICAL_CORRIDOR_EXISTENCE_UNRESOLVED","LANE-019 releases to `CONTRACT` / `none`"])
     need(decisions.includes(token),"D530 decision result missing: "+token);
   const roadRows=["RD-E11","RD-E15","RD-E17","RD-E18","RD-SI06","RD-SI13"];
@@ -126,7 +131,7 @@ step("current LANE-019 D531 DRIVE preserves the six-gap road-research contract a
   need(/may not\s+change data\/runtime\/current-turn\/state\/receipt\/topology\/movement\/live-save behavior/i.test(segment),"D529/D530 product prohibition missing");
   need(!/^### LANE-019[^\n]*SHIPPED/m.test(segment),"LANE-019 must not claim SHIPPED");
   need(/No live\s+campaign start, load, save acceptance, UI, migration, topology, control, service condition, army,\s+date, order, movement, or operational default exists/i.test(segment),"LANE-019 D528 product boundary missing");
-  return {state:state[1],owner:"ChatGPT/Codex",currentDecision:"D531",roadResearchRows:6,waterSeaResearchRows:17,waterSeaWindowsEstablished:0,railWindowsEstablished:0,runtimeHead:"D525",module:"src/116",roadServices:0};
+  return {state:state[1],owner:"none",currentDecision:"D532",roadResearchRows:6,roadResearchCured:2,roadResearchUnresolved:4,roadResearchDisputed:0,waterSeaResearchRows:17,waterSeaWindowsEstablished:0,railWindowsEstablished:0,runtimeHead:"D525",module:"src/116",roadServices:0};
 });
 step("D526 partitions every service and interchange without authorizing a Historical window",()=>{
   const law=read("docs/design/unlocked-but-judged-design.md"),d=read("DECISIONS.md"),lane=read("COORDINATION.md");

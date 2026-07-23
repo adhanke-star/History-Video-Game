@@ -1726,3 +1726,54 @@ After D532 records the honest result, commit/push/fetch clean and return LANE-01
 `none` with D525 still the product head. D532 makes no lane-level `SHIPPED` claim and may not extend
 data/runtime/current-turn/state/receipt/topology/movement/live-save behavior. Under D514, reload the
 ledger immediately after that clean research boundary.
+
+### 8.36 D532 claim-specific road-gap research result
+
+The D531 exact six-row audit closes at `2 ROAD_GAP_CURED`, `4 ROAD_GAP_UNRESOLVED`, and
+`0 ROAD_GAP_DISPUTED`. `RD-SI06` and `RD-SI13` are cured. `RD-E11`, `RD-E15`, `RD-E17`, and
+`RD-E18` remain unresolved. Zero road services remain; D511's packet-level
+`NEEDS_MORE_RESEARCH` verdict remains the product boundary.
+
+All counted sources and locators were manually opened and read back. Four genuinely used sources
+append contiguously as `RDS-66`..`RDS-69`: Boyer's February 1862 diary, Piston and Rutherford's
+Marmaduke transcript, Monks's 1907 southern-Missouri history, and Chamberlin's 81st Ohio compiled
+regimental history. Marshall's marker and the Official Records
+separate exact civilian route identity from a different military approach. The three Rolla-
+Springfield families describe different road-name precision or operations and cannot compose.
+Breck supplies one exact Winchester-Harpers Ferry-return family but no loading-side/depot handling.
+The Price atlas and Cooper County history do not supply two same-operation families for the detached
+14 October 1864 passage on the named Boonville-Arrow Rock Road.
+
+The existing `RDS-50` family resolves to Bvt. Maj. Gen. John M. Corse's exact Fourth Division
+report, Official Records Series I, volume 47, part I, Report No. 32, printed pages 335-342. Platter
+and Corse are independent exact-unit/date handling families. Pages 337-338 record the Robertsville-
+Lawtonville-Coosawhatchie-Whippy route, almost-impassable weather, pioneer labor, miles of corduroy,
+wagon passage, and the 11 February Binnaker's Bridge pontoon crossing, curing `RD-SI06`. Pages
+340-342 place the same division at Laurel Hill on 9 March in violent rain, flooded almost-impassable
+roads, exhaustion, and a forced midnight halt, curing `RD-SI13`. Chamberlin's compatible locality
+and same-regiment partials are not needed for either floor and create no dispute. D531 requires same
+unit/date plus an exact bridge, ferry, corduroy, weather, wagon, or delay chain; it does not require
+every microdetail to repeat. The cured labels apply only to the D532 gap audit and do not rewrite the
+frozen candidate or Sherman-interval registers.
+
+The entire D511 packet remains the exact first 75,108 bytes of the D532 packet at SHA-256
+`df962dd6addb3a4ec167a3e2b218c1dede0eb4917e7ea4bd81565603f0e418c8`; `RDS-01`..`RDS-65`
+and every original register, section, and verdict remain byte-identical. The final packet is
+89,666 bytes / SHA-256 `9498ec2d4d667ad1ca9120dc188460127458b32814746cb9c5fdbeb6b0f982ef`.
+Transport JSON remains SHA-256 `7e484de1c1c59abc698b4cdfe3e599dd8e8c97207e611542eb965d54c38c90f6`.
+The suite-excluded `tools/probe-conquest-road-gap-research.mjs` owns a ten-step filesystem proof.
+Bind G removes the load-bearing Corse support sentence from first cured row `RD-SI06` while
+retaining its source metadata, so only `DISPOSITION / SOURCE-ENDPOINT FLOOR` reds at exactly 9/10;
+packet/probe bytes restore before clean 10/10 proof.
+
+New Orleans-origin and `CT-36` claims remain closed. Boonville, Arrow Rock, and Glasgow remain
+unassigned; Glasgow is only the target beyond `RD-E18`. Harpers Ferry, Williamsport,
+Shepherdstown, and Boteler's Ford remain distinct. Civilian-stage, modern-highway, rail, water,
+ferry, port, telegraph, differently dated, differently routed, and differently organized Sherman
+evidence cannot compose or cross modes. All four CTIs remain `INTERCHANGE_WINDOW_UNADJUDICATED`.
+
+D532 changes only D531's exact thirteen-file docs/research allowlist. It creates no data, runtime,
+Historical window, Mayhem service, current/default turn, state, save, UI, topology, route, movement,
+eligibility, control, condition, receipt, capacity, interchange, or gameplay authority. D525 remains
+the product head. D532 makes no lane-level `SHIPPED` claim and releases LANE-019 to `CONTRACT` /
+`none`; D514 then reloads the completion ledger for a separately adjudicated next prerequisite.

@@ -4,6 +4,58 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D532 — CLAIM_SPECIFIC_ROAD_GAP_RESEARCH_COMPLETE: RD-SI06/SI13 CURED; FOUR UNRESOLVED; ZERO DISPUTED; LANE-019 RELEASES — [CHATGPT/CODEX 5.6 SOL ULTRA, HISTORICAL RESEARCH/JUDGMENT] (2026-07-22)
+
+**VERDICT: `CLAIM_SPECIFIC_ROAD_GAP_RESEARCH_COMPLETE`.** The exact D531 audit closes at
+`2 ROAD_GAP_CURED`, `4 ROAD_GAP_UNRESOLVED`, and `0 ROAD_GAP_DISPUTED`. `RD-SI06` and
+`RD-SI13` are cured; `RD-E11`, `RD-E15`, `RD-E17`, and `RD-E18` remain unresolved. That is the
+honest terminal under the contract's row-specific source, same-operation, handling, and endpoint
+floors. The packet's `NEEDS_MORE_RESEARCH` product verdict and zero road services remain exact.
+
+**Evidence decision:** all counted sources and exact locators were manually accessed and read back;
+inaccessible citations and search snippets were not counted. Four genuinely new used sources append
+contiguously as `RDS-66`..`RDS-69`. The new Rolla-Springfield evidence comes from differently named
+routes or differently dated operations and cannot compose; Breck remains the sole exact
+Winchester-Harpers Ferry-return family without loading-side/depot handling; the Price atlas and
+Cooper County history do not establish the same 14 October 1864 detached-force named-road passage;
+and the Marshall stage marker remains civilian-stage evidence. The existing `RDS-50` family resolves
+to Bvt. Maj. Gen. John M. Corse's Fourth Division report, Official Records Series I, volume 47,
+part I, Report No. 32, printed pages 335-342.
+
+**Cure and no-conflict decision:** Platter and Corse are independent exact-unit/date handling
+families. For `RD-SI06`, Corse pages 337-338 give the Fourth Division's Robertsville-Lawtonville-
+Coosawhatchie-Whippy route, inclement almost-impassable roads, pioneer labor, miles of corduroy,
+wagon passage, and the 11 February Binnaker's Bridge pontoon crossing. This resolves Platter's
+bounded “some ferry near XVII Corps headquarters” wording. For `RD-SI13`, Corse pages 340-342 place
+the exact division at Laurel Hill on 9 March in violent all-day rain, flooded almost-impassable
+roads, exhausted men and animals, and a forced midnight halt. D531's committed floor is
+disjunctive—same unit/date plus an exact bridge, ferry, corduroy, weather, wagon, or delay chain—not
+repetition of every microdetail. Chamberlin's compatible locality and same-regiment partials are
+not needed for either two-family floor and create no material conflict.
+
+**Preservation and boundary decision:** the original packet remains the exact first 75,108 bytes at
+SHA-256 `df962dd6addb3a4ec167a3e2b218c1dede0eb4917e7ea4bd81565603f0e418c8`;
+`RDS-01`..`RDS-65`, all original registers, sections, and verdicts remain byte-identical. New
+Orleans-origin and `CT-36` remain closed; Boonville, Arrow Rock, and Glasgow remain unassigned;
+the Potomac, operation-composition, Sherman-chain, endpoint, and mode-separation negatives remain
+binding. D532 creates no service, Historical window, data/runtime enum, state, save, UI, topology,
+route, movement, eligibility, control, condition, receipt, capacity, interchange, or gameplay
+authority. D525 remains the product head, all four CTIs stay unadjudicated, and no lane-level
+`SHIPPED` claim is made.
+
+**Proof and routing decision:** the dedicated ten-step guard owns the singular audit, preserved
+prefix/registers, source resolution/readback, exact row order and inherited facts, deterministic
+dispositions/floors, permanent negatives, D503 endpoint quarantine, archive, and terminal routing.
+Bind G removes the load-bearing Corse support sentence from first cured row `RD-SI06` while retaining
+its source/family/type/locator metadata; only `DISPOSITION / SOURCE-ENDPOINT FLOOR` reds at exactly
+9/10. A separate identity mutation removes only `RDS-50`'s per-segment readback marker; only
+`SOURCE / FAMILY / TYPE / LOCATOR RESOLUTION` reds at 9/10. Packet/probe bytes restore exactly
+before clean 10/10. Transport 12/12, doc
+coherence 5/5, conquest 8/8, Mayhem 13/13, War Career 24/24, normal build/check, exact archive/
+allowlist/protected/artifact audits, and `git diff --check` pass. No browser or full 140-row battery
+is owed because no protected shared product surface moved. LANE-019 returns to `CONTRACT` / `none`;
+under D514 the live completion ledger reloads immediately.
+
 ## D531 — CONTRACT_CLAIM_SPECIFIC_ROAD_GAP_RESEARCH: LANE-019 TAKES DOCS/RESEARCH DRIVE FOR EXACT RD-E11/E15/E17/E18/SI06/SI13 — [CHATGPT/CODEX 5.6 SOL ULTRA, ARCHITECTURE/RESEARCH CONTRACT] (2026-07-22)
 
 **VERDICT: `CONTRACT_CLAIM_SPECIFIC_ROAD_GAP_RESEARCH`.** From clean, pushed D530

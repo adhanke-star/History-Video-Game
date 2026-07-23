@@ -3684,15 +3684,15 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **DRIVE (D531 CLAIM-SPECIFIC ROAD EVIDENCE RESEARCH CONTRACT)**
+### LANE-019 · conquest-design-law — **CONTRACT (D532 ROAD-GAP RESEARCH COMPLETE; UNOWNED)**
 
-- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra, solely for the exact D531 docs/research contract
-  below. No simultaneous edits.
-- **State:** DRIVE. D531 takes only the exact `RD-E11`, `RD-E15`, `RD-E17`, `RD-E18`, `RD-SI06`,
-  and `RD-SI13` claim-specific audit in the existing road packet. D530's 0/11/6/0 water/sea result
-  and D528's zero-positive rail result remain exact; every unresolved/disputed row and all four CTIs
+- **Owning tool:** none. D532 releases the research lock; no simultaneous edits.
+- **State:** CONTRACT. D532 terminal result is `2 ROAD_GAP_CURED`, `4 ROAD_GAP_UNRESOLVED`, and
+  `0 ROAD_GAP_DISPUTED`. `RD-SI06` and `RD-SI13` are cured. `RD-E11`, `RD-E15`, `RD-E17`, and
+  `RD-E18` remain unresolved. D532 releases LANE-019 to `CONTRACT` / `none`; D530's 0/11/6/0 water/sea result
+  and D528's zero-positive rail result remain exact; every unresolved row and all four CTIs
   stay quarantined. D525 remains the product head. No service or interchange has a machine-readable
-  Historical window, road service remains absent, and D531 authorizes no product change.
+  Historical window, road service remains absent, and D532 authorizes no product change.
   D525 remains only a pure detached campaign-calendar query in the existing sole conquest-state
   owner and D525 adds no live or operational authority. D523's strict factory/view remains exact.
   D521 remains the shipped pure physical-service reader. No live
@@ -4426,7 +4426,7 @@ next green commit and confer through this ledger instead of permitting simultane
   lifecycle. D514/V1 explicitly permit further claim-specific road research. The smallest owner-safe
   prerequisite is therefore the six remaining road gaps in the existing sole claim home.
 - **D531 exact road-gap scope and sole artifact:** D532 works only in
-  `docs/design/strategic-road-transport-research-packet.md` and audits exact ordered `RD-E11`,
+  the existing road packet, `docs/design/strategic-road-transport-research-packet.md`, and audits exact ordered `RD-E11`,
   `RD-E15`, `RD-E17`, `RD-E18`, `RD-SI06`, and `RD-SI13`. Append exactly one normative audit
   section/table. Existing `RDS-01`..`RDS-65` stay byte-identical and ordered; genuinely accessed,
   used, and claim-resolved new sources append contiguously from `RDS-66`. Existing node, edge,
@@ -4486,6 +4486,45 @@ next green commit and confer through this ledger instead of permitting simultane
   found and forced repair of an initially generic floor/allowlist tooth; the final tooth extracts all
   four D531 contract surfaces, pins each route/date/handling marker plus exact 11/13 path arrays, and
   the fresh independent re-audit reports PASS.
+- **D532 delivery record — claim-specific road-gap research:** the exact result is
+  `2 ROAD_GAP_CURED`, `4 ROAD_GAP_UNRESOLVED`, and `0 ROAD_GAP_DISPUTED`. `RD-SI06` and
+  `RD-SI13` are cured; `RD-E11`, `RD-E15`, `RD-E17`, and `RD-E18` remain unresolved. Zero road services
+  remain and the packet's product verdict stays `NEEDS_MORE_RESEARCH`.
+- **D532 source and cure record:** every counted source and exact locator was manually opened and
+  read back. Four genuinely new used sources append contiguously as `RDS-66`..`RDS-69`. Existing
+  `RDS-50` resolves to Corse's Fourth Division report, Official Records Series I, volume 47, part I,
+  Report No. 32, printed pages 335-342. Pages 337-338 provide the exact 5-11 February route,
+  weather, pioneer/corduroy/wagon handling, and Binnaker pontoon crossing needed with Platter to cure
+  `RD-SI06`; pages 340-342 provide the exact Fourth Division, 9 March Laurel Hill weather/road/delay
+  chain needed with Platter to cure `RD-SI13`. Chamberlin is compatible but unnecessary and creates
+  no dispute. The four `RD-E*` rows retain their named-route, same-operation, second-family,
+  handling, or lawful-endpoint deficits.
+- **D532 preservation and permanent negatives:** the original packet is the exact first 75,108
+  bytes at SHA-256 `df962dd6addb3a4ec167a3e2b218c1dede0eb4917e7ea4bd81565603f0e418c8`;
+  `RDS-01`..`RDS-65` and all original registers, sections, and verdicts remain byte-identical. New
+  Orleans-origin and `CT-36` stay closed; Boonville, Arrow Rock, and Glasgow remain unassigned;
+  Potomac crossings, differently sourced operations and Sherman chains, endpoints, and modes cannot
+  compose. All four CTIs remain `INTERCHANGE_WINDOW_UNADJUDICATED`.
+- **D532 product boundary and release:** D525 remains the product head. D532 creates no road
+  service, data/runtime enum, Historical window, Mayhem service, state, save, UI, topology, route,
+  movement, eligibility, control, condition, receipt, capacity, interchange, or gameplay authority.
+  D532 releases LANE-019 to `CONTRACT` / `none`.
+  No lane-level `SHIPPED` claim is made.
+- **D532 research proof:** `tools/probe-conquest-road-gap-research.mjs` is the dedicated ten-step
+  suite-excluded guard. Bind G removes the load-bearing Corse support sentence from first cured row
+  `RD-SI06` while retaining source metadata; exactly 9/10 results with only `DISPOSITION /
+  SOURCE-ENDPOINT FLOOR` red, then packet/probe bytes restore before clean 10/10.
+  A separate identity mutation removes only `RDS-50`'s per-segment readback marker; exactly 9/10
+  results with only `SOURCE / FAMILY / TYPE / LOCATOR RESOLUTION` red before byte-exact restore.
+  Both probe syntax checks, transport plan 12/12, doc coherence 5/5, conquest plan 8/8, Mayhem plan
+  13/13, War Career plan 24/24, normal build/check, exact 13-file allowlist, the exact 6,365-byte
+  D530 archive at SHA-256 `0c7df72906c5801ea936831e35590c2f5720dea29ecbcface6f1a55f77120fdf`,
+  protected no-diff, fresh-artifact readback, and `git diff --check` pass. No browser/full battery is
+  owed because no protected shared product surface moved.
+- **D532 resume pointer:** under D514, reload the live completion ledger and separately adjudicate
+  and contract the next dependency-ready prerequisite. Roads remain unavailable; no Historical rail,
+  water, or sea window or full interchange exists; LANE-020 remains independently blocked. Do not
+  infer product authority from this docs/research result.
 - **Last-touched commits:** D503 standalone design-lock `a3403da`; D503 final-law
   commit `44ffac5`; Slice-1 DRIVE take `7a0ca42`; allowlist/gate HALT ledger
   `cb46f55`; D504 Slice-1 implementation `74237b9`; D505 docs-only contract ships in
@@ -4538,7 +4577,9 @@ next green commit and confer through this ledger instead of permitting simultane
   that audit at 0/11/6/0, retains every CTI and product surface behind the boundary, and releases the
   lane to CONTRACT/unowned. D531 then takes DRIVE only for the exact six-row claim-specific road
   evidence contract in the existing packet; D525 remains the product head and every product surface
-  remains closed.
+  remains closed. D532 closes that audit at two cured (`RD-SI06` and `RD-SI13`), four unresolved,
+  and zero disputed,
+  keeps every product surface closed, and releases the lane to CONTRACT/unowned.
 
 ### LANE-020 · desk-to-battle-pacing — **CONTRACT (D519 SLICE-5 DEPENDENCY; UNOWNED)**
 

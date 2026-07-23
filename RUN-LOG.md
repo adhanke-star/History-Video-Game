@@ -1,17 +1,53 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D531 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D531, 2026-07-22):** LANE-019 is `DRIVE` / `ChatGPT/Codex` solely for a docs/research-only claim-specific audit of `RD-E11`, `RD-E15`, `RD-E17`, `RD-E18`, `RD-SI06`, and `RD-SI13` in the existing road packet.
+<!-- LIVE-HEAD decision=D532 next-lane=LANE-019 state=CONTRACT owner=none -->
+> **Live status (D532, 2026-07-22):** The exact six-row claim-specific road audit closed with `2 ROAD_GAP_CURED`, `4 ROAD_GAP_UNRESOLVED`, and `0 ROAD_GAP_DISPUTED`; LANE-019 is `CONTRACT` / `none`.
 >
 > **Boundary:** D525 remains the product head; D528/D530's zero established rail/water/sea windows, all four unadjudicated interchanges, and zero road services remain exact. No data, runtime, state, save, UI, topology, route, movement, or generated product is authorized.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D531 contract own the boundary. D532 executes only the six-row claim-specific research pass; closed New Orleans, CT-36, endpoint, and mode-separation negatives remain binding.
+> **Authority:** D532 cures `RD-SI06` and `RD-SI13` from independent Platter and Corse exact-unit/date handling evidence; `RD-E11`, `RD-E15`, `RD-E17`, and `RD-E18` remain unresolved, with zero disputed rows. D503 endpoint and every mode-separation negative remain binding.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-22 — D532 claim-specific road-gap research complete
+
+The exact ordered `RD-E11`, `RD-E15`, `RD-E17`, `RD-E18`, `RD-SI06`, and `RD-SI13`
+audit closes at `2 ROAD_GAP_CURED`, `4 ROAD_GAP_UNRESOLVED`, and
+`0 ROAD_GAP_DISPUTED`. `RD-SI06` and `RD-SI13` are cured; the four `RD-E*` rows remain unresolved.
+The road packet's `NEEDS_MORE_RESEARCH` product verdict remains exact, and zero road services exist.
+
+Every counted source and locator was manually opened and read back. Four used sources append
+contiguously as `RDS-66`..`RDS-69`; the original 75,108-byte packet prefix, `RDS-01`..`RDS-65`,
+all original registers/sections/verdicts, transport JSON, and every product surface remain exact.
+The strongest result comes from resolving existing `RDS-50` to Corse's exact Fourth Division
+commander report, Official Records Series I, volume 47, part I, Report No. 32. Pages 337-338 combine
+the same 5-11 February unit/route with almost-impassable weather, pioneer labor, miles of corduroy,
+wagon passage, and the Binnaker's Bridge pontoon crossing, curing `RD-SI06` alongside Platter.
+Pages 340-342 independently place that division at Laurel Hill on 9 March in violent rain, flooded
+nearly impassable roads, exhaustion, and a midnight halt, curing `RD-SI13`. Chamberlin's compatible
+locality and same-regiment partials are not needed for either floor and create no dispute. The Rolla,
+Winchester-Harpers Ferry, Boonville-Arrow Rock, and Marshall-Shreveport evidence remains partial or
+noncomposable under the row-specific floors.
+
+New Orleans-origin and `CT-36` remain closed; Boonville, Arrow Rock, and Glasgow remain unassigned;
+every Potomac crossing and mode-separation negative remains binding. D532 creates no data, runtime,
+state, save, UI, topology, route, movement, service, eligibility, control, condition, receipt,
+capacity, or gameplay authority. D525 remains the product head, and all four CTIs remain
+`INTERCHANGE_WINDOW_UNADJUDICATED`.
+
+The suite-excluded ten-step guard and Bind G own the result. Bind G removes the load-bearing Corse
+support sentence from first cured row `RD-SI06` while retaining its source metadata, making only
+`DISPOSITION / SOURCE-ENDPOINT FLOOR` red at 9/10 before byte-exact restore. An independent
+identity mutation removes only `RDS-50`'s per-segment readback marker and makes only `SOURCE /
+FAMILY / TYPE / LOCATOR RESOLUTION` red at 9/10 before restore. Dedicated proof 10/10, transport 12/12, coherence 5/5,
+conquest 8/8, Mayhem 13/13, War Career 24/24, normal build/check, exact archive/allowlist/protected/
+artifact audits, and `git diff --check` pass. No browser or full-suite checkpoint is owed because no
+protected shared product surface moved. LANE-019 releases to `CONTRACT` / `none`; D514 immediately
+reloads the completion ledger without any lane-level `SHIPPED` claim.
 
 ## 2026-07-22 — D531 claim-specific road-gap research contract taken
 
