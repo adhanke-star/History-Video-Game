@@ -1,17 +1,29 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D541 next-lane=LANE-022 state=CONTRACT owner=none -->
-> **Live status (D541, 2026-07-23):** `LANE-022` **Slice 2 SHIPS** — control and per-segment service condition become REAL STATE, and supply BITES inside a conquest campaign: a cut segment degrades `depotReach` for every army downstream (64 → 52 on the traced US line), `applied` flips true, and `_lgRoute` adopts `tracedFriction` into `friction`. **Non-conquest play stays byte-identical.** The lane releases to `CONTRACT` / `none`.
+<!-- LIVE-HEAD decision=D542 next-lane=LANE-022 state=DRIVE owner=Claude -->
+> **Live status (D542, 2026-07-23):** `LANE-022` **takes Claude Code DRIVE for Slice 3** — repair plus finite engineering capacity, the slice where Aaron's logged Engineering Corps directive lands **load-bearing** rather than decorative. This is the contract-before-teeth commit the Contract Relay's hard rule requires: the lane carries the complete Slice-3 acceptance contract as committed prose and **NO runtime byte moved**. Game `4764b1fccb40c473edd871621497f62b`, srcTree `5f6d33325fa5feb04f6d5b11e3f5a3b7`, suite **142**, manifest 112, data 65, `_SAVE_VER` 1 and the frozen base `c9db83fa99230ffb95bdfdfe059f3fb9` all HOLD and are NOT re-pinned. **D541 remains the ARC 7 product head until Slice 3 ships.**
 >
-> **Boundary:** `src/61-logistics-rail.js` only, plus its two probes, the CF-1 re-pin, and five mechanical pin re-anchors. Game `45278110`→`4764b1fccb40c473edd871621497f62b`, srcTree `08f95d9e`→`5f6d33325fa5feb04f6d5b11e3f5a3b7`, suite **142** (no probe added), manifest 112, data 65, `_SAVE_VER` **1** (purely additive save), `build/base.html` frozen. **D541 replaces D539 as the ARC 7 product head**; LANE-019 stays unrewritten and every one of its boundary sentences stays exact.
+> **What Slice 3 contracts.** Clearing a cut costs finite engineering capacity: the Construction Corps rebuilds a cut rail line, the Pontoon Train restores a cut water crossing (roads stay absent until Slice 5, so "clearing" acts on a Slice-2 cut rail/water service condition, never on a road). Capacity is derived from the shipped `C.engineering.levels` (Construction + Pontoon branches), and the **B-5 effectiveness/realism slider** (`fldPresetResolve().attrition`, clamped `[0.6, 1.4]` exactly as `T13`'s `fldEngRealism`) governs magnitude. Repair EXTENDS the shipped `conquestSupplySetCondition` clear-path plus a capacity ledger `C.conquest.supply.repair` — no fourth mutator, no second owner. Multiple simultaneous cuts exceed one pass's capacity, forcing the standing decision "which artery do you restore, or accept the longer water route?" (design law §5). Save stays **purely additive** (`_SAVE_VER` 1, the D447/GEA-12 precedent); containment fails CLOSED both directions at the same `_lgTraceRuleset` seam; non-conquest play stays byte-identical.
 >
-> **Authority:** D537 ruling 1 and design-law §4 Slice 2. Three A/B legs — two zero-diff (direction battery `18f609d0…`, `probe-full-campaign` `a38185fd…`) and one honest conquest-ON leg adjudicated under D92. Containment fails CLOSED at the ruleset seam in BOTH directions; the ELEVEN-component substrate gap is a first-class TAUGHT case that never becomes a penalty. Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
+> **Authority:** design-law §4 Slice 3 + Aaron's logged Engineering Corps + B-5-slider directive. Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-23 — D542 LANE-022 takes Claude Code DRIVE for Slice 3 (repair + finite engineering capacity; contract only)
+
+Contract-before-teeth commit from the clean pushed `5ecc00b` boundary. LANE-022 flips to `DRIVE` / Claude
+Code and carries the complete Slice-3 acceptance contract as committed prose: clearing a cut costs FINITE
+engineering capacity (Construction Corps rebuilds a cut rail line, Pontoon Train restores a cut water
+crossing; roads wait for Slice 5), magnitude on the B-5 slider `fldPresetResolve().attrition` clamped
+`[0.6,1.4]` (the exact `T13 fldEngRealism` lever), repair extending the shipped `conquestSupplySetCondition`
+clear-path plus a `C.conquest.supply.repair` ledger — no fourth mutator, no second owner, no new clock. Save
+purely additive (`_SAVE_VER` 1). NO runtime byte moved: game `4764b1fc`, srcTree `5f6d3332`, suite 142,
+manifest 112, data 65, frozen base all HOLD. Build `GATE OK` (docs-only), doc-coherence 5/5. **Next:**
+implement D542 exactly as contracted and ship under its own D### with three A/B legs and one declared bind.
 
 ## 2026-07-23 — D541 LANE-022 Slice 2 ships: control and service condition become real state and supply bites
 
