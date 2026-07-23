@@ -1604,3 +1604,50 @@ After D530 records the honest result, commit/push/fetch clean and return LANE-01
 quarantined. D530 makes no lane-level `SHIPPED` claim and may not extend data/runtime/current-turn/
 state/receipt/topology/movement/live-save behavior. Under D514, reload the ledger immediately after
 that clean research boundary.
+
+### 8.34 D530 water/sea physical-corridor research result
+
+D530 completes the exact D529 docs/research contract in the existing D499 water packet. The ordered
+`CTS-W-01`..`CTS-W-15` plus `CTS-S-01`..`CTS-S-02` surface closes at
+`0 PHYSICAL_CORRIDOR_WINDOW_ESTABLISHED`,
+`11 PHYSICAL_CORRIDOR_PRESENCE_SNAPSHOTS_ONLY`, `6 PHYSICAL_CORRIDOR_EXISTENCE_UNRESOLVED`, and
+`0 PHYSICAL_CORRIDOR_EXISTENCE_DISPUTED`. The unresolved rows are `CTS-W-02`, `CTS-W-03`,
+`CTS-W-04`, `CTS-W-05`, `CTS-W-07`, and `CTS-S-01`; every other row is snapshot-only. No row has
+qualifying continuity evidence, so no Historical legal-now water or sea window exists.
+
+Every one of the audit's 19 counted claims across ten canonical underlying-work families was
+manually accessed and read back at its locator. Unavailable citations and search snippets did not
+count. No source row was appended: existing `SW-01`..`SW-32` remain byte-identical and ordered.
+The same Army CMH work recorded at `SW-29` was read from its current official PDF URL without
+rewriting the frozen register. A passage, landing, convoy, fleet movement, or engineering episode
+proves at most its dated observation; control, capture, surrender, service, later supply, blockade,
+and strategic navigation language remain nonphysical context. Missing exact evidence remains
+unresolved rather than inferred.
+
+The operation-specific negatives remain binding. Island No. 10's temporary canal, battery-running
+path, and ferry are distinct. Mississippi approaches, battery passage, surrender, and through-
+navigation language do not become continuous corridors. Arkansas and Red River low-water findings
+create neither permanent absence nor a season calendar. City Point and Bermuda Hundred events do
+not create standing James River service. Roanoke and New Bern do not create a complete sounds graph.
+`WE-24` stays one-way and January-1865-bounded. For `CTS-S-02` / `WE-26`, closure after Fort Fisher
+means closure to blockade runners rather than physical disappearance or generic Union transport
+closure. Every full interchange result remains `INTERCHANGE_WINDOW_UNADJUDICATED`; no water
+passage, landing, co-location, rail face, service date, or handling assertion establishes one.
+
+The original source, node, edge, chokepoint, and transfer-case sections remain byte-identical, as do
+every mapping, endpoint, direction, mode, and qualitative JSON `historicalEligibility.dateText`.
+The dedicated ten-step suite-excluded guard owns the singular audit, preservation, exact 15+2
+mapping, claim-source metadata, disposition precedence, complete positive floor, semantic negatives,
+CTI quarantine, byte-verbatim D528 archive, and terminal routing. Bind W promotes the first deficient
+row without curing its missing two-family/direct-continuity floor; the named disposition tooth alone
+reds at exactly 9/10, and packet/probe bytes restore exactly before clean 10/10 proof. Transport plan
+12/12, doc coherence 5/5, conquest plan 8/8, Mayhem plan 13/13, War Career plan 24/24, normal build
+and check, exact archive/allowlist/protected/artifact audits, and independent Sol-high review pass.
+
+D530 changes only the exact 13-file docs/research allowlist established by D529. Data, every `src/`
+and runtime probe, manifest/build/suite/save owner, rail/road packet, frozen base, and generated
+product remain fixed. D525 remains the product head. D530 creates no runtime/data enum, current or
+default turn, legal-now availability, navigability, control, condition, receipt, capacity, topology,
+route, movement, save, UI, or playable conquest. It is not a lane-level `SHIPPED` claim. LANE-019
+releases to `CONTRACT` / `none`; under D514 the next dependency-ready prerequisite must be separately
+adjudicated and contracted.

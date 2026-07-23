@@ -3684,16 +3684,15 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **DRIVE (D529 WATER/SEA PHYSICAL-CORRIDOR RESEARCH CONTRACT)**
+### LANE-019 · conquest-design-law — **CONTRACT (D530 WATER/SEA RESEARCH COMPLETE; UNOWNED)**
 
-- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra, solely for the exact docs/research D529 contract
-  below. No simultaneous edits.
-- **State:** DRIVE. D529 takes only the exact 15 inland-water plus two bounded-sea physical
-  corridor/landing existence-window adjudication in the existing D499 packet. D528's rail result
-  remains zero established with every unresolved/disputed row quarantined. D525 remains the product
-  head. The four interchanges remain unadjudicated and outside D530. All 44 service dates and four
-  interchange dates still require their mode-bounded source result before any machine-readable
-  Historical window; D529 presumes no positive result and authorizes no product change.
+- **Owning tool:** none. No simultaneous edits.
+- **State:** CONTRACT. D530 completed the exact 15 inland-water plus two bounded-sea physical
+  corridor/landing existence-window adjudication in the existing D499 packet. The result is zero
+  established windows, 11 snapshot-only rows, six unresolved rows, and zero disputed rows. D528's
+  rail result remains zero established with every unresolved/disputed row quarantined. D525 remains
+  the product head. The four interchanges remain unadjudicated. No service or interchange now has a
+  machine-readable Historical window, and D530 authorizes no product change.
   D525 remains only a pure detached campaign-calendar query in the existing sole conquest-state
   owner and D525 adds no live or operational authority. D523's strict factory/view remains exact.
   D521 remains the shipped pure physical-service reader. No live
@@ -4393,6 +4392,33 @@ next green commit and confer through this ledger instead of permitting simultane
   `CONTRACT` / `none` with D525 still the product head, and immediately reload D514. D530 may not
   change data/runtime/current-turn/state/receipt/topology/movement/live-save behavior or make a
   lane-level `SHIPPED` claim.
+- **D530 delivery record — water/sea physical-corridor research:** the exact result is
+  `0 PHYSICAL_CORRIDOR_WINDOW_ESTABLISHED`, `11 PHYSICAL_CORRIDOR_PRESENCE_SNAPSHOTS_ONLY`,
+  `6 PHYSICAL_CORRIDOR_EXISTENCE_UNRESOLVED`, and `0 PHYSICAL_CORRIDOR_EXISTENCE_DISPUTED`. The
+  unresolved rows are `CTS-W-02`, `CTS-W-03`, `CTS-W-04`, `CTS-W-05`, `CTS-W-07`, and `CTS-S-01`;
+  every other audited row is snapshot-only. No row has qualifying continuity evidence.
+- **D530 source and preservation result:** all 19 counted claims across ten underlying-work families
+  were manually accessed and read back; unavailable citations and search snippets were not counted.
+  No `SW-*` row was appended. Existing sources, nodes, edges, chokepoints, transfer cases, exact
+  mappings, endpoints, directions, modes, and qualitative `dateText` values remain byte-identical.
+  The dedicated suite-excluded guard is `tools/probe-conquest-water-window-research.mjs`. All four
+  CTIs remain `INTERCHANGE_WINDOW_UNADJUDICATED`; roads and product behavior remain outside scope.
+- **D530 product boundary:** D525 remains the product head. D530 adds no runtime/data enum, live or
+  default turn, legal-now availability, navigability, control, service condition, receipt, capacity,
+  topology, route, movement, save, UI, or playable conquest and makes no lane-level `SHIPPED` claim.
+  D530 releases LANE-019 at `CONTRACT` / `none`.
+- **D530 research proof:** the dedicated proof is clean 10/10. Bind W falsely promotes deficient
+  `CTS-W-01`, exits 1 at exactly 9/10 with only `DISPOSITION / POSITIVE FLOOR / CONTINUITY` red,
+  then restores packet/probe bytes to SHA-256
+  `33fd25ebcdf7a9c99e3bb633ed72595b9e5ab50870913b2ca10fc9ad14af48be` /
+  `40f7f09126ef4f3ba6a80d1d7af3787c5ec0f275386b5b1df5f866eccafba19b`. Transport plan 12/12,
+  doc coherence 5/5, conquest plan 8/8, Mayhem plan 13/13, War Career plan 24/24, normal build/check,
+  exact archive/allowlist/protected/artifact audits, and `git diff --check` pass. Independent Sol-high
+  audit reports PASS. Generated product remains byte-identical; no browser/full-suite gate is owed.
+- **D530 resume pointer:** under D514, reload the completion ledger and separately adjudicate and
+  contract the next dependency-ready prerequisite. Roads remain unavailable; no Historical rail,
+  water, or sea legal-now window or full interchange exists; LANE-020 remains independently blocked.
+  Do not infer product authority from this docs/research result.
 - **Last-touched commits:** D503 standalone design-lock `a3403da`; D503 final-law
   commit `44ffac5`; Slice-1 DRIVE take `7a0ca42`; allowlist/gate HALT ledger
   `cb46f55`; D504 Slice-1 implementation `74237b9`; D505 docs-only contract ships in
@@ -4410,7 +4436,8 @@ next green commit and confer through this ledger instead of permitting simultane
   is `7adcc28`; D525 implementation and CONTRACT/unowned release are `9b94e3f`; D526's bounded
   Historical-window finding is `24c7a2b`; D527's rail-window research DRIVE contract is
   `5330ab4`; D528's rail-window research result and CONTRACT/unowned release are `4ab8440`;
-  D529's water/sea research DRIVE contract ships in the commit containing this entry.
+  D529's water/sea research DRIVE contract is `2196d1b`; D530's water/sea research result and
+  CONTRACT/unowned release ship in the commit containing this entry.
 - **History:** D502 created the design-only contract. Aaron chose Package A. D503
   completed the final law. D504 shipped the read-only territory board. D505 audits
   every rail/water evidence row, contracts the read-only substrate, and D506 ships
@@ -4439,7 +4466,9 @@ next green commit and confer through this ledger instead of permitting simultane
   operational state and integration remain closed. D528 records the zero-positive 19/7/1 result,
   retains every CTI as unadjudicated, and releases the lane without product behavior or a lane-level
   SHIPPED claim. D529 takes DRIVE only for the exact 15+2 water/sea physical-corridor research
-  contract in the existing D499 packet; it excludes every CTI and all product behavior.
+  contract in the existing D499 packet; it excludes every CTI and all product behavior. D530 closes
+  that audit at 0/11/6/0, retains every CTI and product surface behind the boundary, and releases the
+  lane to CONTRACT/unowned.
 
 ### LANE-020 · desk-to-battle-pacing — **CONTRACT (D519 SLICE-5 DEPENDENCY; UNOWNED)**
 

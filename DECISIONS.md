@@ -4,6 +4,56 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D530 — WATER_SEA_PHYSICAL_CORRIDOR_RESEARCH_COMPLETE: ZERO ESTABLISHED WINDOWS; ELEVEN SNAPSHOTS; SIX UNRESOLVED; LANE-019 RELEASES — [CHATGPT/CODEX 5.6 SOL ULTRA, HISTORICAL RESEARCH/JUDGMENT] (2026-07-22)
+
+**VERDICT: `WATER_SEA_PHYSICAL_CORRIDOR_RESEARCH_COMPLETE`.** The exact D529 audit closes at
+`0 PHYSICAL_CORRIDOR_WINDOW_ESTABLISHED`, `11 PHYSICAL_CORRIDOR_PRESENCE_SNAPSHOTS_ONLY`,
+`6 PHYSICAL_CORRIDOR_EXISTENCE_UNRESOLVED`, and `0 PHYSICAL_CORRIDOR_EXISTENCE_DISPUTED`. The
+unresolved rows are `CTS-W-02`, `CTS-W-03`, `CTS-W-04`, `CTS-W-05`, `CTS-W-07`, and `CTS-S-01`;
+the other eleven rows are snapshot-only. No row has the required two independent non-tertiary
+families plus direct physical continuity across an asserted interval. Zero positives is the honest
+terminal rather than authority to weaken the source floor.
+
+**Evidence decision:** all 19 counted claims across ten canonical underlying-work families were
+manually opened and read back at their locators. Unavailable citations and search snippets were not
+counted, so no new `SW-*` row was justified and `SW-01`..`SW-32` remain byte-identical and ordered.
+The same Army CMH work in `SW-29` was read from its current official PDF without changing the frozen
+register. Dated landings, passages, convoys, fleet movements, and engineering episodes support only
+their observed endpoints or events; operational control, surrender, later supply, blockade, and
+strategic navigation language remain nonphysical context. Missing exact evidence remains unresolved.
+
+**Mode and parser decision:** Island No. 10's canal, battery-running path, and ferry remain distinct;
+Mississippi operation and surrender prose does not create continuous corridors; Arkansas and Red
+River low water creates neither permanent absence nor a season calendar; City Point creates no
+standing James River service; and Roanoke/New Bern creates no complete sounds graph. `WE-24` stays
+one-way and January-1865-bounded. For `CTS-S-02` / `WE-26`, closure after Fort Fisher means closure
+to blockade runners, not physical disappearance or generic Union transport closure. Every CTI stays
+`INTERCHANGE_WINDOW_UNADJUDICATED`.
+
+**Preservation and proof decision:** D530 appends only one normative audit to the existing D499
+packet and adds the suite-excluded `tools/probe-conquest-water-window-research.mjs`. Existing source,
+node, edge, chokepoint, transfer-case, exact service mapping, endpoint, direction, mode, and JSON
+qualitative-date surfaces remain byte-identical. The guard owns ten filesystem teeth. Bind W promotes
+deficient `CTS-W-01` without curing its missing two-family/direct-continuity floor, so only
+`DISPOSITION / POSITIVE FLOOR / CONTINUITY` reds at exactly 9/10; packet and probe restore to SHA-256
+`33fd25ebcdf7a9c99e3bb633ed72595b9e5ab50870913b2ca10fc9ad14af48be` /
+`40f7f09126ef4f3ba6a80d1d7af3787c5ec0f275386b5b1df5f866eccafba19b` before clean 10/10.
+D528's exact 5,925-byte HANDOFF block is archived at SHA-256
+`c4c96e7ef7e468532040e34bdec1ab6432aec4cb5b9a958a2ca7ec0b7ce941a4`.
+
+**Verification decision:** transport plan 12/12, doc coherence 5/5, conquest plan 8/8, Mayhem plan
+13/13, War Career plan 24/24, normal build and `--check`, exact allowlist/archive/protected/artifact
+audits, and `git diff --check` are green. Generated product remains byte-identical. Independent
+Sol-high review reports PASS with no historical overclaim, contract mismatch, or under-toothed guard.
+No browser or full 140-row battery is owed because no protected shared surface moved.
+
+**Product and routing decision:** D525 remains the product head. D530 adds no runtime/data enum,
+current/default turn, legal-now availability, navigability, control, service condition, receipt,
+capacity, topology, route, movement, save, UI, or playable conquest and makes no lane-level
+`SHIPPED` claim. LANE-019 releases to `CONTRACT` / `none`. Under D514, reload the live ledger and
+separately contract the next dependency-ready prerequisite; roads remain unavailable and LANE-020
+remains independently blocked.
+
 ## D529 — CONTRACT_WATER_PHYSICAL_CORRIDOR_WINDOW_RESEARCH: LANE-019 TAKES DOCS/RESEARCH DRIVE FOR THE EXACT 15+2 WATER/SEA ADJUDICATION — [CHATGPT/CODEX 5.6 SOL ULTRA, ARCHITECTURE/RESEARCH CONTRACT] (2026-07-22)
 
 **VERDICT: `CONTRACT_WATER_PHYSICAL_CORRIDOR_WINDOW_RESEARCH`.** From clean, pushed D528

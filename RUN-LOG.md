@@ -1,17 +1,43 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D529 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D529, 2026-07-22):** LANE-019 is `DRIVE` / `ChatGPT/Codex` solely for a docs/research-only physical corridor/landing existence-window adjudication of the exact 15 inland-water and two bounded-sea services in the existing D499 packet.
+<!-- LIVE-HEAD decision=D530 next-lane=LANE-019 state=CONTRACT owner=none -->
+> **Live status (D530, 2026-07-22):** LANE-019 is `CONTRACT` / `none` after the exact 15 inland-water plus two bounded-sea audit closed with zero established physical-corridor windows, 11 snapshot-only rows, six unresolved rows, and zero disputed rows.
 >
-> **Boundary:** D525 remains the product head and D528's zero-positive rail finding remains exact. All four interchanges stay unadjudicated; no data, runtime, state, save, UI, topology, route, movement, or generated product is authorized.
+> **Boundary:** D525 remains the product head; D528's rail result and all four unadjudicated interchanges remain exact. No data, runtime, state, save, UI, topology, route, movement, or generated product is authorized.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D529 contract own the boundary. After D529 is clean and pushed, D530 executes only the contracted 17-row research pass; roads remain unavailable and LANE-020 remains independently blocked.
+> **Authority:** `HANDOFF.md`'s first ⚡ block owns the boundary. Under D514, reload the live ledger and separately contract the next dependency-ready prerequisite; roads remain unavailable and LANE-020 remains independently blocked.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-22 — D530 water/sea physical-corridor research complete
+
+The exact 15 inland-water plus two bounded-sea services were adjudicated in the existing D499
+packet. The result is zero established physical-corridor windows, 11 snapshot-only rows, six
+unresolved rows (`CTS-W-02`, `CTS-W-03`, `CTS-W-04`, `CTS-W-05`, `CTS-W-07`, `CTS-S-01`), and
+zero disputed rows. No row has qualifying continuity evidence. Every source or locator counted in
+the 19 claims across ten underlying-work families was manually opened and read back; inaccessible
+citations and search snippets were not counted, and no source row was appended.
+
+The audit preserves the existing source, node, edge, chokepoint, transfer-case, transport JSON, and
+qualitative-date surfaces byte-for-byte. Operation-specific passages and landings remain dated
+snapshots rather than continuous corridors. The Island No. 10, low-water, sounds-graph, one-way
+`WE-24`, and Fort Fisher parser negatives remain exact. All four interchanges stay wholly
+unadjudicated. The new suite-excluded ten-step guard owns those boundaries and Bind W.
+
+D525 remains the product head. D530 changes no data, runtime, state, save, UI, topology, route,
+movement, or generated product and makes no lane-level `SHIPPED` claim. D528's exact 5,925-byte
+HANDOFF block moves byte-verbatim to the archive. LANE-019 releases to CONTRACT/unowned; under D514,
+reload the ledger and separately contract the next dependency-ready prerequisite.
+
+Proof is green: the dedicated guard is 10/10; Bind W is exactly 9/10 with only the disposition tooth
+red before byte-exact restore; transport 12/12; coherence 5/5; conquest 8/8; Mayhem plan 13/13; War
+Career plan 24/24; normal build/check `GATE OK`; exact 13-file allowlist, archive, protected, and
+artifact audits; and `git diff --check`. Independent Sol-high review reports PASS. No browser or
+full-suite checkpoint is owed.
 
 ## 2026-07-22 — D529: WATER/SEA PHYSICAL-CORRIDOR RESEARCH CONTRACT
 
