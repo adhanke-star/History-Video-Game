@@ -1458,3 +1458,42 @@ CONTRACT/unowned with D525 still the product head. Zero established windows is a
 unresolved/disputed rows remain quarantined and D514 continues the next independent item. D528 ships
 no lane-level `SHIPPED` claim and may not extend data/runtime/current-turn/state/receipt/topology/
 movement/live-save behavior.
+
+### 8.32 D528 rail physical-window research result
+
+D528 completes the exact D527 docs/research contract in the existing D497 rail packet. The ordered
+`CTS-R-01`..`CTS-R-27` / `RE-01`..`RE-27` surface closes at zero
+`PHYSICAL_WINDOW_ESTABLISHED`, 19 `PHYSICAL_PRESENCE_SNAPSHOTS_ONLY`, seven
+`PHYSICAL_EXISTENCE_UNRESOLVED`, and one `PHYSICAL_EXISTENCE_DISPUTED`. The unresolved rows are
+`CTS-R-02`, `CTS-R-03`, `CTS-R-04`, `CTS-R-10`, `CTS-R-11`, `CTS-R-25`, and `CTS-R-26`;
+`CTS-R-27` alone is disputed. No row has qualifying continuity evidence. Two dated physical
+observations therefore remain snapshots and cannot establish an intervening interval.
+
+The audit appends only genuinely accessed and used `SR-27`..`SR-33`. Every claim has one canonical
+underlying-work family, source row, role, type, locator, and bounded precision. Construction,
+completion, track, bridge, destruction, removal, inspection, map, and historic-property evidence may
+prove only what its exact observation supports. Military use, control, capture, supply, service,
+condition, operation, and abandonment remain nonphysical. The January 1863 Galveston troop crossing
+therefore remains context and cannot supply `CTS-R-26` with a physical bound. The `CTS-R-27`
+removal/inspection conflict retains priority and supplies neither a settled end nor a Louisiana
+through edge.
+
+The only admitted interchange evidence remains `CTI-01` / `RE-06`, `CTI-02` / `RE-22`, `CTI-03`
+/ `RE-11`, and `CTI-04` / `RE-11`+`RE-12`. Each result is limited to
+`RAIL_FACE_EVIDENCE_ONLY`; every full interchange stays `INTERCHANGE_WINDOW_UNADJUDICATED`. A
+water/service date, `SW-*`, rebuild, co-location, landing, or operation cannot establish handling.
+Every existing edge, endpoint, non-link, qualitative `dateText`, and the Cape Fear parser negative
+remains exact.
+
+D528 changes only the exact 13-file docs/research allowlist: the existing eleven D527 routing, law,
+archive, and current-boundary-probe paths; the existing rail packet; and the new suite-excluded
+research guard. The original `SR-01`..`SR-26` rows and node, edge, and case-study tables remain
+byte-identical. Data, `src/`, runtime probes, manifest/build/suite/save owners, road/water packets,
+frozen base, and generated product remain fixed. The dedicated ten-step proof owns the deterministic
+disposition/positive-floor tooth and Bind R; D526's exact 4,723-byte HANDOFF block is archived at
+SHA-256 `c156b0bbfbbddd6448a36a9fcedff3621def8819f13e4d18886a7a0a3391c044`.
+
+D525 remains the product head. D528 creates no runtime/data enum, legal-now result, current/default
+turn, control, condition, receipt, topology, route, movement, save, UI, or playable conquest. It is
+not a lane-level `SHIPPED` claim. LANE-019 releases to `CONTRACT` / `none`; under D514 the next
+dependency-ready prerequisite must be separately adjudicated and contracted.

@@ -4,6 +4,46 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D528 — RAIL_PHYSICAL_WINDOW_AUDIT_ZERO_POSITIVE: EXACT 27-ROW RESEARCH CLOSES WITH EVERY HISTORICAL WINDOW QUARANTINED — [CHATGPT/CODEX 5.6 SOL ULTRA, SOURCE ADJUDICATION/PROOF] (2026-07-22)
+
+**VERDICT: `RAIL_PHYSICAL_WINDOW_AUDIT_ZERO_POSITIVE`.** The exact ordered `CTS-R-01`
+through `CTS-R-27` / `RE-01` through `RE-27` surface was adjudicated in the existing D497 rail
+packet under D527's construction/existence and continuity floor. The result is exact: zero
+`PHYSICAL_WINDOW_ESTABLISHED`, 19 `PHYSICAL_PRESENCE_SNAPSHOTS_ONLY`, seven
+`PHYSICAL_EXISTENCE_UNRESOLVED`, and one `PHYSICAL_EXISTENCE_DISPUTED`. The unresolved rows are
+`CTS-R-02`, `CTS-R-03`, `CTS-R-04`, `CTS-R-10`, `CTS-R-11`, `CTS-R-25`, and `CTS-R-26`;
+`CTS-R-27` alone remains disputed. No row contains qualifying continuity evidence, so no source
+pair can establish an uninterrupted Historical interval.
+
+**Evidence law applied, not relaxed:** the audit appends only genuinely accessed and used
+`SR-27` through `SR-33`; every claim records one canonical underlying-work family, resolved source,
+role, type, locator, and bounded precision. Military use, control, operation, supply, abandonment,
+and service observations stay nonphysical. In particular, the Galveston operation's troop crossing
+of a railroad bridge cannot supply a physical bound, so `CTS-R-26` is unresolved rather than
+snapshot-only. Dated completion, construction, track, bridge, destruction, inspection, map, or
+historic-property observations may support snapshots, but two snapshots never supply continuity.
+The Texas & New Orleans removal account remains materially conflicted by its cited inspection and
+therefore disputed with no settled end or Louisiana through rail.
+
+**Interchange and product boundary:** `CTI-01` / `RE-06`, `CTI-02` / `RE-22`, `CTI-03` /
+`RE-11`, and `CTI-04` / `RE-11`+`RE-12` retain only `RAIL_FACE_EVIDENCE_ONLY`; all four full
+results remain `INTERCHANGE_WINDOW_UNADJUDICATED`. No `SW-*`, water/service date, rebuild,
+co-location, landing, or operation establishes handling. D525 remains the product head. D528 adds
+no data field, enum, parser, source/runtime owner, current/default turn, availability, control,
+condition, receipt, topology, route, movement, save, UI, or generated-product behavior.
+
+**Proof and terminal:** the dedicated ten-step filesystem guard freezes the original 26-source
+register, node/edge/case tables, transport JSON/date prose, exact mappings, canonical source-family
+resolution, physical/nonphysical role separation, positive floor, named negatives, CTI limits,
+archive, and terminal routing. Bind R promotes only the first ordered non-disputed deficient row;
+exactly `DISPOSITION / POSITIVE FLOOR / CONTINUITY` must red before packet/probe byte restoration.
+The D526 HANDOFF head is archived byte-verbatim at 4,723 bytes and SHA-256
+`c156b0bbfbbddd6448a36a9fcedff3621def8819f13e4d18886a7a0a3391c044`. The exact D528 allowlist
+is the eleven D527 routing/law/archive/probe paths plus the existing rail packet and the new
+suite-excluded research probe. LANE-019 returns to `CONTRACT` / `none`; this is a bounded research
+finding, not playable conquest or a lane-level `SHIPPED` claim. Under D514, the next
+dependency-ready prerequisite requires its own contract.
+
 ## D527 — CONTRACT_RAIL_PHYSICAL_WINDOW_RESEARCH: LANE-019 TAKES DOCS/RESEARCH DRIVE FOR EXACT 27-ROW CONSTRUCTION/EXISTENCE ADJUDICATION — [CHATGPT/CODEX 5.6 SOL ULTRA, ARCHITECTURE/RESEARCH CONTRACT] (2026-07-22)
 
 **VERDICT: `CONTRACT_RAIL_PHYSICAL_WINDOW_RESEARCH`.** From clean, pushed D526

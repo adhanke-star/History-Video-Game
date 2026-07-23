@@ -1,17 +1,39 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D527 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
-> **Live status (D527, 2026-07-22):** LANE-019 is `DRIVE` / `ChatGPT/Codex` for one docs/research-only rail physical construction/existence-window adjudication covering the exact 27 rail services plus rail-facing evidence for four interchanges.
+<!-- LIVE-HEAD decision=D528 next-lane=LANE-019 state=CONTRACT owner=none -->
+> **Live status (D528, 2026-07-22):** LANE-019 is `CONTRACT` / `none` after the exact docs/research-only 27-row rail physical-window audit closed at zero established, 19 snapshot-only, seven unresolved, and one disputed; all four rail faces remain unadjudicated interchanges.
 >
-> **Boundary:** D527 changes only committed law/routing and one planning-probe boundary tooth. D525 remains the product head; transport data, runtime, state, save, UI, topology, movement, and generated output remain fixed, and no rail row is presumed to meet the source floor.
+> **Boundary:** D525 remains the product head. No transport data, runtime, state, save, UI, topology, route, movement, or generated product changed, and no Historical rail service is legal-now ready.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D527 exact contract own the boundary. D528 must use the existing rail packet, enforce the two-family floor, retain every unresolved/disputed row and all four interchange limits, and stop before data/runtime behavior; LANE-020 remains independently blocked.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D528 delivery record own the boundary. Under D514, reload the ledger and separately contract the next dependency-ready prerequisite; roads remain unavailable and LANE-020 remains independently blocked.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-22 — D528: RAIL PHYSICAL-WINDOW AUDIT CLOSES ZERO-POSITIVE
+
+The exact 27 rail services and four rail-facing interchange records were adjudicated in the
+existing D497 packet. Seven genuinely used sources append as `SR-27` through `SR-33`; the original
+26 source rows, node/edge/case tables, transport JSON, and every qualitative `dateText` remain
+byte-identical. Exact result: zero established, 19 snapshot-only, seven unresolved
+(`CTS-R-02`, `03`, `04`, `10`, `11`, `25`, `26`), and one disputed (`CTS-R-27`). The bridge used
+by troops in the Galveston operation remains nonphysical context under D527 and cannot promote
+`CTS-R-26`. No row proves continuity.
+
+The four CTIs retain rail-face evidence only and remain wholly unadjudicated handling windows.
+The ten-step dedicated proof fixes source-family/type resolution, claim roles, preservation hashes,
+the positive floor, permanent negatives, CTI boundaries, exact archive, and terminal routing.
+Bind R promotes only `CTS-R-01` without curing its missing floor; exactly the named disposition
+tooth reds, then packet/probe bytes restore before clean proof. D526 moves to the archive at exact
+4,723 bytes / SHA-256 `c156b0bbfbbddd6448a36a9fcedff3621def8819f13e4d18886a7a0a3391c044`.
+
+D525 remains the product head: no data, source runtime, manifest, build owner, save, UI, topology,
+route, movement, or generated product changes. LANE-019 returns to CONTRACT/unowned without a
+lane-level SHIPPED claim. Under D514, reload the ledger and separately contract the next
+dependency-ready prerequisite; roads remain unavailable and LANE-020 remains blocked.
 
 ## 2026-07-22 — D527: RAIL PHYSICAL-WINDOW RESEARCH CONTRACT TAKEN
 
