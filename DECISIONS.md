@@ -4,6 +4,63 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D545 — SHIPPED_CONQUEST_SUPPLY_BLOCKADE_SEA_EDGE: LANE-022 SLICE 4 GATES THE TWO SOURCED SEA SERVICES AS THE CONFEDERATE IMPORT EDGE VIA BLOCKADE-GATED COASTAL SOURCES, WHILE NON-CONQUEST PLAY STAYS BYTE-IDENTICAL; LANE-022 RELEASES — [CLAUDE CODE / Opus 4.8 `[1m]` xhigh, IMPLEMENTATION+GATES] (2026-07-23)
+
+D544 is committed and pushed clean at `9b1363f`. Slice 4 shipped exactly as that contract specified.
+**D545 replaces D543 as the ARC 7 product head.**
+
+**The seam is `src/61-logistics-rail.js` only.** For a CS carrier `conquestSupplyTrace` builds a source list — the
+interior depot `_LG_TRACE_DEPOT[side]` FIRST (depot-preferred, so every shipped route is byte-identical), then
+every held coastal port that ORIGINATES a sourced sea service (the from-end of a sea-mode edge in the base
+projection — CT-12 Savannah). The first source whose OPEN-graph walk reaches the target wins; if none reaches,
+it falls back to the depot's walk (so US, CS/E and every prior case are byte-identical). A pure reader
+`_lgSeaImportOpen(C)` reads the shipped `C.blockade.portsOpen` (0..4): an open runner port (`portsOpen > 0`)
+lets the import source carry; a sealed blockade (`portsOpen 0` — the "last runner port is closed; the South is
+sealed" state in `src/60`) closes it, so a base-reachable import-sourced front SEVERS at the authored ceiling
+(40) rather than becoming a `SUBSTRATE_GAP`. A missing or malformed blockade defaults OPEN (the 1861 opening).
+
+**The finding that shaped Slice 4 (packet-vs-disk, Aaron-ratified).** The packet assumed a CS route already
+traversed a sea service. Disk showed the sole sea edge `CTS-S-01` (CT-12 Savannah → CT-11 Charleston, also the
+only in-edge to CT-11) sits in the 18-node Deep-South component while both fixed depots (CS `CT-05`, US `CT-01`)
+sit in other components, so no depot route used either sea service and a `blocked`-predicate gate would be a
+no-op. `CTS-S-02` (CT-10 Wilmington) is a single-territory service that projects no edge. Surfaced per the HALT
+rule; Aaron ratified the **sea-import-port SOURCE model** — the import edge as blockade-gated coastal sources.
+
+**A/B — three legs, two zero-diff, one honest.** Leg 1 (conquest OFF) the 24-scenario × 8-seed direction
+battery `18f609d07b1190904ec0c11e4ca64675` BYTE-IDENTICAL to the `caf3855` baseline (0 diffs); leg 2
+`probe-full-campaign` `a38185fd371a7f181250eff3a6cbf76a` BYTE-IDENTICAL (0 diffs). Leg 3 (conquest ON, in-page,
+both columns, 0 pageerrors): at caf3855 both CS coast targets were `SUBSTRATE_GAP` (no import route existed,
+shipped friction held). In this build, blockade OPEN → `CS→CT-11` `TRACED` friction **8** via `CTS-S-01:sea`,
+and the Western front `CS→CT-20` `TRACED` friction **16** via rail from Savannah; blockade SEALED → both
+`SEVERED` friction **40**, `severedBy` naming `CTS-S-01`. Direction: tightening the blockade RAISES friction
+(worsens CS supply). Adjudicated under D92 as an accurate-inputs consequence — a sealed blockade closing a real
+import line; every value derives from the graph walk plus the shipped `portsOpen`, never tuned, never an output
+gate. The bounded channel is unchanged: `logisticsBridgeBonus` keeps its caps (`supply ≤ 7`, `fatigueRelief ≤ 5`,
+`overall ≤ 2`), `wr.supply` its 0.15 weight, and every measured state stays inside the caps.
+
+**Bind and save.** Bind D544-B1 mutated the containment allowlist (`{ mayhem: 1 }` → `{ mayhem: 1, historical:
+1 }`) and ran the focused probe WITHOUT rebuilding: ONLY `CONTAINMENT-B` redded (19/20, exit 1), every other
+tooth — including `CONTAINMENT-A` and the new `BLOCKADE SEA EDGE` step — held; restore byte-identical (`src/61`
+md5 `4aa935355487feec3a0780abba7316b4` pre == post), rebuild returned the identical game md5 `0a5286c3` at 20/20
+green. Save is **purely additive with nothing to serialize** — the sea edge reads `C.blockade`, which already
+rides the existing `serializeSave` envelope, so `C.conquest` gains no field, none of the seven
+`tools/save-shape.json` functions moved, and `_SAVE_VER` stays 1 (a CONSCIOUS decision, the D447/GEA-12
+precedent); the SAVE SHAPE and BLOCKADE SEA EDGE teeth prove the read is pure over `C.blockade` and writes no
+`C.conquest` field. No authored constant, so the `authored, not sourced` provenance count in the seam stays 6;
+`src/115`/`src/114`/the evidence pack stay byte-frozen and the two `seaServices` are READ, never rewritten.
+
+**Gates, all green with every artifact read:** build `GATE OK`; focused **20/20** (0 pageerrors, 0 realErrors);
+plan 10/10; adjacent logistics-rail 8, logistics 15, bridge 6, conditioning 9, blockade 11, conquest-board
+13/13, conquest-state 15/15, conquest-transport 18/18, campaign-link 19, auto-resolve 10, save-slots 17/17,
+command 100, presets 27 — all exit 0, 0 pageerrors; plan probes Mayhem 13/13, War Career 24/24, transport
+12/12, conquest layer 8/8, doc coherence 5/5; `git diff --check` clean. Game
+`98f3feaf0de89b3b47eda6b1347dacd0` → `0a5286c3b79c8011a6903ceb23772d80`, srcTree
+`c4fc64ebe6d49d9cdfc79885b4c05d8b` → `7bcb0579d4e432950897500e7f0e5846`, re-anchored at FIVE disk-verified sites
+(three generated-game, two srcTree); suite md5, focused md5, manifest and frozen base HOLD (no probe or module
+added, so the suite stays 142). Reversible: the seam is guarded and byte-identical when inactive. **EXACT
+NEXT:** Slice 5 (the authored Mayhem road layer, seeded on `RD-SI06`/`RD-SI13`). ARC 7 Historical transport
+movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
+
 ## D544 — CONTRACT_CONQUEST_SUPPLY_BLOCKADE_SEA_EDGE: LANE-022 TAKES CLAUDE CODE DRIVE FOR SLICE 4 — BLOCKADE STATE GATES THE TWO SOURCED SEA SERVICES AS THE CONFEDERATE IMPORT EDGE, MODELLED AS BLOCKADE-GATED COASTAL SOURCES (CONTRACT ONLY; NO RUNTIME BYTE MOVED) — [CLAUDE CODE / Opus 4.8 `[1m]` xhigh, CONTRACT] (2026-07-23)
 
 D543 is committed and pushed clean at `caf3855162c666a677ff58fa85373edb9a2e6f13`. This is the

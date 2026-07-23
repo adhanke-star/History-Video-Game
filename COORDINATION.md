@@ -5117,19 +5117,19 @@ risk and lane routing rather than on the rulings themselves.)*
   D536 contract exactly (the D535 bullets above); after D536, the lane is `CONTRACT` / `none` and the next
   parked slice (the E61 collapse-terminal fork recommended) needs its own contract section.
 
-### LANE-022 · conquest-mayhem-supply-ladder — **DRIVE (D544 SLICE 4 CONTRACT; CLAUDE CODE)**
+### LANE-022 · conquest-mayhem-supply-ladder — **CONTRACT (D545 SLICE 4 SHIPPED; UNOWNED)**
 
-- **Owning tool:** Claude Code (Opus 4.8 `[1m]` xhigh), DRIVE for the D544 Slice-4 blockade/sea-edge contract,
-  taken in this ledger-only commit at the clean pushed D543 boundary; no simultaneous edits by any provider.
-  Lock history: D537 opened the lane at `CONTRACT` / `none`; D538 took DRIVE at
+- **Owning tool:** none. D545 releases the D544 Claude Code DRIVE lock at the shipped Slice-4 boundary; no
+  simultaneous edits by any provider. Slice 5 requires its own committed contract section and DRIVE take here
+  before any runtime edit. Lock history: D537 opened the lane at `CONTRACT` / `none`; D538 took DRIVE at
   `0829d8d`; D539 shipped Slice 1 and released; D540 took DRIVE at
   `7e48ca813be39a9db9df565e5af4976547b55a80`; D541 shipped Slice 2 and released at
   `5ecc00bdb6f5fc65d9e26c32d51fb49371e81d2b`; D542 took DRIVE for Slice 3 at
-  `475543cebc4d9026b382c61cfef51283396183cc`; D543 shipped Slice 3 and released; D544 takes DRIVE for Slice 4
-  at the pushed `caf3855162c666a677ff58fa85373edb9a2e6f13` boundary.
-- **State:** DRIVE — **D544 takes Claude Code DRIVE for Slice 4 (the blockade / sea edge) as a committed
-  contract-only take; the complete Slice-4 acceptance contract is committed prose below and NO runtime byte has
-  moved.** This lane owns the ARC 7 transport/supply ladder that D537 ratified onto
+  `475543cebc4d9026b382c61cfef51283396183cc`; D543 shipped Slice 3 and released; D544 took DRIVE for Slice 4 at
+  `9b1363f`; D545 shipped Slice 4 and released.
+- **State:** CONTRACT/unowned — **D545 shipped Slice 4 (the blockade / sea edge) exactly as D544 contracted;
+  blockade state gates the two sourced sea services as the Confederate import edge via blockade-gated coastal
+  sources, and non-conquest play stays byte-identical.** This lane owns the ARC 7 transport/supply ladder that D537 ratified onto
   the **Mayhem** ruleset. **LANE-019 is deliberately not rewritten by this lane** — its segment is pinned
   tooth-for-tooth by `tools/probe-conquest-transport-plan.mjs` and every one of its boundary sentences
   remains exact. LANE-019 keeps the historical-evidence contract; LANE-022 owns buildable Mayhem product.
@@ -5670,4 +5670,42 @@ risk and lane routing rather than on the rulings themselves.)*
   committed above and NO runtime byte moved. Implement the seam in `src/61-logistics-rail.js` only (plus the two
   LANE-022 probes and the five mechanical pin re-anchors), ship it under its own D### with the three A/B legs
   and the one declared bind, then release LANE-022 and contract Slice 5 (the authored Mayhem road layer). ARC 7
+  Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
+
+- **D545 delivery record — Slice 4, the blockade / sea edge:** shipped exactly as D544 contracted. The seam is
+  `src/61-logistics-rail.js` only. For a CS carrier `conquestSupplyTrace` builds a source list — the interior
+  depot FIRST (depot-preferred, so every shipped route is byte-identical), then every held coastal port that
+  originates a sourced sea service (the from-end of a sea-mode edge — CT-12 Savannah); the first source whose
+  open-graph walk reaches the target wins, else it falls back to the depot. A pure reader `_lgSeaImportOpen(C)`
+  reads the shipped `C.blockade.portsOpen`: open (`portsOpen > 0`) lets the import carry, sealed (`portsOpen 0`)
+  closes it so a base-reachable import-sourced front SEVERS at the ceiling (40) rather than becoming a
+  `SUBSTRATE_GAP`. No fourth mutator, no second logistics/blockade owner, no new save owner, no new clock, no
+  authored constant, no module added (manifest 112), no data change (65), `_SAVE_VER` stays 1 (the sea edge
+  reads `C.blockade`, so nothing new serializes), `build/base.html` frozen.
+- **D545 containment:** the sea-import logic lives inside `conquestSupplyTrace`, which fails CLOSED at the D539
+  `_lgTraceRuleset` allowlist gate before any board read. `CONTAINMENT-A` gained the open-ruleset sea-import
+  assertion (`CS→CT-11` `TRACED` via `CTS-S-01`); `CONTAINMENT-B` stays the ONE tooth owning the gated-ruleset
+  query and the allowlist source assertion, and now proves a CS sea-import query is null on the gated ruleset.
+- **D545 A/B — three legs.** Leg 1 (conquest OFF) the direction battery `18f609d07b1190904ec0c11e4ca64675`
+  BYTE-IDENTICAL to the `caf3855` baseline (0 diffs); leg 2 `probe-full-campaign`
+  `a38185fd371a7f181250eff3a6cbf76a` BYTE-IDENTICAL (0 diffs); leg 3 (conquest ON, in-page, both columns) at
+  caf3855 both CS coast targets were `SUBSTRATE_GAP`; in this build blockade OPEN → `CS→CT-11` `TRACED` friction
+  8 via `CTS-S-01:sea`, Western `CS→CT-20` `TRACED` friction 16, blockade SEALED → both `SEVERED` friction 40
+  (`severedBy CTS-S-01`) — adjudicated under D92 as accurate-inputs consequences, caps held.
+- **D545 bind — Bind D544-B1, exact scope:** mutated the containment allowlist
+  (`{ mayhem: 1 }` → `{ mayhem: 1, historical: 1 }`) and ran the focused probe WITHOUT rebuilding; ONLY
+  `CONTAINMENT-B` redded (19/20, exit 1), every other tooth held. Restore byte-identical (`src/61` md5
+  `4aa935355487feec3a0780abba7316b4` pre == post), rebuild returned the identical game md5 at 20/20 green.
+- **D545 gates, all green with every artifact read:** build `GATE OK`; focused 20/20 (0 pageerrors, 0
+  realErrors); plan 10/10; adjacent logistics-rail 8, logistics 15, bridge 6, conditioning 9, blockade 11,
+  conquest-board 13/13, conquest-state 15/15, conquest-transport 18/18, campaign-link 19, auto-resolve 10,
+  save-slots 17/17, command 100, presets 27 — all exit 0, 0 pageerrors; plan probes Mayhem 13/13, War Career
+  24/24, transport 12/12, conquest layer 8/8, doc coherence 5/5; `git diff --check` clean. Game
+  `98f3feaf0de89b3b47eda6b1347dacd0` → `0a5286c3b79c8011a6903ceb23772d80`, srcTree
+  `c4fc64ebe6d49d9cdfc79885b4c05d8b` → `7bcb0579d4e432950897500e7f0e5846`, re-anchored at FIVE disk-verified
+  sites (three generated-game, two srcTree); suite md5, focused md5, manifest and frozen base HOLD.
+- **Resume pointer (D545):** LANE-022 is `CONTRACT` / `none` with Slices 1-4 shipped. Slice 5 (the authored
+  Mayhem road layer, seeded on `RD-SI06`/`RD-SI13` as sourced labelled exemplars of road FAILURE with the rest
+  openly authored and visibly marked, structurally barred from Historical) needs its own committed contract
+  section and DRIVE take here before any runtime edit. D545 replaces D543 as the ARC 7 product head. ARC 7
   Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.

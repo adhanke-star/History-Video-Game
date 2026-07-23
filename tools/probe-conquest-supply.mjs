@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import "./guard-probe-browser.mjs";
-// D538/D539 + D540 / LANE-022 Slices 1-2 focused proof — the traced conquest supply route, and the
-// control/service receipts and cuts that make it bite.
+// D538/D539 + D540 + D542 + D544 / LANE-022 Slices 1-4 focused proof — the traced conquest supply route, the
+// control/service receipts and cuts that make it bite, the finite-capacity repair, and the blockade sea edge.
 //
 // Two halves by design. The STATIC half rebuilds the seam in a node:vm context from the ON-DISK
 // src/115 + src/114 + src/61, so a source mutation reds it WITHOUT a rebuild (that is what makes the
@@ -80,7 +80,14 @@ try {
 
   await step("CONTAINMENT-A: authored trace AND authored control/condition state are reachable on the open ruleset", () => {
     const run = diskSeam();
-    const v = JSON.parse(run("var C=mkConquest('US','mayhem');var t=conquestSupplyTrace(C,null);var s=_lgSupplyView(C);var r=_lgRoute(C,null);return {t:t,s:s,routeKeys:Object.keys(r),sameRef:r.trace&&r.trace.depot===t.depot,frozen:[Object.isFrozen(t),Object.isFrozen(t.segments),Object.isFrozen(t.segments[0]),Object.isFrozen(t.modeMix),Object.isFrozen(s),Object.isFrozen(s.control),Object.isFrozen(s.cut)],openingUS:s.control['CT-01'],openingCS:s.control['CT-05'],openingCount:Object.keys(s.control).length};"));
+    const v = JSON.parse(run("var C=mkConquest('US','mayhem');var t=conquestSupplyTrace(C,null);var s=_lgSupplyView(C);var r=_lgRoute(C,null);"
+      // D544: the authored CS sea-import route is reachable on the open ruleset (Charleston via CTS-S-01).
+      + "var seaC=mkConquest('CS','mayhem');seaC.blockade={portsOpen:4};var sea=conquestSupplyTrace(seaC,'CT-11');"
+      + "return {t:t,s:s,routeKeys:Object.keys(r),sameRef:r.trace&&r.trace.depot===t.depot,frozen:[Object.isFrozen(t),Object.isFrozen(t.segments),Object.isFrozen(t.segments[0]),Object.isFrozen(t.modeMix),Object.isFrozen(s),Object.isFrozen(s.control),Object.isFrozen(s.cut)],openingUS:s.control['CT-01'],openingCS:s.control['CT-05'],openingCount:Object.keys(s.control).length,"
+      + "sea:{state:sea.supplyState,applied:sea.applied,depot:sea.depot,seg:sea.segments.map(function(x){return x.id+':'+x.mode;}),f:sea.tracedFriction}};"));
+    need(v.sea && v.sea.state === "TRACED" && v.sea.applied === true && v.sea.depot === "CT-12"
+      && JSON.stringify(v.sea.seg) === JSON.stringify(["CTS-S-01:sea"]) && v.sea.f === 8,
+      "the authored CS sea-import route (Savannah -> Charleston via CTS-S-01) is not reachable on the open ruleset: " + JSON.stringify(v.sea));
     need(v.t && typeof v.t === "object", "the open ruleset produced no trace object");
     need(JSON.stringify(Object.keys(v.t)) === JSON.stringify(TRACE_KEYS), "trace field set drifted: " + JSON.stringify(Object.keys(v.t)));
     need(JSON.stringify(Object.keys(v.s)) === JSON.stringify(SUPPLY_KEYS), "control/condition field set drifted: " + JSON.stringify(Object.keys(v.s)));
@@ -130,7 +137,9 @@ try {
       "var partial={side:'US',campaignKind:{id:'conquest',version:1},ruleset:Object.assign(Object.create({version:1}),{id:'mayhem'})};",
       "closed.push(conquestSupplyTrace(partial,'CT-03')===null);",
       // D540/D542: the SAME gate must close authored control/condition/repair state and every writer AND reader.
+      // D544: and the authored CS sea-import route stays closed even with live blockade state on the carrier.
       "var G2=mkConquest('US','historical');G2.engineering={levels:{construction:3,pontoons:3}};",
+      "var SEA=mkConquest('CS','historical');SEA.blockade={portsOpen:4};",
       "var stateClosed=[_lgSupplyView(G2)===null,",
       " conquestSupplySetCondition(G2,'CTS-R-02',true)===null,",
       " conquestSupplySetControl(G2,'CT-03','CS')===null,",
@@ -138,6 +147,7 @@ try {
       " conquestSupplyRepairReport(G2)===null,",
       " _lgSupplyRepairReset(G2)===null,",
       " _lgSupplyBlockHTML(G2)==='',",
+      " conquestSupplyTrace(SEA,'CT-11')===null,",
       " Object.keys(G2.conquest).length===0];",
       "return {trace:conquestSupplyTrace(C,'CT-03'),routeKeys:Object.keys(r),hasTrace:Object.prototype.hasOwnProperty.call(r,'trace'),closed:closed,stateClosed:stateClosed};"
     ].join("")));
@@ -145,8 +155,8 @@ try {
     need(v.hasTrace === false, "_lgRoute attached a trace on the evidence-gated ruleset — CONTAINMENT LEAK");
     need(JSON.stringify(v.routeKeys) === JSON.stringify(SHIPPED_ROUTE_KEYS), "evidence-gated route keys drifted");
     need(v.closed.length === 11 && v.closed.every(Boolean), "a non-admitted ruleset shape opened the gate: " + JSON.stringify(v.closed));
-    need(v.stateClosed.length === 8 && v.stateClosed.every(Boolean),
-      "authored control/condition/repair state surfaced on the evidence-gated ruleset — CONTAINMENT LEAK: " + JSON.stringify(v.stateClosed));
+    need(v.stateClosed.length === 9 && v.stateClosed.every(Boolean),
+      "authored control/condition/repair/sea-import state surfaced on the evidence-gated ruleset — CONTAINMENT LEAK: " + JSON.stringify(v.stateClosed));
     return { absent: true, closedShapes: v.closed.length, stateClosed: v.stateClosed.length, allowlist: "single-id", accessorsInvoked: 0 };
   });
 
@@ -420,6 +430,58 @@ try {
     return { capacity: [v.cap0, v.cap32, v.capMax], b5: [v.capHi, v.capMax, v.capLo], cleared: v.cleared, railCount: v.railCount, exhausted: v.repExhausted, resetWorks: v.spentReset === 0 };
   });
 
+  await step("BLOCKADE SEA EDGE (D544): an open runner port TRACES the CS coastal import, a sealed blockade SEVERS it, US is unaffected, and the read is pure", () => {
+    const run = diskSeam();
+    const v = JSON.parse(run([
+      "function cs(ports){var C=mkConquest('CS','mayhem');if(ports!==undefined)C.blockade={portsOpen:ports};return C;}",
+      "function tr(C,t){var x=conquestSupplyTrace(C,t);return {s:x.supplyState,ap:x.applied,f:x.tracedFriction,by:x.severedBy,seg:x.segments.map(function(y){return y.id+':'+y.mode;}),depot:x.depot,reason:x.reason};}",
+      // Charleston is reachable ONLY through the sea edge CTS-S-01; the front CT-20 is import-sourced rail
+      "var charOpen=tr(cs(4),'CT-11'),charSealed=tr(cs(0),'CT-11'),charDefault=tr(cs(),'CT-11');",
+      "var westOpen=tr(cs(4),'CT-20'),westSealed=tr(cs(0),'CT-20');",
+      // both directions: a reopened blockade restores the line
+      "var reopened=tr(cs(2),'CT-11');",
+      // US has no Confederate import source, so the blockade never moves it (still a gap)
+      "var usSealed=conquestSupplyTrace((function(){var C=mkConquest('US','mayhem');C.blockade={portsOpen:0};return C;})(),'CT-11');",
+      "var usOpen=conquestSupplyTrace((function(){var C=mkConquest('US','mayhem');C.blockade={portsOpen:4};return C;})(),'CT-11');",
+      // capturing the import port removes it as a source (not a free pass, not a sea sever)
+      "var LOST=mkConquest('CS','mayhem');LOST.blockade={portsOpen:4};conquestSupplySetControl(LOST,'CT-12','US');var portLost=tr(LOST,'CT-11');",
+      // a malformed blockade defaults OPEN, the 1861 opening
+      "var bad=tr((function(){var C=mkConquest('CS','mayhem');C.blockade={portsOpen:'x'};return C;})(),'CT-11');",
+      // the sea-edge read is PURE over C.blockade — the sibling state is never mutated
+      "var P=cs(0);var before=JSON.stringify(P.blockade);conquestSupplyTrace(P,'CT-11');conquestSupplyTrace(P,'CT-20');var pure=JSON.stringify(P.blockade)===before&&!Object.prototype.hasOwnProperty.call(P.conquest,'supply');",
+      // the CS carrier's capped bridge stays inside the shipped caps in both blockade states
+      "function active(C){var L=logisticsInit(C);L.active=true;L.priority='railheads';return C;}",
+      "var caps=_lgCfg().bridgeCaps,bo=logisticsBridgeBonus(active(cs(4))),bs=logisticsBridgeBonus(active(cs(0)));",
+      "var capsOk=[bo,bs].every(function(b){return b.supply>=0&&b.supply<=caps.supply&&b.fatigueRelief>=0&&b.fatigueRelief<=caps.fatigueRelief&&b.overall>=0&&b.overall<=caps.overall;});",
+      "return {charOpen:charOpen,charSealed:charSealed,charDefault:charDefault,westOpen:westOpen,westSealed:westSealed,reopened:reopened,",
+      " usSealed:usSealed.supplyState,usOpen:usOpen.supplyState,portLost:portLost,bad:bad,pure:pure,capsOk:capsOk};"
+    ].join("")));
+    // Charleston, the sea-only target
+    need(v.charOpen.s === "TRACED" && v.charOpen.ap === true && v.charOpen.f === 8
+      && JSON.stringify(v.charOpen.seg) === JSON.stringify(["CTS-S-01:sea"]) && v.charOpen.depot === "CT-12",
+      "an open blockade must TRACE the Charleston sea import via CTS-S-01: " + JSON.stringify(v.charOpen));
+    need(v.charSealed.s === "SEVERED" && v.charSealed.ap === true && v.charSealed.f === 40
+      && JSON.stringify(v.charSealed.by) === JSON.stringify(["CTS-S-01"]) && /blockade/i.test(v.charSealed.reason),
+      "a sealed blockade must SEVER the Charleston import at the ceiling and name the sea service: " + JSON.stringify(v.charSealed));
+    need(v.charDefault.s === "TRACED", "a CS carrier with no blockade state must default OPEN (the 1861 opening): " + JSON.stringify(v.charDefault));
+    // the Western front, import-sourced rail from Savannah
+    need(v.westOpen.s === "TRACED" && v.westOpen.ap === true && v.westSealed.s === "SEVERED" && v.westSealed.f === 40,
+      "the Western front must TRACE from the coast when open and SEVER when the blockade seals: " + JSON.stringify([v.westOpen, v.westSealed]));
+    need(v.westSealed.f > v.westOpen.f, "sealing the blockade must raise the Western front's friction: " + v.westOpen.f + " -> " + v.westSealed.f);
+    // both directions
+    need(v.reopened.s === "TRACED" && v.reopened.f === v.charOpen.f, "a reopened blockade must restore the traced import line: " + JSON.stringify(v.reopened));
+    // US is never moved by the blockade
+    need(v.usSealed === "SUBSTRATE_GAP" && v.usOpen === "SUBSTRATE_GAP",
+      "the US side must never gain or lose a Confederate sea import: sealed " + v.usSealed + " open " + v.usOpen);
+    // losing the port removes the source
+    need(v.portLost.s === "SUBSTRATE_GAP" && v.portLost.depot === "CT-05",
+      "capturing the import port must remove it as a source, falling back to the interior depot: " + JSON.stringify(v.portLost));
+    need(v.bad.s === "TRACED", "a malformed blockade payload must default OPEN, never crash or seal: " + JSON.stringify(v.bad));
+    need(v.pure === true, "the sea-edge read mutated C.blockade or wrote into C.conquest — the path must be pure");
+    need(v.capsOk === true, "a blockade state pushed the capped bridge outside the shipped caps");
+    return { charleston: [v.charOpen.f, v.charSealed.f], west: [v.westOpen.f, v.westSealed.f], usUnmoved: true, portLost: "SUBSTRATE_GAP", pureRead: true, capsHeld: true };
+  });
+
   await step("SUBSTRATE IMMUTABILITY: tracing never writes the evidence pack, the board, or module 115", () => {
     const run = diskSeam();
     const v = JSON.parse(run([
@@ -588,6 +650,23 @@ try {
     } finally {
       if (saved === undefined) delete G.settings.tacticalPreset; else G.settings.tacticalPreset = saved;
     }
+  }));
+
+  await step("IN PAGE (D544): the blockade opens and seals the CS coastal import in the built deliverable, and US is unaffected", () => page.evaluate(() => {
+    if (typeof conquestSupplyTrace !== "function") throw new Error("conquestSupplyTrace is absent from the built game");
+    const cs = ports => ({ side: "CS", campaignKind: { id: "conquest", version: 1 }, ruleset: { id: "mayhem", version: 1 }, conquest: {}, blockade: { portsOpen: ports } });
+    const open = conquestSupplyTrace(cs(4), "CT-11");
+    const sealed = conquestSupplyTrace(cs(0), "CT-11");
+    if (!open || open.supplyState !== "TRACED" || open.segments.length !== 1 || open.segments[0].id !== "CTS-S-01" || open.tracedFriction !== 8)
+      throw new Error("in-page open blockade did not TRACE the Charleston sea import: " + JSON.stringify(open && { s: open.supplyState, f: open.tracedFriction }));
+    if (!sealed || sealed.supplyState !== "SEVERED" || sealed.tracedFriction !== 40 || sealed.severedBy[0] !== "CTS-S-01")
+      throw new Error("in-page sealed blockade did not SEVER the Charleston import: " + JSON.stringify(sealed && { s: sealed.supplyState, f: sealed.tracedFriction }));
+    const westOpen = conquestSupplyTrace(cs(4), "CT-20"), westSealed = conquestSupplyTrace(cs(0), "CT-20");
+    if (westOpen.supplyState !== "TRACED" || westSealed.supplyState !== "SEVERED" || !(westSealed.tracedFriction > westOpen.tracedFriction))
+      throw new Error("in-page Western front did not move with the blockade");
+    const usSealed = conquestSupplyTrace({ side: "US", campaignKind: { id: "conquest", version: 1 }, ruleset: { id: "mayhem", version: 1 }, conquest: {}, blockade: { portsOpen: 0 } }, "CT-11");
+    if (usSealed.supplyState !== "SUBSTRATE_GAP") throw new Error("in-page US side gained a Confederate sea import");
+    return { open: open.tracedFriction, sealed: sealed.tracedFriction, west: [westOpen.tracedFriction, westSealed.tracedFriction], usUnmoved: true };
   }));
 
   await step("IN PAGE: repeated tracing is pure — no G, C, save, storage, DOM, or board movement", () => page.evaluate(() => {

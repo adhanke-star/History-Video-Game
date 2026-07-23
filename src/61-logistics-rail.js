@@ -48,7 +48,7 @@ function _lgBattle(C) {
   } catch (e) { return null; }
 }
 
-/* --- LANE-022 Slices 1-2 (D538/D539 trace, D540 receipts and cuts) + Slice 3 (D542 repair) ---
+/* --- LANE-022 Slices 1-2 (D538/D539 trace, D540 receipts and cuts) + Slice 3 (D542 repair) + Slice 4 (D544 sea import) ---
    A guarded seam. Every carrier that does not declare an exact conquest
    campaign kind takes none of this and gets the shipped static route with its
    object untouched, so the capped bridge, the troop-morale weight, camp and
@@ -80,6 +80,20 @@ function _lgBattle(C) {
    route? The capacity/repair state is control-class and stays out of the CF-2 memo,
    rides the existing save envelope, and fails closed on the gated ruleset like the
    rest of the seam.
+
+   Slice 4 turns the two sourced sea services into the Confederate IMPORT edge. The
+   coastal ports those services name (Wilmington, Charleston, Savannah) run the
+   blockade for imported arms, so for a CS carrier a held port that ORIGINATES a sea
+   service becomes an extra supply SOURCE beside the interior depot. A front the
+   depot cannot reach overland across the sourced substrate (the interior rail gap
+   the road layer closes in Slice 5) can then be supplied from the coast. The shipped
+   blockade lever gates that source: while a runner port is open (portsOpen > 0) the
+   import carries; when the blockade seals every port (portsOpen 0 — the Fort Fisher
+   state) it lands nothing and the front SEVERS, falling back on the meagre interior.
+   The interior depot's overland supply is never gated, so US play and the CS depot
+   line stay byte-identical. It READS the shipped blockade STATE only and rides the
+   existing blockade save envelope, so no field is added to C.conquest and the save
+   shape does not move.
    ------------------------------------------------------------------------ */
 
 var _LG_TRACE_RULESETS = { mayhem: 1 };                                            // LANE022_CONTAINMENT_ALLOWLIST
@@ -396,6 +410,21 @@ function _lgSupplyRepairReset(C) {
   return _lgSupplyView(C);
 }
 
+/* Slice 4 (D544). The shipped blockade lever read as an open/closed gate on the sea
+   import. A CS carrier with at least one runner port open (portsOpen > 0) can land
+   imports; a sealed blockade (portsOpen 0) closes every coastal source. A missing or
+   malformed blockade defaults OPEN — the Confederate 1861 opening — so a bare conquest
+   carrier behaves like an unsealed South. Pure read of a sibling state; the depot's
+   own overland supply is never gated, and this never enters the control-independent
+   memo. */
+function _lgSeaImportOpen(C) {
+  var b = C && C.blockade;
+  if (!b || typeof b !== "object" || Array.isArray(b)) return true;
+  var p = b.portsOpen;
+  if (typeof p !== "number" || !isFinite(p)) return true;
+  return p > 0;
+}
+
 function conquestSupplyTrace(C, targetId) {
   if (!_lgConquestKind(C)) return null;
   var view = _lgTraceRuleset(C);
@@ -406,9 +435,9 @@ function conquestSupplyTrace(C, targetId) {
   if (!state) return null;
   var own = Object.prototype.hasOwnProperty, names = base.names, i, m, cost = 0;
   var side = (C && C.side === "CS") ? "CS" : "US", foe = (side === "CS") ? "US" : "CS";
-  var depot = _LG_TRACE_DEPOT[side], theater = _lgTraceTheater(C);
+  var theater = _lgTraceTheater(C);
   var target = (typeof targetId === "string" && own.call(names, targetId)) ? targetId : _LG_TRACE_FRONT[theater];
-  if (!own.call(names, depot) || !own.call(names, target)) return null;
+  if (!own.call(names, _LG_TRACE_DEPOT[side]) || !own.call(names, target)) return null;
 
   /* A segment carries for this side only if its service is sound AND neither
      end is held by the enemy. Supply lines reach INTO contested ground — an
@@ -417,9 +446,32 @@ function conquestSupplyTrace(C, targetId) {
   var blocked = function (e, from) {
     return state.cut[e.id] === 1 || state.control[e.to] === foe || state.control[from] === foe;
   };
+
+  /* Slice 4 (D544). The interior depot is always the first supply source. For a CS
+     carrier every held coastal port that ORIGINATES a sourced sea service (the from-
+     end of a sea edge) is added as an import source, so a front the depot cannot reach
+     overland can still be supplied from the coast. The first source whose OPEN-graph
+     walk reaches the target wins, depot preferred, so every shipped depot route is
+     byte-identical and only a genuinely coast-only front ever picks an import port. */
+  var sources = [{ id: _LG_TRACE_DEPOT[side], sea: false }];
+  if (side === "CS") {
+    var origin = {}, on, oe, oks;
+    for (on in base.adj) if (own.call(base.adj, on)) { for (oe = 0; oe < base.adj[on].length; oe++) if (base.adj[on][oe].mode === "sea") origin[on] = 1; }
+    oks = Object.keys(origin).sort();
+    for (i = 0; i < oks.length; i++) if (own.call(names, oks[i]) && state.control[oks[i]] !== foe) sources.push({ id: oks[i], sea: true });
+  }
+  var chosen = sources[0], openWalk = null, srcK, srcWalk;
+  for (srcK = 0; srcK < sources.length; srcK++) {
+    srcWalk = _lgTraceWalk(base.adj, sources[srcK].id, target, null);
+    if (srcWalk.reachable) { chosen = sources[srcK]; openWalk = srcWalk; break; }
+  }
+  if (!openWalk) openWalk = _lgTraceWalk(base.adj, chosen.id, target, null);
+  var depot = chosen.id;
+  /* The shipped blockade lever gates a sea-import source only: an open runner port
+     lands supply, a sealed blockade lands nothing. The interior depot is never gated. */
+  var seaOpen = chosen.sea ? _lgSeaImportOpen(C) : true;
   var depotHeld = state.control[depot] !== foe;
-  var openWalk = _lgTraceWalk(base.adj, depot, target, null);
-  var liveWalk = depotHeld ? _lgTraceWalk(base.adj, depot, target, blocked)
+  var liveWalk = (depotHeld && seaOpen) ? _lgTraceWalk(base.adj, depot, target, blocked)
     : { reachable: false, segments: [], territories: [depot], reached: 1 };
 
   var walk, applied, supplyState, severedBy = [], reason, friction;
@@ -433,6 +485,15 @@ function conquestSupplyTrace(C, targetId) {
     walk = liveWalk; applied = true; supplyState = "TRACED";
     reason = "Supply runs " + walk.segments.length + (walk.segments.length === 1 ? " segment" : " segments")
       + " from " + names[depot] + " to " + names[target] + ".";
+  } else if (chosen.sea && !seaOpen) {
+    /* Slice 4 (D544): the coastal import that fed this front is sealed by the
+       blockade. Name the closed sea service(s) at the port so the player sees the
+       import edge that shut, and teach the blockade rather than a wagon-road cut. */
+    walk = openWalk; applied = true; supplyState = "SEVERED";
+    for (i = 0; i < base.adj[depot].length; i++) if (base.adj[depot][i].mode === "sea") severedBy.push(base.adj[depot][i].id);
+    reason = "The Federal blockade has sealed the coastal ports, so nothing lands by sea at "
+      + names[depot] + " to supply " + names[target]
+      + ". Until a runner port reopens the army falls back on the meagre interior, which carries far less.";
   } else {
     walk = openWalk; applied = true; supplyState = "SEVERED";
     for (i = 0; i < openWalk.segments.length; i++) {

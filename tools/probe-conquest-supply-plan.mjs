@@ -110,7 +110,19 @@ step("LANE-022 carries the complete D538 Slice-1 acceptance contract", () => {
     "conquestRepairCapacity",
     "conquestSupplyRepairReport",
     "C.conquest.supply.repair",
-    "fldPresetResolve().attrition"
+    "fldPresetResolve().attrition",
+    // D544 Slice-4 contract clauses
+    "D544 exact Slice-4 objective:",
+    "D544 exact Slice-4 seam",
+    "D544 exact Slice-4 blockade lever",
+    "D544 exact Slice-4 containment seam (the declared bind target):",
+    "D544 Slice-4 save law",
+    "D544 Slice-4 probe design:",
+    "D544 Slice-4 gate contract:",
+    "sea-import-port source model",
+    "_lgSeaImportOpen",
+    "C.blockade.portsOpen",
+    "CTS-S-01"
   ]) need(LANE.includes(token.split("\n")[0]), "LANE-022 contract clause missing: " + token.replace(/\n\s*/g, " "));
   need(/which artery do you restore/.test(LANE.replace(/\s+/g, " ")),
     "the Slice-3 finite-capacity standing decision is not contracted in the lane");

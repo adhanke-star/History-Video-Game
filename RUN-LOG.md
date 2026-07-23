@@ -1,17 +1,43 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D544 next-lane=LANE-022 state=DRIVE owner=Claude -->
-> **Live status (D544, 2026-07-23):** `LANE-022` takes **Claude Code DRIVE for Slice 4** — the blockade / sea edge — as a committed **contract-only** take (no runtime byte moved). Blockade state gates the two sourced sea services as the Confederate **import edge**: for a CS carrier the held coastal ports that ORIGINATE a sea service become supply **sources** beside the interior depot, so a front the depot cannot reach overland is supplied from the coast — and the shipped blockade lever (`C.blockade.portsOpen`) closes it. An **open** runner port TRACES the import; a **sealed** blockade (`portsOpen` 0) SEVERS it, so `CS→CT-11` (Charleston, via `CTS-S-01`) and the Western front `CS→CT-20` move with the blockade while US play and the CS interior line stay **byte-identical**. Reuses shipped blockade state — **no new owner, no new field, `_SAVE_VER` stays 1**. **D543 remains the ARC 7 product head until Slice 4 ships.**
+<!-- LIVE-HEAD decision=D545 next-lane=LANE-022 state=CONTRACT owner=none -->
+> **Live status (D545, 2026-07-23):** `LANE-022` **Slice 4 SHIPS** — the blockade / sea edge. For a CS carrier the held coastal ports that ORIGINATE a sourced sea service become supply **sources** beside the interior depot, and the shipped blockade lever gates them: `conquestSupplyTrace` reads `C.blockade.portsOpen`, so an **open** runner port TRACES the import and a **sealed** blockade (`portsOpen 0`) SEVERS it. `CS→CT-11` (Charleston via `CTS-S-01`) moves friction **8↔40** and the Western front `CS→CT-20` **16↔40** as the blockade opens and seals, while US play and the CS interior line stay **byte-identical**. Reuses shipped `C.blockade` state — **no new owner, no new field, `_SAVE_VER` 1, no authored constant**. The lane releases to `CONTRACT` / `none`.
 >
-> **Boundary (contracted):** `src/61-logistics-rail.js` only, plus its two probes and the five mechanical pin re-anchors owed at the shipping commit; no module, no data change, no authored constant. In THIS docs-only DRIVE take nothing in `src/`, `data/`, `build/`, the manifest, the suite or the generated deliverable moves — game `98f3feaf0de89b3b47eda6b1347dacd0`, srcTree `c4fc64ebe6d49d9cdfc79885b4c05d8b`, suite 142, manifest 112, data 65 and the frozen base hold and are NOT re-pinned.
+> **Boundary:** `src/61-logistics-rail.js` only, plus its two probes and five mechanical pin re-anchors. Game `98f3feaf`→`0a5286c3b79c8011a6903ceb23772d80`, srcTree `c4fc64eb`→`7bcb0579d4e432950897500e7f0e5846`, suite **142** (no probe added), manifest 112, data 65, `_SAVE_VER` **1**, `build/base.html` frozen. **D545 replaces D543 as the ARC 7 product head**; LANE-019 stays unrewritten.
 >
-> **Authority:** design-law §4 Slice 4 + Aaron's 2026-07-23 ratification of the sea-import-port source model (the sea edge is unreachable from either fixed depot on disk, so the import edge is modelled as blockade-gated coastal sources). Three A/B legs owed at the shipping commit — two zero-diff (`18f609d0…`, `a38185fd…`) and one honest conquest-ON leg adjudicated under D92 — plus one declared bind redding only `CONTAINMENT-B`. Containment fails CLOSED at the ruleset seam both directions. Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
+> **Authority:** design-law §4 Slice 4 + Aaron's ratified sea-import-port source model. Three A/B legs — two zero-diff (direction battery `18f609d0…`, `probe-full-campaign` `a38185fd…`) and one honest conquest-ON leg adjudicated under D92 (open TRACES the CS import, sealed SEVERS at the 40 ceiling; both columns logged). Containment fails CLOSED at the ruleset seam both directions; Bind D544-B1 redded only `CONTAINMENT-B` with a byte-identical restore. Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-23 — D545 LANE-022 Slice 4 ships: the blockade / sea edge gates the two sourced sea services as the Confederate import edge
+
+Shipped exactly as D544 contracted, from the clean pushed `9b1363f` boundary. The seam is
+`src/61-logistics-rail.js` only. **Packet-vs-disk finding, Aaron-ratified:** the packet assumed a CS route
+already traversed a sea service, but the sole sea edge `CTS-S-01` (CT-12 Savannah → CT-11 Charleston) sits in
+the Deep-South component unreachable from either fixed depot, so gating the sea mode in the `blocked` predicate
+alone was a byte-for-byte no-op. Aaron ratified the **sea-import-port SOURCE model**: for a CS carrier
+`conquestSupplyTrace` builds a source list — the interior depot FIRST (depot-preferred, so every shipped route
+is byte-identical), then every held coastal port that originates a sourced sea service (CT-12); the first source
+whose open-graph walk reaches the target wins. A pure reader `_lgSeaImportOpen(C)` reads the shipped
+`C.blockade.portsOpen`: open (`>0`) TRACES the import, sealed (`0`) SEVERS it at the ceiling (40). The interior
+depot is never gated, so US play and the CS interior line are byte-identical. No fourth mutator, no second
+owner, no new clock, no authored constant, `_SAVE_VER` 1 (the sea edge reads `C.blockade`, nothing new
+serializes). Three A/B legs: legs 1-2 byte-identical (`18f609d07b1190904ec0c11e4ca64675` /
+`a38185fd371a7f181250eff3a6cbf76a` at the `caf3855` baseline, 0 diffs); leg 3 (conquest ON, both columns) — at
+caf3855 both CS coast targets were `SUBSTRATE_GAP`; here blockade OPEN → `CS→CT-11` `TRACED` friction 8 via
+`CTS-S-01:sea` and Western `CS→CT-20` `TRACED` friction 16, blockade SEALED → both `SEVERED` friction 40
+(`severedBy CTS-S-01`), adjudicated under D92, caps held. Bind D544-B1 redded only `CONTAINMENT-B` (19/20,
+byte-identical restore `4aa93535…`, rebuild identical game md5 at 20/20). Gates: build GATE OK · focused 20/20 ·
+plan 10/10 · thirteen adjacent probes green (incl. blockade 11) · plan probes Mayhem 13/13, War Career 24/24,
+transport 12/12, conquest layer 8/8, doc coherence 5/5 · `git diff --check` clean. Game
+`98f3feaf…` → `0a5286c3b79c8011a6903ceb23772d80`, srcTree `c4fc64eb…` → `7bcb0579d4e432950897500e7f0e5846`,
+five pin sites re-anchored; suite/focused md5, manifest, base HOLD. LANE-022 releases to `CONTRACT` / `none`;
+**D545 replaces D543 as the ARC 7 product head.** Next: Slice 5 (the authored Mayhem road layer). Historical
+transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
 
 ## 2026-07-23 — D543 LANE-022 Slice 3 ships: repair costs finite engineering capacity, the Engineering Corps is load-bearing, the B-5 slider governs magnitude
 
