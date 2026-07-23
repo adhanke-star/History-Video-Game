@@ -48,24 +48,50 @@ function _lgBattle(C) {
   } catch (e) { return null; }
 }
 
-/* --- LANE-022 Slice 1 (D538) · the traced conquest supply route -------------
+/* --- LANE-022 Slices 1-2 (D538/D539 trace, D540 receipts and cuts) ----------
    A guarded seam. Every carrier that does not declare an exact conquest
    campaign kind takes none of this and gets the shipped static route with its
    object untouched, so the capped bridge, the troop-morale weight, camp and
-   loot stay byte-identical. A conquest carrier on the open ruleset gains ONE
-   extra derived field holding a real path across the read-only 36-territory
-   board; the identical query on the evidence-gated ruleset fails CLOSED at the
-   gate below and gains nothing, because five research passes established no
-   physical window for that side. The board and the transport evidence are READ
-   here, never written and never namespace-shared. Nothing below is consumed by
-   the sim in this slice: `applied` stays false and the shipped friction number
-   is untouched, which is exactly what makes the read-only proof total.
+   loot stay byte-identical in every shipped campaign. A conquest carrier on the
+   open ruleset gains ONE extra derived field holding a real path across the
+   read-only 36-territory board; the identical query on the gated ruleset fails
+   CLOSED at the allowlist below and gains nothing, because five research passes
+   established no physical service period for that side. The board and the
+   transport evidence are READ here, never written and never namespace-shared.
+
+   Slice 2 turns territory control and per-segment service condition into real
+   state and lets supply BITE: a base walk over the full open projection and a
+   live walk filtered by cuts and control resolve into three bounded states.
+   TRACED and SEVERED set `applied` true, so the derived friction replaces the
+   shipped static number and `depotReach` falls for every army downstream of a
+   cut. SUBSTRATE_GAP does NOT: when no sourced service links the pair at all,
+   the shortfall is OUR evidence gap rather than anything the player did, and
+   wagons in fact carried such routes throughout the war, so the shipped number
+   stands and the reason is taught instead. Penalising a player for a hole in
+   our own sources would invent the history backwards and is exactly the output
+   gate the no-fudge law forbids.
    ------------------------------------------------------------------------ */
 
 var _LG_TRACE_RULESETS = { mayhem: 1 };                                            // LANE022_CONTAINMENT_ALLOWLIST
 var _LG_TRACE_DEPOT = { US: "CT-01", CS: "CT-05" };                                // authored, not sourced
 var _LG_TRACE_FRONT = { E: "CT-03", W: "CT-20", TM: "CT-32", N: "CT-19" };         // authored, not sourced
-var _LG_TRACE_COST = { "inland-water": 2, rail: 3, sea: 4, road: 6 };              // authored, unconsumed
+var _LG_TRACE_COST = { "inland-water": 2, rail: 3, sea: 4, road: 6 };              // authored, not sourced
+var _LG_SUPPLY_SEVERED = 40;                                                       // authored, not sourced
+var _LG_SUPPLY_SCHEMA = "cw_conquest_supply_v1";
+
+/* The authored opening control map: four Union, twenty-four Confederate, and
+   eight deliberately unassigned as the contested frontier. This is openly
+   authored game content for the open ruleset only — never a sourced claim, and
+   structurally unreachable on the gated side, where unsourced opening control
+   values stay closed. */
+var _LG_SUPPLY_OPENING = {                                                         // authored, not sourced
+  "CT-01": "US", "CT-18": "US", "CT-19": "US", "CT-29": "US",
+  "CT-05": "CS", "CT-06": "CS", "CT-07": "CS", "CT-10": "CS", "CT-11": "CS",
+  "CT-12": "CS", "CT-13": "CS", "CT-14": "CS", "CT-15": "CS", "CT-16": "CS",
+  "CT-17": "CS", "CT-20": "CS", "CT-21": "CS", "CT-23": "CS", "CT-24": "CS",
+  "CT-25": "CS", "CT-26": "CS", "CT-27": "CS", "CT-28": "CS", "CT-32": "CS",
+  "CT-33": "CS", "CT-34": "CS", "CT-35": "CS", "CT-36": "CS"
+};
 
 function _lgConquestKind(C) {
   var k = C && C.campaignKind;
@@ -102,11 +128,9 @@ function _lgTraceEdgeOrder(a, b) {
 
 /* Projects each evidence row's existing territoryRefs into a directed graph,
    honouring that row's existing direction. A row naming a single territory
-   contributes no edge. Neighbour order is sorted so the walk is deterministic. */
-function _lgTraceGraph(view) {
-  if (typeof conquestTransportPhysicalServices !== "function") return null;
-  var pack = conquestTransportPhysicalServices(view);
-  if (!pack || !Array.isArray(pack.services) || !pack.services.length) return null;
+   contributes no edge. Neighbour order is sorted so the walk is deterministic.
+   Pure over its argument: it performs no lookup of its own. */
+function _lgTraceProject(pack) {
   var adj = {}, i, j, k, row, refs, keys;
   for (i = 0; i < pack.services.length; i++) {
     row = pack.services[i];
@@ -126,7 +150,62 @@ function _lgTraceGraph(view) {
   return adj;
 }
 
-function _lgTraceWalk(adj, from, to) {
+function _lgTracePack(view) {
+  if (typeof conquestTransportPhysicalServices !== "function") return null;
+  var pack = conquestTransportPhysicalServices(view);
+  if (!pack || !Array.isArray(pack.services) || !pack.services.length) return null;
+  return pack;
+}
+
+function _lgTraceGraph(view) {
+  var pack = _lgTracePack(view);
+  return pack ? _lgTraceProject(pack) : null;
+}
+
+/* THE MEMO (D540). Measurement, not assumption, put it here: re-deriving the
+   projection costs about 15ms per call on a conquest carrier against 0.04ms on
+   every other carrier, and almost all of it is the substrate's own revalidation
+   and deep clone rather than the projection itself. Slice 2 makes that path hot
+   — per army, per condition change, per turn — so the pure part is cached once.
+
+   The cache holds ONLY inputs that cannot change under play: the admitted
+   ruleset id and the two injected packs, compared by REFERENCE identity so a
+   swapped or reloaded pack misses immediately. Control and service condition
+   are deliberately NOT part of it and are applied per walk instead, which makes
+   a cache that outlives a cut structurally impossible rather than merely
+   unlikely. It is module-scoped derived data: never campaign state, never
+   serialized, and never carried across a ruleset change. */
+var _lgTraceMemo = null;
+
+function _lgTraceInjected(name) {
+  try { return (typeof GAME_DATA === "object" && GAME_DATA) ? GAME_DATA[name] : null; }
+  catch (e) { return null; }
+}
+
+function _lgTraceBase(view) {
+  var evidence = _lgTraceInjected("conquest-transport-evidence");
+  var territories = _lgTraceInjected("conquest-territories");
+  var memo = _lgTraceMemo, pack, board, names = {}, services = {}, i;
+  if (memo && memo.rulesetId === view.id && memo.evidence === evidence && memo.territories === territories) return memo;
+  pack = _lgTracePack(view);
+  if (!pack) return null;
+  if (typeof conquestBoardNormalized !== "function") return null;
+  board = conquestBoardNormalized();
+  if (!board || !Array.isArray(board.territories) || board.territories.length !== 36) return null;
+  for (i = 0; i < board.territories.length; i++) names[board.territories[i].id] = board.territories[i].name;
+  for (i = 0; i < pack.services.length; i++) if (pack.services[i] && pack.services[i].id) services[pack.services[i].id] = pack.services[i].mode;
+  memo = {
+    rulesetId: view.id, evidence: evidence, territories: territories,
+    adj: _lgTraceFreeze(_lgTraceProject(pack)), names: _lgTraceFreeze(names), services: _lgTraceFreeze(services)
+  };
+  _lgTraceMemo = memo;
+  return memo;
+}
+
+/* Breadth-first over sorted neighbours, so the chosen path is deterministic.
+   `block` is consulted per edge; when it is absent this is byte-for-byte the
+   Slice 1 walk over the full open projection. */
+function _lgTraceWalk(adj, from, to, block) {
   var prev = {}, seen = {}, queue = [from], reached = 1, node, edges, i, e, segs, terr, cur, p;
   seen[from] = 1;
   if (from === to) return { reachable: true, segments: [], territories: [from], reached: 1 };
@@ -136,6 +215,7 @@ function _lgTraceWalk(adj, from, to) {
     for (i = 0; i < edges.length; i++) {
       e = edges[i];
       if (seen[e.to]) continue;
+      if (block && block(e, node)) continue;
       seen[e.to] = 1; reached++;
       prev[e.to] = { from: node, id: e.id, mode: e.mode };
       if (e.to === to) {
@@ -169,36 +249,160 @@ function _lgTraceFreeze(v) {
   try { return Object.freeze(v); } catch (e) { return v; }
 }
 
+function _lgSupplySide(v) { return (v === "US" || v === "CS") ? v : null; }
+
+/* THE ONE READER (D540). Pure by construction: it inspects the carrier and
+   returns a frozen normalized value, and it never writes a byte anywhere. A
+   missing, wrong-shaped or malformed payload FAILS CLOSED to the authored
+   opening rather than being partially adopted, so a damaged save can degrade
+   the readout but can never smuggle in a control or condition claim. The whole
+   value is unreachable unless the carrier declares an exact conquest campaign
+   kind AND an admitted ruleset, so authored content stays contained. */
+function _lgSupplyView(C) {
+  if (!_lgConquestKind(C) || !_lgTraceRuleset(C)) return null;
+  var own = Object.prototype.hasOwnProperty, control = {}, cut = {}, adopted = false;
+  var q = (C && C.conquest && typeof C.conquest === "object" && !Array.isArray(C.conquest)) ? C.conquest : null;
+  var raw = q ? q.supply : null, keys, i, ok, rc, rk;
+  for (i in _LG_SUPPLY_OPENING) if (own.call(_LG_SUPPLY_OPENING, i)) control[i] = _LG_SUPPLY_OPENING[i];
+  if (raw && typeof raw === "object" && !Array.isArray(raw) && raw.schema === _LG_SUPPLY_SCHEMA) {
+    rc = raw.control; rk = raw.cut; ok = true;
+    if (rc !== undefined && (!rc || typeof rc !== "object" || Array.isArray(rc))) ok = false;
+    if (ok && rk !== undefined && (!rk || typeof rk !== "object" || Array.isArray(rk))) ok = false;
+    if (ok && rc) {
+      keys = Object.keys(rc);
+      for (i = 0; i < keys.length; i++) if (!/^CT-\d\d$/.test(keys[i]) || !_lgSupplySide(rc[keys[i]])) { ok = false; break; }
+    }
+    if (ok && rk) {
+      keys = Object.keys(rk);
+      for (i = 0; i < keys.length; i++) if (!/^CTS-[RWS]-\d\d$/.test(keys[i]) || rk[keys[i]] !== 1) { ok = false; break; }
+    }
+    if (ok) {
+      adopted = true;
+      if (rc) { keys = Object.keys(rc); for (i = 0; i < keys.length; i++) control[keys[i]] = rc[keys[i]]; }
+      if (rk) { keys = Object.keys(rk); for (i = 0; i < keys.length; i++) cut[keys[i]] = 1; }
+    }
+  }
+  return _lgTraceFreeze({
+    schema: _LG_SUPPLY_SCHEMA, control: control, cut: cut,
+    adopted: adopted, cutCount: Object.keys(cut).length
+  });
+}
+
+/* THE ONLY WRITERS (D540). Both take the same conquest-kind plus allowlist gate
+   as the reader, so authored control and condition state can never be written
+   on a carrier the gate refuses. Neither calls a save owner: the value rides
+   the existing campaign envelope through the shipped serializer, so no second
+   save owner and no second logistics store is created. A carrier whose conquest
+   namespace is absent, sealed or hostile fails closed to null. */
+function _lgSupplyStore(C) {
+  if (!_lgConquestKind(C) || !_lgTraceRuleset(C)) return null;
+  var q = C.conquest, s;
+  if (!q || typeof q !== "object" || Array.isArray(q)) return null;
+  try {
+    s = q.supply;
+    if (!s || typeof s !== "object" || Array.isArray(s) || s.schema !== _LG_SUPPLY_SCHEMA) {
+      s = { schema: _LG_SUPPLY_SCHEMA, control: {}, cut: {} };
+      q.supply = s;
+      if (q.supply !== s) return null;
+    }
+    if (!s.control || typeof s.control !== "object" || Array.isArray(s.control)) s.control = {};
+    if (!s.cut || typeof s.cut !== "object" || Array.isArray(s.cut)) s.cut = {};
+    if (!s.control || !s.cut) return null;
+  } catch (e) { return null; }
+  return s;
+}
+
+function conquestSupplySetCondition(C, serviceId, cut) {
+  var s = _lgSupplyStore(C), view = _lgTraceRuleset(C), base = view ? _lgTraceBase(view) : null;
+  if (!s || !base || typeof serviceId !== "string" ||
+      !Object.prototype.hasOwnProperty.call(base.services, serviceId)) return null;
+  try {
+    if (cut === true) s.cut[serviceId] = 1; else delete s.cut[serviceId];
+  } catch (e) { return null; }
+  return _lgSupplyView(C);
+}
+
+function conquestSupplySetControl(C, territoryId, side) {
+  var s = _lgSupplyStore(C), view = _lgTraceRuleset(C), base = view ? _lgTraceBase(view) : null;
+  var held = _lgSupplySide(side);
+  if (!s || !base || typeof territoryId !== "string" ||
+      !Object.prototype.hasOwnProperty.call(base.names, territoryId)) return null;
+  try {
+    if (held) s.control[territoryId] = held; else delete s.control[territoryId];
+  } catch (e) { return null; }
+  return _lgSupplyView(C);
+}
+
 function conquestSupplyTrace(C, targetId) {
   if (!_lgConquestKind(C)) return null;
   var view = _lgTraceRuleset(C);
   if (!view) return null;
-  if (typeof conquestBoardNormalized !== "function") return null;
-  var board = conquestBoardNormalized();
-  if (!board || !Array.isArray(board.territories) || board.territories.length !== 36) return null;
-  var own = Object.prototype.hasOwnProperty, names = {}, i, m, cost = 0;
-  for (i = 0; i < board.territories.length; i++) names[board.territories[i].id] = board.territories[i].name;
-  var side = (C && C.side === "CS") ? "CS" : "US";
+  var base = _lgTraceBase(view);
+  if (!base) return null;
+  var state = _lgSupplyView(C);
+  if (!state) return null;
+  var own = Object.prototype.hasOwnProperty, names = base.names, i, m, cost = 0;
+  var side = (C && C.side === "CS") ? "CS" : "US", foe = (side === "CS") ? "US" : "CS";
   var depot = _LG_TRACE_DEPOT[side], theater = _lgTraceTheater(C);
   var target = (typeof targetId === "string" && own.call(names, targetId)) ? targetId : _LG_TRACE_FRONT[theater];
   if (!own.call(names, depot) || !own.call(names, target)) return null;
-  var adj = _lgTraceGraph(view);
-  if (!adj) return null;
-  var walk = _lgTraceWalk(adj, depot, target);
+
+  /* A segment carries for this side only if its service is sound AND neither
+     end is held by the enemy. Supply lines reach INTO contested ground — an
+     army does not have to own the ground it fights on — but enemy-held country
+     astride the line cuts it. */
+  var blocked = function (e, from) {
+    return state.cut[e.id] === 1 || state.control[e.to] === foe || state.control[from] === foe;
+  };
+  var depotHeld = state.control[depot] !== foe;
+  var openWalk = _lgTraceWalk(base.adj, depot, target, null);
+  var liveWalk = depotHeld ? _lgTraceWalk(base.adj, depot, target, blocked)
+    : { reachable: false, segments: [], territories: [depot], reached: 1 };
+
+  var walk, applied, supplyState, severedBy = [], reason, friction;
+  if (!openWalk.reachable) {
+    walk = openWalk; applied = false; supplyState = "SUBSTRATE_GAP";
+    reason = "No sourced rail, river or coastal service links " + names[depot] + " to " + names[target]
+      + ". Wagon trains carried routes like this one throughout the war, and the authored Mayhem road"
+      + " network is not built yet, so supply keeps its shipped value here instead of being penalised"
+      + " for a gap in our own evidence. Building that road layer is what closes this.";
+  } else if (liveWalk.reachable) {
+    walk = liveWalk; applied = true; supplyState = "TRACED";
+    reason = "Supply runs " + walk.segments.length + (walk.segments.length === 1 ? " segment" : " segments")
+      + " from " + names[depot] + " to " + names[target] + ".";
+  } else {
+    walk = openWalk; applied = true; supplyState = "SEVERED";
+    for (i = 0; i < openWalk.segments.length; i++) {
+      if (blocked(openWalk.segments[i], openWalk.segments[i].from)) severedBy.push(openWalk.segments[i].id);
+    }
+    reason = depotHeld
+      ? ("The line from " + names[depot] + " to " + names[target] + " is broken at "
+         + (severedBy.length ? severedBy.join(", ") : "an intermediate stage")
+         + ". Until it is restored the army falls back on wagon roads, which is slower and carries far less.")
+      : (names[depot] + " is in enemy hands, so nothing moves forward from the depot at all.");
+  }
+  for (i = 0; i < walk.segments.length; i++) {
+    m = walk.segments[i].mode;
+    cost += (typeof _LG_TRACE_COST[m] === "number") ? _LG_TRACE_COST[m] : _LG_TRACE_COST.road;
+  }
   var mix = { rail: 0, "inland-water": 0, sea: 0, road: 0 };
   for (i = 0; i < walk.segments.length; i++) {
     m = walk.segments[i].mode;
     if (typeof mix[m] === "number") mix[m]++;
-    cost += (typeof _LG_TRACE_COST[m] === "number") ? _LG_TRACE_COST[m] : 6;
   }
+  friction = (supplyState === "SEVERED") ? _LG_SUPPLY_SEVERED
+    : walk.reachable ? _lgClamp(4 + cost, 0, 100) : 100;
+
   return _lgTraceFreeze({
     rulesetId: view.id,
     authored: true,
-    applied: false,
+    applied: applied,
+    supplyState: supplyState,
     side: side,
     theater: theater,
     depot: depot,
     depotName: names[depot],
+    depotHeld: depotHeld,
     target: target,
     targetName: names[target],
     reachable: walk.reachable === true,
@@ -207,10 +411,39 @@ function conquestSupplyTrace(C, targetId) {
     modeMix: mix,
     segmentCount: walk.segments.length,
     reachedCount: walk.reached,
-    tracedFriction: walk.reachable ? _lgClamp(4 + cost, 0, 100) : 100,
+    severedBy: severedBy,
+    cutCount: state.cutCount,
+    tracedFriction: _lgClamp(friction, 0, 100),
     label: names[depot] + " to " + names[target]
-      + (walk.reachable ? (" (" + walk.segments.length + (walk.segments.length === 1 ? " segment)" : " segments)")) : " (no traced path)")
+      + (walk.reachable ? (" (" + walk.segments.length + (walk.segments.length === 1 ? " segment)" : " segments)")) : " (no traced path)"),
+    reason: reason
   });
+}
+
+/* The player-facing half of Slice 2: a conquest carrier must be able to see WHY
+   supply failed, and the three states must read differently. Returns the empty
+   string for every carrier the gate refuses, so the shipped readout below stays
+   byte-identical outside a conquest campaign. */
+function _lgSupplyBlockHTML(C) {
+  var t = conquestSupplyTrace(C, null);
+  if (!t) return "";
+  var tone = t.supplyState === "TRACED" ? "#6f9e5a" : (t.supplyState === "SEVERED" ? "#c9712e" : "#b8863b");
+  var word = t.supplyState === "TRACED" ? "Traced" : (t.supplyState === "SEVERED" ? "Severed" : "Unmapped");
+  var chain = "", i;
+  for (i = 0; i < t.segments.length; i++) {
+    chain += (i ? " &rarr; " : "") + htmlEsc(t.segments[i].id) + ' <span style="opacity:.6">(' + htmlEsc(t.segments[i].mode) + ')</span>';
+  }
+  return ''
+    + '<div style="margin-top:10px;padding:8px;border:1px solid var(--rule);border-left:4px solid ' + tone + ';border-radius:5px;background:rgba(0,0,0,.10)">'
+    + '<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline">'
+    + '<div style="font-size:12px"><b>Conquest supply line</b> &middot; ' + htmlEsc(t.label) + '</div>'
+    + '<div style="font-size:12px;font-weight:bold;color:' + tone + '">' + word
+    + (t.applied ? (' &middot; friction ' + _lgRound(t.tracedFriction)) : ' &middot; shipped friction held') + '</div>'
+    + '</div>'
+    + (chain ? '<div style="font-size:11px;opacity:.8;margin-top:4px">' + chain + '</div>' : '')
+    + '<div style="font-size:11px;opacity:.72;margin-top:4px">' + htmlEsc(t.reason) + '</div>'
+    + (t.cutCount ? '<div style="font-size:11px;opacity:.72;margin-top:3px">Cut services on this map: ' + _lgRound(t.cutCount) + '</div>' : '')
+    + '</div>';
 }
 
 function _lgRoute(C, bd) {
@@ -230,7 +463,12 @@ function _lgRoute(C, bd) {
     note: t.note || ""
   };
   var traced = conquestSupplyTrace(C, null);
-  if (traced) out.trace = traced;
+  if (traced) {
+    out.trace = traced;
+    /* The ONE sim-affecting line of Slice 2. It is a clamped conditioning input
+       feeding the already-capped bridge, never a new combat channel. */
+    if (traced.applied === true) out.friction = _lgClamp(traced.tracedFriction, 0, 100);
+  }
   return out;
 }
 
@@ -417,6 +655,7 @@ function presLogisticsBlock(C) {
     + ' supply, -' + _lgNum((_lgCfg().bridgeCaps || {}).fatigueRelief, 5) + ' fatigue, and +' + _lgNum((_lgCfg().bridgeCaps || {}).overall, 2)
     + ' overall. When inactive it returns exact zero.</div>'
     + '</div>'
+    + _lgSupplyBlockHTML(C)
     + (log ? '<div style="margin-top:8px">' + log + '</div>' : '')
     + '<details style="margin-top:8px;font-size:11px;opacity:.78"><summary style="cursor:pointer">Sources and teaching note</summary>'
     + '<div style="margin-top:4px;line-height:1.45">' + htmlEsc(p.teaching || profileFact) + '</div>'

@@ -1,12 +1,12 @@
 # AUTONOMOUS-RUN.md — the 12-hour max-productivity build plan ("The Civil War")
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D540 next-lane=LANE-022 state=DRIVE owner=Claude -->
-> **Live status (D540, 2026-07-23):** `LANE-022` takes **Claude Code DRIVE for Slice 2 — control/service receipts and cuts**, the FIRST sim-affecting slice of the ARC 7 ladder. **CONTRACT ONLY — no runtime byte moved here.** Territory control and per-segment service condition become real state in one namespace; a cut segment degrades `depotReach` for every army downstream; `applied` flips true and `tracedFriction` is adopted into `_lgRoute`'s `friction`.
+<!-- LIVE-HEAD decision=D541 next-lane=LANE-022 state=CONTRACT owner=none -->
+> **Live status (D541, 2026-07-23):** `LANE-022` **Slice 2 SHIPS** — control and per-segment service condition become REAL STATE, and supply BITES inside a conquest campaign: a cut segment degrades `depotReach` for every army downstream (64 → 52 on the traced US line), `applied` flips true, and `_lgRoute` adopts `tracedFriction` into `friction`. **Non-conquest play stays byte-identical.** The lane releases to `CONTRACT` / `none`.
 >
-> **Boundary:** contract-before-teeth per the Contract Relay hard rule — `src/`, `data/`, `build/`, the manifest, the suite, the save shape and the generated deliverable are untouched, so game `45278110cb73ea4719fa41ffef7682f9`, srcTree `08f95d9e9311e90313cc5b7a930f9380`, suite **142**, manifest 112, data 65, `_SAVE_VER` 1 and the frozen base `c9db83fa99230ffb95bdfdfe059f3fb9` do NOT move and are NOT re-pinned. **D539 remains the ARC 7 product head until Slice 2 ships.**
+> **Boundary:** `src/61-logistics-rail.js` only, plus its two probes, the CF-1 re-pin, and five mechanical pin re-anchors. Game `45278110`→`4764b1fccb40c473edd871621497f62b`, srcTree `08f95d9e`→`5f6d33325fa5feb04f6d5b11e3f5a3b7`, suite **142** (no probe added), manifest 112, data 65, `_SAVE_VER` **1** (purely additive save), `build/base.html` frozen. **D541 replaces D539 as the ARC 7 product head**; LANE-019 stays unrewritten and every one of its boundary sentences stays exact.
 >
-> **Authority:** D537 ruling 1 and `docs/design/conquest-supply-chain-design.md` §4 Slice 2. Containment stays fail-closed at the ruleset seam in BOTH directions; the ELEVEN-component substrate gap is made a first-class, TAUGHT case that never becomes a penalty, not cured. Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
+> **Authority:** D537 ruling 1 and design-law §4 Slice 2. Three A/B legs — two zero-diff (direction battery `18f609d0…`, `probe-full-campaign` `a38185fd…`) and one honest conquest-ON leg adjudicated under D92. Containment fails CLOSED at the ruleset seam in BOTH directions; the ELEVEN-component substrate gap is a first-class TAUGHT case that never becomes a penalty. Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **D514 completion rule:** `HANDOFF.md` owns the work-conserving loop and terminal condition. This manual executes the whole live ledger, not one bundle; each slice remains independently contracted, gated, documented, committed, and pushed.

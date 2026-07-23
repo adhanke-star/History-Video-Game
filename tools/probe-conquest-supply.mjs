@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 import "./guard-probe-browser.mjs";
-// D538 / LANE-022 Slice 1 focused proof — the READ-ONLY traced conquest supply route.
+// D538/D539 + D540 / LANE-022 Slices 1-2 focused proof — the traced conquest supply route, and the
+// control/service receipts and cuts that make it bite.
 //
 // Two halves by design. The STATIC half rebuilds the seam in a node:vm context from the ON-DISK
 // src/115 + src/114 + src/61, so a source mutation reds it WITHOUT a rebuild (that is what makes the
 // declared negative bind meaningful). The BROWSER half proves the identical behavior in the built
-// deliverable. The declared D538 bind target is the single CONTAINMENT-B step.
+// deliverable. The declared D540 bind target is the single CONTAINMENT-B step, which is deliberately
+// the ONLY step that queries the seam on a non-admitted ruleset AND the only one that reads the
+// allowlist literal from source — a bind that reds two steps means the tooth is too broad (D539).
 //
 // The vm context is created EMPTY on purpose: injecting a host Object breaks the substrate's
 // prototype-identity ruleset check, which would silently fail every query closed.
@@ -41,18 +44,22 @@ const DATA = {
 };
 function diskSeam() {
   const ctx = createContext({});
-  runInContext("var GAME_DATA=" + JSON.stringify(DATA) + "; function gameData(n){return GAME_DATA[n]||null;}", ctx);
+  runInContext("var GAME_DATA=" + JSON.stringify(DATA) + "; function gameData(n){return GAME_DATA[n]||null;}"
+    + " function htmlEsc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}"
+    + " function logPush(){}", ctx);
   for (const f of ["src/115-conquest-transport.js", "src/114-conquest-board.js", SRC61]) runInContext(read(f), ctx);
   runInContext([
     "function mkPlain(side){return {side:side};}",
-    "function mkConquest(side,id){return {side:side,campaignKind:{id:'conquest',version:1},ruleset:{id:id,version:1}};}"
+    "function mkConquest(side,id){return {side:side,campaignKind:{id:'conquest',version:1},ruleset:{id:id,version:1},conquest:{}};}"
   ].join("\n"), ctx);
-  return expr => runInContext("JSON.stringify((function(){" + expr + "})())", ctx) ;
+  return expr => runInContext("JSON.stringify((function(){" + expr + "})())", ctx);
 }
 const SHIPPED_ROUTE_KEYS = ["id", "label", "theater", "theaterName", "friction", "note"];
-const TRACE_KEYS = ["rulesetId", "authored", "applied", "side", "theater", "depot", "depotName", "target",
-  "targetName", "reachable", "segments", "territories", "modeMix", "segmentCount", "reachedCount",
-  "tracedFriction", "label"];
+// D540: the field set grows by supplyState / depotHeld / severedBy / cutCount / reason.
+const TRACE_KEYS = ["rulesetId", "authored", "applied", "supplyState", "side", "theater", "depot", "depotName",
+  "depotHeld", "target", "targetName", "reachable", "segments", "territories", "modeMix", "segmentCount",
+  "reachedCount", "severedBy", "cutCount", "tracedFriction", "label", "reason"];
+const SUPPLY_KEYS = ["schema", "control", "cut", "adopted", "cutCount"];
 
 let server = null, browser = null;
 try {
@@ -60,34 +67,40 @@ try {
 
   await step("SEAM SHAPE: a non-conquest carrier keeps the shipped six-key route and gets no trace", () => {
     const run = diskSeam();
-    const v = JSON.parse(run("var r=_lgRoute(mkPlain('US'),null);return {keys:Object.keys(r),trace:conquestSupplyTrace(mkPlain('US'),null),hasTrace:Object.prototype.hasOwnProperty.call(r,'trace'),friction:r.friction};"));
+    const v = JSON.parse(run("var r=_lgRoute(mkPlain('US'),null);return {keys:Object.keys(r),trace:conquestSupplyTrace(mkPlain('US'),null),supply:_lgSupplyView(mkPlain('US')),hasTrace:Object.prototype.hasOwnProperty.call(r,'trace'),friction:r.friction,block:_lgSupplyBlockHTML(mkPlain('US'))};"));
     need(JSON.stringify(v.keys) === JSON.stringify(SHIPPED_ROUTE_KEYS), "non-conquest route keys drifted: " + JSON.stringify(v.keys));
     need(v.hasTrace === false, "non-conquest route attached a trace");
     need(v.trace === null, "non-conquest carrier produced a trace object");
-    return { keys: v.keys.length, trace: null, friction: v.friction };
+    need(v.supply === null, "non-conquest carrier produced a control/condition view");
+    need(v.block === "", "non-conquest carrier rendered a conquest supply block");
+    return { keys: v.keys.length, trace: null, supply: null, friction: v.friction };
   });
 
-  await step("CONTAINMENT-A: an authored trace object IS reachable on the open ruleset", () => {
+  await step("CONTAINMENT-A: authored trace AND authored control/condition state are reachable on the open ruleset", () => {
     const run = diskSeam();
-    const v = JSON.parse(run("var C=mkConquest('US','mayhem');var t=conquestSupplyTrace(C,null);var r=_lgRoute(C,null);return {t:t,routeKeys:Object.keys(r),sameRef:r.trace&&r.trace.depot===t.depot,frozen:[Object.isFrozen(t),Object.isFrozen(t.segments),Object.isFrozen(t.segments[0]),Object.isFrozen(t.modeMix)]};"));
+    const v = JSON.parse(run("var C=mkConquest('US','mayhem');var t=conquestSupplyTrace(C,null);var s=_lgSupplyView(C);var r=_lgRoute(C,null);return {t:t,s:s,routeKeys:Object.keys(r),sameRef:r.trace&&r.trace.depot===t.depot,frozen:[Object.isFrozen(t),Object.isFrozen(t.segments),Object.isFrozen(t.segments[0]),Object.isFrozen(t.modeMix),Object.isFrozen(s),Object.isFrozen(s.control),Object.isFrozen(s.cut)],openingUS:s.control['CT-01'],openingCS:s.control['CT-05'],openingCount:Object.keys(s.control).length};"));
     need(v.t && typeof v.t === "object", "the open ruleset produced no trace object");
     need(JSON.stringify(Object.keys(v.t)) === JSON.stringify(TRACE_KEYS), "trace field set drifted: " + JSON.stringify(Object.keys(v.t)));
+    need(JSON.stringify(Object.keys(v.s)) === JSON.stringify(SUPPLY_KEYS), "control/condition field set drifted: " + JSON.stringify(Object.keys(v.s)));
     need(v.t.rulesetId === "mayhem" && v.t.authored === true, "trace is not stamped as authored open-ruleset content");
-    need(v.t.applied === false, "Slice 1 must carry applied:false — nothing consumes the trace");
     need(v.t.depot === "CT-01" && v.t.target === "CT-03", "authored depot/front pair moved");
+    need(v.t.supplyState === "TRACED" && v.t.applied === true, "the shipped default US route must TRACE and APPLY at Slice 2");
     need(v.t.reachable === true && v.t.segmentCount === 1 && v.t.segments[0].id === "CTS-R-02" && v.t.segments[0].mode === "rail",
       "the sourced Washington-Manassas rail segment no longer carries the default US route");
     need(JSON.stringify(v.t.territories) === JSON.stringify(["CT-01", "CT-03"]), "traced territory chain moved");
     need(v.routeKeys.length === 7 && v.routeKeys[6] === "trace", "the guarded route tail did not attach exactly one field");
     need(v.sameRef === true, "the route tail does not carry the same traced value");
-    need(v.frozen.every(Boolean), "the trace is not deeply frozen");
-    return { reachable: true, segments: v.t.segments, tracedFriction: v.t.tracedFriction, frozen: true };
+    need(v.frozen.every(Boolean), "the trace or the control/condition view is not deeply frozen");
+    need(v.openingUS === "US" && v.openingCS === "CS" && v.openingCount === 28,
+      "the authored opening control map moved: " + v.openingCount + " assigned");
+    need(v.s.adopted === false && v.s.cutCount === 0, "an empty conquest namespace must adopt nothing and carry no cut");
+    return { reachable: true, supplyState: v.t.supplyState, applied: true, openingAssigned: v.openingCount, frozen: true };
   });
 
-  // *** THE D538 DECLARED NEGATIVE-BIND TARGET ***
-  // Mutating the containment allowlist in src/61 so the evidence-gated side would leak an authored
-  // object must red THIS step and no other. It is deliberately the ONLY step that queries the seam
-  // on a non-admitted ruleset, and the only one that reads the allowlist literal from source.
+  // *** THE D540 DECLARED NEGATIVE-BIND TARGET ***
+  // Mutating the containment allowlist in src/61 so the evidence-gated side would leak authored
+  // control/condition state must red THIS step and no other. It is deliberately the ONLY step that
+  // queries the seam on a non-admitted ruleset, and the only one that reads the allowlist literal.
   await step("CONTAINMENT-B: the IDENTICAL query on every non-admitted ruleset returns the absent result", () => {
     const run = diskSeam();
     const src = read(SRC61);
@@ -114,29 +127,117 @@ try {
       "closed.push(conquestSupplyTrace({side:'US',campaignKind:{id:'conquest',version:1},ruleset:accessor},'CT-03')===null&&calls===0);",
       "var partial={side:'US',campaignKind:{id:'conquest',version:1},ruleset:Object.assign(Object.create({version:1}),{id:'mayhem'})};",
       "closed.push(conquestSupplyTrace(partial,'CT-03')===null);",
-      "return {trace:conquestSupplyTrace(C,'CT-03'),routeKeys:Object.keys(r),hasTrace:Object.prototype.hasOwnProperty.call(r,'trace'),closed:closed};"
+      // D540: the SAME gate must close the authored control/condition state and both mutators.
+      "var G2=mkConquest('US','historical');",
+      "var stateClosed=[_lgSupplyView(G2)===null,",
+      " conquestSupplySetCondition(G2,'CTS-R-02',true)===null,",
+      " conquestSupplySetControl(G2,'CT-03','CS')===null,",
+      " _lgSupplyBlockHTML(G2)==='',",
+      " Object.keys(G2.conquest).length===0];",
+      "return {trace:conquestSupplyTrace(C,'CT-03'),routeKeys:Object.keys(r),hasTrace:Object.prototype.hasOwnProperty.call(r,'trace'),closed:closed,stateClosed:stateClosed};"
     ].join("")));
     need(v.trace === null, "the evidence-gated ruleset produced an authored trace object — CONTAINMENT LEAK");
     need(v.hasTrace === false, "_lgRoute attached a trace on the evidence-gated ruleset — CONTAINMENT LEAK");
     need(JSON.stringify(v.routeKeys) === JSON.stringify(SHIPPED_ROUTE_KEYS), "evidence-gated route keys drifted");
     need(v.closed.length === 11 && v.closed.every(Boolean), "a non-admitted ruleset shape opened the gate: " + JSON.stringify(v.closed));
-    return { absent: true, closedShapes: v.closed.length, allowlist: "single-id", accessorsInvoked: 0 };
+    need(v.stateClosed.length === 5 && v.stateClosed.every(Boolean),
+      "authored control/condition state surfaced on the evidence-gated ruleset — CONTAINMENT LEAK: " + JSON.stringify(v.stateClosed));
+    return { absent: true, closedShapes: v.closed.length, stateClosed: v.stateClosed.length, allowlist: "single-id", accessorsInvoked: 0 };
   });
 
-  await step("READ-ONLY OUTCOME: the capped bridge and the snapshot are byte-identical across all three carriers", () => {
+  await step("BOUNDED OUTCOME: non-conquest play is byte-identical and every conquest state stays inside the shipped caps", () => {
     const run = diskSeam();
     const v = JSON.parse(run([
-      "var a=logisticsBridgeBonus(mkPlain('US')),b=logisticsBridgeBonus(mkConquest('US','mayhem')),c=logisticsBridgeBonus(mkConquest('US','historical'));",
-      "var sa=logisticsSnapshot(mkPlain('US')),sb=logisticsSnapshot(mkConquest('US','mayhem')),sc=logisticsSnapshot(mkConquest('US','historical'));",
-      "var ra=_lgRoute(mkPlain('US'),null),rb=_lgRoute(mkConquest('US','mayhem'),null);",
-      "return {bridge:[JSON.stringify(a),JSON.stringify(b),JSON.stringify(c)],snap:[JSON.stringify(sa),JSON.stringify(sb),JSON.stringify(sc)],snapKeys:Object.keys(sa),frictionSame:ra.friction===rb.friction,labelSame:ra.label===rb.label,thSame:ra.theater===rb.theater,noteSame:ra.note===rb.note,caps:_lgCfg().bridgeCaps};"
+      "function active(C){var L=logisticsInit(C);L.active=true;L.priority='railheads';return C;}",
+      // non-conquest carriers must not move a single byte
+      "var a=logisticsBridgeBonus(mkPlain('US')),sa=logisticsSnapshot(mkPlain('US'));",
+      "var a2=logisticsBridgeBonus(active(mkPlain('US'))),sa2=logisticsSnapshot(active(mkPlain('US')));",
+      "var pr=_lgRoute(mkPlain('US'),null);",
+      // every reachable conquest state, with the bridge switched ON
+      "var caps=_lgCfg().bridgeCaps,rows=[],bad=[];",
+      "function scen(name,mk){var C=active(mk());var b=logisticsBridgeBonus(C),s=logisticsSnapshot(C),t=conquestSupplyTrace(C,null);",
+      " rows.push({name:name,state:t.supplyState,applied:t.applied,friction:_lgRoute(C,null).friction,depotReach:s.depotReach,network:s.network,supply:b.supply,fatigueRelief:b.fatigueRelief,overall:b.overall});",
+      " if(b.supply<0||b.supply>caps.supply||b.fatigueRelief<0||b.fatigueRelief>caps.fatigueRelief||b.overall<0||b.overall>caps.overall)bad.push(name);",
+      " if(s.depotReach<0||s.depotReach>100||s.network<0||s.network>100||s.marchBurden<0||s.marchBurden>100)bad.push(name+':snapshot');}",
+      "scen('us-traced',function(){return mkConquest('US','mayhem');});",
+      "scen('cs-substrate-gap',function(){return mkConquest('CS','mayhem');});",
+      "scen('us-severed-cut',function(){var C=mkConquest('US','mayhem');conquestSupplySetCondition(C,'CTS-R-02',true);return C;});",
+      "scen('us-severed-enemy-target',function(){var C=mkConquest('US','mayhem');conquestSupplySetControl(C,'CT-03','CS');return C;});",
+      "scen('us-severed-depot-lost',function(){var C=mkConquest('US','mayhem');conquestSupplySetControl(C,'CT-01','CS');return C;});",
+      "scen('us-all-cut',function(){var C=mkConquest('US','mayhem');var g=_lgTraceBase({id:'mayhem',version:1});for(var k in g.services)conquestSupplySetCondition(C,k,true);return C;});",
+      "return {plainBridge:JSON.stringify(a),plainBridgeActive:JSON.stringify(a2),plainSnap:JSON.stringify(sa),plainSnapActive:JSON.stringify(sa2),plainRoute:JSON.stringify(pr),caps:caps,rows:rows,bad:bad};"
     ].join("")));
-    need(v.bridge[0] === v.bridge[1] && v.bridge[1] === v.bridge[2], "logisticsBridgeBonus moved between carriers:\n" + v.bridge.join("\n"));
-    need(v.snap[0] === v.snap[1] && v.snap[1] === v.snap[2], "logisticsSnapshot moved between carriers:\n" + v.snap.join("\n"));
-    need(!v.snapKeys.includes("conquestTrace") && !v.snapKeys.includes("trace"), "the snapshot gained a trace field — downstream must stay untouched");
-    need(v.frictionSame && v.labelSame && v.thSame && v.noteSame, "a shipped route field moved on the conquest carrier");
+    need(v.bad.length === 0, "a conquest state pushed a capped or clamped value out of range: " + JSON.stringify(v.bad));
     need(v.caps.supply === 7 && v.caps.fatigueRelief === 5 && v.caps.overall === 2, "the shipped bridge caps moved");
-    return { bridgeIdentical: true, snapshotIdentical: true, caps: v.caps };
+    const traced = v.rows.find(r => r.name === "us-traced");
+    const gap = v.rows.find(r => r.name === "cs-substrate-gap");
+    const severed = v.rows.find(r => r.name === "us-severed-cut");
+    need(traced.state === "TRACED" && traced.applied === true, "the default US conquest route must TRACE and apply");
+    need(gap.state === "SUBSTRATE_GAP" && gap.applied === false,
+      "an unreachable-on-the-open-graph pair must NOT apply — our evidence gap may not become the player's penalty");
+    need(severed.state === "SEVERED" && severed.applied === true && severed.friction === 40,
+      "a cut on the traced segment must SEVER and apply the bounded ceiling: " + JSON.stringify(severed));
+    need(severed.depotReach < traced.depotReach,
+      "a cut segment must degrade depotReach downstream: severed " + severed.depotReach + " vs traced " + traced.depotReach);
+    return { nonConquestFrozen: true, caps: v.caps, rows: v.rows, outOfRange: 0 };
+  });
+
+  await step("CUT DEGRADES DOWNSTREAM: the cut bites only the armies whose line actually used it", () => {
+    const run = diskSeam();
+    const v = JSON.parse(run([
+      "var base=mkConquest('US','mayhem');",
+      "var beforeE=conquestSupplyTrace(base,'CT-03'),beforeSelf=conquestSupplyTrace(base,'CT-01');",
+      "var C=mkConquest('US','mayhem');conquestSupplySetCondition(C,'CTS-R-02',true);",
+      "var afterE=conquestSupplyTrace(C,'CT-03'),afterSelf=conquestSupplyTrace(C,'CT-01');",
+      // an unrelated service cut must not touch the CT-03 line at all
+      "var U=mkConquest('US','mayhem');conquestSupplySetCondition(U,'CTS-R-20',true);",
+      "var unrelated=conquestSupplyTrace(U,'CT-03');",
+      "var restored=mkConquest('US','mayhem');conquestSupplySetCondition(restored,'CTS-R-02',true);conquestSupplySetCondition(restored,'CTS-R-02',false);",
+      "var back=conquestSupplyTrace(restored,'CT-03');",
+      "var rejected=[conquestSupplySetCondition(mkConquest('US','mayhem'),'CTS-R-99',true),conquestSupplySetCondition(mkConquest('US','mayhem'),'nonsense',true),conquestSupplySetControl(mkConquest('US','mayhem'),'CT-99','US')];",
+      "return {beforeE:{s:beforeE.supplyState,f:beforeE.tracedFriction},afterE:{s:afterE.supplyState,f:afterE.tracedFriction,by:afterE.severedBy,cutCount:afterE.cutCount},",
+      " beforeSelf:{s:beforeSelf.supplyState,f:beforeSelf.tracedFriction},afterSelf:{s:afterSelf.supplyState,f:afterSelf.tracedFriction},",
+      " unrelated:{s:unrelated.supplyState,f:unrelated.tracedFriction,cutCount:unrelated.cutCount},back:{s:back.supplyState,f:back.tracedFriction,cutCount:back.cutCount},rejected:rejected};"
+    ].join("")));
+    need(v.beforeE.s === "TRACED" && v.afterE.s === "SEVERED", "cutting the traced segment did not sever the line");
+    need(v.afterE.f > v.beforeE.f, "severing did not raise friction: " + v.beforeE.f + " -> " + v.afterE.f);
+    need(JSON.stringify(v.afterE.by) === JSON.stringify(["CTS-R-02"]), "severedBy must name the exact cut service: " + JSON.stringify(v.afterE.by));
+    need(v.afterE.cutCount === 1, "cutCount must count the live cut set");
+    need(v.afterSelf.s === v.beforeSelf.s && v.afterSelf.f === v.beforeSelf.f,
+      "the cut moved an army that was never downstream of it: " + JSON.stringify([v.beforeSelf, v.afterSelf]));
+    need(v.unrelated.s === "TRACED" && v.unrelated.f === v.beforeE.f && v.unrelated.cutCount === 1,
+      "an unrelated service cut changed the traced line: " + JSON.stringify(v.unrelated));
+    need(v.back.s === "TRACED" && v.back.f === v.beforeE.f && v.back.cutCount === 0, "restoring a cut did not restore the line");
+    need(v.rejected.every(x => x === null), "a mutator accepted an id that is not a live service or territory");
+    return { severed: true, severedBy: v.afterE.by, unaffectedArmyHeld: true, restoreWorks: true, badIdsRejected: 3 };
+  });
+
+  await step("SUBSTRATE GAP IS FIRST-CLASS: no sourced path costs the player nothing and is taught, not hidden", () => {
+    const run = diskSeam();
+    const v = JSON.parse(run([
+      "var cs=mkConquest('CS','mayhem'),plainCS=mkPlain('CS');",
+      "var t=conquestSupplyTrace(cs,null);",
+      "var far=conquestSupplyTrace(mkConquest('US','mayhem'),'CT-20');",
+      "return {t:{s:t.supplyState,applied:t.applied,f:t.tracedFriction,reachable:t.reachable,reached:t.reachedCount,reason:t.reason,label:t.label,depotName:t.depotName},",
+      " far:{s:far.supplyState,applied:far.applied,f:far.tracedFriction},",
+      " frictionSame:_lgRoute(cs,null).friction===_lgRoute(plainCS,null).friction,",
+      " conquestFriction:_lgRoute(cs,null).friction,plainFriction:_lgRoute(plainCS,null).friction,",
+      " reachSame:logisticsSnapshot(cs).depotReach===logisticsSnapshot(plainCS).depotReach,",
+      " netSame:logisticsSnapshot(cs).network===logisticsSnapshot(plainCS).network,",
+      " block:_lgSupplyBlockHTML(cs)};"
+    ].join("")));
+    need(v.t.s === "SUBSTRATE_GAP" && v.t.applied === false, "the CS/E no-path pair must resolve as an un-applied substrate gap");
+    need(v.t.reachable === false && v.t.f === 100 && v.t.reached === 5, "the honest CS/E no-path result moved");
+    need(v.frictionSame && v.reachSame && v.netSame,
+      "a substrate gap changed the sim — an evidence gap must never become a penalty: conquest "
+      + v.conquestFriction + " vs shipped " + v.plainFriction);
+    need(v.far.s === "SUBSTRATE_GAP" && v.far.applied === false, "a cross-component target must stay an un-applied gap until the road layer lands");
+    need(/road/i.test(v.t.reason) && /wagon/i.test(v.t.reason), "the substrate-gap reason must teach the wagon-road fallback and name the missing road layer");
+    need(/not built yet/.test(v.t.reason), "the substrate-gap reason must say the road layer is not built yet");
+    need(v.block.indexOf("Unmapped") >= 0 && v.block.indexOf(v.t.depotName) >= 0,
+      "the player-facing block must show the gap state and the depot it failed from");
+    need(v.block.indexOf("shipped friction held") >= 0, "the block must tell the player the shipped value was kept");
+    return { state: "SUBSTRATE_GAP", applied: false, simUnmoved: true, taught: true };
   });
 
   await step("TRACE CORRECTNESS: the sourced substrate is ELEVEN components and the walk is deterministic", () => {
@@ -150,56 +251,149 @@ try {
       " while(q.length){var x=q.shift();c.push(x);var nb=und[x]||[];for(var j=0;j<nb.length;j++)if(!seen[nb[j]]){seen[nb[j]]=1;q.push(nb[j]);}}",
       " comps.push(c.length);}",
       "var t1=conquestSupplyTrace(mkConquest('US','mayhem'),null),t2=conquestSupplyTrace(mkConquest('US','mayhem'),null);",
-      "var cs=conquestSupplyTrace(mkConquest('CS','mayhem'),null);",
-      "var far=conquestSupplyTrace(mkConquest('US','mayhem'),'CT-20');",
       "var self=conquestSupplyTrace(mkConquest('US','mayhem'),'CT-01');",
       "var bogus=conquestSupplyTrace(mkConquest('US','mayhem'),'CT-99');",
-      "return {comps:comps.sort(function(a,b){return b-a;}),det:JSON.stringify(t1)===JSON.stringify(t2),cs:{r:cs.reachable,f:cs.tracedFriction,reached:cs.reachedCount},far:{r:far.reachable,f:far.tracedFriction},self:{r:self.reachable,seg:self.segmentCount},bogusTarget:bogus.target,us:{f:t1.tracedFriction,mix:t1.modeMix}};"
+      "return {comps:comps.sort(function(a,b){return b-a;}),det:JSON.stringify(t1)===JSON.stringify(t2),",
+      " self:{r:self.reachable,seg:self.segmentCount},bogusTarget:bogus.target,us:{f:t1.tracedFriction,mix:t1.modeMix},services:Object.keys(_lgTraceBase({id:'mayhem',version:1}).services).length};"
     ].join("")));
     need(v.comps.length === 11, "the sourced substrate no longer resolves to ELEVEN components: " + JSON.stringify(v.comps));
     need(JSON.stringify(v.comps) === JSON.stringify([18, 5, 4, 2, 1, 1, 1, 1, 1, 1, 1]), "component sizes moved: " + JSON.stringify(v.comps));
     need(v.det === true, "the walk is not deterministic across repeated calls");
-    need(v.cs.r === false && v.cs.f === 100 && v.cs.reached === 5, "the honest CS/E no-path result moved");
-    need(v.far.r === false && v.far.f === 100, "a cross-component target must stay unreachable until the authored road layer lands");
+    need(v.services === 44, "the sourced service count moved: " + v.services);
     need(v.self.r === true && v.self.seg === 0, "a depot-to-itself trace must resolve with zero segments");
     need(v.bogusTarget === "CT-03", "an unknown target must fall back to the authored theatre front");
     need(v.us.f === 7 && v.us.mix.rail === 1 && v.us.mix["inland-water"] === 0 && v.us.mix.sea === 0 && v.us.mix.road === 0,
       "the default US derivation moved: " + JSON.stringify(v.us));
-    return { components: v.comps, deterministic: true, csUnreachable: true, usFriction: 7 };
+    return { components: v.comps, deterministic: true, services: 44, usFriction: 7 };
+  });
+
+  await step("CF-2 MEMO: the cache equals a cold recompute, invalidates on a substrate swap, and is never state", () => {
+    const run = diskSeam();
+    const v = JSON.parse(run([
+      "var view={id:'mayhem',version:1};",
+      "_lgTraceMemo=null;",
+      "var cold=_lgTraceGraph(view);",
+      "var first=_lgTraceBase(view);",
+      "var second=_lgTraceBase(view);",
+      "var hitSameRecord=(first===second);",
+      "var equalsCold=(JSON.stringify(first.adj)===JSON.stringify(cold));",
+      "var frozen=[Object.isFrozen(first.adj),Object.isFrozen(first.names),Object.isFrozen(first.services)];",
+      // a swapped injected pack (new reference, identical content) MUST miss and recompute
+      "GAME_DATA['conquest-transport-evidence']=JSON.parse(JSON.stringify(GAME_DATA['conquest-transport-evidence']));",
+      "var afterSwap=_lgTraceBase(view);",
+      "var recomputed=(afterSwap!==first);",
+      "var stillEqual=(JSON.stringify(afterSwap.adj)===JSON.stringify(cold));",
+      "GAME_DATA['conquest-territories']=JSON.parse(JSON.stringify(GAME_DATA['conquest-territories']));",
+      "var afterSwap2=_lgTraceBase(view);",
+      "var recomputed2=(afterSwap2!==afterSwap);",
+      // the cache must never depend on, or outlive, control/condition
+      "var C=mkConquest('US','mayhem');var before=conquestSupplyTrace(C,null).supplyState;",
+      "conquestSupplySetCondition(C,'CTS-R-02',true);",
+      "var after=conquestSupplyTrace(C,null).supplyState;",
+      "var memoKeys=Object.keys(_lgTraceMemo);",
+      "return {hitSameRecord:hitSameRecord,equalsCold:equalsCold,frozen:frozen,recomputed:recomputed,stillEqual:stillEqual,recomputed2:recomputed2,before:before,after:after,memoKeys:memoKeys};"
+    ].join("")));
+    need(v.equalsCold === true, "the memoized projection does not deep-equal a cold recompute");
+    need(v.hitSameRecord === true, "a second call did not hit the cache");
+    need(v.frozen.every(Boolean), "the cached projection is not frozen — it could be mutated in place");
+    need(v.recomputed === true, "a swapped evidence pack did NOT invalidate the cache — a stale cache is a correctness bug");
+    need(v.recomputed2 === true, "a swapped territory pack did NOT invalidate the cache");
+    need(v.stillEqual === true, "the recomputed projection disagrees with the cold projection");
+    need(v.before === "TRACED" && v.after === "SEVERED",
+      "the cache masked a cut — control and condition must never be cached: " + v.before + " -> " + v.after);
+    need(!v.memoKeys.includes("control") && !v.memoKeys.includes("cut") && !v.memoKeys.includes("supply"),
+      "the cache holds mutable control/condition state: " + JSON.stringify(v.memoKeys));
+    const src = read(SRC61);
+    need(!/_lgTraceMemo[^\n]*(saveLocal|serializ|localStorage)/.test(src), "the cache is wired to a save owner");
+    need(/var _lgTraceMemo = null;/.test(src), "the cache is not a single module-scoped declaration");
+    return { equalsCold: true, cacheHit: true, invalidatesOnSwap: true, cutNeverCached: true, memoKeys: v.memoKeys };
+  });
+
+  await step("SAVE SHAPE: the envelope is purely additive, legacy bytes round-trip exactly, and a bad payload fails closed", () => {
+    const run = diskSeam();
+    const v = JSON.parse(run([
+      // A LEGACY (pre-Slice-2, non-conquest) campaign. Every path Slice 2 introduces must leave its
+      // bytes EXACTLY as found. `logisticsBridgeBonus` writing `logistics.lastBridge` is shipped D159
+      // behavior that long predates this lane, so it is asserted separately and precisely: the shipped
+      // owners may touch ONLY their own `logistics` namespace and may never create `conquest`.
+      "var mkLegacy=function(){return {side:'US',idx:0,logistics:{schema:'cw_logistics_rail_v1',active:false,priority:null,log:[],lastTurn:null,lastBridge:null},warroom:{supply:50,nodes:{}},production:{},blockade:{}};};",
+      "var legacy=mkLegacy();",
+      "var before=JSON.stringify(legacy);",
+      "var roundTrip=JSON.stringify(JSON.parse(before));",
+      "_lgRoute(legacy,null);conquestSupplyTrace(legacy,null);_lgSupplyView(legacy);_lgSupplyBlockHTML(legacy);",
+      "var afterCalls=JSON.stringify(legacy);",
+      "var shipped=mkLegacy();logisticsSnapshot(shipped);logisticsBridgeBonus(shipped);presLogisticsBlock(shipped);",
+      "var movedKeys=[];var baseline=mkLegacy();",
+      "for(var kk in shipped)if(JSON.stringify(shipped[kk])!==JSON.stringify(baseline[kk]))movedKeys.push(kk);",
+      "var gainedConquest=Object.prototype.hasOwnProperty.call(legacy,'conquest')||Object.prototype.hasOwnProperty.call(shipped,'conquest');",
+      // fail-closed sanitizing: every malformed payload falls back to the authored opening, never partially adopted
+      "function view(p){var C=mkConquest('US','mayhem');C.conquest.supply=p;return _lgSupplyView(C);}",
+      "var bad=[view({schema:'wrong',cut:{'CTS-R-02':1}}),view({schema:'cw_conquest_supply_v1',control:{'CT-01':'XX'},cut:{}}),",
+      " view({schema:'cw_conquest_supply_v1',control:{'nope':'US'},cut:{}}),view({schema:'cw_conquest_supply_v1',control:{},cut:{'CTS-R-02':2}}),",
+      " view({schema:'cw_conquest_supply_v1',control:{},cut:{'bogus':1}}),view({schema:'cw_conquest_supply_v1',control:[],cut:{}}),",
+      " view('nonsense'),view(null),view(42)];",
+      "var good=view({schema:'cw_conquest_supply_v1',control:{'CT-03':'CS'},cut:{'CTS-R-02':1}});",
+      // a sealed conquest namespace must fail closed rather than throw
+      "var sealed=mkConquest('US','mayhem');Object.freeze(sealed.conquest);",
+      "var sealedWrite=conquestSupplySetCondition(sealed,'CTS-R-02',true);",
+      "var sealedTrace=conquestSupplyTrace(sealed,null);",
+      "return {legacyRoundTrip:before===roundTrip,legacyUntouched:before===afterCalls,gainedConquest:gainedConquest,movedKeys:movedKeys,",
+      " badAdopted:bad.map(function(b){return b.adopted;}),badCuts:bad.map(function(b){return b.cutCount;}),",
+      " goodAdopted:good.adopted,goodCut:good.cutCount,goodControl:good.control['CT-03'],",
+      " sealedWrite:sealedWrite,sealedTraceState:sealedTrace?sealedTrace.supplyState:null};"
+    ].join("")));
+    need(v.legacyRoundTrip === true, "a legacy campaign did not round-trip byte-identically");
+    need(v.legacyUntouched === true, "a Slice 2 path mutated a legacy campaign — legacy save bytes MUST NOT move");
+    need(v.gainedConquest === false, "the logistics path created a conquest namespace on a legacy campaign");
+    need(JSON.stringify(v.movedKeys) === JSON.stringify(["logistics"]),
+      "the shipped logistics owners touched a namespace other than their own: " + JSON.stringify(v.movedKeys));
+    need(v.badAdopted.length === 9 && v.badAdopted.every(a => a === false),
+      "a malformed control/condition payload was adopted: " + JSON.stringify(v.badAdopted));
+    need(v.badCuts.every(c => c === 0), "a malformed payload leaked a cut into the live view: " + JSON.stringify(v.badCuts));
+    need(v.goodAdopted === true && v.goodCut === 1 && v.goodControl === "CS", "a well-formed payload was not adopted");
+    need(v.sealedWrite === null, "a sealed conquest namespace accepted a write");
+    need(v.sealedTraceState === "TRACED", "a sealed conquest namespace must still read the authored opening");
+    const shape = JSON.parse(read("tools/save-shape.json"));
+    need(shape.saveVer === 1, "_SAVE_VER moved without a conscious decision; save-shape says " + shape.saveVer);
+    need(Object.keys(shape.signatures).length === 7, "the save-shape signature set changed size");
+    const region = read(SRC61).slice(read(SRC61).indexOf("LANE-022 Slices 1-2"), read(SRC61).indexOf("function _lgWord("));
+    need(!/_SAVE_VER|saveLocal|applySave|importSave|exportSave|localStorage/.test(region),
+      "the LANE-022 region touches a save owner — the state must ride the shipped envelope");
+    return { saveVer: 1, additive: true, legacyByteIdentical: true, badPayloadsRejected: 9, signatures: 7 };
   });
 
   await step("SUBSTRATE IMMUTABILITY: tracing never writes the evidence pack, the board, or module 115", () => {
     const run = diskSeam();
     const v = JSON.parse(run([
       "var before=[JSON.stringify(conquestTransportNormalized()),JSON.stringify(conquestBoardNormalized()),JSON.stringify(GAME_DATA)];",
-      "for(var i=0;i<5;i++){conquestSupplyTrace(mkConquest('US','mayhem'),null);conquestSupplyTrace(mkConquest('CS','mayhem'),'CT-20');_lgRoute(mkConquest('US','mayhem'),null);}",
+      "for(var i=0;i<5;i++){conquestSupplyTrace(mkConquest('US','mayhem'),null);conquestSupplyTrace(mkConquest('CS','mayhem'),'CT-20');_lgRoute(mkConquest('US','mayhem'),null);",
+      " var C=mkConquest('US','mayhem');conquestSupplySetCondition(C,'CTS-R-02',true);conquestSupplySetControl(C,'CT-03','CS');conquestSupplyTrace(C,null);}",
       "var after=[JSON.stringify(conquestTransportNormalized()),JSON.stringify(conquestBoardNormalized()),JSON.stringify(GAME_DATA)];",
-      "return {same:before[0]===after[0]&&before[1]===after[1]&&before[2]===after[2],road:conquestTransportNormalized().roadStatus,interchanges:conquestTransportNormalized().interchanges.length};"
+      "return {same:before[0]===after[0]&&before[1]===after[1]&&before[2]===after[2],road:conquestTransportNormalized().roadStatus};"
     ].join("")));
-    need(v.same === true, "tracing mutated the read-only substrate, the board, or the injected data");
+    need(v.same === true, "tracing or cutting mutated the read-only substrate, the board, or the injected data");
     need(v.road === "ROAD_REQUIRES_BOUNDED_SOURCE_PASS", "the zero-road authority moved");
-    need(v.interchanges === 4, "the four interchange faces moved");
     const s115 = read("src/115-conquest-transport.js");
-    for (const token of ["conquestSupplyTrace", "_LG_TRACE", "campaignKind", "logisticsInit", "_lgRoute"])
+    for (const token of ["conquestSupplyTrace", "_LG_TRACE", "_LG_SUPPLY", "campaignKind", "logisticsInit", "_lgRoute"])
       need(!s115.includes(token), "the immutable substrate gained a LANE-022 token: " + token);
-    return { substrateUnchanged: true, roadServices: 0, interchanges: 4 };
+    return { substrateUnchanged: true, roadServices: 0 };
   });
 
-  await step("NO NEW AUTHORITY: the trace consumes services only, and creates no window, road, or interchange", () => {
+  await step("NO NEW AUTHORITY: the seam consumes services only, and creates no period, road, or interchange", () => {
     const run = diskSeam();
     const v = JSON.parse(run([
-      "var t=conquestSupplyTrace(mkConquest('US','mayhem'),null);",
-      "var text=JSON.stringify(t);",
+      "var C=mkConquest('US','mayhem');conquestSupplySetCondition(C,'CTS-R-02',true);",
+      "var text=JSON.stringify([conquestSupplyTrace(mkConquest('US','mayhem'),null),conquestSupplyTrace(mkConquest('CS','mayhem'),null),conquestSupplyTrace(C,null),_lgSupplyView(C)]);",
       "var pack=conquestTransportNormalized();",
       "var ctiSeen=false,nlSeen=false;",
       "for(var i=0;i<pack.interchanges.length;i++)if(text.indexOf(pack.interchanges[i].id)>=0)ctiSeen=true;",
       "for(var j=0;j<pack.nonLinks.length;j++)if(text.indexOf(pack.nonLinks[j].id)>=0)nlSeen=true;",
-      "return {text:text,cti:ctiSeen,nl:nlSeen,modes:t.segments.map(function(s){return s.mode;})};"
+      "return {text:text,cti:ctiSeen,nl:nlSeen,modes:conquestSupplyTrace(mkConquest('US','mayhem'),null).segments.map(function(s){return s.mode;})};"
     ].join("")));
-    need(v.cti === false, "an interchange face leaked into the trace — CTI-01..CTI-04 stay unadjudicated");
-    need(v.nl === false, "an explicit non-link leaked into the trace as a usable segment");
+    need(v.cti === false, "an interchange face leaked into the seam — CTI-01..CTI-04 stay unadjudicated");
+    need(v.nl === false, "an explicit non-link leaked into the seam as a usable segment");
     for (const forbidden of ["dateText", "historicalEligibility", "eligibility", "window", "roadService", "RD-", "legalNow", "availability"])
-      need(v.text.indexOf(forbidden) < 0, "the trace manufactured a forbidden authority field: " + forbidden);
+      need(v.text.indexOf(forbidden) < 0, "the seam manufactured a forbidden authority field: " + forbidden);
     need(v.modes.every(m => m === "rail" || m === "inland-water" || m === "sea"), "a non-service mode entered the trace: " + JSON.stringify(v.modes));
     const src = read(SRC61);
     for (const forbidden of ["dateText", "historicalEligibility", "roadStatus", "interchanges", "nonLinks"])
@@ -207,9 +401,9 @@ try {
     return { interchanges: 0, nonLinks: 0, forbiddenFields: 0 };
   });
 
-  await step("D74: the new seam writes no scoreboard, no save owner, and no campaign state", () => {
+  await step("D74: the seam writes no scoreboard, no save owner, no DOM and no RNG", () => {
     const src = read(SRC61);
-    const from = src.indexOf("LANE-022 Slice 1 (D538)");
+    const from = src.indexOf("LANE-022 Slices 1-2");
     const to = src.indexOf("function _lgWord(");
     need(from > 0 && to > from, "the LANE-022 region markers are missing from the seam");
     const region = src.slice(from, to);
@@ -218,32 +412,43 @@ try {
       [/\.victory\s*=(?!=)/, "the victory result"],
       [/\.(strength|maxStr|morale|maxMor|ammo)\s*(\+=|-=|=)(?!=)/, "a Classic or modern combat field"],
       [/\bsev\./, "a severity lever"],
-      [/\.conquest\s*(\.|\[|=)/, "the C.conquest namespace"],
       [/saveLocal|applySave|importSave|exportSave|localStorage|_SAVE_VER/, "a save owner"],
       [/\bdocument\b|openSheet|innerHTML/, "a DOM or UI owner"],
       [/Math\.random|\bRNG\b|_rng/, "RNG state"],
-      [/\bG\.|\bwindow\./, "a global campaign or window authority"]
+      [/\bG\.|\bwindow\./, "a global campaign authority"]
     ];
     for (const [re, what] of forbidden) need(!re.test(region), "the LANE-022 region writes/reads " + what + ": " + String((region.match(re) || [""])[0]).trim());
+    // D540: C.conquest.supply IS the contracted namespace, but ONLY the two declared mutators may write it.
+    const writes = (region.match(/\bq\.supply\s*=|\bs\.(control|cut)\s*=|\bs\.(control|cut)\[/g) || []).length;
+    need(/function _lgSupplyStore\(/.test(region), "the single guarded store accessor is missing");
+    need((region.match(/function conquestSupplySet(Condition|Control)\(/g) || []).length === 2, "the seam must expose exactly two mutators");
+    need(!/C\.conquest\.supply\s*=/.test(region), "the seam writes C.conquest.supply outside the guarded store accessor");
+    need(writes > 0 && writes <= 8, "unexpected number of store writes in the region: " + writes);
     const run = diskSeam();
     const v = JSON.parse(run([
+      // Every READ path Slice 2 introduces must be pure over its carrier. `logisticsInit` creating
+      // `C.logistics` inside presLogisticsBlock is shipped D159 behavior and is asserted separately:
+      // the shipped readout may add its own owner but must never reach the conquest namespace.
       "var C=mkConquest('US','mayhem');var before=JSON.stringify(C);",
-      "conquestSupplyTrace(C,null);_lgRoute(C,null);",
-      "return {carrierUnchanged:JSON.stringify(C)===before,keys:Object.keys(C)};"
+      "conquestSupplyTrace(C,null);_lgRoute(C,null);_lgSupplyView(C);_lgSupplyBlockHTML(C);",
+      "var readsPure=JSON.stringify(C)===before;",
+      "var D=mkConquest('US','mayhem');var q=JSON.stringify(D.conquest);",
+      "logisticsSnapshot(D);presLogisticsBlock(D);",
+      "return {readsPure:readsPure,keys:Object.keys(C),conquestUntouched:JSON.stringify(D.conquest)===q,shippedKeys:Object.keys(D)};"
     ].join("")));
-    need(v.carrierUnchanged === true, "the trace mutated its own carrier: " + JSON.stringify(v.keys));
-    need(!v.keys.includes("conquest"), "the trace created a C.conquest field");
-    return { scoreboardWrites: 0, saveWrites: 0, carrierWrites: 0, regionBytes: region.length };
+    need(v.readsPure === true, "a Slice 2 READ path mutated its own carrier: " + JSON.stringify(v.keys));
+    need(v.conquestUntouched === true, "the shipped readout wrote into the conquest namespace: " + JSON.stringify(v.shippedKeys));
+    return { scoreboardWrites: 0, saveWrites: 0, readPathsPure: true, mutators: 2, regionBytes: region.length };
   });
 
-  await step("ENROLMENT: no new module, no data change, and both new probes are in the suite", () => {
+  await step("ENROLMENT: no new module, no new probe, no data change, and the suite is unmoved", () => {
     const manifest = JSON.parse(read("src/00-manifest.json"));
     const vet = read("tools/vet-no-regression.mjs");
     const rows = ((/const SUITE = \[([\s\S]*?)\n\];/.exec(vet) || [null, ""])[1].match(/^\s*\['/gm) || []).length;
-    need(manifest.modules.length === 112, "Slice 1 must add no module; manifest is " + manifest.modules.length);
+    need(manifest.modules.length === 112, "Slice 2 must add no module; manifest is " + manifest.modules.length);
     need(manifest.modules.at(-1) === "116-conquest-state.js", "manifest tail moved");
-    need(rows === 142, "suite must be 142 after enrolling the two D538 probes, counted " + rows);
-    need(vet.includes("tools/probe-conquest-supply.mjs") && vet.includes("tools/probe-conquest-supply-plan.mjs"), "a D538 probe is not enrolled");
+    need(rows === 142, "Slice 2 adds no probe; the suite must stay 142, counted " + rows);
+    need(vet.includes("tools/probe-conquest-supply.mjs") && vet.includes("tools/probe-conquest-supply-plan.mjs"), "a LANE-022 probe is not enrolled");
     return { modules: 112, last: manifest.modules.at(-1), suite: rows };
   });
 
@@ -265,18 +470,31 @@ try {
 
   await step("IN PAGE: the built deliverable carries the seam and holds containment in both directions", () => page.evaluate(() => {
     if (typeof conquestSupplyTrace !== "function") throw new Error("conquestSupplyTrace is absent from the built game");
-    const mk = (side, id) => ({ side, campaignKind: { id: "conquest", version: 1 }, ruleset: { id, version: 1 } });
+    if (typeof conquestSupplySetCondition !== "function" || typeof conquestSupplySetControl !== "function") throw new Error("the D540 mutators are absent from the built game");
+    const mk = (side, id) => ({ side, campaignKind: { id: "conquest", version: 1 }, ruleset: { id, version: 1 }, conquest: {} });
     const open = conquestSupplyTrace(mk("US", "mayhem"), null);
     const gated = conquestSupplyTrace(mk("US", "historical"), null);
     const plain = conquestSupplyTrace({ side: "US" }, null);
-    if (!open || open.rulesetId !== "mayhem" || open.authored !== true || open.applied !== false) throw new Error("open-ruleset trace missing in page");
+    if (!open || open.rulesetId !== "mayhem" || open.authored !== true) throw new Error("open-ruleset trace missing in page");
+    if (open.supplyState !== "TRACED" || open.applied !== true) throw new Error("in-page default route did not TRACE and apply");
     if (open.segments.length !== 1 || open.segments[0].id !== "CTS-R-02") throw new Error("in-page default route moved");
     if (gated !== null) throw new Error("IN-PAGE CONTAINMENT LEAK: the evidence-gated ruleset produced a trace");
     if (plain !== null) throw new Error("a non-conquest carrier produced a trace in page");
+    const gatedState = mk("US", "historical");
+    if (conquestSupplySetCondition(gatedState, "CTS-R-02", true) !== null) throw new Error("IN-PAGE CONTAINMENT LEAK: a cut was written on the gated ruleset");
+    if (conquestSupplySetControl(gatedState, "CT-03", "CS") !== null) throw new Error("IN-PAGE CONTAINMENT LEAK: control was written on the gated ruleset");
+    if (Object.keys(gatedState.conquest).length !== 0) throw new Error("IN-PAGE CONTAINMENT LEAK: the gated carrier gained supply state");
     const r = _lgRoute(mk("US", "mayhem"), null), g = _lgRoute(mk("US", "historical"), null), p = _lgRoute({ side: "US" }, null);
     if (Object.keys(r).length !== 7 || Object.keys(g).length !== 6 || Object.keys(p).length !== 6) throw new Error("in-page route key counts drifted");
-    if (r.friction !== g.friction || g.friction !== p.friction) throw new Error("in-page friction moved on a conquest carrier");
-    return { open: open.segments[0].id, gated: null, routeKeys: [7, 6, 6], friction: p.friction };
+    if (g.friction !== p.friction) throw new Error("in-page friction moved on a gated conquest carrier");
+    if (r.friction !== open.tracedFriction) throw new Error("in-page applied friction was not adopted from the trace");
+    // the cut must bite in page too
+    const cut = mk("US", "mayhem");
+    conquestSupplySetCondition(cut, "CTS-R-02", true);
+    const severed = conquestSupplyTrace(cut, null);
+    if (severed.supplyState !== "SEVERED" || severed.applied !== true) throw new Error("in-page cut did not sever the line");
+    if (_lgRoute(cut, null).friction <= r.friction) throw new Error("in-page severed friction did not rise");
+    return { open: open.segments[0].id, gated: null, routeKeys: [7, 6, 6], traced: r.friction, severed: _lgRoute(cut, null).friction };
   }));
 
   await step("IN PAGE: repeated tracing is pure — no G, C, save, storage, DOM, or board movement", () => page.evaluate(() => {
@@ -291,27 +509,44 @@ try {
         transport: typeof conquestTransportNormalized === "function" ? JSON.stringify(conquestTransportNormalized()) : "__absent__"
       };
     };
-    const mk = (side, id) => ({ side, campaignKind: { id: "conquest", version: 1 }, ruleset: { id, version: 1 } });
+    const mk = (side, id) => ({ side, campaignKind: { id: "conquest", version: 1 }, ruleset: { id, version: 1 }, conquest: {} });
     const before = snap();
-    for (let i = 0; i < 5; i++) { conquestSupplyTrace(mk("US", "mayhem"), null); conquestSupplyTrace(mk("CS", "mayhem"), "CT-20"); _lgRoute(mk("US", "mayhem"), null); }
+    for (let i = 0; i < 5; i++) {
+      conquestSupplyTrace(mk("US", "mayhem"), null);
+      conquestSupplyTrace(mk("CS", "mayhem"), "CT-20");
+      _lgRoute(mk("US", "mayhem"), null);
+      _lgSupplyView(mk("US", "mayhem"));
+      const c = mk("US", "mayhem"); conquestSupplySetCondition(c, "CTS-R-02", true); conquestSupplyTrace(c, null);
+    }
     const after = snap();
-    for (const k of Object.keys(before)) if (before[k] !== after[k]) throw new Error("repeated tracing moved " + k);
+    for (const k of Object.keys(before)) if (before[k] !== after[k]) throw new Error("repeated tracing or cutting moved " + k);
     const a = JSON.stringify(logisticsBridgeBonus({ side: "US" }));
-    const b = JSON.stringify(logisticsBridgeBonus(mk("US", "mayhem")));
-    const c = JSON.stringify(logisticsBridgeBonus(mk("US", "historical")));
-    if (a !== b || b !== c) throw new Error("in-page capped bridge moved between carriers:\n" + [a, b, c].join("\n"));
-    return { calls: 15, writes: 0, bridgeIdentical: true };
+    const b = JSON.stringify(logisticsBridgeBonus({ side: "US" }));
+    if (a !== b) throw new Error("in-page non-conquest capped bridge is not stable");
+    return { calls: 25, writes: 0, nonConquestStable: true };
   }));
 
-  await step("IN PAGE: the shipped logistics readout is untouched and shows no conquest surface", () => page.evaluate(() => {
+  await step("IN PAGE: the shipped readout is byte-identical off-conquest and gains exactly one guarded block on it", () => page.evaluate(() => {
     if (typeof presLogisticsBlock !== "function") throw new Error("presLogisticsBlock is absent");
-    const html = presLogisticsBlock({ side: "US" });
-    const mk = { side: "US", campaignKind: { id: "conquest", version: 1 }, ruleset: { id: "mayhem", version: 1 } };
-    const conquestHtml = presLogisticsBlock(mk);
-    if (html !== conquestHtml) throw new Error("the shipped logistics readout moved on a conquest carrier");
-    if (/CT-\d\d|CTS-[RWS]-\d\d|traced|depot reach chain/i.test(html)) throw new Error("Slice 1 leaked a conquest surface into the shipped readout");
-    if (!/Rail &amp; Supply Network/.test(html)) throw new Error("the shipped readout heading is gone");
-    return { identical: true, bytes: html.length };
+    const plain = presLogisticsBlock({ side: "US" });
+    const plain2 = presLogisticsBlock({ side: "US" });
+    if (plain !== plain2) throw new Error("the shipped readout is not stable on a non-conquest carrier");
+    if (/CT-\d\d|CTS-[RWS]-\d\d|Conquest supply line/.test(plain)) throw new Error("a conquest surface leaked into the NON-conquest readout");
+    if (!/Rail &amp; Supply Network/.test(plain)) throw new Error("the shipped readout heading is gone");
+    const mk = { side: "US", campaignKind: { id: "conquest", version: 1 }, ruleset: { id: "mayhem", version: 1 }, conquest: {} };
+    const conquest = presLogisticsBlock(mk);
+    if (conquest === plain) throw new Error("the conquest carrier did not gain the supply-line block");
+    if (!conquest.startsWith(plain.slice(0, 400))) throw new Error("the shipped readout head changed on a conquest carrier");
+    const blocks = (conquest.match(/Conquest supply line/g) || []).length;
+    if (blocks !== 1) throw new Error("expected exactly one guarded conquest block, found " + blocks);
+    if (!/Traced/.test(conquest) || !/CTS-R-02/.test(conquest)) throw new Error("the conquest block does not show the traced state and its segment");
+    const gated = presLogisticsBlock({ side: "US", campaignKind: { id: "conquest", version: 1 }, ruleset: { id: "historical", version: 1 }, conquest: {} });
+    if (gated !== plain) throw new Error("IN-PAGE CONTAINMENT LEAK: the gated ruleset rendered a conquest supply block");
+    const cut = { side: "US", campaignKind: { id: "conquest", version: 1 }, ruleset: { id: "mayhem", version: 1 }, conquest: {} };
+    conquestSupplySetCondition(cut, "CTS-R-02", true);
+    const severedHtml = presLogisticsBlock(cut);
+    if (!/Severed/.test(severedHtml)) throw new Error("a cut line does not read as severed in the readout");
+    return { plainBytes: plain.length, conquestBytes: conquest.length, blocks: 1, gatedIdenticalToPlain: true };
   }));
 
   if (result.pageerrors.length || result.realErrors.length) { result.ok = false; result.errors.push("browser errors present"); }

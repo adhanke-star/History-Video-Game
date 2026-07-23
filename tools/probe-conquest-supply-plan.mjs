@@ -81,8 +81,31 @@ step("LANE-022 carries the complete D538 Slice-1 acceptance contract", () => {
     "never on the current lock\n  holder",
     "18f609d07b1190904ec0c11e4ca64675",
     "a38185fd371a7f181250eff3a6cbf76a",
-    "140 → 142"
-  ]) need(LANE.includes(token.split("\n")[0]), "LANE-022 D538 contract clause missing: " + token.replace(/\n\s*/g, " "));
+    "140 → 142",
+    // D540 Slice-2 contract clauses
+    "D540 exact Slice-2 objective:",
+    "D540 exact Slice-2 state seam:",
+    "D540 exact Slice-2 resolution law",
+    "D540 exact Slice-2 containment seam (the declared bind target):",
+    "D540 Slice-2 authored Mayhem content",
+    "D540 Slice-2 traversal law:",
+    "D540 Slice-2 bounded-channel law",
+    "D540 Slice-2 save law",
+    "D540 Slice-2 CF-2 performance law",
+    "D540 Slice-2 probe design:",
+    "D540 Slice-2 gate contract:",
+    "D540 carry-forward obligations",
+    "`C.conquest.supply`",
+    "SUBSTRATE_GAP",
+    "purely additive"
+  ]) need(LANE.includes(token.split("\n")[0]), "LANE-022 contract clause missing: " + token.replace(/\n\s*/g, " "));
+  const flat = LANE.replace(/\s+/g, " ");
+  need(/`applied:false`\*{0,2}, `friction` keeps its shipped static number/.test(flat),
+    "the load-bearing substrate-gap ruling is not contracted in the lane");
+  need(/eleven-component gap is OUR evidence gap|evidence gap, not the player's doing/.test(flat),
+    "the lane must record WHY a substrate gap may not be charged to the player");
+  need(/never tuned toward a preferred number/.test(LANE.replace(/\s+/g, " ")),
+    "the D92 accurate-inputs adjudication rule is not contracted for the sim-affecting leg");
   need(/ELEVEN disconnected components/.test(LANE), "the honest eleven-component finding is not contracted in the lane");
   need(/applied:false/.test(LANE) && /NOTHING consumes/.test(LANE), "the read-only law is not contracted in the lane");
   need(/no slice may absorb its successor/.test(LANE.replace(/\s+/g, " ")), "the standing no-absorption prohibition moved");
@@ -98,10 +121,16 @@ step("LANE-022 carries the complete D538 Slice-1 acceptance contract", () => {
 });
 
 step("the authored Mayhem content lives ONLY in the seam and never in sourced data or the substrate", () => {
-  const authored = ["_LG_TRACE_RULESETS", "_LG_TRACE_DEPOT", "_LG_TRACE_FRONT", "_LG_TRACE_COST"];
+  // D540 re-anchor: Slice 2 adds the severed ceiling and the authored opening control map, and the
+  // derived friction is now CONSUMED, so the "unconsumed" marker is retired rather than carried stale.
+  const authored = ["_LG_TRACE_RULESETS", "_LG_TRACE_DEPOT", "_LG_TRACE_FRONT", "_LG_TRACE_COST",
+    "_LG_SUPPLY_SEVERED", "_LG_SUPPLY_OPENING", "_LG_SUPPLY_SCHEMA"];
   for (const sym of authored) need(count(SRC61, "var " + sym + " =") === 1, "authored constant not declared exactly once: " + sym);
-  need(count(SRC61, "authored, not sourced") === 2 && count(SRC61, "authored, unconsumed") === 1,
+  need(count(SRC61, "authored, not sourced") === 5 && count(SRC61, "authored, unconsumed") === 0,
     "the authored-vs-sourced provenance markers moved in the seam");
+  const opening = (SRC61.match(/"CT-\d\d": "(US|CS)"/g) || []);
+  need(opening.length === 28 && opening.filter(r => r.endsWith('"US"')).length === 4,
+    "the authored opening control map moved: " + opening.length + " assigned");
   need(SRC61.includes("LANE022_CONTAINMENT_ALLOWLIST"), "the containment allowlist marker is missing from the seam");
   const s115 = read("src/115-conquest-transport.js"), s114 = read("src/114-conquest-board.js");
   for (const sym of authored.concat(["conquestSupplyTrace", "campaignKind"]))
@@ -147,9 +176,15 @@ step("Slice 1 adds no module, no data file, and no save shape", () => {
   need(manifest.modules.includes("61-logistics-rail.js"), "the seam module is not enrolled");
   need(readdirSync(join(ROOT, "data")).filter(n => n.endsWith(".json")).length === 65, "data file count moved");
   need(md5("build/base.html") === "c9db83fa99230ffb95bdfdfe059f3fb9", "the FROZEN base moved");
-  need(!/\.conquest\s*(\.|\[|=[^=])/.test(SRC61), "the seam writes into the C.conquest namespace");
+  // D540: C.conquest.supply IS the contracted Slice 2 namespace. What must stay true is that exactly
+  // one guarded accessor owns the write and the two declared mutators are the only public writers.
+  need(count(SRC61, "function _lgSupplyStore(") === 1, "the single guarded store accessor is missing or duplicated");
+  need(count(SRC61, "function conquestSupplySetCondition(") === 1 &&
+    count(SRC61, "function conquestSupplySetControl(") === 1, "the seam must expose exactly two mutators");
+  need(!/C\.conquest\.supply\s*=/.test(SRC61), "the seam writes C.conquest.supply outside the guarded accessor");
+  need(count(SRC61, "function _lgSupplyView(") === 1, "the single pure reader is missing or duplicated");
   need(!/_SAVE_VER|saveLocal\(\)|applySave|importSave|exportSave/.test(
-    SRC61.slice(SRC61.indexOf("LANE-022 Slice 1 (D538)"), SRC61.indexOf("function _lgWord("))),
+    SRC61.slice(SRC61.indexOf("LANE-022 Slices 1-2"), SRC61.indexOf("function _lgWord("))),
     "the LANE-022 region touches a save owner");
   return { modules: 112, data: 65, baseFrozen: true, saveShapeMoved: false };
 });
@@ -161,7 +196,10 @@ step("the shipped logistics owners are extended, never forked into a second stor
     need(count(SRC61, owner) === 1, "a shipped logistics owner is missing or duplicated: " + owner);
   need(count(SRC61, "function _lgRoute(") === 1, "the seam function is missing or duplicated");
   need(count(SRC61, "var traced = conquestSupplyTrace(C, null);") === 1, "the guarded route tail is missing or duplicated");
-  need(count(SRC61, "if (traced) out.trace = traced;") === 1, "the route tail must attach exactly one field, exactly once");
+  need(count(SRC61, "out.trace = traced;") === 1, "the route tail must attach exactly one field, exactly once");
+  need(count(SRC61, "if (traced.applied === true) out.friction = _lgClamp(traced.tracedFriction, 0, 100);") === 1,
+    "the single D540 sim-affecting line is missing or duplicated");
+  need(count(SRC61, "_lgSupplyBlockHTML(C)") === 2, "the guarded readout block must be defined once and wired once");
   need(/bridgeCaps/.test(SRC61), "the capped-bridge reference is gone");
   const caps = JSON.parse(read("data/logistics-rail.json")).config.bridgeCaps;
   need(caps.supply === 7 && caps.fatigueRelief === 5 && caps.overall === 2, "the shipped bridge caps moved");

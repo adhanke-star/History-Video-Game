@@ -943,7 +943,9 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
 // D525 re-pin: the pure detached calendar moves srcTree 45aea5f8 -> 9f4ffbff in existing src/116 only; protected War Career owners hold.
 // D534 re-pin: the E51 raidSupply honesty copy moves srcTree 9f4ffbff -> 7f2a5e6f in existing src/85-battle-bridge.js only; protected War Career owners hold.
 // D536 re-pin: the S39 --h0d-* token unification moves srcTree 7f2a5e6f -> 003d308a in existing src/95-playstyle.js only (presentation); protected War Career owners hold.
-srcTree:"08f95d9e9311e90313cc5b7a930f9380",
+// D540 re-pin: LANE-022 Slice 2 (control/service receipts and cuts) moves srcTree 08f95d9e -> 5f6d3332
+// for existing src/61-logistics-rail.js only; War Career runtime/journey/command/focused/data/manifest/suite hold.
+srcTree:"5f6d33325fa5feb04f6d5b11e3f5a3b7",
     runtime:"dfee8d9c3a6b8c8caa414366302214a7",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
@@ -1334,7 +1336,9 @@ step("BASELINES + LANE", () => {
     // D525 re-pin: game c2a7b0cb -> 269ecc62 for the pure detached calendar in existing src/116 only; protected War Career owners hold.
     // D534 re-pin: game 269ecc62 -> c6f9699a for the E51 raidSupply honesty copy in existing src/85-battle-bridge.js only; protected War Career owners hold.
     // D536 re-pin: game c6f9699a -> 859637ed for the S39 --h0d-* token unification in existing src/95-playstyle.js only (presentation); protected War Career owners hold.
-    game:"45278110cb73ea4719fa41ffef7682f9",
+// D540 re-pin: LANE-022 Slice 2 moves game 45278110 -> 4764b1fc for existing src/61-logistics-rail.js only;
+// War Career runtime/journey/focused remain exact.
+    game:"4764b1fccb40c473edd871621497f62b",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     // D478 re-pin: dataTree 4bbdebe5 -> b3b323fa (LANE-017 slice 1: rarity glyphs + reserved tier
     // hexes + rungTiers in data/loot-survival.json — presentation data only, no war-career data).
@@ -1814,7 +1818,9 @@ step("REACHABILITY BASELINES", () => {
     // D525 re-pin: game c2a7b0cb -> 269ecc62 for the pure detached calendar in existing src/116 only; protected War Career owners hold.
     // D534 re-pin: game 269ecc62 -> c6f9699a for the E51 raidSupply honesty copy in existing src/85-battle-bridge.js only; protected War Career owners hold.
     // D536 re-pin: game c6f9699a -> 859637ed for the S39 --h0d-* token unification in existing src/95-playstyle.js only (presentation); protected War Career owners hold.
-    game:"45278110cb73ea4719fa41ffef7682f9",
+// D540 re-pin: LANE-022 Slice 2 moves game 45278110 -> 4764b1fc for existing src/61-logistics-rail.js only;
+// War Career runtime/journey/focused remain exact.
+    game:"4764b1fccb40c473edd871621497f62b",
     dataTree:"2e9e4df430eaaaeca4ce6f58f51a3b2e",
         // D484 re-pin (LANE-017 slice 6, soldier-tier badges SS4d.3): game e7ff100e -> e99e6ac5 · dataTree 00f8c1fe -> c3c28fd6 (data/ratings.json gains soldierBadgeDefs 14 + soldierBadges 48 rows on 39 Verified carriers + _soldierBadgeNote) · srcTree 15570ebc -> d79696ce (T14 soldier-badge accessors + the fldSoldierBadgeFactor capped gateway; src/37 cwCareerBadges/cwSoldierBadgeRows/_ssSoldierBadgesHTML register/journey chips; the src/22 comment-token reword — the D482 class, fifth instance) · journey 1689c4a2 -> 9655bfff (src/37) · focused 65e9c873 -> e2acf99a (probe-war-career gains the D484 career-badge step; the stale 138 suite.expected DISPLAY fields aligned to the 140 teeth). Presentation + data + the capped gateway only — no combat line consumes the keys, sim inputs did not move; both binds md5-proven; base/manifest/suite/runtime/command hold.
     // D486 re-pin (LANE-017 slice 8): srcTree b7648a67 -> 8174d79d (src/37 sets/salvage/
@@ -1837,7 +1843,9 @@ step("REACHABILITY BASELINES", () => {
 // D525 re-pin: game c2a7b0cb -> 269ecc62 and srcTree 45aea5f8 -> 9f4ffbff for the pure detached calendar in existing src/116 only; War Career runtime/journey/focused remain exact.
 // D534 re-pin: game 269ecc62 -> c6f9699a and srcTree 9f4ffbff -> 7f2a5e6f for the E51 raidSupply honesty copy in existing src/85-battle-bridge.js only; War Career runtime/journey/focused remain exact.
 // D536 re-pin: game c6f9699a -> 859637ed and srcTree 7f2a5e6f -> 003d308a for the S39 --h0d-* token unification in existing src/95-playstyle.js only (presentation); War Career runtime/journey/focused remain exact.
-srcTree:"08f95d9e9311e90313cc5b7a930f9380",
+// D540 re-pin: LANE-022 Slice 2 (control/service receipts and cuts) moves srcTree 08f95d9e -> 5f6d3332
+// for existing src/61-logistics-rail.js only; War Career runtime/journey/command/focused/data/manifest/suite hold.
+srcTree:"5f6d33325fa5feb04f6d5b11e3f5a3b7",
     runtime:"dfee8d9c3a6b8c8caa414366302214a7",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;

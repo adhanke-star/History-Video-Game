@@ -139,7 +139,7 @@ const PIN = {
 // campaignKind, so the seam is a guarded no-op for 100% of shipped play and the sim is
 // byte-identical (both A/B legs zero-diff).
 // D536 re-pin: the S39 --h0d-* token unification in src/95-playstyle.js only (presentation); game c6f9699a -> 859637ed. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
-  game: "45278110cb73ea4719fa41ffef7682f9",
+  game: "4764b1fccb40c473edd871621497f62b",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "4cc094911506cf5af9929cf79d25dc6c",
   suite: "a1cb6e7347155b8705614b83cc0c32d3",

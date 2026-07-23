@@ -160,12 +160,19 @@ step("baseline counts, settings/save law, and UI caps are exact", () => {
   const tabs = ((src99.match(/var H0_DESK_TABS = \[([\s\S]*?)\n  \];/) || [null, ""])[1].match(/^\s*\["/gm) || []).length;
   const saveShape = JSON.parse(read("tools/save-shape.json"));
   need(dataCount === 65, "data count moved");
-  need(suiteRows(vet) === 140, "release suite moved before enrollment");
+  // D540 CF-1 re-pin: D539 enrolled the two LANE-022 probes and moved the release suite 140 -> 142.
+  // This probe is a superseded, suite-EXCLUDED LANE-020 DRIVE-era contract probe (its lane was released
+  // at D519) and is not a gate, but a stale pin is drift, so the count is re-anchored to the live suite.
+  // Its three remaining reds are structural and PREDATE D539, verified against 0829d8d: LANE-020 is
+  // CONTRACT not DRIVE after its own D519 release; the manifest is 112 with 116-conquest-state.js last
+  // after D523; and src/00-manifest.json's sha256 drifted with it. Those belong to LANE-020 and are
+  // deliberately left named rather than rewritten by a lane that does not own them.
+  need(suiteRows(vet) === 142, "release suite moved before enrollment");
   need(tabs === 20, "H0 Desk tab count moved");
   need(/var _SL_MAX = 3\b/.test(src91), "named-slot count moved");
   need(/var cap = 3\b/.test(src109), "Chief cap moved");
   need(saveShape.saveVer === 1, "_SAVE_VER contract moved");
-  return { data: 65, modules: 111, suite: 140, slots: 3, deskTabs: 20, chiefCap: 3, saveVersion: 1 };
+  return { data: 65, modules: 111, suite: 142, slots: 3, deskTabs: 20, chiefCap: 3, saveVersion: 1 };
 });
 
 step("all known literal/hash pin transitions are declared before runtime", () => {
