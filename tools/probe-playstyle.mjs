@@ -37,6 +37,31 @@ const OUT = join(__dirname, 'shots');
 mkdirSync(OUT, { recursive: true });
 const cfg = JSON.parse(readFileSync(join(__dirname, 'shots.json'), 'utf8'));
 const GL = ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist','--enable-webgl','--disable-dev-shm-usage'];
+
+// S39 (D536) anti-drift tooth — the 95-playstyle picker is the FOURTH pre-battle config surface, now
+// on the shared --h0d-* palette (the D245 S25 idiom). Every --h0d-* token it defines must carry
+// EXACTLY the H0 desk-shell canon value (src/99-h0-president-desk.js), and every retired invented
+// accent must be gone from the whole module (comments included, the D484 comment-token scan class).
+// Runs node-side before the browser; a drift throws and exits nonzero, greening no artifact.
+const S39_RETIRED_HEXES = ['#e8c84a','#241c10','#1a150d','#f0d98a','#c9a85f','#e9dcc0','#9f845c','#f2e8d5','#8c724e','#5a4a2e','#26200f'];
+{
+  const canon = {};
+  const h0 = readFileSync(join(ROOT, 'src', '99-h0-president-desk.js'), 'utf8');
+  for (const m of h0.matchAll(/--h0d-([a-z0-9]+):([^;"'}]+)/g)) if (!(m[1] in canon)) canon[m[1]] = m[2].trim();
+  if (!canon.brass || !canon.focus) throw new Error('S39 tooth: could not extract --h0d-* canon from 99-h0-president-desk.js');
+  const ps = readFileSync(join(ROOT, 'src', '95-playstyle.js'), 'utf8');
+  let defs = 0;
+  for (const m of ps.matchAll(/--h0d-([a-z0-9]+):([^;"'}]+)/g)) {
+    defs++;
+    if (!(m[1] in canon)) throw new Error('S39 tooth: 95-playstyle defines unknown token --h0d-' + m[1]);
+    if (m[2].trim() !== canon[m[1]]) throw new Error('S39 tooth: 95-playstyle --h0d-' + m[1] + ' = ' + m[2].trim() + ' but the H0 canon is ' + canon[m[1]]);
+  }
+  if (!defs) throw new Error('S39 tooth: 95-playstyle defines no --h0d-* tokens (the surface fell off the shared palette)');
+  const lower = ps.toLowerCase();
+  for (const hex of S39_RETIRED_HEXES) if (lower.includes(hex)) throw new Error('S39 tooth: 95-playstyle still contains the retired invented accent ' + hex);
+  console.log('S39 token canon check: 95-playstyle matches the H0 --h0d-* values (' + defs + ' tokens, 0 retired accents)');
+}
+
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 async function up(u){ try{ const r=await fetch(u,{method:'HEAD'}); return r.ok||r.status===200; }catch{ return false; } }
 
@@ -219,6 +244,32 @@ const SETUP = `(() => {
       var fin=document.getElementById('gnPlayStyle'); if(fin&&fin.parentNode) fin.parentNode.removeChild(fin);
       if(synth&&synth.parentNode) synth.parentNode.removeChild(synth);
       return { ok:true }; });
+
+    step('S39 (D536): the panel consumes the shared H0 --h0d-* tokens; the invented card palette is gone + the selected outline resolves to --h0d-focus', function(){
+      delete G.settings.playStyle;
+      var host=mount(psRenderTab(null));
+      var html=host.innerHTML;
+      // the six canon tokens are defined on the panel wrapper
+      ['--h0d-panel:#111918','--h0d-panel2:#17231f','--h0d-ink:#f3efe4','--h0d-brass:#d8b458','--h0d-focus:#ffe27a','--h0d-line:rgba(216,180,88,.27)'].forEach(function(t){
+        if(html.indexOf(t)<0) throw new Error('missing wrapper token def: '+t); });
+      // the cards + rows consume var(--h0d-*), not invented hexes
+      ['var(--h0d-focus)','var(--h0d-panel)','var(--h0d-panel2)','var(--h0d-ink)','var(--h0d-brass)','var(--h0d-line)'].forEach(function(v){
+        if(html.indexOf(v)<0) throw new Error('surface does not consume '+v); });
+      // the retired invented accents that lived on the 95-authored play-style CARDS are gone from the
+      // rendered card markup (scan the cards only — the sec2 body also appends out-of-scope module output
+      // like rtmHubReadout from 96, which carries its own accents; the node-side tooth owns the full-file
+      // 95 source guarantee across headers/rows/comments too).
+      var cards=document.querySelectorAll('[data-ps-style]'); var cardHTML='';
+      for(var ci=0;ci<cards.length;ci++) cardHTML+=cards[ci].outerHTML;
+      cardHTML=cardHTML.toLowerCase();
+      ['#e8c84a','#241c10','#1a150d','#f0d98a','#c9a85f','#e9dcc0'].forEach(function(h){
+        if(cardHTML.indexOf(h)>=0) throw new Error('retired invented accent still rendered on a play-style card: '+h); });
+      // live resolve: the selected card's focus outline resolves through the wrapper token to canon #ffe27a
+      var sel=document.querySelector('[data-ps-style][aria-pressed="true"]');
+      if(!sel) throw new Error('no selected card to resolve');
+      var oc=getComputedStyle(sel).outlineColor;
+      if(oc!=='rgb(255, 226, 122)') throw new Error('selected card outline did not resolve to --h0d-focus (#ffe27a): '+oc);
+      return { tokens:6, resolvedFocus:oc, cards:cards.length }; });
 
     // restore the player's real settings
     if(_savedStyle==null) { try{ delete G.settings.playStyle; }catch(e){} } else G.settings.playStyle=_savedStyle;

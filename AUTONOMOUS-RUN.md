@@ -1,12 +1,12 @@
 # AUTONOMOUS-RUN.md — the 12-hour max-productivity build plan ("The Civil War")
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D535 next-lane=LANE-021 state=DRIVE owner=Claude -->
-> **Live status (D535, 2026-07-23):** LANE-021 takes a committed Claude Code DRIVE contract for S39 — the 95-playstyle picker (the fourth pre-battle config surface) joins the shared H0 `--h0d-*` token palette; presentation-only, never a sim change.
+<!-- LIVE-HEAD decision=D536 next-lane=LANE-021 state=CONTRACT owner=none -->
+> **Live status (D536, 2026-07-23):** S39 shipped — the 95-playstyle picker (the fourth pre-battle config surface) now consumes the shared H0 `--h0d-*` token palette; presentation-only, sim byte-identical. LANE-021 is `CONTRACT` / `none`.
 >
-> **Boundary:** D525 remains the ARC 7 product head. Only `src/95-playstyle.js` colors/comments, the probe-playstyle S39 canon teeth, the five mechanical game/srcTree re-pins, and closeout docs may move in D536; DOM order, ids, callbacks, saves, mechanics, and every D74 surface are barred.
+> **Boundary:** D525 remains the ARC 7 product head. D536 moved only `src/95-playstyle.js` colors/comments plus the S39 probe teeth and the five mechanical game/srcTree re-pins (game `859637ed`, srcTree `003d308a`); no DOM order, id, callback, save, mechanic, or D74 surface moved.
 >
-> **Authority:** D514 continues on the formerly parked queue. ARC 7 Historical movement, ARC 9 Slice 5, and E46 remain blocked; the D245 S25 worked example and its probe-presets byte-identity guard are the governing precedent.
+> **Authority:** D514 continues on the formerly parked queue (the E61 collapse-terminal design fork recommended next). ARC 7 Historical movement, ARC 9 Slice 5, and E46 remain blocked; the D535 contract and Bind S39-B1 red/restore are the shipped evidence.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **D514 completion rule:** `HANDOFF.md` owns the work-conserving loop and terminal condition. This manual executes the whole live ledger, not one bundle; each slice remains independently contracted, gated, documented, committed, and pushed.

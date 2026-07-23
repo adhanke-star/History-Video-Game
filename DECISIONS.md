@@ -4,6 +4,45 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D536 — S39_SHIPPED_TOKEN_UNIFICATION: THE 95-PLAYSTYLE PICKER JOINS THE SHARED H0 --h0d-* PALETTE (PRESENTATION-ONLY, BYTE-IDENTICAL SIM); LANE-021 RELEASES — [CLAUDE CODE, IMPLEMENTATION+GATES; Fable-5-derived plan, Opus 4.8 driver] (2026-07-23)
+
+**VERDICT: `S39_SHIPPED_TOKEN_UNIFICATION`.** From clean pushed D535 `78893b81`, the contracted
+presentation-only edit landed: `src/95-playstyle.js` defines the six shared tokens on the panel
+wrapper (panel #111918 · panel2 #17231f · ink #f3efe4 · brass #d8b458 · focus #ffe27a · line
+rgba(216,180,88,.27), pinned to the src/99-h0-president-desk.js canon), every card/row/header/
+divider consumes `var(--h0d-*)`, and all 11 retired invented accents are gone from the whole
+module (comments included, the D484 class). The fourth pre-battle config surface now matches the
+S25 three (D245). No DOM order, id, aria, callback, save, mechanic, manifest, or data byte moved;
+T2's per-file pin `57e82cd4b9873d8b56ecba51f05a4111` is untouched. D74: byte-identical sim by
+construction, proven by probe-presets 27/27.
+
+**Contrast (computed, worst pairs; ambient sheet #26200f, desk-shell lightest stop #13201d):**
+every replaced text pair ≥ 6.23:1 (floor 4.5:1 — worst is the .62-opacity ink hint span; brass
+headers 8.17:1; ink labels 14.10:1); required non-text selection outlines 12.66:1 (floor 3:1).
+The Historian's-layer divider moved to `var(--h0d-line)` (composites ~1.8:1) — decorative,
+1.4.11-exempt per D245's shipped adjudication of the identical S25 divider role; the local
+wcag-auditor 3.57:1 divider fix was deliberately superseded for canon parity (contracted in D535,
+the uppercase section heading carries the structure).
+
+**Gate record:** build `GATE OK`; artifact readback (six token defs present, zero retired hexes
+in the built 95 module); game `c6f9699a`→`859637edd920e386dd9008d5dfc647bb` and srcTree
+`7f2a5e6f`→`003d308af7cbaa8d3512df17a0d8d72b` re-pinned at the five contracted sites with chained
+D536 comments; Bind S39-B1 exact (`--h0d-brass` #d8b458→#d8b459, probe-playstyle without rebuild
+redded ONLY the node-side canon tooth naming the token, exit 1 pre-browser; md5-proven
+byte-identical restore `ae69a03b` then clean green); `node --check` ×4; probe-playstyle 15/15
+(the S39 node-side canon tooth + in-page consumption/live-resolve to rgb(255, 226, 122));
+probe-presets 27/27 (sim byte-identity guard); probe-desk 13/13; Mayhem 13/13; War Career 24/24;
+transport 12/12; conquest 8/8; doc coherence 5/5; zero pageerrors everywhere; `git diff --check`
+clean. No 140-row battery owed under D160 for a presentation-only slice.
+
+**Probe home note:** the S39 teeth live in `tools/probe-playstyle.mjs` (verified unpinned by
+every plan probe); probe-custom-battle-builder's S25 tooth keeps its three-surface scope by
+design (a playstyle drift reds the playstyle probe, not the builder's).
+
+**Release:** REVIEW-QUEUE S39 → FIXED-in-D536; the V1 queue line checks; LANE-021 →
+`CONTRACT` / `none`; the next parked slice (E61 recommended) needs its own contract. The D514
+ledger reloads.
+
 ## D535 — CONTRACT_S39_TOKEN_UNIFICATION: LANE-021 TAKES CLAUDE DRIVE FOR THE FOURTH PRE-BATTLE CONFIG SURFACE TO JOIN THE SHARED H0 PALETTE — [CLAUDE CODE, ADJUDICATION+CONTRACT; Fable-5-derived plan, Opus 4.8 driver mid-session] (2026-07-23)
 
 **VERDICT: `CONTRACT_S39_TOKEN_UNIFICATION`.** From clean pushed D534

@@ -4929,10 +4929,21 @@ D372/D373 reconciliation lesson — every handoff commit sweeps the canonical he
 
 ↳ **[Fable, 2026-07-12] — D381 CHECKPOINT + S-03 AMENDMENT PROPOSAL.** The stretch-ladder release checkpoint is discharged: 124/124 across evidenced segments, every artifact read, sweep 19×8 `failures:[]`, one slow-Mac tactical-visuals timeout root-caused and standalone-green, the eighth optional 404 (`ford_albedo`) confirmed as the frozen engine's documented absent-asset class. Proposed floor amendment (9): **a provider-transfer commit that rewrites a lane MUST re-run every plan probe that greps that lane before pushing** — the `2f3da4a` transfer landed two LANE reds and D380's pin bump dropped a required pin-history fragment, all caught only at D381's final gates; the reshaped teeth now bind role rosters and durable history, never the current lock holder. Also: Aaron's 2026-07-12 popup Q&A ratified a large forward slate (D382) — Fort Donelson spec-first remains next, then Women-in-War arc, Elkhorn, an Overland/attrition extension, the war-career loop, surrender/no-quarter (consequence-only, never scored), four system-integrated teaching threads, the procedural sandbox + Chronicle, a committed naval engine, and a post-ladder media/audio session. Sol's parked queue (E71/C72/GEA-01/S44) runs after the ladder per Aaron.
 
-### LANE-021 · parked-review-closeout — **DRIVE (D535 S39 token-unification contract; Claude Code)**
+### LANE-021 · parked-review-closeout — **CONTRACT (D536 S39 SHIPPED; UNOWNED)**
 
-- **Owning tool:** Claude Code, DRIVE for the D535 S39 token-unification slice only; model resolution — Opus 4.8 `[1m]` is the current TOP-LOOP driver (Aaron switched mid-session), executing the Fable-5-derived S39 plan/contract; no simultaneous edits.
-- **State:** DRIVE — this entry IS the acceptance contract (committed at the clean pushed D534 boundary
+- **Owning tool:** none. D536 releases the D535 DRIVE lock; no simultaneous edits.
+- **State:** CONTRACT/unowned. D536 shipped the S39 token-unification exactly as contracted: the
+  `src/95-playstyle.js` colors/comments only (six wrapper tokens pinned to the 99-h0 canon, every
+  card/row/header/divider on `var(--h0d-*)`, all 11 retired accents gone module-wide), game
+  `c6f9699a`→`859637edd920e386dd9008d5dfc647bb`, srcTree `7f2a5e6f`→`003d308af7cbaa8d3512df17a0d8d72b`,
+  five chained re-pins, Bind S39-B1 exact (only the node-side canon tooth redded; md5-proven restore),
+  and the full contracted gate set green with zero pageerrors (probe-playstyle 15/15, probe-presets
+  27/27 sim byte-identity guard, probe-desk 13/13, Mayhem 13/13, War Career 24/24, transport 12/12,
+  conquest 8/8, doc coherence 5/5). Worst replaced text pair 6.23:1, required non-text 12.66:1.
+  REVIEW-QUEUE S39 is FIXED-in-D536. The next parked slice (the E61 collapse-terminal design fork
+  recommended, then E57, R-7/E33, the D460 option) requires its own contract section here before
+  implementation. Model note: Fable-5-derived plan, Opus 4.8 `[1m]` driver (Aaron switched mid-session).
+- **D535 contract (retained history):** this entry was the acceptance contract (committed at the clean pushed D534 boundary
   `be27a94f5a4f315bd78f0da740552f9d4c99a0e0`). The lane hosts successive small closeout slices from the V1
   “formerly parked” queue, one committed contract at a time; after D536 ships, each later slice (the E61
   collapse-terminal fork recommended, then E57, R-7/E33, the D460 option) requires its own contract section

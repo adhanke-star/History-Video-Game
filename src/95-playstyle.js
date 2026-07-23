@@ -60,8 +60,11 @@ var PS = {
   deskTabs: { economy: 1, command: 1, victory: 1, warroom: 1 },
 };
 
-/* the period-broadsheet palette (AA on the dark sheet; reused from T6/codex tokens).
-   #9f845c label 4.58:1 · #e9dcc0/#f2e8d5 body · #e8c84a/#c9a85f selection ring. */
+/* S39 (D536): the pre-battle palette consumes the shared H0 --h0d-* token set (defined on the
+   panel wrapper in _psPanelHTML, values pinned to the src/99-h0-president-desk.js canon by a
+   node-side probe tooth) — the fourth config surface joins the D245 S25 unification. Worst
+   replaced text pair 6.23:1, section headers 8.17:1, required non-text selection outlines
+   12.66:1; the invented brass/parchment accents are retired. */
 var _psEsc = (typeof htmlEsc === "function") ? htmlEsc : function (s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); };
 
 /* ---- read accessors (pure) ---- */
@@ -139,13 +142,13 @@ function _psStyleCard(k, on) {
   return '<button type="button" class="upg" aria-pressed="' + (on ? "true" : "false") + '"'
     + ' data-ps-style="' + k + '"'
     + ' style="display:block;width:100%;text-align:left;margin:0 0 8px 0;padding:10px 12px;border-radius:6px;'
-    + (on ? "outline:2px solid #e8c84a;outline-offset:1px;background:#241c10;" : "background:#1a150d;") + '">'
+    + (on ? "outline:2px solid var(--h0d-focus);outline-offset:1px;background:var(--h0d-panel2);" : "background:var(--h0d-panel);") + '">'
     + '<div style="display:flex;align-items:baseline;gap:8px">'
-    +   '<span aria-hidden="true" style="font-size:17px;color:' + (on ? "#f0d98a" : "#c9a85f") + '">' + d.glyph + '</span>'
-    +   '<span style="font-weight:bold;letter-spacing:.03em;color:' + (on ? "#f0d98a" : "#e9dcc0") + ';">' + (on ? "&#9656; " : "") + _psEsc(d.label) + '</span>'
-    +   '<span style="margin-left:auto;font-size:11px;font-style:italic;opacity:.7;color:#e9dcc0">' + d.lead + '</span>'
+    +   '<span aria-hidden="true" style="font-size:17px;color:' + (on ? "var(--h0d-focus)" : "var(--h0d-brass)") + '">' + d.glyph + '</span>'
+    +   '<span style="font-weight:bold;letter-spacing:.03em;color:' + (on ? "var(--h0d-focus)" : "var(--h0d-ink)") + ';">' + (on ? "&#9656; " : "") + _psEsc(d.label) + '</span>'
+    +   '<span style="margin-left:auto;font-size:11px;font-style:italic;opacity:.7;color:var(--h0d-ink)">' + d.lead + '</span>'
     + '</div>'
-    + '<div style="font-size:11.5px;opacity:.85;line-height:1.5;margin-top:3px;color:#e9dcc0;">' + d.sub + '</div></button>';
+    + '<div style="font-size:11.5px;opacity:.85;line-height:1.5;margin-top:3px;color:var(--h0d-ink);">' + d.sub + '</div></button>';
 }
 function _psToggleBtn(id, on, name) {
   // bug-hunt (WCAG 4.1.2): the visible "On"/"Off" text is the whole accessible name unless we
@@ -153,12 +156,12 @@ function _psToggleBtn(id, on, name) {
   // Carry the purpose on the button itself, matching the divergence-tab toggle's aria-label.
   return '<button id="' + id + '" type="button" class="upg" aria-pressed="' + (on ? "true" : "false") + '"'
     + (name ? ' aria-label="' + _psEsc(name) + (on ? ": on" : ": off") + '"' : '')
-    + ' style="min-width:70px;' + (on ? "outline:2px solid #e8c84a;outline-offset:1px;font-weight:bold;" : "") + '">' + (on ? "On" : "Off") + '</button>';
+    + ' style="min-width:70px;' + (on ? "outline:2px solid var(--h0d-focus);outline-offset:1px;font-weight:bold;" : "") + '">' + (on ? "On" : "Off") + '</button>';
 }
 /* a labelled settings row: a name + hint on the left, a control on the right. */
 function _psRow(label, hint, controlHTML) {
   return '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin:9px 0">'
-    + '<span style="font-size:13px;color:#f2e8d5">' + label + '<span style="opacity:.62;font-size:11px"> &mdash; ' + hint + '</span></span>'
+    + '<span style="font-size:13px;color:var(--h0d-ink)">' + label + '<span style="opacity:.62;font-size:11px"> &mdash; ' + hint + '</span></span>'
     + '<span style="flex-shrink:0">' + controlHTML + '</span></div>';
 }
 function _psPanelHTML(ctx) {
@@ -172,15 +175,18 @@ function _psPanelHTML(ctx) {
     : '<div style="font-size:12px;opacity:.8;line-height:1.55;margin-bottom:10px">Set how the game leans for you &mdash; an emphasis, never a gate. Every layer of the war stays one click away whichever you choose.</div>';
 
   // --- Section 1: play-style ---
-  var sec1 = '<div style="' + (ctx === "menu" ? "max-width:600px;margin:0 auto;" : "") + '">'
-    + '<div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9f845c;margin:2px 0 6px">Play-style</div>'
+  // S39 (D536): the six shared H0 --h0d-* tokens are defined on this outer wrapper (the D232/D245
+  // per-surface idiom), values pinned to the src/99-h0-president-desk.js canon; every card + row
+  // below consumes var(--h0d-*), so this fourth pre-battle config surface can never diverge again.
+  var sec1 = '<div style="--h0d-panel:#111918;--h0d-panel2:#17231f;--h0d-ink:#f3efe4;--h0d-brass:#d8b458;--h0d-focus:#ffe27a;--h0d-line:rgba(216,180,88,.27);' + (ctx === "menu" ? "max-width:600px;margin:0 auto;" : "") + '">'
+    + '<div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--h0d-brass);margin:2px 0 6px">Play-style</div>'
     + '<div role="group" aria-label="Play-style emphasis">' + cards + '</div>';
 
   // --- Section 2: the Historian's layer (teaching / realism) ---
   var emOn = _psEmergentOnly();
   var tac = _psTacticalLine();
-  var sec2 = '<div style="margin-top:14px;border-top:1px solid #8c724e;padding-top:10px">' /* wcag-auditor: contrast fix from #5a4a2e to #8c724e for AA non-text 3:1 compliance (was 1.89:1 vs #26200f; now 3.57:1) */
-    + '<div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#9f845c;margin-bottom:2px">The Historian&rsquo;s layer</div>'
+  var sec2 = '<div style="margin-top:14px;border-top:1px solid var(--h0d-line);padding-top:10px">' /* S39 (D536): the divider joins the shared --h0d-line canon (decorative, 1.4.11-exempt per D245's adjudication of the identical S25 divider role; the uppercase section heading below carries the structure — supersedes the local wcag-auditor divider fix for canon parity) */
+    + '<div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--h0d-brass);margin-bottom:2px">The Historian&rsquo;s layer</div>'
     + '<div style="font-size:11px;opacity:.72;line-height:1.5;margin-bottom:6px">Teaching &amp; realism &mdash; how honestly, and how unforgivingly, the war is presented.</div>'
     // alt-history emergent-only (a real, owned teaching toggle)
     + _psRow("Alternate history: emergent only",
@@ -191,13 +197,13 @@ function _psPanelHTML(ctx) {
         "difficulty &amp; realism of every real-time battle &mdash; the AI never cheats",
         (ctx === "menu"
           ? '<button id="psBattlefield" type="button" class="upg" aria-label="Adjust the battlefield difficulty and realism" style="min-width:70px">Adjust&hellip;</button>'
-          : '<span style="font-size:12px;opacity:.85;color:#e9dcc0">' + (tac || "&mdash;") + '<span style="opacity:.6;font-size:11px"><br>set from the menu &middot; &#9881; Command &amp; Realism</span></span>'))
+          : '<span style="font-size:12px;opacity:.85;color:var(--h0d-ink)">' + (tac || "&mdash;") + '<span style="opacity:.6;font-size:11px"><br>set from the menu &middot; &#9881; Command &amp; Realism</span></span>'))
     // display / motion / sound (owned by the frozen base openSettings)
     + _psRow("Display, motion &amp; sound",
         "reduced motion, colour-blind aids, and audio",
         (ctx === "menu"
           ? '<button id="psDisplay" type="button" class="upg" aria-label="Open display, motion and sound settings" style="min-width:70px">Open&hellip;</button>'
-          : '<span style="font-size:11px;opacity:.7;color:#e9dcc0">main menu &middot; Settings</span>'));
+          : '<span style="font-size:11px;opacity:.7;color:var(--h0d-ink)">main menu &middot; Settings</span>'));
   // E3-i1 (D125): a guarded hand-off to the dedicated Accessibility hub (97-accessibility);
   // "" when the module is absent -> byte-identical row set.
   if (typeof a11yOpenMenu === "function") {
@@ -205,10 +211,10 @@ function _psPanelHTML(ctx) {
       "high contrast, dyslexia-friendly text, colour-blind safe cues &amp; screen-reader narration",
       (ctx === "menu"
         ? '<button id="psA11y" type="button" class="upg" aria-label="Open the Accessibility settings hub" style="min-width:70px">Open&hellip;</button>'
-        : '<span style="font-size:11px;opacity:.7;color:#e9dcc0">main menu &middot; &#9855; Accessibility</span>'));
+        : '<span style="font-size:11px;opacity:.7;color:var(--h0d-ink)">main menu &middot; &#9855; Accessibility</span>'));
   }
   if (ctx === "menu" && tac) {
-    sec2 += '<div style="font-size:11px;opacity:.7;margin-top:2px;color:#e9dcc0">Battlefield now: <b>' + tac + '</b>.</div>';
+    sec2 += '<div style="font-size:11px;opacity:.7;margin-top:2px;color:var(--h0d-ink)">Battlefield now: <b>' + tac + '</b>.</div>';
   }
   // E2-i5 (D124): a guarded historical teaching read-out of the current realism level
   // (pure read-out, owned by 96-realism-teaching; "" when unavailable -> no change).
