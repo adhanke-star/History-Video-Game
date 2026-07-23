@@ -1497,3 +1497,110 @@ D525 remains the product head. D528 creates no runtime/data enum, legal-now resu
 turn, control, condition, receipt, topology, route, movement, save, UI, or playable conquest. It is
 not a lane-level `SHIPPED` claim. LANE-019 releases to `CONTRACT` / `none`; under D514 the next
 dependency-ready prerequisite must be separately adjudicated and contracted.
+
+### 8.33 D529 inland-water and bounded-sea physical-corridor research contract
+
+D529 takes LANE-019 `DRIVE` from clean D528
+`4ab8440859613ca1ef88db0896fda95bdfdb9a04` solely for a docs/research adjudication. D530 must
+audit the exact ordered `CTS-W-01` through `CTS-W-15` mappings to `WE-01`, `WE-03`, `WE-04`,
+`WE-05`, `WE-06`, `WE-07`, `WE-08`, `WE-09`, `WE-10`, `WE-11`, `WE-12`, `WE-14`, `WE-17`,
+`WE-21`, and `WE-22`, followed by `CTS-S-01` / `WE-24` and `CTS-S-02` / `WE-26`. The sole claim
+home is the existing D499 `docs/design/strategic-water-transport-research-packet.md`. Genuinely
+accessed and used unique sources may append to its `SW-*` register, and exactly one normative audit section/table may append
+to that packet. Existing `SW-01` through `SW-32` rows remain byte-identical and ordered; new unique
+source IDs append contiguously from `SW-33` without a gap or insertion. The existing node, edge,
+chokepoint, and transfer-case registers plus every shipped JSON `historicalEligibility.dateText`
+value remain byte-identical. The packet's historic `READY_FOR_CONQUEST_LAW` verdict remains
+topology/category-input readiness only and cannot mean a physical window or legal-now service.
+No new packet, cross-mode table, registry, schema, parser, data field, or runtime owner is
+authorized.
+
+The water-mode subject is **physical corridor/landing existence**, not generic navigability. Each
+service row must retain its exact IDs, corridor, endpoints, direction, and mode, then separately
+record dated physical presence, end or continued-existence evidence, continuity evidence, and
+nonphysical context. Every claim record carries one canonical underlying-work `familyKey`, resolved
+`SW-*` ID, claim role, source type, precise locator, and verbatim or bounded precision. Different
+hosts of the same creator/work/report count once. Every source counted toward a claim—including
+snapshot, unresolved, and disputed evidence—must be accessed and manually read back at its locator;
+an unavailable citation cannot count.
+
+Direct physical evidence is limited to hydrographic or channel surveys, harbor/river engineering,
+landing/wharf property or inspection records, or an official account explicitly describing a
+channel, cutoff, canal, landing, approach, obstruction, clearance, construction, survival, removal,
+or destruction. A contemporary map or photograph proves only its dated snapshot. An actual passage,
+landing, transfer, approach, convoy, or fleet movement proves at most that the named physical route
+was traversed on that bounded occasion. Neither it nor military use, control, capture, port closure,
+blockade state, service, transport lift, operation, water level, weather, draft, or vessel class
+proves a standing physical interval or continuity. Silence about depth, season, obstruction, or
+hazard is never positive evidence.
+
+The four closed docs-only water dispositions use deterministic precedence: an explicit material
+conflict is `PHYSICAL_CORRIDOR_EXISTENCE_DISPUTED`; otherwise a source-proved continuous interval is
+`PHYSICAL_CORRIDOR_WINDOW_ESTABLISHED`; otherwise one or more dated physical observations are
+`PHYSICAL_CORRIDOR_PRESENCE_SNAPSHOTS_ONLY`; otherwise the row is
+`PHYSICAL_CORRIDOR_EXISTENCE_UNRESOLVED`. An established interval requires two independent
+non-tertiary families for the exact corridor and each asserted bound, at least one direct physical
+family supporting physical presence and continuity, and evidence that actually establishes
+continuous existence across the asserted interval. Two passages or snapshots do not establish the
+time between them. Exact dates remain exact; no missing day/month, hydrographic season, or campaign
+boundary may be invented. Zero established rows is valid. Every disposition remains research
+metadata rather than a JSON/runtime enum, current/legal availability, navigability, direction,
+control, condition, capacity, lift, adjacency, topology, route, or movement authority.
+
+Mode-specific negatives are binding. `CTS-W-02` / `WE-03` may not turn a February 1862 control
+change and qualitative later supply use into corridor continuity. `WE-05`'s temporary Island No. 10
+canal and battery-running gunboat path remain distinct and operation-bounded. `WE-07` through
+`WE-10` distinguish approach, fort/city control, battery passage, surrender, and through-navigation
+language from physical continuity. The low-water findings in `WE-12` and `WE-14` establish neither
+permanent absence nor a fabricated seasonal calendar. `WE-17`'s clearance/landing operation does not
+create standing James River service. `WE-21` and `WE-22` do not create a complete sounds graph.
+`WE-24` remains one-way and bounded to its January 1865 observation. `CTS-S-02` / `WE-26` remains the
+hard parser negative: “closed thereafter” describes the Cape Fear approach closing to blockade
+runners after Fort Fisher, not the physical disappearance of the approach or a generic Union
+transport closure. A material contradiction with an existing endpoint, edge, explicit non-link,
+direction, or qualitative date is a HALT rather than authority to rewrite it.
+
+All four `CTI-*` rows are excluded from D530. They retain exact full result
+`INTERCHANGE_WINDOW_UNADJUDICATED`; D528's rail-face finding does not authorize a water face or a
+handling connection. No water passage, landing, co-location, service/control date, or source may
+piggyback into an interchange window. Roads, non-links, and every omitted/context-only `WE-*` row
+also remain outside the audit.
+
+D530 may add one suite-excluded filesystem research guard,
+`tools/probe-conquest-water-window-research.mjs`, and update only the existing transport-plan
+current-boundary tooth. The dedicated guard must prove one normative audit; byte-identical original
+`SW-01`..`SW-32` rows and node/edge/chokepoint/transfer-case registers; contiguous unique appended
+source IDs, with every appended row resolved from at least one audit claim and its recorded manual
+readback; exact ordered 15+2 service/evidence/endpoint/direction coverage; required claim fields;
+source/family/locator resolution and independence; verbatim precision and role separation; the
+direct-source/continuity floor; every named negative; CTI exclusion; and absence of runtime/data
+enums or prohibited authority. Its distribution-safe Bind W removes enough qualifying families or
+claims from the first established row to deterministically violate the complete positive floor—by
+leaving fewer than two independent families or removing its required direct continuity support—or,
+if none exists, promotes the first ordered non-disputed row that lacks the floor without curing its
+evidence deficit. One named
+`DISPOSITION / POSITIVE FLOOR / CONTINUITY` tooth owns deterministic precedence and the complete
+positive floor; only that tooth may red. Packet and probe bytes restore exactly before a clean rerun.
+
+D529 changes only the eight routing documents, this law, the HANDOFF archive, and the existing
+transport-plan current-boundary tooth. D530 may additionally change only the existing water packet
+and add the dedicated research guard. Data, every `src/` and runtime probe, manifest/build/suite/save
+owner, rail/road packet, generated HTML, frozen base, and all unlisted files are barred. Normal build
+output must remain byte-identical. D529 routing proof requires transport-plan syntax and 12/12; doc
+coherence; conquest, Mayhem, and War Career plans; normal build and `--check`; byte-verbatim
+archiving of D527's exact 9,097-byte HANDOFF block at SHA-256
+`93afa994eb7f381855de7edb1f504350be197143fff18bc6cefe9ee1f6915017`; the exact eleven-file
+allowlist; protected no-diff and fresh-artifact audits; and `git diff --check`.
+
+D530 proof additionally requires syntax for both touched probes; the dedicated research guard;
+manual readback of every cited/used claim source and locator; isolated Bind W/byte restore; the
+transport-plan terminal tooth; byte-verbatim archiving of D528's exact 5,925-byte HANDOFF block at
+SHA-256 `c4c96e7ef7e468532040e34bdec1ab6432aec4cb5b9a958a2ca7ec0b7ce941a4`; and the same static,
+allowlist, protected, artifact, build, and diff gates. No browser or full 140-row battery is owed
+unless a protected/shared product surface moves.
+
+After D530 records the honest result, commit/push/fetch clean and return LANE-019 to
+`CONTRACT` / `none` with D525 still the product head. Unresolved or disputed rows remain
+quarantined. D530 makes no lane-level `SHIPPED` claim and may not extend data/runtime/current-turn/
+state/receipt/topology/movement/live-save behavior. Under D514, reload the ledger immediately after
+that clean research boundary.

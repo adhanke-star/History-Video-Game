@@ -3684,14 +3684,16 @@ next green commit and confer through this ledger instead of permitting simultane
   the two mandated plan probes pin LANE-005/LANE-007 strings + an approval-string
   count, so an APPENDED LANE-018 entry is tooth-safe by construction.
 
-### LANE-019 · conquest-design-law — **CONTRACT (D528 RAIL RESEARCH COMPLETE; UNOWNED)**
+### LANE-019 · conquest-design-law — **DRIVE (D529 WATER/SEA PHYSICAL-CORRIDOR RESEARCH CONTRACT)**
 
-- **Owning tool:** none. D528 releases the exact docs/research-only rail adjudication at its
-  terminal evidence boundary. No simultaneous edits.
-- **State:** CONTRACT/unowned. D528 closes the 27-row rail physical construction/existence audit
-  at zero established windows and preserves all unresolved/disputed evidence in quarantine.
-  D525 remains the product head. All 44 service dates and four interchange dates still require their
-  mode-bounded source result before any machine-readable Historical window; D528 creates none.
+- **Owning tool:** ChatGPT/Codex 5.6 Sol Ultra, solely for the exact docs/research D529 contract
+  below. No simultaneous edits.
+- **State:** DRIVE. D529 takes only the exact 15 inland-water plus two bounded-sea physical
+  corridor/landing existence-window adjudication in the existing D499 packet. D528's rail result
+  remains zero established with every unresolved/disputed row quarantined. D525 remains the product
+  head. The four interchanges remain unadjudicated and outside D530. All 44 service dates and four
+  interchange dates still require their mode-bounded source result before any machine-readable
+  Historical window; D529 presumes no positive result and authorizes no product change.
   D525 remains only a pure detached campaign-calendar query in the existing sole conquest-state
   owner and D525 adds no live or operational authority. D523's strict factory/view remains exact.
   D521 remains the shipped pure physical-service reader. No live
@@ -4306,6 +4308,91 @@ next green commit and confer through this ledger instead of permitting simultane
   dependency-ready prerequisite. Roads remain unavailable; no Historical rail legal-now window or
   full interchange exists; LANE-020 remains independently blocked. Do not infer data/runtime/current-
   turn/state/receipt/topology/route/movement/live-save authority from this docs-only finding.
+- **D529 DRIVE take and dependency verdict:** from clean pushed D528
+  `4ab8440859613ca1ef88db0896fda95bdfdb9a04`, ChatGPT/Codex owns only the exact D530 docs/research
+  contract below. A Mayhem-only playable slice is not dependency-ready: D521's evidence view has no
+  control, service condition, receipts, topology, order, opening values, or live/save lifecycle.
+  The next smallest independent prerequisite is the remaining mode-bounded Historical source audit,
+  not a new product owner.
+- **D529 exact water/sea scope and sole artifact:** D530 works only in existing D499
+  `docs/design/strategic-water-transport-research-packet.md`. Audit exact ordered
+  `CTS-W-01`..`CTS-W-15` mapped to `WE-01`, `WE-03`, `WE-04`, `WE-05`, `WE-06`, `WE-07`, `WE-08`,
+  `WE-09`, `WE-10`, `WE-11`, `WE-12`, `WE-14`, `WE-17`, `WE-21`, `WE-22`, followed by
+  `CTS-S-01` / `WE-24` and `CTS-S-02` / `WE-26`. Append exactly one normative audit section/table.
+  Existing `SW-01`..`SW-32` remain byte-identical and ordered; genuinely accessed/used new sources
+  append contiguously from `SW-33`. Existing node, edge, chokepoint, transfer-case, and JSON
+  qualitative `dateText` surfaces remain byte-identical. D499's old `READY_FOR_CONQUEST_LAW`
+  remains topology/category-input readiness only. Create no packet, table owner, registry, schema,
+  parser, data field, or runtime owner.
+- **D529 physical-corridor claim law:** physical corridor/landing existence is distinct from generic
+  navigability. Each row retains exact IDs, corridor, endpoints, direction, and mode, with separate
+  presence, end/continued-existence, continuity, and nonphysical-context claims. Every claim carries
+  one canonical underlying-work `familyKey`, resolved `SW-*`, role, type, precise locator, and
+  verbatim/bounded precision. Different hosts of one work count once. Every counted source/locator,
+  including snapshot, unresolved, and disputed evidence, must be accessed and manually read back.
+  Direct physical evidence is limited to hydrographic/channel surveys, harbor/river engineering,
+  landing/wharf property or inspection, or explicit official accounts of channel/cutoff/canal/
+  landing/approach/obstruction/clearance/construction/survival/removal/destruction. Maps,
+  photographs, passages, landings, transfers, approaches, convoys, and fleet movements prove at most
+  dated snapshots. Military use, control, capture, port closure, blockade, service, lift, operation,
+  water level, weather, draft, vessel class, and silence about hazards prove no standing interval or
+  continuity.
+- **D529 dispositions and positive floor:** deterministic precedence is explicit conflict →
+  `PHYSICAL_CORRIDOR_EXISTENCE_DISPUTED`; qualifying continuous proof →
+  `PHYSICAL_CORRIDOR_WINDOW_ESTABLISHED`; dated observation without the complete floor →
+  `PHYSICAL_CORRIDOR_PRESENCE_SNAPSHOTS_ONLY`; otherwise
+  `PHYSICAL_CORRIDOR_EXISTENCE_UNRESOLVED`. A positive needs two independent non-tertiary families
+  for the exact corridor and each asserted bound, one direct physical family supporting presence and
+  continuity, and actual evidence across the whole asserted interval. Two snapshots do not establish
+  continuity. Exact precision remains exact; no season or campaign boundary is invented. Zero
+  positives is valid. All labels are docs-only and supply no JSON/runtime enum, legal-now result,
+  navigability, control/condition, capacity/lift, adjacency, topology, route, or movement authority.
+- **D529 permanent negatives and CTI exclusion:** Island No. 10's two operation paths remain
+  distinct; Mississippi approach/control/passage/surrender/opening language is not physical
+  continuity; Arkansas/Red low water creates neither permanent absence nor a season calendar; City
+  Point clearance creates no standing service; Roanoke/New Bern creates no complete sounds graph;
+  `WE-24` remains one-way/January-1865 bounded; and `WE-26` “closed thereafter” remains a
+  blockade-runner closure rather than physical disappearance or generic transport closure. A
+  contradiction with any shipped endpoint, edge, non-link, direction, or qualitative date HALTs.
+  `CTI-01`..`CTI-04` are excluded and remain `INTERCHANGE_WINDOW_UNADJUDICATED`; D528's rail faces,
+  water passages, landings, co-location, or service/control dates establish no water face or handling.
+- **D529 probe and Bind W:** D530 may add suite-excluded
+  `tools/probe-conquest-water-window-research.mjs` and update only the current-boundary tooth in the
+  transport plan. The guard proves singular audit, preserved source/register surfaces, exact 15+2
+  mapping/order/endpoints/direction, claim/source/family/type/locator resolution, precision/role
+  separation, the direct/continuity floor, named negatives, CTI exclusion, and no product authority.
+  Every appended source row must resolve from at least one audit claim and its recorded manual
+  readback. Bind W removes enough qualifying families or claims from the first established row to
+  deterministically violate the complete floor—leaving fewer than two independent families or
+  removing required direct continuity support—or, at zero positives, promotes the first ordered
+  non-disputed deficient row without curing it. Only
+  `DISPOSITION / POSITIVE FLOOR / CONTINUITY` may red; packet/probe bytes restore exactly.
+- **D529/D530 allowlists and gates:** D529 changes only `AUTONOMOUS-RUN.md`, `COORDINATION.md`,
+  `DECISIONS.md`, `HANDOFF.md`, `RUN-LOG.md`, `START-HERE.md`, `V1-CHECKLIST.md`, `WAKE-UP.md`,
+  Package A §8, `legacy/HANDOFF-ARCHIVE.md`, and the transport-plan current-boundary tooth. D530 may
+  additionally change only the existing D499 packet and add the dedicated guard. Data, every `src/`
+  and runtime probe, manifest/build/suite/save owner, rail/road packet, generated HTML, frozen base,
+  and all unlisted files are barred. D529 proof is transport-plan syntax/12-of-12, doc coherence,
+  conquest/Mayhem/War-Career plans, normal build/check, exact 9,097-byte D527 archive at SHA-256
+  `93afa994eb7f381855de7edb1f504350be197143fff18bc6cefe9ee1f6915017`, exact eleven-file
+  allowlist, protected/artifact/diff audits. D530 adds both-probe syntax, dedicated proof, all source
+  readbacks, Bind W/restore, terminal proof, and exact 5,925-byte D528 archive at SHA-256
+  `c4c96e7ef7e468532040e34bdec1ab6432aec4cb5b9a958a2ca7ec0b7ce941a4`, then repeats static gates.
+  No browser/full battery is owed unless a protected/shared product surface moves.
+- **D529 routing proof:** transport-plan syntax and 12/12; doc coherence 5/5; conquest plan 8/8;
+  Mayhem plan 13/13; War Career plan 24/24; normal build/check `GATE OK` at data 65, territories 36,
+  transport 27/15/2/4/18, manifest 112 with 116 last, and suite 140; exact 9,097-byte archive; exact
+  eleven-file allowlist; protected no-diff; fresh artifacts; and `git diff --check`. Generated
+  product, frozen base, transport JSON, and D499 packet hashes remain exact. No browser/full-suite
+  gate is owed. Independent Sol-high audit found and closed deterministic-bind,
+  appended-source-resolution, and under-toothed-contract gaps; fresh re-audit reports PASS with no
+  remaining contradiction or overclaim.
+- **D529 resume pointer:** after this routing contract is committed, pushed, fetched, and clean,
+  execute only D530's 17-row research pass. Record the honest result and quarantines, prove all
+  source/probe/bind/restore/gate requirements, commit/push/fetch clean, release LANE-019 to
+  `CONTRACT` / `none` with D525 still the product head, and immediately reload D514. D530 may not
+  change data/runtime/current-turn/state/receipt/topology/movement/live-save behavior or make a
+  lane-level `SHIPPED` claim.
 - **Last-touched commits:** D503 standalone design-lock `a3403da`; D503 final-law
   commit `44ffac5`; Slice-1 DRIVE take `7a0ca42`; allowlist/gate HALT ledger
   `cb46f55`; D504 Slice-1 implementation `74237b9`; D505 docs-only contract ships in
@@ -4322,8 +4409,8 @@ next green commit and confer through this ledger instead of permitting simultane
   implementation and CONTRACT/unowned release are `b59532c`; D524's pure-calendar DRIVE contract
   is `7adcc28`; D525 implementation and CONTRACT/unowned release are `9b94e3f`; D526's bounded
   Historical-window finding is `24c7a2b`; D527's rail-window research DRIVE contract is
-  `5330ab4`; D528's rail-window research result and CONTRACT/unowned release ship in the commit
-  containing this entry.
+  `5330ab4`; D528's rail-window research result and CONTRACT/unowned release are `4ab8440`;
+  D529's water/sea research DRIVE contract ships in the commit containing this entry.
 - **History:** D502 created the design-only contract. Aaron chose Package A. D503
   completed the final law. D504 shipped the read-only territory board. D505 audits
   every rail/water evidence row, contracts the read-only substrate, and D506 ships
@@ -4351,7 +4438,8 @@ next green commit and confer through this ledger instead of permitting simultane
   the exact 27-row rail construction/existence research contract plus rail-face CTI evidence;
   operational state and integration remain closed. D528 records the zero-positive 19/7/1 result,
   retains every CTI as unadjudicated, and releases the lane without product behavior or a lane-level
-  SHIPPED claim.
+  SHIPPED claim. D529 takes DRIVE only for the exact 15+2 water/sea physical-corridor research
+  contract in the existing D499 packet; it excludes every CTI and all product behavior.
 
 ### LANE-020 · desk-to-battle-pacing — **CONTRACT (D519 SLICE-5 DEPENDENCY; UNOWNED)**
 

@@ -1,12 +1,12 @@
 # START HERE — "The Civil War" (master index)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D528 next-lane=LANE-019 state=CONTRACT owner=none -->
-> **Live status (D528, 2026-07-22):** LANE-019 is `CONTRACT` / `none` after the exact docs/research-only 27-row rail physical-window audit closed at zero established, 19 snapshot-only, seven unresolved, and one disputed; all four rail faces remain unadjudicated interchanges.
+<!-- LIVE-HEAD decision=D529 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D529, 2026-07-22):** LANE-019 is `DRIVE` / `ChatGPT/Codex` solely for a docs/research-only physical corridor/landing existence-window adjudication of the exact 15 inland-water and two bounded-sea services in the existing D499 packet.
 >
-> **Boundary:** D525 remains the product head. No transport data, runtime, state, save, UI, topology, route, movement, or generated product changed, and no Historical rail service is legal-now ready.
+> **Boundary:** D525 remains the product head and D528's zero-positive rail finding remains exact. All four interchanges stay unadjudicated; no data, runtime, state, save, UI, topology, route, movement, or generated product is authorized.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D528 delivery record own the boundary. Under D514, reload the ledger and separately contract the next dependency-ready prerequisite; roads remain unavailable and LANE-020 remains independently blocked.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D529 contract own the boundary. After D529 is clean and pushed, D530 executes only the contracted 17-row research pass; roads remain unavailable and LANE-020 remains independently blocked.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **D514 completion rule:** the project now runs a work-conserving completion loop. `HANDOFF.md` owns the algorithm and terminal condition; `V1-CHECKLIST.md` owns every live item; ordinary milestone/phase/browser boundaries do not stop a healthy run.

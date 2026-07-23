@@ -4,6 +4,83 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D529 — CONTRACT_WATER_PHYSICAL_CORRIDOR_WINDOW_RESEARCH: LANE-019 TAKES DOCS/RESEARCH DRIVE FOR THE EXACT 15+2 WATER/SEA ADJUDICATION — [CHATGPT/CODEX 5.6 SOL ULTRA, ARCHITECTURE/RESEARCH CONTRACT] (2026-07-22)
+
+**VERDICT: `CONTRACT_WATER_PHYSICAL_CORRIDOR_WINDOW_RESEARCH`.** From clean, pushed D528
+`4ab8440859613ca1ef88db0896fda95bdfdb9a04`, the live D514 ledger, Package A, D499 packet, exact
+15 inland-water plus two bounded-sea service mappings, D528 rail result, and existing conquest
+owners were reconciled. A Mayhem-only playable slice is not dependency-ready: D521 exposes only a
+pure evidence view, while control, service condition, player receipts, topology, orders, live/save
+integration, and initial values remain uncontracted. The smallest independent prerequisite is the
+remaining mode-bounded Historical evidence audit. LANE-019 therefore takes ChatGPT/Codex DRIVE for
+docs/research only; D525 remains the product head.
+
+**Sole artifact and exact scope:** D530 works only in the existing D499
+`docs/design/strategic-water-transport-research-packet.md`. It covers exact ordered
+`CTS-W-01`..`CTS-W-15` mappings to `WE-01`, `03`, `04`, `05`, `06`, `07`, `08`, `09`, `10`, `11`,
+`12`, `14`, `17`, `21`, and `22`, followed by `CTS-S-01` / `WE-24` and `CTS-S-02` / `WE-26`.
+Existing `SW-01`..`SW-32` rows stay byte-identical and ordered; genuinely accessed and used unique sources may
+append contiguously from `SW-33`. Exactly one normative audit section/table may append. Existing
+node, edge, chokepoint, and transfer-case registers and all JSON qualitative `dateText` values
+remain byte-identical. No packet, schema, registry, parser, or runtime owner is added.
+
+**Water-mode evidence law:** the target is physical corridor/landing existence, not generic
+navigability. Each row separates physical presence, end/continued existence, continuity, and
+nonphysical context. Every claim carries canonical underlying-work family, resolved `SW-*`, role,
+type, precise locator, and bounded precision; every counted source/locator is manually accessed and
+read back. Direct evidence is limited to hydrographic/channel surveys, harbor/river engineering,
+landing/wharf property or inspection, or explicit official physical accounts. A dated passage,
+landing, convoy, transfer, map, or operation is at most a snapshot. Control, capture, blockade,
+service, lift, weather, water level, draft, vessel class, or silence about hazards cannot supply a
+standing interval or continuity.
+
+**Closed docs-only outcomes:** precedence is material conflict →
+`PHYSICAL_CORRIDOR_EXISTENCE_DISPUTED`; complete continuous proof →
+`PHYSICAL_CORRIDOR_WINDOW_ESTABLISHED`; dated observation without the complete floor →
+`PHYSICAL_CORRIDOR_PRESENCE_SNAPSHOTS_ONLY`; otherwise
+`PHYSICAL_CORRIDOR_EXISTENCE_UNRESOLVED`. A positive needs two independent non-tertiary families
+for the exact corridor and each asserted bound, at least one direct physical family supporting
+presence and continuity, and actual continuity evidence. Two snapshots do not prove the interval.
+Zero positives is valid. These labels never become runtime/data enums or legal-now, navigability,
+condition, capacity, topology, route, or movement authority.
+
+**Permanent negatives and interchanges:** Island No. 10's two paths remain distinct; Mississippi
+control/opening language is not physical continuity; Red/Arkansas low water creates no generic
+season; City Point clearance creates no standing service; Roanoke/New Bern creates no complete
+sounds graph; `WE-24` stays one-way/January-1865 bounded; and `WE-26` “closed thereafter” remains a
+blockade-runner closure, not physical disappearance or generic transport closure. All four CTIs are
+excluded and remain `INTERCHANGE_WINDOW_UNADJUDICATED`; D528's rail-face findings supply no water
+face or handling connection.
+
+**Probe, bind, and boundaries:** D530 may add only suite-excluded
+`tools/probe-conquest-water-window-research.mjs` plus the transport-plan terminal tooth. The guard
+owns the singular audit, preservation baselines, exact 15+2 mapping, claim/source/family/locator
+resolution, direct/continuity floor, negatives, CTI exclusion, and prohibited-authority checks.
+Every appended source row must resolve from at least one audit claim and its recorded manual
+readback. Bind W removes enough qualifying families or claims from the first positive to
+deterministically leave fewer than two independent families or remove required direct continuity
+support; at zero positives it promotes the first ordered non-disputed deficient row. Only
+`DISPOSITION / POSITIVE FLOOR / CONTINUITY` may red before exact packet/probe restoration. D529 uses the exact eleven-file routing/law/archive/probe allowlist;
+D530 may additionally change only the existing water packet and new guard. Data, `src/`, runtime,
+manifest/build/suite/save, rail/road packets, frozen base, and generated product remain barred.
+
+**Gate and terminal:** D529 requires doc coherence; transport plan syntax and 12/12; conquest,
+Mayhem, and War Career plans; normal build/check; exact archive of D527 at 9,097 bytes / SHA-256
+`93afa994eb7f381855de7edb1f504350be197143fff18bc6cefe9ee1f6915017`; exact allowlist,
+protected no-diff, artifact, and diff checks. D530 adds the dedicated guard, manual source readback,
+isolated Bind W/restore, and exact archive of D528 at 5,925 bytes / SHA-256
+`c4c96e7ef7e468532040e34bdec1ab6432aec4cb5b9a958a2ca7ec0b7ce941a4`, then repeats the static
+gates. No browser/full battery is owed without a protected product change. D530 records the honest
+result and releases LANE-019 to CONTRACT/unowned with D525 still the product head, then D514
+continues.
+
+D529 routing closes green on doc coherence 5/5, transport plan 12/12, conquest plan 8/8, Mayhem
+plan 13/13, War Career plan 24/24, normal build/check `GATE OK`, exact D527 archive equality, exact
+eleven-file allowlist, protected no-diff, fresh artifacts, and `git diff --check`. No product or
+generated surface moved; no browser or full-suite gate is owed. Independent Sol-high audit found
+and closed the deterministic-bind, appended-source-resolution, and under-toothed-contract gaps;
+fresh re-audit reports PASS.
+
 ## D528 — RAIL_PHYSICAL_WINDOW_AUDIT_ZERO_POSITIVE: EXACT 27-ROW RESEARCH CLOSES WITH EVERY HISTORICAL WINDOW QUARANTINED — [CHATGPT/CODEX 5.6 SOL ULTRA, SOURCE ADJUDICATION/PROOF] (2026-07-22)
 
 **VERDICT: `RAIL_PHYSICAL_WINDOW_AUDIT_ZERO_POSITIVE`.** The exact ordered `CTS-R-01`

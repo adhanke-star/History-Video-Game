@@ -1,17 +1,42 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D528 next-lane=LANE-019 state=CONTRACT owner=none -->
-> **Live status (D528, 2026-07-22):** LANE-019 is `CONTRACT` / `none` after the exact docs/research-only 27-row rail physical-window audit closed at zero established, 19 snapshot-only, seven unresolved, and one disputed; all four rail faces remain unadjudicated interchanges.
+<!-- LIVE-HEAD decision=D529 next-lane=LANE-019 state=DRIVE owner=ChatGPT/Codex -->
+> **Live status (D529, 2026-07-22):** LANE-019 is `DRIVE` / `ChatGPT/Codex` solely for a docs/research-only physical corridor/landing existence-window adjudication of the exact 15 inland-water and two bounded-sea services in the existing D499 packet.
 >
-> **Boundary:** D525 remains the product head. No transport data, runtime, state, save, UI, topology, route, movement, or generated product changed, and no Historical rail service is legal-now ready.
+> **Boundary:** D525 remains the product head and D528's zero-positive rail finding remains exact. All four interchanges stay unadjudicated; no data, runtime, state, save, UI, topology, route, movement, or generated product is authorized.
 >
-> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D528 delivery record own the boundary. Under D514, reload the ledger and separately contract the next dependency-ready prerequisite; roads remain unavailable and LANE-020 remains independently blocked.
+> **Authority:** `HANDOFF.md`'s first ⚡ block and LANE-019's D529 contract own the boundary. After D529 is clean and pushed, D530 executes only the contracted 17-row research pass; roads remain unavailable and LANE-020 remains independently blocked.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-22 — D529: WATER/SEA PHYSICAL-CORRIDOR RESEARCH CONTRACT
+
+The D514 ledger and Package A were reloaded after clean D528. The next dependency-ready prerequisite
+is the exact 15 inland-water plus two bounded-sea source adjudication in the existing D499 packet;
+a Mayhem-only playable slice is premature because it would require uncontracted control, condition,
+receipt, topology, order, and live/save owners. LANE-019 takes docs/research DRIVE only.
+
+D530 must preserve the existing `SW-01`..`SW-32`, node, edge, chokepoint, transfer-case, transport
+JSON, and qualitative-date surfaces while separating physical corridor/landing existence from
+navigability, operation, control, blockade state, lift, seasonality, and service. The closed
+disposition floor permits an honest zero-positive result. All CTIs remain unadjudicated and are
+excluded. D529 changes only the eleven routing/law/archive/current-boundary-probe paths; D525 remains
+the product head and no browser/full-suite work is owed.
+
+Routing proof is green: doc coherence 5/5; transport plan 12/12; conquest plan 8/8; Mayhem plan
+13/13; War Career plan 24/24; normal build/check `GATE OK`; exact 9,097-byte D527 archive and exact
+eleven-file allowlist; protected no-diff; fresh artifacts; and `git diff --check`. Generated product,
+base, transport JSON, and D499 packet hashes remain exact.
+
+Independent Sol-high audit found three contract gaps: a one-family removal could leave Bind W green,
+unused appended sources could pass, and the current tooth did not protect enough canonical law. The
+contract and tooth now deterministically break the positive floor, require appended-source claim/
+readback resolution, and pin the exact mapping plus critical mode/source/continuity/WE-26 law. Fresh
+re-audit reports PASS.
 
 ## 2026-07-22 — D528: RAIL PHYSICAL-WINDOW AUDIT CLOSES ZERO-POSITIVE
 
