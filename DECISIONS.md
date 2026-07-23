@@ -4,6 +4,41 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D535 — CONTRACT_S39_TOKEN_UNIFICATION: LANE-021 TAKES CLAUDE DRIVE FOR THE FOURTH PRE-BATTLE CONFIG SURFACE TO JOIN THE SHARED H0 PALETTE — [CLAUDE CODE, ADJUDICATION+CONTRACT; Fable-5-derived plan, Opus 4.8 driver mid-session] (2026-07-23)
+
+**VERDICT: `CONTRACT_S39_TOKEN_UNIFICATION`.** From clean pushed D534
+`be27a94f5a4f315bd78f0da740552f9d4c99a0e0`, the D514 ledger reload finds the same blockers as
+D533 (ARC 7: zero source-proved physical windows; ARC 9 Slice 5: no independent sequential-turn
+owner; LANE-002 5b: no selected candidate set; E46: E53-class mechanics), so the formerly parked
+queue continues; D534 recommended S39 and LANE-021 takes Claude Code DRIVE for it.
+
+**Adjudication:** REVIEW-QUEUE S39 (PROPOSED by the D245 review lens, recommendation approve)
+closes APPROVED as the S25-class follow-up under D514 — Aaron's D237 S25 approval ratified
+unifying the pre-battle config surfaces on the shared H0 `--h0d-*` palette and 95-playstyle is
+the identical invented-accent idiom on a fourth such surface. The T6 in-battle drawer and T2
+campaign-briefing accents stay out of scope (unchanged from S25). One contracted contrast call:
+the Historian's-layer divider moves to `var(--h0d-line)` (composites ~1.8:1) — decorative-only,
+1.4.11-exempt per the shipped D245 adjudication of the identical divider role; the local
+wcag-auditor 3.57:1 fix is deliberately superseded for canon parity. Every replaced TEXT pair
+computes ≥ 6.23:1 (floor 4.5:1); every required non-text pair 12.66:1 (floor 3:1).
+
+**Contract decision:** sole runtime edit `src/95-playstyle.js` (colors/comments only): six
+wrapper tokens pinned to the 99-h0 canon (panel #111918 · panel2 #17231f · ink #f3efe4 · brass
+#d8b458 · focus #ffe27a · line rgba(216,180,88,.27)), the LANE-021 mapping applied, and all 11
+retired hexes absent from the whole file, comments included (the D484 comment-token scan class).
+DOM order, ids, aria, callbacks, saves, mechanics, manifest, data, and `build/base.html` barred;
+T2 stays frozen per-file at `57e82cd4b9873d8b56ecba51f05a4111`. Probe home adjudicated: extend
+`tools/probe-playstyle.mjs` (verified unpinned by every plan probe) with the node-side S39 canon
+tooth + one in-page consumption step; probe-custom-battle-builder's S25 tooth keeps its
+three-surface scope. Re-pins with chained D536 comments only at the five contracted sites
+(Mayhem plan game ×1; War Career plan game ×2 + srcTree ×2). Bind S39-B1: mutate one wrapper
+token value, run probe-playstyle without rebuilding — only the canon tooth may red; md5-proven
+byte-identical restore, then clean green. Gates per the LANE-021 contract (build GATE OK,
+artifact readback, serialized probe-playstyle + probe-presets 27/27 byte-identity guard +
+probe-desk, four plan probes, doc coherence 5/5, `git diff --check`); no 140-row battery for a
+presentation-only slice under D160. At D536 the lane releases to `CONTRACT` / `none` and the
+D514 ledger reloads (E61 recommended next).
+
 ## D534 — E51_SHIPPED_COPY_AMEND: THE RAIDSUPPLY HINT IS HONEST IN BOTH ENGINES; LANE-021 RELEASES — [CLAUDE CODE / FABLE 5, IMPLEMENTATION+GATES] (2026-07-23)
 
 **VERDICT: `E51_SHIPPED_COPY_AMEND`.** From clean pushed D533

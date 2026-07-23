@@ -1,17 +1,30 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D534 next-lane=LANE-021 state=CONTRACT owner=none -->
-> **Live status (D534, 2026-07-23):** E51 shipped — the raidSupply hint is honest (“opens the fight hungry and stays short of ammunition all day”); LANE-021 is `CONTRACT` / `none`.
+<!-- LIVE-HEAD decision=D535 next-lane=LANE-021 state=DRIVE owner=Claude -->
+> **Live status (D535, 2026-07-23):** LANE-021 takes a committed Claude Code DRIVE contract for S39 — the 95-playstyle picker (the fourth pre-battle config surface) joins the shared H0 `--h0d-*` token palette; presentation-only, never a sim change.
 >
-> **Boundary:** D525 remains the ARC 7 product head. D534 moved exactly one hint string in `src/85-battle-bridge.js` plus the mechanical game/srcTree re-pins (game `c6f9699a`, srcTree `7f2a5e6f`); no mechanics, data, or D74 surface moved.
+> **Boundary:** D525 remains the ARC 7 product head. Only `src/95-playstyle.js` colors/comments, the probe-playstyle S39 canon teeth, the five mechanical game/srcTree re-pins, and closeout docs may move in D536; DOM order, ids, callbacks, saves, mechanics, and every D74 surface are barred.
 >
-> **Authority:** D514 continues on the formerly parked queue (S39 recommended next). ARC 7 Historical movement, ARC 9 Slice 5, and E46 remain blocked; the D533 contract and the Bind E1 red/restore are the shipped evidence.
+> **Authority:** D514 continues on the formerly parked queue. ARC 7 Historical movement, ARC 9 Slice 5, and E46 remain blocked; the D245 S25 worked example and its probe-presets byte-identity guard are the governing precedent.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-23 — D535 LANE-021 takes DRIVE for S39: the playstyle picker joins the H0 palette (contract)
+
+The D514 reload after D534 finds the same larger-branch blockers, so the formerly parked queue
+continues with its recommended item: S39, the D245-filed fourth pre-battle config surface still
+on the invented-accent idiom. Adjudicated APPROVED as the S25-class follow-up (Aaron's D237 S25
+approval + D514); contract committed in LANE-021: six wrapper tokens pinned to the 99-h0 canon,
+the full color mapping, 11 retired hexes banned file-wide (comments included), probe home =
+probe-playstyle (node-side canon tooth + in-page step), five chained re-pins, Bind S39-B1
+red/restore, and the D160 focused gate set with probe-presets 27/27 as the sim byte-identity
+guard. Computed AA record: worst replaced text pair 6.23:1, required non-text 12.66:1; the
+divider's move to `--h0d-line` (~1.8:1, decorative, 1.4.11-exempt per D245) is contracted as a
+deliberate supersession of the local wcag-auditor divider fix. D536 ships the edit.
 
 ## 2026-07-23 — D534 E51 ships: the raidSupply hint is honest (copy-amend)
 

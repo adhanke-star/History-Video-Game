@@ -4929,10 +4929,83 @@ D372/D373 reconciliation lesson — every handoff commit sweeps the canonical he
 
 ↳ **[Fable, 2026-07-12] — D381 CHECKPOINT + S-03 AMENDMENT PROPOSAL.** The stretch-ladder release checkpoint is discharged: 124/124 across evidenced segments, every artifact read, sweep 19×8 `failures:[]`, one slow-Mac tactical-visuals timeout root-caused and standalone-green, the eighth optional 404 (`ford_albedo`) confirmed as the frozen engine's documented absent-asset class. Proposed floor amendment (9): **a provider-transfer commit that rewrites a lane MUST re-run every plan probe that greps that lane before pushing** — the `2f3da4a` transfer landed two LANE reds and D380's pin bump dropped a required pin-history fragment, all caught only at D381's final gates; the reshaped teeth now bind role rosters and durable history, never the current lock holder. Also: Aaron's 2026-07-12 popup Q&A ratified a large forward slate (D382) — Fort Donelson spec-first remains next, then Women-in-War arc, Elkhorn, an Overland/attrition extension, the war-career loop, surrender/no-quarter (consequence-only, never scored), four system-integrated teaching threads, the procedural sandbox + Chronicle, a committed naval engine, and a post-ladder media/audio session. Sol's parked queue (E71/C72/GEA-01/S44) runs after the ladder per Aaron.
 
-### LANE-021 · parked-review-closeout — **CONTRACT (D534 E51 SHIPPED; UNOWNED)**
+### LANE-021 · parked-review-closeout — **DRIVE (D535 S39 token-unification contract; Claude Code)**
 
-- **Owning tool:** none. D534 releases the D533 DRIVE lock; no simultaneous edits.
-- **State:** CONTRACT/unowned. D534 shipped the E51 copy-amend exactly as contracted: the one
+- **Owning tool:** Claude Code, DRIVE for the D535 S39 token-unification slice only; model resolution — Opus 4.8 `[1m]` is the current TOP-LOOP driver (Aaron switched mid-session), executing the Fable-5-derived S39 plan/contract; no simultaneous edits.
+- **State:** DRIVE — this entry IS the acceptance contract (committed at the clean pushed D534 boundary
+  `be27a94f5a4f315bd78f0da740552f9d4c99a0e0`). The lane hosts successive small closeout slices from the V1
+  “formerly parked” queue, one committed contract at a time; after D536 ships, each later slice (the E61
+  collapse-terminal fork recommended, then E57, R-7/E33, the D460 option) requires its own contract section
+  here before implementation.
+- **D535 ledger reconciliation:** ARC 7 Historical movement stays blocked (D526/D528/D530/D532: zero
+  source-proved rail/water/sea physical windows, four unadjudicated CTIs, zero road services), ARC 9 Slice 5
+  stays blocked (no lawful independent sequential-turn entrypoint), LANE-002 5b has no selected
+  citation-grade candidate set, and E46 stays parked behind the E53-class attacker mechanics. The
+  dependency-ready queue is the formerly parked list; D534 recommended S39 next and it is contracted here.
+- **D535 adjudication — S39 closes APPROVED as the S25-class follow-up:** REVIEW-QUEUE S39 (filed by the
+  D245 review lens as PROPOSED, recommendation approve) is adjudicated APPROVED under D514: Aaron's D237
+  S25 approval ratified unifying the pre-battle config surfaces on the shared H0 palette, and the
+  95-playstyle picker carries the identical invented-accent idiom on a fourth such surface (the D245 lens
+  filing). Out of scope by design, unchanged from S25: the in-battle T6 `_fldDrawerHTML` drawer and the T2
+  campaign-briefing accents.
+- **D536 exact contract — scope and mapping:** the sole runtime edit is `src/95-playstyle.js` presentation
+  colors and comments. The panel's outer wrapper div (the sec1 opener that encloses both sections in both
+  ctx modes) gains six per-surface token definitions pinned to the `src/99-h0-president-desk.js` canon (the
+  D232 six-shell / D245 per-surface idiom): `--h0d-panel:#111918` · `--h0d-panel2:#17231f` ·
+  `--h0d-ink:#f3efe4` · `--h0d-brass:#d8b458` · `--h0d-focus:#ffe27a` · `--h0d-line:rgba(216,180,88,.27)`.
+  Mapping: style-card selected outline + toggle-on outline → `var(--h0d-focus)`; selected card background →
+  `var(--h0d-panel2)`; unselected card background → `var(--h0d-panel)`; selected glyph/label →
+  `var(--h0d-focus)`; unselected glyph → `var(--h0d-brass)`; unselected label, card sub/lead copy, the desk
+  battlefield read-out, the display/accessibility hints, and the “Battlefield now” line → `var(--h0d-ink)`
+  (existing opacities unchanged); both uppercase section headers → `var(--h0d-brass)`; the row labels →
+  `var(--h0d-ink)`; the Historian's-layer divider → `1px solid var(--h0d-line)`. The two palette comments
+  (the header palette note and the wcag-auditor divider note) are rewritten to name the token canon and NO
+  hex — every retired hex must be absent from the whole file, comments included (the D484 comment-token
+  scan class). Retired hexes (11): #e8c84a #241c10 #1a150d #f0d98a #c9a85f #e9dcc0 #9f845c #f2e8d5 #8c724e
+  #5a4a2e #26200f. Barred: DOM order, ids, aria wiring, callbacks, save fields, mechanics, manifest, data
+  bytes, `build/base.html`; `src/tactical/T2-campaign-link.js` stays frozen per-file at
+  `57e82cd4b9873d8b56ecba51f05a4111` (tools/probe-war-career.mjs); the generated game moves only through
+  `node tools/build.mjs`. D74 binding: presentation-only, byte-identical sim by construction.
+- **D536 AA record (computed, worst pairs; ambient sheet #26200f, desk-shell lightest stop #13201d):**
+  every replaced TEXT pair ≥ 6.23:1 (floor 4.5:1 — worst: the .62-opacity ink hint span on the sheet;
+  next-worst 7.55:1 the .7-opacity ink lead on panel2; brass headers 8.17:1; ink labels 14.10:1) and every
+  REQUIRED non-text pair 12.66:1 (floor 3:1 — the focus outlines vs panel2/sheet). Contracted divider
+  adjudication: `--h0d-line` composites 1.79-1.81:1 as the Historian's-layer divider — decorative-only and
+  1.4.11-exempt per the shipped D245 adjudication of the identical divider role on the S25 surfaces; the
+  local wcag-auditor 3.57:1 divider fix is deliberately superseded for canon parity (the uppercase section
+  heading carries the structure). This supersession is contracted here so it is a decision, never a silent
+  regression. Any OTHER pair that cannot reach AA without diverging from canon → HALT and surface.
+- **D536 probe home (adjudicated):** extend the surface's own probe `tools/probe-playstyle.mjs` — verified
+  unpinned: no plan probe references it and nothing pins its step count or md5 (only the vet-no-regression
+  battery row names it). (a) A node-side S39 canon tooth before browser launch, the D245 idiom: extract the
+  `--h0d-*` canon from `src/99-h0-president-desk.js`; assert every `--h0d-*` token defined in
+  `src/95-playstyle.js` matches the canon exactly, at least one is defined, and every retired hex is absent
+  from the whole file. (b) One in-page step( asserting the rendered desk panel's wrapper defines the six
+  tokens, the card markup consumes `var(--h0d-...)`, the retired hexes are absent from the rendered panel
+  HTML, and a live getComputedStyle resolve of the selected card's outline-color to `rgb(255, 226, 122)`.
+  The S25 tooth in probe-custom-battle-builder keeps its three-surface scope (cross-probe coupling rejected
+  — a playstyle drift must red the playstyle probe, not the builder's).
+- **D536 re-pins (chained D536 comments only):** `tools/probe-open-history-mayhem-plan.mjs` game
+  `c6f9699a86268d3677049e1982cc2a61`→new ×1; `tools/probe-war-career-loop-plan.mjs` game (both sites) the
+  same transition plus srcTree `7f2a5e6f1f8995970d82a10fbd587d50`→new (both sites). No other pin, count, or
+  tooth may move.
+- **Bind S39-B1:** after re-pinning, mutate ONE token value on the 95 wrapper (brass `#d8b458`→`#d8b459`)
+  and run probe-playstyle WITHOUT rebuilding: the node-side canon tooth must red exactly, naming the token,
+  before any browser step; nothing else may red. Restore the source byte-identical (md5-proven against the
+  pre-bind hash) and rerun clean green.
+- **D536 gates:** `node --check` on `src/95-playstyle.js`, `tools/probe-playstyle.mjs`, and the two edited
+  plan probes; `node tools/build.mjs` GATE OK; artifact readback (the 95 module region of
+  `civil_war_generals.html` defines the six tokens and contains zero retired hexes); serialized focused
+  browser probes probe-playstyle (the S39 teeth live) + probe-presets 27/27 (the standing sim byte-identity
+  guard — current owner verified: the NEUTRAL==TODAY seed-for-seed step and the layers-off byte-identity
+  guard) + probe-desk (adjacent shell); plan probes Mayhem 13/13, War Career 24/24, transport 12/12,
+  conquest 8/8; doc coherence 5/5; `git diff --check`. No full 140-row battery is owed for a
+  presentation-only slice under D160. The suite-excluded D528/D530/D532 research guards are point-in-time
+  proofs pinned to their own heads and are neither rerun nor edited.
+- **D536 docs and release:** REVIEW-QUEUE S39 flips to FIXED-in-D536, the V1 queue line checks,
+  DECISIONS/RUN-LOG/HANDOFF/mirrors sync, D534's HANDOFF head archives byte-verbatim (D535 archived
+  D533's), and LANE-021 releases to `CONTRACT` / `none`.
+- **D534 ship record (retained history):** D534 shipped the E51 copy-amend exactly as contracted: the one
   `src/85-battle-bridge.js:33` hint string, game `269ecc62`→`c6f9699a86268d3677049e1982cc2a61`,
   srcTree `9f4ffbff`→`7f2a5e6f1f8995970d82a10fbd587d50`, five chained re-pins, Bind E1 exact
   red/restore, and the full contracted gate set green with zero pageerrors (conditioning 9,
@@ -4986,6 +5059,6 @@ D372/D373 reconciliation lesson — every handoff commit sweeps the canonical he
   current-boundary tooth: the D531 contract checks move from the live HANDOFF to the byte-verbatim
   `legacy/HANDOFF-ARCHIVE.md` block (the tooth's own archived D529/D530 pattern), bind-tested red/restore
   in the same commit. No other tooth moves at D533.
-- **Resume pointer:** if a session ends before D534 ships, a successor re-takes DRIVE here and executes the
-  D534 contract exactly; after D534, the lane is `CONTRACT` / `none` and the next parked slice needs its own
-  contract section.
+- **Resume pointer:** if a session ends before D536 ships, a successor re-takes DRIVE here and executes the
+  D536 contract exactly (the D535 bullets above); after D536, the lane is `CONTRACT` / `none` and the next
+  parked slice (the E61 collapse-terminal fork recommended) needs its own contract section.

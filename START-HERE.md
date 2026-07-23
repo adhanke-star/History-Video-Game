@@ -1,12 +1,12 @@
 # START HERE — "The Civil War" (master index)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D534 next-lane=LANE-021 state=CONTRACT owner=none -->
-> **Live status (D534, 2026-07-23):** E51 shipped — the raidSupply hint is honest (“opens the fight hungry and stays short of ammunition all day”); LANE-021 is `CONTRACT` / `none`.
+<!-- LIVE-HEAD decision=D535 next-lane=LANE-021 state=DRIVE owner=Claude -->
+> **Live status (D535, 2026-07-23):** LANE-021 takes a committed Claude Code DRIVE contract for S39 — the 95-playstyle picker (the fourth pre-battle config surface) joins the shared H0 `--h0d-*` token palette; presentation-only, never a sim change.
 >
-> **Boundary:** D525 remains the ARC 7 product head. D534 moved exactly one hint string in `src/85-battle-bridge.js` plus the mechanical game/srcTree re-pins (game `c6f9699a`, srcTree `7f2a5e6f`); no mechanics, data, or D74 surface moved.
+> **Boundary:** D525 remains the ARC 7 product head. Only `src/95-playstyle.js` colors/comments, the probe-playstyle S39 canon teeth, the five mechanical game/srcTree re-pins, and closeout docs may move in D536; DOM order, ids, callbacks, saves, mechanics, and every D74 surface are barred.
 >
-> **Authority:** D514 continues on the formerly parked queue (S39 recommended next). ARC 7 Historical movement, ARC 9 Slice 5, and E46 remain blocked; the D533 contract and the Bind E1 red/restore are the shipped evidence.
+> **Authority:** D514 continues on the formerly parked queue. ARC 7 Historical movement, ARC 9 Slice 5, and E46 remain blocked; the D245 S25 worked example and its probe-presets byte-identity guard are the governing precedent.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **D514 completion rule:** the project now runs a work-conserving completion loop. `HANDOFF.md` owns the algorithm and terminal condition; `V1-CHECKLIST.md` owns every live item; ordinary milestone/phase/browser boundaries do not stop a healthy run.
