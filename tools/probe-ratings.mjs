@@ -487,8 +487,15 @@ const SETUP = `(() => {
       if(!by.grand_charge || by.grand_charge.prov!=='Verified' || by.grand_charge.sources.length<2) throw new Error('grand_charge should be Verified with >=2 sources');
       if(!by.the_slows || by.the_slows.prov!=='Verified' || by.the_slows.sources.length<2) throw new Error('the_slows (a negative badge on a real man) must be firmly Verified with >=2 sources');
       // catalog-wide invariant (mirrors build gate 4e): no Verified record ANYWHERE in GAME_DATA carries <2 sources
+      // D547 MEASUREMENT REPAIR (not a relaxation). This walk was authored at D103 and counted only the
+      // sources/src keys. The D506 conquest transport evidence pack normalizes its citations through
+      // sourceRefs into the shared 60-entry source register, so all 40 of its Verified rows were counted
+      // as ZERO-source and the sweep reported a citation failure that did not exist - every one of those
+      // rows genuinely carries 2 or more refs. The 2-source FLOOR IS UNCHANGED; only the key set the
+      // count reads is corrected, and refs must be nonempty strings exactly as sources entries are.
+      // Invisible until D547 ran the first full battery since D487, which predates that data file.
       var nrm=function(v){ return (typeof v==='string')?v.trim().toLowerCase():''; };
-      var off=0; (function walk(n){ if(Array.isArray(n)){ for(var a=0;a<n.length;a++) walk(n[a]); return; } if(n&&typeof n==='object'){ if(nrm(n.prov)==='verified'||nrm(n.provenance)==='verified'){ var sc=Array.isArray(n.sources)?n.sources.length:(Array.isArray(n.src)?n.src.length:0); if(sc<2) off++; } for(var k in n) if(n.hasOwnProperty(k)) walk(n[k]); } })(typeof GAME_DATA!=='undefined'?GAME_DATA:{});
+      var off=0; (function walk(n){ if(Array.isArray(n)){ for(var a=0;a<n.length;a++) walk(n[a]); return; } if(n&&typeof n==='object'){ if(nrm(n.prov)==='verified'||nrm(n.provenance)==='verified'){ var sc=Array.isArray(n.sources)?n.sources.length:(Array.isArray(n.src)?n.src.length:(Array.isArray(n.sourceRefs)?n.sourceRefs.filter(function(x){return typeof x==='string'&&x.trim();}).length:0)); if(sc<2) off++; } for(var k in n) if(n.hasOwnProperty(k)) walk(n[k]); } })(typeof GAME_DATA!=='undefined'?GAME_DATA:{});
       if(off>0) throw new Error(off+' Verified-with-<2-source record(s) remain in GAME_DATA (build gate 4e should have failed)');
       var verified=0; for(var m=0;m<defs.length;m++) if(defs[m].prov==='Verified') verified++;
       return { badgeDefs:defs.length, verifiedBadges:verified, belovedProv:by.beloved.prov, grandChargeSrc:by.grand_charge.sources.length, catalogVerifiedClean:true }; });

@@ -3,6 +3,38 @@ Updated 2026-07-10 (AUDIT ledger; D370 is run 3 under the D336/D367 ChatGPT/Code
 
 **D514 completion rule (2026-07-22):** every unresolved finding in this ledger is authorized for autonomous live-code revalidation and either a gated fix or evidence-based closure. Historical prose does not reopen an item already marked fixed/settled. A blocked or refuted finding must record why; it cannot stop independent V1/REVIEW work. After the feature ledger closes, run a fresh full-spectrum audit, repair every confirmed finding, and repeat until no live finding remains.
 
+## BATTERY-REVEALED FINDINGS — 2026-07-23 (D547; the first full battery since D487)
+
+**Root cause common to both gate reds below:** `data/conquest-territories.json` (D504) and
+`data/conquest-transport-evidence.json` (D506) both landed AFTER the last full battery (D487) and after the
+schema validator's last enrollment (D492). Two independent gates had therefore never seen either file, and the
+batched-vetting policy meant the omissions sat undetected across roughly forty decisions. **Standing lesson: a
+data file added between full batteries is unguarded by every gate that enumerates data files; enroll it in the
+same commit that adds it, or run the battery on a shorter leash.**
+
+- [x] **BR-1 · Closed-world schema gap — FIXED in D547.** `tools/validate-data-schemas.mjs` failed closed on both
+  conquest data files ("file has no registered schema rule"), 63/65. The validator was RIGHT; the defect was the
+  missing registration. Both files are now registered in `SCHEMA_REQUIREMENTS` with their real top-level keys
+  (65/65, `unclassified` gone from the families list). Neither data file was touched; both remain byte-frozen.
+  Bind-tested with a bogus required key: exactly one row redded, byte-identical restore.
+- [x] **BR-2 · R-6 citation sweep false positive — FIXED in D547.** `probe-ratings` R-6 reported "40
+  Verified-with-<2-source record(s) remain in GAME_DATA". All 40 are `conquest-transport-evidence.json` rows, and
+  every one genuinely carries **two or more** `sourceRefs` into the shared 60-entry source register. The D103-era
+  catalog walk counted only `sources`/`src`, so it scored a normalized-citation pack as zero-source. The walk now
+  also counts nonempty-string `sourceRefs`; **the two-source floor is unchanged** — only the key set it reads was
+  corrected. Bind-tested by raising the floor to three, which redded with 351 records, proving the walk is live
+  and enforcing.
+- [ ] **BR-3 · OPEN, LANE-019 owned — one dangling source reference.** `CTS-R-03` in
+  `data/conquest-transport-evidence.json` cites `SR-13`, which is **not present** in the 60-entry
+  `sourceRegisters` of `data/conquest-territories.json`; all other refs across the pack resolve. `SR-13` IS
+  documented in `docs/design/strategic-rail-conquest-research-packet.md`, so this is a **register-carry omission,
+  not a fabricated citation**. NOT fixed here: both files are LANE-019-owned, do-not-touch and pinned
+  tooth-for-tooth by `tools/probe-conquest-transport-plan.mjs`, so the repair belongs to LANE-019 in a commit that
+  re-runs that plan probe. Surfaced rather than silently reconciled (non-negotiable #4).
+- [ ] **BR-4 · OPEN — the full battery has not yet run to completion.** D547 cleared BR-1 and BR-2, which were
+  rows 40 and ~41 of 142. Everything past `ratings` is still unverified at this head. The next session should
+  re-run `npm run vet:noreg` ALONE on the machine and expect further never-before-run reds of the same class.
+
 ## FABLE AUDIT — 2026-07-03 (run 1)
 
 ## D270 Carry-Forward Queue — 2026-07-05
