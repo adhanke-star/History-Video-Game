@@ -4,6 +4,108 @@ Per Aaron's locked operating parameters (run i, 2026-06-13): **run the whole arc
 
 Format: `Dn · [who] · phase · decision — rationale (reversible? / impact)`
 
+## D546 — CONTRACT_CONQUEST_AUTHORED_ROAD_LAYER: LANE-022 TAKES CLAUDE CODE DRIVE FOR SLICE 5 — THE AUTHORED MAYHEM ROAD LAYER, SEEDED ON THE TWO CURED ROWS AS SOURCED LABELLED EXEMPLARS OF ROAD FAILURE (CONTRACT ONLY; NO RUNTIME BYTE MOVED) — [CLAUDE CODE / Opus 4.8 `[1m]` xhigh, CONTRACT] (2026-07-23)
+
+D545 is committed and pushed clean at `ca6b63e0a62aec44775fe681f707a81006de7c46`. This is the
+contract-before-teeth commit the Contract Relay's hard rule requires: LANE-022 carries the complete
+Slice 5 acceptance contract as committed prose, and the acceptance teeth land in the SAME commit as
+the code that greens them. Nothing in `src/`, `data/`, `build/`, the manifest, the suite, the save
+shape or the generated deliverable moved here, so game `0a5286c3b79c8011a6903ceb23772d80`, srcTree
+`7bcb0579d4e432950897500e7f0e5846`, suite 142, manifest 112, data 65, `_SAVE_VER` 1 and the frozen
+base `c9db83fa99230ffb95bdfdfe059f3fb9` do NOT move and are NOT re-pinned. **D545 remains the ARC 7
+product head until Slice 5 ships.**
+
+**The citation pass that shaped the slice (default-refute, surfaced, corrections carried).** Before
+authoring anything, every element of the design-law §4 Slice-5 sentence was verified against the
+ORIGINAL Official Records text (Internet Archive `warofrebellion014701rootrich`, full `_djvu.txt`;
+Report No. 32 read back at printed pages 336-342) and the Platter diary (DLG `dlg_zlpd_ccp001`), on
+a default-refute posture. BOTH cured rows SURVIVE as **Verified**, and the D532 locators were
+genuinely read back rather than manufactured — which materially raises confidence in that audit.
+FOUR wordings had drifted and are corrected in the authored copy instead of propagated: Corse
+crossed the **Lawtonville roads**, not the town (the town was traversed by the XX Corps and by
+Logan's First and Third Divisions); he crossed **Coosawhatchie Swamp** inland, NOT the Charleston
+and Savannah Railroad depot town of that name — a drift that, left alone, would have put a road
+segment on the wrong side of the board; "miles of corduroy" overstates a source whose own words are
+men "marching for miles with fence rails upon their shoulders with which to corduroy the swamps and
+quicksand roads"; and `RD-SI13`'s midnight halt was at **Johnson's plantation beyond Laurel Hill**,
+under rain that ran "nearly the entire day", not all day. A FIFTH reading was REFUTED outright and
+changes the build: `RD-SI13`'s documented route (Cheraw on the Great Pee Dee, through Laurel Hill in
+the sandhills, toward Fayetteville on the Cape Fear) anchors to NO board territory at its origin,
+and the CT-11 and CT-13 readings are both wrong. It therefore ships with **no endpoints and no
+edge** rather than being forced onto geography it does not support — the honest, D503-consistent
+result, and the shipped substrate's own behaviour for a single-territory row (`CTS-S-02`).
+
+**Two findings recorded, not acted on.** Platter was adjutant of the 81st Ohio, which was Second
+Brigade of Corse's OWN Fourth Division, so D532's "2/2 independent families" floor is weaker in
+COMMAND independence than the phrase implies; the cure costs nothing and is taken — Logan's
+cross-command Report No. 11 (pp. 224-225) is cited alongside Corse for `RD-SI06`. Separately, the
+FROZEN D511 register row carries Platter's Buford's Bridge where Corse's report says Rivers' Bridge;
+those are different crossings on the same river. That contradiction is SURFACED here rather than
+silently reconciled. It touches no design-law sentence and no authored road, and LANE-019 stays
+unrewritten: the D532 packet row and its research guard keep "printed pp. 340-342" untouched while
+the authored seam cites the precise **p. 340**.
+
+**What Slice 5 contracts.** ONE authored constant `_LG_ROADS` (seventeen rows: two sourced labelled
+exemplars, fifteen openly authored segments) merged into the memoized base projection by one pure
+helper inside `_lgTraceBase`. `_lgTraceProject` / `_lgTraceGraph` stay SOURCED-ONLY and unchanged, so
+D539's eleven-component / 44-service proof of the evidence substrate keeps working untouched as the
+immutability tooth. The sourced substrate's eleven islands become ONE connected board of 36
+territories; roads cost 6 a segment against rail 3 and river 2, so a road line is a real but
+expensive fallback and a six-segment all-road haul costs exactly the severed ceiling. Roads are cut
+and repaired through the SHIPPED Slice-2/Slice-3 mechanism over the same `cut` map — no fourth
+mutator, no new namespace, no new save field — which finally lands design law §4's "clearing
+restores a road" promise that Slice 3 could only approximate. `_SAVE_VER` stays 1.
+
+**The Slice-4 rule this slice must amend.** D544/D545 chose the first source whose open walk reached,
+depot preferred — correct then, because the depot reached almost nothing. With roads the depot
+reaches nearly everything, and pre-authoring instrumentation measured the consequence: `CS` to
+`CT-11` would fall from the 1-segment sea import at friction **8** to a 4-segment interior road route
+at friction **19** purely by preference order, silently destroying the Slice-4 blockade lever. The
+rule becomes cheapest-open-walk among the sources that can ACTUALLY source, depot winning ties, with
+the blockade-`SEVERED` branch kept exactly for a genuinely sea-only front. A uniform-cost walk was
+BUILT AND MEASURED as the alternative and returned results identical to the shipped breadth-first
+walk on every measured pair, so `_lgTraceWalk` is deliberately NOT changed.
+
+**The movements are contracted in advance, not rationalised afterwards.** From the pre-authoring
+instrumentation: `US` to its Western and Trans-Mississippi fronts moves from an un-applied
+`SUBSTRATE_GAP` to `SEVERED` at the ceiling 40, because Nashville and Little Rock are Confederate in
+the authored 1861 opening control map and an enemy-held destination severs the line under the SHIPPED
+D540/D541 traversal law — the Union genuinely had no supply line into Confederate Tennessee in 1861,
+and the state flips to `TRACED` as the player takes the ground, which is the entire point of a
+conquest layer. `US` to its Northern front becomes `TRACED` at 19 over the National Road and the Ohio
+valley road; `CS` to its Eastern front becomes `TRACED` at 10 over the Fredericksburg road; `CS` to
+Little Rock and to Marshall become `TRACED` at 33; and the blockade lever on `CS` to `CT-11` becomes
+8 open / 19 sealed instead of 8 / 40, because a real interior alternative now exists. Every one is
+adjudicated under D92 as an accurate-inputs consequence, derived from the graph walk and the shipped
+opening control map, never tuned toward a preferred number and never gated on an output.
+
+**Three probe-tooth reshapes are contracted, each strictly tighter and none weakened.** The
+`NO NEW AUTHORITY` teeth in both LANE-022 probes today forbid the bare token `RD-`/`RD-SI` anywhere
+in the seam or its output — authored at Slice 1 when roads were absent, and exactly what Slice 5
+legitimately introduces. The blanket ban is REPLACED by a positive assertion that every road id is
+one of the two cured `RD-SI` rows or the authored `RDA-` namespace, with the four UNRESOLVED `RD-E1*`
+rows still forbidden outright and every other forbidden authority token unchanged. The
+`SUBSTRATE GAP IS FIRST-CLASS` tooth asserts a cross-component target "must stay an un-applied gap
+until the road layer lands" and that the reason says the road layer is "not built yet" — both are the
+pre-Slice-5 truth by construction — so it becomes THE ROAD LAYER CLOSES THE SUBSTRATE GAP, keeping
+the `SUBSTRATE_GAP` branch and its no-penalty law as the defensive result. No probe is added, so the
+suite stays 142.
+
+**Containment, unchanged in law.** `_LG_ROADS` is consumed only inside `_lgTraceBase`, reachable only
+after `_lgConquestKind` and the D539 `_lgTraceRuleset` allowlist gate both pass, so the authored road
+graph fails CLOSED at the ruleset seam before any board or evidence read. `CONTAINMENT-B` stays the
+ONE tooth owning the gated-ruleset query and the allowlist source assertion. The Historical zero-road
+negative stays EXACT — `roadStatus` `ROAD_REQUIRES_BOUNDED_SOURCE_PASS` with no `roadServices` key,
+`src/115`/`src/114`/the evidence pack byte-frozen, zero road-mode services from
+`conquestTransportPhysicalServices` — as do New Orleans-origin, `CT-36`, the D503 endpoint
+quarantine, the permanent unassignment of Boonville, Arrow Rock and Glasgow, and the four `CTI-*`
+faces staying `INTERCHANGE_WINDOW_UNADJUDICATED` for Historical.
+
+**EXACT NEXT:** implement D546 exactly as contracted, ship it under its own D### with the three A/B
+legs and the one declared bind, then release LANE-022 and contract Slice 6 (legal-order AI) or issue
+the capacity relay. ARC 7 Historical transport movement, Historical roads, the four `CTI-*` faces and
+E46 remain blocked.
+
 ## D545 — SHIPPED_CONQUEST_SUPPLY_BLOCKADE_SEA_EDGE: LANE-022 SLICE 4 GATES THE TWO SOURCED SEA SERVICES AS THE CONFEDERATE IMPORT EDGE VIA BLOCKADE-GATED COASTAL SOURCES, WHILE NON-CONQUEST PLAY STAYS BYTE-IDENTICAL; LANE-022 RELEASES — [CLAUDE CODE / Opus 4.8 `[1m]` xhigh, IMPLEMENTATION+GATES] (2026-07-23)
 
 D544 is committed and pushed clean at `9b1363f`. Slice 4 shipped exactly as that contract specified.

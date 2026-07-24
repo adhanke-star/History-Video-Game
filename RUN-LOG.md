@@ -1,17 +1,49 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D545 next-lane=LANE-022 state=CONTRACT owner=none -->
-> **Live status (D545, 2026-07-23):** `LANE-022` **Slice 4 SHIPS** — the blockade / sea edge. For a CS carrier the held coastal ports that ORIGINATE a sourced sea service become supply **sources** beside the interior depot, and the shipped blockade lever gates them: `conquestSupplyTrace` reads `C.blockade.portsOpen`, so an **open** runner port TRACES the import and a **sealed** blockade (`portsOpen 0`) SEVERS it. `CS→CT-11` (Charleston via `CTS-S-01`) moves friction **8↔40** and the Western front `CS→CT-20` **16↔40** as the blockade opens and seals, while US play and the CS interior line stay **byte-identical**. Reuses shipped `C.blockade` state — **no new owner, no new field, `_SAVE_VER` 1, no authored constant**. The lane releases to `CONTRACT` / `none`.
+<!-- LIVE-HEAD decision=D546 next-lane=LANE-022 state=DRIVE owner=Claude -->
+> **Live status (D546, 2026-07-23):** `LANE-022` takes **Claude Code DRIVE for Slice 5** — the **authored Mayhem road layer**. Contract only: the lane carries the complete Slice-5 acceptance contract as committed prose and **no runtime byte has moved**. Slice 5 authors ONE constant `_LG_ROADS` (seventeen rows — two sourced labelled exemplars of road FAILURE, fifteen openly authored segments) merged into the memoized base projection inside `_lgTraceBase`, turning the sourced substrate's **eleven disconnected components into ONE board of 36 territories** at the highest-friction mode (`road` cost 6 against rail 3 and river 2), so every front can be supplied overland at a real and costly price. `_lgTraceProject`/`_lgTraceGraph` stay sourced-only, so D539's eleven-component / 44-service proof keeps working untouched.
 >
-> **Boundary:** `src/61-logistics-rail.js` only, plus its two probes and five mechanical pin re-anchors. Game `98f3feaf`→`0a5286c3b79c8011a6903ceb23772d80`, srcTree `c4fc64eb`→`7bcb0579d4e432950897500e7f0e5846`, suite **142** (no probe added), manifest 112, data 65, `_SAVE_VER` **1**, `build/base.html` frozen. **D545 replaces D543 as the ARC 7 product head**; LANE-019 stays unrewritten.
+> **Boundary:** contract-only. Game `0a5286c3b79c8011a6903ceb23772d80`, srcTree `7bcb0579d4e432950897500e7f0e5846`, suite **142**, manifest 112, data 65, `_SAVE_VER` **1**, `build/base.html` frozen — none move and none are re-pinned. **D545 remains the ARC 7 product head until Slice 5 ships.** LANE-019 stays unrewritten.
 >
-> **Authority:** design-law §4 Slice 4 + Aaron's ratified sea-import-port source model. Three A/B legs — two zero-diff (direction battery `18f609d0…`, `probe-full-campaign` `a38185fd…`) and one honest conquest-ON leg adjudicated under D92 (open TRACES the CS import, sealed SEVERS at the 40 ceiling; both columns logged). Containment fails CLOSED at the ruleset seam both directions; Bind D544-B1 redded only `CONTAINMENT-B` with a byte-identical restore. Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
+> **Authority:** design-law §4 Slice 5 + D537 ruling 2. A default-refute citation pass against the original Official Records text verified BOTH cured rows as **Verified**, corrected four drifted wordings, and REFUTED the CT-11/CT-13 reading of `RD-SI13` — which therefore ships with **no endpoints and no edge** rather than invented geography. Depot-preferred source selection is amended to cheapest-available-source (measured: it would otherwise drop `CS`→`CT-11` from friction 8 to 19 and destroy the Slice-4 blockade lever); a uniform-cost walk was built, measured identical, and deliberately NOT adopted. Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-23 — D546 LANE-022 takes Claude Code DRIVE for Slice 5: the authored Mayhem road layer (contract only, no runtime byte moved)
+
+Contract-before-teeth commit at the clean pushed D545 boundary `ca6b63e`. LANE-022 moves `CONTRACT`/none →
+`DRIVE`/Claude Code and carries the complete Slice-5 acceptance contract as committed prose; the teeth land in
+the same commit as the code that greens them. Nothing in `src/`, `data/`, `build/`, the manifest, the suite,
+the save shape or the generated deliverable moved, so game `0a5286c3`, srcTree `7bcb0579`, suite 142, manifest
+112, data 65, `_SAVE_VER` 1 and the frozen base all hold and are not re-pinned.
+
+Phase 0 re-captured both A/B baselines FRESH at `ca6b63e`, machine alone: the 24-scenario × 8-seed direction
+battery `18f609d07b1190904ec0c11e4ca64675` (exit 0, ok=true, failures=0, pageerrors=0) and `probe-full-campaign`
+`a38185fd371a7f181250eff3a6cbf76a` (exit 0, ok=true, steps=4, pageerrors=0). Both match the contracted values.
+
+Before authoring, a default-refute citation pass read the ORIGINAL Official Records text (Internet Archive
+`warofrebellion014701rootrich`, Report No. 32 at printed pp. 336-342) and the Platter diary (DLG
+`dlg_zlpd_ccp001`). Both cured rows survive as **Verified** and D532's locators were genuinely read back. Four
+drifted wordings are corrected in the authored copy — the **Lawtonville roads** not the town, **Coosawhatchie
+Swamp** inland not the railroad depot town, the source's own fence-rail corduroy construction, and the midnight
+halt at **Johnson's plantation beyond Laurel Hill** under rain lasting "nearly the entire day". A fifth reading
+was REFUTED and changed the build: `RD-SI13`'s route anchors to no board territory at its origin and is neither
+CT-11 nor CT-13, so it ships with no endpoints and no edge instead of invented geography. Surfaced but not acted
+on: Platter was adjutant of the 81st Ohio, Second Brigade of Corse's own division, so D532's "2/2 independent
+families" floor is weaker in command independence than it reads (cured at no cost by citing Logan's Report
+No. 11 alongside Corse); and the frozen D511 register row carries Buford's Bridge where Corse says Rivers'
+Bridge. LANE-019 stays unrewritten.
+
+Pre-authoring instrumentation measured the candidate graph before a byte was written (invariant B) and settled
+two design forks with evidence: depot-preferred source selection is amended to cheapest-available-source,
+because first-wins would have dropped `CS`→`CT-11` from friction 8 to 19 and silently destroyed the Slice-4
+blockade lever; and a uniform-cost walk was built and measured, returned results identical to the shipped
+breadth-first walk on every pair, and was deliberately NOT adopted. The contracted movements are recorded in
+advance in LANE-022 and D546 so they cannot be rationalised after the fact.
 
 ## 2026-07-23 — D545 LANE-022 Slice 4 ships: the blockade / sea edge gates the two sourced sea services as the Confederate import edge
 
