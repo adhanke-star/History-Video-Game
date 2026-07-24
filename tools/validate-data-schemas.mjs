@@ -57,6 +57,14 @@ const META_REQUIREMENTS = new Map([
 const SCHEMA_REQUIREMENTS = new Map([
   ['chief-of-staff.json', ['schema', 'schemaVersion', 'config', 'rules']],
   ['concept-links.json', ['schema', 'schemaVersion', 'concepts']],
+  // D547 CLOSED-WORLD REPAIR: the two read-only conquest data files shipped at D504/D506, AFTER the
+  // validator's last enrollment at D492, and were never registered — so the closed-world map fell
+  // through to 'unclassified' and the gate FAILED CLOSED on both, exactly as designed. The full
+  // battery had not run since D487, so the omission sat undetected until D547 ran it. This registers
+  // the real top-level keys of each file; neither data file is touched and both stay byte-frozen.
+  ['conquest-territories.json', ['schema', 'version', 'enablement', 'sourceRegisters', 'territories']],
+  ['conquest-transport-evidence.json', ['schema', 'version', 'enablement', 'sourcePackets',
+    'railServices', 'waterServices', 'seaServices', 'interchanges', 'nonLinks', 'roadStatus']],
   ['mayhem-rules.json', ['schema', 'version', 'actions']],
   ['artillery.json', ['schemaVersion', 'guns', 'teachingCards']],
   ['cs-finance.json', ['schema', 'schemaVersion', 'config', 'profile', 'instruments']],
