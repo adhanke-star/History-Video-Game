@@ -5117,20 +5117,22 @@ risk and lane routing rather than on the rulings themselves.)*
   D536 contract exactly (the D535 bullets above); after D536, the lane is `CONTRACT` / `none` and the next
   parked slice (the E61 collapse-terminal fork recommended) needs its own contract section.
 
-### LANE-022 · conquest-mayhem-supply-ladder — **DRIVE (D546 SLICE 5 CONTRACTED; CLAUDE CODE)**
+### LANE-022 · conquest-mayhem-supply-ladder — **CONTRACT (D547 SLICE 5 SHIPPED; UNOWNED)**
 
-- **Owning tool:** Claude Code (Opus 4.8 `[1m]`, xhigh) — DRIVE for the D546 Slice-5 authored Mayhem road layer,
-  taken in this ledger-only commit at the clean pushed D545 boundary `ca6b63e`; no simultaneous edits by any
-  other provider. Lock history: D537 opened the lane at `CONTRACT` / `none`; D538 took DRIVE at
+- **Owning tool:** none. D547 releases the D546 Slice-5 DRIVE lock at the clean shipped boundary; no
+  simultaneous edits by any provider. Lock history: D537 opened the lane at `CONTRACT` / `none`; D538 took DRIVE at
   `0829d8d`; D539 shipped Slice 1 and released; D540 took DRIVE at
   `7e48ca813be39a9db9df565e5af4976547b55a80`; D541 shipped Slice 2 and released at
   `5ecc00bdb6f5fc65d9e26c32d51fb49371e81d2b`; D542 took DRIVE for Slice 3 at
   `475543cebc4d9026b382c61cfef51283396183cc`; D543 shipped Slice 3 and released; D544 took DRIVE for Slice 4 at
-  `9b1363f`; D545 shipped Slice 4 and released at `ca6b63e`; D546 takes DRIVE for Slice 5.
-- **State:** DRIVE — **D546 carries the complete Slice-5 acceptance contract below and NO runtime byte has moved.**
-  Slices 1-4 are shipped: **D545 shipped Slice 4 (the blockade / sea edge) exactly as D544 contracted;
-  blockade state gates the two sourced sea services as the Confederate import edge via blockade-gated coastal
-  sources, and non-conquest play stays byte-identical.** This lane owns the ARC 7 transport/supply ladder that D537 ratified onto
+  `9b1363f`; D545 shipped Slice 4 and released at `ca6b63e`; D546 took DRIVE for Slice 5 at `d73cf57`;
+  D547 shipped Slice 5 and released.
+- **State:** CONTRACT — Slices 1-5 are shipped. **D547 shipped Slice 5 (the authored Mayhem road layer) from the
+  committed D546 contract: `_LG_ROADS` merges into the memoized base projection inside `_lgTraceBase`, the eleven
+  sourced components become ONE board of 36 territories at mode `road` cost 6, roads cut and repair through the
+  SHIPPED Slice-2/3 mechanism, source selection becomes cheapest-available, and non-conquest play stays
+  byte-identical.** Slice 6 (legal-order AI) needs its own committed contract section and DRIVE take before any
+  runtime edit. This lane owns the ARC 7 transport/supply ladder that D537 ratified onto
   the **Mayhem** ruleset. **LANE-019 is deliberately not rewritten by this lane** — its segment is pinned
   tooth-for-tooth by `tools/probe-conquest-transport-plan.mjs` and every one of its boundary sentences
   remains exact. LANE-019 keeps the historical-evidence contract; LANE-022 owns buildable Mayhem product.
@@ -5891,3 +5893,86 @@ risk and lane routing rather than on the rulings themselves.)*
   and the five mechanical pin re-anchors), ship it under its own D### with the three A/B legs and the one declared
   bind, then release LANE-022 and contract Slice 6 (legal-order AI). ARC 7 Historical transport movement, Historical
   roads, the four `CTI-*` faces and E46 remain blocked.
+- **D547 delivery record — Slice 5, the authored Mayhem road layer:** shipped as D546 contracted, with **two tooth
+  reshapes the slice FORCED beyond the three contracted** and **three defects in the inherited working tree caught by
+  the gates and fixed** — all stated plainly rather than absorbed. The seam is `src/61-logistics-rail.js` only: one
+  authored constant `_LG_ROADS` (17 rows — `RD-SI06`/`RD-SI13` sourced and labelled, `RDA-01`..`RDA-15` openly
+  authored) merged by the pure helper `_lgTraceRoadAdj` inside `_lgTraceBase`, plus `_lgRoadById`, the extracted
+  `_lgTraceCost`, the widened `_lgSupplyView` sanitizer pattern, `_LG_REPAIR.cost.road = 3`, the cheapest-source
+  selection with `importClosed`, and the road provenance/teaching block in `_lgSupplyBlockHTML`.
+  `_lgTraceProject`/`_lgTraceGraph` are byte-unchanged. No new module (manifest 112), no data change (65), no new
+  probe (suite 142), no save-shape movement (`_SAVE_VER` 1), `build/base.html` frozen.
+- **D547 measured substrate columns (the reason the merge lives in `_lgTraceBase`):** the SOURCED projection is
+  identical in both columns — components `[18,5,4,2,1,1,1,1,1,1,1]`, 44 sourced services, `roadStatus`
+  `ROAD_REQUIRES_BOUNDED_SOURCE_PASS` — while the roaded base is ONE component of 36 territories and **61** base
+  services. D546's contract prose said 60 (44 sourced + 16 road edges); **61 is correct and the prose conflated rows
+  with edges** — `base.services` has always been the ROW roster, proved on disk by the shipped sourced roster being
+  44 ROWS of which **16 project no edge** (`CTS-S-02` Wilmington and fifteen others), which is the same precedent
+  D546 cites to justify `RD-SI13` shipping edgeless. The probe pins 61 with that reasoning recorded inline.
+- **D547 A/B — two zero-diff guard legs, one honest leg measured in BOTH columns:** leg 1 the standing direction
+  battery (`tools/sweep-all-battles.mjs`, **29 scenarios × 8 seeds**; the long-carried "24×8" figure is stale on
+  disk) artifact `18f609d07b1190904ec0c11e4ca64675` BYTE-IDENTICAL to the `ca6b63e` baseline, 0 failures,
+  0 pageerrors, **0 diffs**; leg 2 `probe-full-campaign` artifact `a38185fd371a7f181250eff3a6cbf76a`
+  BYTE-IDENTICAL, steps 4, **0 diffs**. Leg 3 used a throwaway `node:vm` harness rebuilding the SAME on-disk seam
+  twice (column A from HEAD's `src/61`, column B from the working tree), deleted before the commit, so both columns
+  are measurement. Every contracted movement matched exactly: `US/E` `TRACED 7` → `TRACED 7` (same single
+  `CTS-R-02:rail`; trace gains `importClosed:false`); `US/W`→CT-20 and `US/TM`→CT-32 `SUBSTRATE_GAP` → `SEVERED 40`;
+  `US/N`→CT-19 `SUBSTRATE_GAP` → `TRACED 19` over `CTS-R-01:rail + RDA-14:road + RDA-15:road`; `CS/E`
+  `SUBSTRATE_GAP` → `TRACED 10` over one `RDA-01:road`; `CS/W`→CT-20 `TRACED 16` sea-sourced → `TRACED 16`
+  depot-sourced via `RDA-04`; `CS/TM`→CT-32 and `CS`→CT-35 `SUBSTRATE_GAP` → `TRACED 33` across seven segments,
+  three of them road; `CS`→CT-08 `SUBSTRATE_GAP` → `TRACED 10`; blockade lever on `CS`→`CT-11` **8 open / 40 sealed
+  → 8 open / 19 sealed with `importClosed:true`**. Two further rows moved as the reshaped teeth contracted:
+  `CS`→CT-20 sealed `SEVERED 40` → `TRACED 16` (a blockade shuts a COASTAL door, not an inland one), and
+  `US`→CT-11 `SUBSTRATE_GAP` → `SEVERED 40` **identically in both blockade states**. Containment HELD (`null`) in
+  both columns. **Adjudicated under D92**: every value is the graph walk over the shipped authored opening control
+  map, the authored road network and the shipped cost table — never tuned, never an output gate, all inside the
+  shipped caps. The `US` SEVERED-at-40 rows are correct: Nashville and Little Rock are Confederate in the authored
+  1861 opening and an enemy-held DESTINATION severs under the SHIPPED D540/D541 traversal law; the state flips to
+  `TRACED` as the player takes the ground.
+- **D547 bind — one declared bind, exact scope:** Bind D546-B1 mutated ONE value in the containment allowlist
+  (`{ mayhem: 1 }` → `{ mayhem: 1, historical: 1 }`) and ran the focused probe WITHOUT rebuilding; ONLY
+  `CONTAINMENT-B` redded (19/20, exit 1), every other tooth held including `CONTAINMENT-A` and the new road step.
+  Restore byte-identical, `src/61` md5 `8d5725d318ad1d7e9ff13ad551f1e87c` pre == post, rebuild returned the
+  identical game md5 `77d96c43` at 20/20 clean green.
+- **D547 tooth reshapes — THREE contracted, TWO forced (none weakened):** contracted — (1) the focused probe's
+  blanket `RD-` ban replaced by the strictly tighter positive rule (only the two cured `RD-SI` ids or the authored
+  `RDA-` namespace may be emitted; the four UNRESOLVED `RD-E1*` rows stay banned outright); (2) the identical ban in
+  the plan probe replaced the same way plus a conscious `authored, not sourced` marker re-pin 6 → 7; (3) `SUBSTRATE
+  GAP IS FIRST-CLASS` → `THE ROAD LAYER CLOSES THE SUBSTRATE GAP`. **FORCED by the slice, both strictly tighter:**
+  (4) `BOUNDED OUTCOME` — the `cs-substrate-gap` scenario becomes `cs-road-traced` and the no-penalty law is
+  generalised from a single fixture into an invariant asserted over EVERY measured row; (5) `BLOCKADE SEA EDGE`
+  node-side AND in-page — sealed Charleston 40 → 19 with `importClosed:true`, the Western front re-pinned to trace
+  overland in BOTH blockade states, the US-unaffected assertion re-pinned off its `SUBSTRATE_GAP` fixture onto the
+  actual law, and the port-lost case re-pinned to the dearer interior fallback.
+- **D547 defects found in the inherited working tree and fixed (all caught by these gates):** (a) both srcTree pins
+  were `a7376020b178ce910c511bb80dee171c`, a value matching NO tree on disk — `treeMd5` reproduces the committed
+  D544 pin `7bcb0579` exactly from HEAD, so the walk is sound and the re-pin was computed against a superseded draft
+  of `src/61`; it redded `probe-war-career-loop-plan` at 22/24 and is corrected to the measured
+  `ad0b2811db8e8323fdb70438c84893a4`. (b) `probe-conquest-supply-plan`'s srcTree tooth compared the two pins only to
+  EACH OTHER, so a stale-but-self-consistent pin passed there and redded only downstream; it now verifies srcTree
+  against the live `src/` tree exactly as the game pin verifies against the built deliverable, and was bind-tested
+  (restoring the stale value redded EXACTLY that one tooth, 9/10, exit 1, byte-identical restore). (c) the
+  `BLOCKADE SEA EDGE` step NAME still asserted "a sealed blockade SEVERS it" and its return object hardcoded
+  `portLost:"SUBSTRATE_GAP"`, both contradicting the step's own passing assertions; both now report the
+  measurement. Four of the five pin sites also carried no D546 chain comment against the lane's D538/D542/D544
+  practice; all five now chain.
+- **D547 gates, all green with every artifact read:** build `GATE OK · doc-coherence ✓ · parse ✓ · hex ✓ ·
+  collision ✓ · no-fudge ✓ · citations ✓ · women-in-war ✓ · save-shape ✓` (exit 0); `node --check` clean on all five
+  touched JS/MJS; artifact readback of `_LG_ROADS`, `_lgTraceRoadAdj`, `_lgRoadById`, `_lgTraceCost`, `RD-SI06`,
+  `RD-SI13`, `RDA-01`, `RDA-15`, `importClosed`, `Wagon road`, `Binnaker`, `Johnson's plantation` inside the built
+  deliverable with zero gated-ruleset literal in the allowlist; focused **20/20** (0 pageerrors, 0 realErrors); plan
+  **10/10**; adjacent logistics-rail 8, logistics 15, bridge 6, conditioning 9, engineering-corps 23, blockade 11,
+  conquest-board 13, conquest-state 15, conquest-transport 18, campaign-link 19, auto-resolve 10, save-slots 17,
+  presets 27, command 100 — all exit 0 with fresh `ok:true` / `failed:[]` / `pageerrors:[]` / `realErrors:[]`; plan
+  probes Mayhem 13/13, War Career 24/24, transport 12/12, conquest layer 8/8, doc coherence 5/5; `git diff --check`
+  clean. `probe-engineering` was deliberately NOT run — it is the reproducible headless-Chrome fonts-stall
+  `page.screenshot` FATAL, not a regression, and `probe-engineering-corps` 23/23 cross-validates that surface. Game
+  `0a5286c3b79c8011a6903ceb23772d80` → `77d96c4384cc5c818efe5f296a3c4e21`, srcTree
+  `7bcb0579d4e432950897500e7f0e5846` → `ad0b2811db8e8323fdb70438c84893a4`, re-anchored at FIVE disk-counted sites
+  (three generated-game, two srcTree); suite md5, focused md5, manifest and frozen base HOLD. **LANE-019 is
+  deliberately unrewritten** (transport plan 12/12). The full serialized 142-row battery stays owed at Slice 7.
+- **Resume pointer (D547):** LANE-022 is `CONTRACT` / `none` with Slices 1-5 shipped. **Slice 6 (legal-order AI —
+  the AI's order filter must honour supply legality under the SAME rules as the player, reusing
+  `conquestSupplyTrace`/`_lgSupplyView` with no second resolver and no AI-only supply path)** needs its own committed
+  contract section and DRIVE take here before any runtime edit. D547 replaces D545 as the ARC 7 product head. ARC 7
+  Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.

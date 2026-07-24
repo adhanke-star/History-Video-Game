@@ -141,7 +141,8 @@ const PIN = {
 // D536 re-pin: the S39 --h0d-* token unification in src/95-playstyle.js only (presentation); game c6f9699a -> 859637ed. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
 // D542 re-pin: LANE-022 Slice 3 (repair + finite engineering capacity) moves game 4764b1fc -> 98f3feaf for existing src/61-logistics-rail.js only. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
 // D544 re-pin: LANE-022 Slice 4 (blockade / sea edge) moves game 98f3feaf -> 0a5286c3 for existing src/61-logistics-rail.js only. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
-  game: "0a5286c3b79c8011a6903ceb23772d80",
+// D546 re-pin: LANE-022 Slice 5 (the authored Mayhem road layer) moves game 0a5286c3 -> 77d96c43 for existing src/61-logistics-rail.js only. Base, data, manifest, suite, Mayhem authority, and public readiness hold.
+  game: "77d96c4384cc5c818efe5f296a3c4e21",
   base: "c9db83fa99230ffb95bdfdfe059f3fb9",
   manifest: "4cc094911506cf5af9929cf79d25dc6c",
   suite: "a1cb6e7347155b8705614b83cc0c32d3",

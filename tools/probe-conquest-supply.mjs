@@ -60,7 +60,7 @@ const SHIPPED_ROUTE_KEYS = ["id", "label", "theater", "theaterName", "friction",
 // D540: the field set grows by supplyState / depotHeld / severedBy / cutCount / reason.
 const TRACE_KEYS = ["rulesetId", "authored", "applied", "supplyState", "side", "theater", "depot", "depotName",
   "depotHeld", "target", "targetName", "reachable", "segments", "territories", "modeMix", "segmentCount",
-  "reachedCount", "severedBy", "cutCount", "tracedFriction", "label", "reason"];
+  "reachedCount", "severedBy", "importClosed", "cutCount", "tracedFriction", "label", "reason"];  // D546: + importClosed
 const SUPPLY_KEYS = ["schema", "control", "cut", "adopted", "cutCount", "repairSpent"];  // D542: + repairSpent
 
 let server = null, browser = null;
@@ -83,8 +83,18 @@ try {
     const v = JSON.parse(run("var C=mkConquest('US','mayhem');var t=conquestSupplyTrace(C,null);var s=_lgSupplyView(C);var r=_lgRoute(C,null);"
       // D544: the authored CS sea-import route is reachable on the open ruleset (Charleston via CTS-S-01).
       + "var seaC=mkConquest('CS','mayhem');seaC.blockade={portsOpen:4};var sea=conquestSupplyTrace(seaC,'CT-11');"
+      // D546: the authored road layer is reachable on the open ruleset and nowhere else.
+      + "var roadC=mkConquest('CS','mayhem');var road=conquestSupplyTrace(roadC,'CT-03');"
+      + "var bs=_lgTraceBase({id:'mayhem',version:1});"
       + "return {t:t,s:s,routeKeys:Object.keys(r),sameRef:r.trace&&r.trace.depot===t.depot,frozen:[Object.isFrozen(t),Object.isFrozen(t.segments),Object.isFrozen(t.segments[0]),Object.isFrozen(t.modeMix),Object.isFrozen(s),Object.isFrozen(s.control),Object.isFrozen(s.cut)],openingUS:s.control['CT-01'],openingCS:s.control['CT-05'],openingCount:Object.keys(s.control).length,"
-      + "sea:{state:sea.supplyState,applied:sea.applied,depot:sea.depot,seg:sea.segments.map(function(x){return x.id+':'+x.mode;}),f:sea.tracedFriction}};"));
+      + "sea:{state:sea.supplyState,applied:sea.applied,depot:sea.depot,seg:sea.segments.map(function(x){return x.id+':'+x.mode;}),f:sea.tracedFriction},"
+      + "road:{state:road.supplyState,applied:road.applied,depot:road.depot,seg:road.segments.map(function(x){return x.id+':'+x.mode;}),f:road.tracedFriction},"
+      + "roadServices:_LG_ROADS.length,baseServices:Object.keys(bs.services).length,sourcedServices:Object.keys(_lgTraceBase({id:'mayhem',version:1}).services).filter(function(k){return k.indexOf('CTS-')===0;}).length};"));
+    need(v.road && v.road.state === "TRACED" && v.road.applied === true && v.road.depot === "CT-05"
+      && JSON.stringify(v.road.seg) === JSON.stringify(["RDA-01:road"]) && v.road.f === 10,
+      "the authored road layer is not reachable on the open ruleset — the CS Eastern front must trace over one authored road segment: " + JSON.stringify(v.road));
+    need(v.roadServices === 17 && v.baseServices === 61 && v.sourcedServices === 44,
+      "the authored road roster moved: " + v.roadServices + " roads, " + v.baseServices + " base services, " + v.sourcedServices + " sourced");
     need(v.sea && v.sea.state === "TRACED" && v.sea.applied === true && v.sea.depot === "CT-12"
       && JSON.stringify(v.sea.seg) === JSON.stringify(["CTS-S-01:sea"]) && v.sea.f === 8,
       "the authored CS sea-import route (Savannah -> Charleston via CTS-S-01) is not reachable on the open ruleset: " + JSON.stringify(v.sea));
@@ -148,6 +158,8 @@ try {
       " _lgSupplyRepairReset(G2)===null,",
       " _lgSupplyBlockHTML(G2)==='',",
       " conquestSupplyTrace(SEA,'CT-11')===null,",
+      // D546: the authored road layer is unreachable on the evidence-gated ruleset.
+      " conquestSupplyTrace(mkConquest('CS','historical'),'CT-03')===null,",
       " Object.keys(G2.conquest).length===0];",
       "return {trace:conquestSupplyTrace(C,'CT-03'),routeKeys:Object.keys(r),hasTrace:Object.prototype.hasOwnProperty.call(r,'trace'),closed:closed,stateClosed:stateClosed};"
     ].join("")));
@@ -155,7 +167,7 @@ try {
     need(v.hasTrace === false, "_lgRoute attached a trace on the evidence-gated ruleset — CONTAINMENT LEAK");
     need(JSON.stringify(v.routeKeys) === JSON.stringify(SHIPPED_ROUTE_KEYS), "evidence-gated route keys drifted");
     need(v.closed.length === 11 && v.closed.every(Boolean), "a non-admitted ruleset shape opened the gate: " + JSON.stringify(v.closed));
-    need(v.stateClosed.length === 9 && v.stateClosed.every(Boolean),
+    need(v.stateClosed.length === 10 && v.stateClosed.every(Boolean),
       "authored control/condition/repair/sea-import state surfaced on the evidence-gated ruleset — CONTAINMENT LEAK: " + JSON.stringify(v.stateClosed));
     return { absent: true, closedShapes: v.closed.length, stateClosed: v.stateClosed.length, allowlist: "single-id", accessorsInvoked: 0 };
   });
@@ -175,7 +187,7 @@ try {
       " if(b.supply<0||b.supply>caps.supply||b.fatigueRelief<0||b.fatigueRelief>caps.fatigueRelief||b.overall<0||b.overall>caps.overall)bad.push(name);",
       " if(s.depotReach<0||s.depotReach>100||s.network<0||s.network>100||s.marchBurden<0||s.marchBurden>100)bad.push(name+':snapshot');}",
       "scen('us-traced',function(){return mkConquest('US','mayhem');});",
-      "scen('cs-substrate-gap',function(){return mkConquest('CS','mayhem');});",
+      "scen('cs-road-traced',function(){return mkConquest('CS','mayhem');});",
       "scen('us-severed-cut',function(){var C=mkConquest('US','mayhem');conquestSupplySetCondition(C,'CTS-R-02',true);return C;});",
       "scen('us-severed-enemy-target',function(){var C=mkConquest('US','mayhem');conquestSupplySetControl(C,'CT-03','CS');return C;});",
       "scen('us-severed-depot-lost',function(){var C=mkConquest('US','mayhem');conquestSupplySetControl(C,'CT-01','CS');return C;});",
@@ -185,11 +197,17 @@ try {
     need(v.bad.length === 0, "a conquest state pushed a capped or clamped value out of range: " + JSON.stringify(v.bad));
     need(v.caps.supply === 7 && v.caps.fatigueRelief === 5 && v.caps.overall === 2, "the shipped bridge caps moved");
     const traced = v.rows.find(r => r.name === "us-traced");
-    const gap = v.rows.find(r => r.name === "cs-substrate-gap");
+    const road = v.rows.find(r => r.name === "cs-road-traced");
     const severed = v.rows.find(r => r.name === "us-severed-cut");
     need(traced.state === "TRACED" && traced.applied === true, "the default US conquest route must TRACE and apply");
-    need(gap.state === "SUBSTRATE_GAP" && gap.applied === false,
-      "an unreachable-on-the-open-graph pair must NOT apply — our evidence gap may not become the player's penalty");
+    // D546: the CS Eastern pair was the load-bearing substrate gap; one authored road closes it.
+    need(road.state === "TRACED" && road.applied === true,
+      "the CS Eastern pair must trace over the authored road layer: " + JSON.stringify(road));
+    // The no-penalty LAW is kept as a general invariant over every measured row rather than as a
+    // fixture that only held while the board was disconnected.
+    for (const r of v.rows)
+      need(r.state !== "SUBSTRATE_GAP" || r.applied === false,
+        "an unreachable-on-the-open-graph pair applied a penalty — our evidence gap may not become the player's: " + JSON.stringify(r));
     need(severed.state === "SEVERED" && severed.applied === true && severed.friction === 40,
       "a cut on the traced segment must SEVER and apply the bounded ceiling: " + JSON.stringify(severed));
     need(severed.depotReach < traced.depotReach,
@@ -227,32 +245,59 @@ try {
     return { severed: true, severedBy: v.afterE.by, unaffectedArmyHeld: true, restoreWorks: true, badIdsRejected: 3 };
   });
 
-  await step("SUBSTRATE GAP IS FIRST-CLASS: no sourced path costs the player nothing and is taught, not hidden", () => {
+  // D546 CONTRACTED RESHAPE. This tooth asserted that a cross-component target "must stay an
+  // un-applied gap until the road layer lands" and that the reason says the layer is "not built
+  // yet" — both were the pre-Slice-5 truth BY CONSTRUCTION, and Slice 5 is the slice that lands
+  // it. So it now proves the road layer CLOSES the gap, while the SUBSTRATE_GAP branch and its
+  // no-penalty law stay present and correct as the defensive result for a genuinely unlinked pair.
+  await step("THE ROAD LAYER CLOSES THE SUBSTRATE GAP: the eleven islands become one board and the no-penalty law survives", () => {
     const run = diskSeam();
     const v = JSON.parse(run([
       "var cs=mkConquest('CS','mayhem'),plainCS=mkPlain('CS');",
       "var t=conquestSupplyTrace(cs,null);",
       "var far=conquestSupplyTrace(mkConquest('US','mayhem'),'CT-20');",
-      "return {t:{s:t.supplyState,applied:t.applied,f:t.tracedFriction,reachable:t.reachable,reached:t.reachedCount,reason:t.reason,label:t.label,depotName:t.depotName},",
-      " far:{s:far.supplyState,applied:far.applied,f:far.tracedFriction},",
+      // every ordered CT pair must now be base-reachable from a depot: the board is ONE component
+      "var B=_lgTraceBase({id:'mayhem',version:1}),ids=[],n,gapless=true;",
+      "for(n=1;n<=36;n++)ids.push('CT-'+(n<10?'0':'')+n);",
+      "for(n=0;n<ids.length;n++){if(!_lgTraceWalk(B.adj,'CT-05',ids[n],null).reachable){gapless=false;break;}}",
+      // The board is now connected, so no live pair can produce SUBSTRATE_GAP. Rather than fake
+      // one, prove the WALK still reports unreachability honestly on an empty projection — the
+      // exact condition the branch keys on — and assert the branch's law from source below.
+      "var isolated=_lgTraceWalk({},'CT-05','CT-03',null);",
+      "var gap={reachable:isolated.reachable,segs:isolated.segments.length};",
+      "return {t:{s:t.supplyState,applied:t.applied,f:t.tracedFriction,reachable:t.reachable,reached:t.reachedCount,reason:t.reason,label:t.label,depotName:t.depotName,segCount:t.segmentCount,modes:t.segments.map(function(x){return x.mode;})},",
+      " far:{s:far.supplyState,applied:far.applied,f:far.tracedFriction}, gapless:gapless, gap:gap,",
       " frictionSame:_lgRoute(cs,null).friction===_lgRoute(plainCS,null).friction,",
       " conquestFriction:_lgRoute(cs,null).friction,plainFriction:_lgRoute(plainCS,null).friction,",
       " reachSame:logisticsSnapshot(cs).depotReach===logisticsSnapshot(plainCS).depotReach,",
       " netSame:logisticsSnapshot(cs).network===logisticsSnapshot(plainCS).network,",
       " block:_lgSupplyBlockHTML(cs)};"
     ].join("")));
-    need(v.t.s === "SUBSTRATE_GAP" && v.t.applied === false, "the CS/E no-path pair must resolve as an un-applied substrate gap");
-    need(v.t.reachable === false && v.t.f === 100 && v.t.reached === 5, "the honest CS/E no-path result moved");
-    need(v.frictionSame && v.reachSame && v.netSame,
-      "a substrate gap changed the sim — an evidence gap must never become a penalty: conquest "
-      + v.conquestFriction + " vs shipped " + v.plainFriction);
-    need(v.far.s === "SUBSTRATE_GAP" && v.far.applied === false, "a cross-component target must stay an un-applied gap until the road layer lands");
-    need(/road/i.test(v.t.reason) && /wagon/i.test(v.t.reason), "the substrate-gap reason must teach the wagon-road fallback and name the missing road layer");
-    need(/not built yet/.test(v.t.reason), "the substrate-gap reason must say the road layer is not built yet");
-    need(v.block.indexOf("Unmapped") >= 0 && v.block.indexOf(v.t.depotName) >= 0,
-      "the player-facing block must show the gap state and the depot it failed from");
-    need(v.block.indexOf("shipped friction held") >= 0, "the block must tell the player the shipped value was kept");
-    return { state: "SUBSTRATE_GAP", applied: false, simUnmoved: true, taught: true };
+    // The CS Eastern pair was the load-bearing SUBSTRATE_GAP at ca6b63e. One authored road closes it.
+    need(v.t.s === "TRACED" && v.t.applied === true && v.t.f === 10 && v.t.reachable === true,
+      "the CS/E pair must now trace over the authored road layer: " + JSON.stringify(v.t));
+    need(v.t.segCount === 1 && v.t.modes.length === 1 && v.t.modes[0] === "road",
+      "the CS/E line must run over exactly one authored road segment: " + JSON.stringify(v.t.modes));
+    // The cross-component Western target likewise stops being a gap. It SEVERS rather than TRACES
+    // because Nashville is Confederate in the authored opening and an enemy-held destination cuts
+    // the line under the shipped traversal law — a real state, not an evidence hole.
+    need(v.far.s === "SEVERED" && v.far.applied === true && v.far.f === 40,
+      "the cross-component US/W target must resolve as a real severed line once the roads land: " + JSON.stringify(v.far));
+    need(v.gapless === true, "no CT-nn pair may remain base-unreachable once the authored road layer lands");
+    need(v.gap && v.gap.reachable === false && v.gap.segs === 0,
+      "the walk no longer reports honest unreachability, so the SUBSTRATE_GAP branch could never fire");
+    // The no-penalty law survives IN THE SEAM: the branch is still there, still un-applied, still
+    // teaching, and it no longer tells the player the road layer is unbuilt (it is built now).
+    const seam = read(SRC61);
+    const gapBranch = seam.slice(seam.indexOf("if (!openWalk.reachable)"), seam.indexOf("} else if (liveWalk.reachable)"));
+    need(/supplyState = "SUBSTRATE_GAP"/.test(gapBranch) && /applied = false/.test(gapBranch),
+      "the SUBSTRATE_GAP branch must remain first-class and un-applied");
+    need(/wagon/i.test(gapBranch) && /penalised/i.test(gapBranch),
+      "the substrate-gap reason must still refuse to charge our own evidence hole to the player");
+    need(!/not built yet/.test(seam), "the seam still claims the authored road layer is unbuilt");
+    need(v.block.indexOf("Wagon road") >= 0 && v.block.indexOf("RDA-01") >= 0,
+      "the player-facing block must name the road the line actually runs over");
+    return { csEast: "TRACED", friction: 10, roadSegments: 1, gapStillFirstClass: true, boardConnected: true };
   });
 
   await step("TRACE CORRECTNESS: the sourced substrate is ELEVEN components and the walk is deterministic", () => {
@@ -269,17 +314,25 @@ try {
       "var self=conquestSupplyTrace(mkConquest('US','mayhem'),'CT-01');",
       "var bogus=conquestSupplyTrace(mkConquest('US','mayhem'),'CT-99');",
       "return {comps:comps.sort(function(a,b){return b-a;}),det:JSON.stringify(t1)===JSON.stringify(t2),",
-      " self:{r:self.reachable,seg:self.segmentCount},bogusTarget:bogus.target,us:{f:t1.tracedFriction,mix:t1.modeMix},services:Object.keys(_lgTraceBase({id:'mayhem',version:1}).services).length};"
+      " self:{r:self.reachable,seg:self.segmentCount},bogusTarget:bogus.target,us:{f:t1.tracedFriction,mix:t1.modeMix},services:Object.keys(_lgTraceBase({id:'mayhem',version:1}).services).length,",
+      // D546: the ROADED base is one board; the SOURCED projection above is untouched at eleven.
+      " roaded:(function(){var B=_lgTraceBase({id:'mayhem',version:1}),u={},sn={},o=[];for(var k in B.adj)for(var e=0;e<B.adj[k].length;e++){(u[k]=u[k]||[]).push(B.adj[k][e].to);(u[B.adj[k][e].to]=u[B.adj[k][e].to]||[]).push(k);}for(var i=0;i<ids.length;i++){if(sn[ids[i]])continue;var q=[ids[i]],c=0;sn[ids[i]]=1;while(q.length){var x=q.shift();c++;var nb=u[x]||[];for(var j=0;j<nb.length;j++)if(!sn[nb[j]]){sn[nb[j]]=1;q.push(nb[j]);}}o.push(c);}return o;})()};"
     ].join("")));
     need(v.comps.length === 11, "the sourced substrate no longer resolves to ELEVEN components: " + JSON.stringify(v.comps));
     need(JSON.stringify(v.comps) === JSON.stringify([18, 5, 4, 2, 1, 1, 1, 1, 1, 1, 1]), "component sizes moved: " + JSON.stringify(v.comps));
     need(v.det === true, "the walk is not deterministic across repeated calls");
-    need(v.services === 44, "the sourced service count moved: " + v.services);
+    // D546 re-pin, CONSCIOUS: the base roster is 44 sourced services + the 17 authored road rows.
+    // The ELEVEN-component / sourced assertions above read _lgTraceGraph and are DELIBERATELY
+    // untouched — that is precisely why the road merge lives in _lgTraceBase and not in the
+    // sourced projection, so the evidence substrate keeps proving itself unchanged.
+    need(v.services === 61, "the base service roster moved: " + v.services + " (expected 44 sourced + 17 road rows)");
+    need(JSON.stringify(v.roaded) === JSON.stringify([36]),
+      "the authored road layer must join every territory into ONE board: " + JSON.stringify(v.roaded));
     need(v.self.r === true && v.self.seg === 0, "a depot-to-itself trace must resolve with zero segments");
     need(v.bogusTarget === "CT-03", "an unknown target must fall back to the authored theatre front");
     need(v.us.f === 7 && v.us.mix.rail === 1 && v.us.mix["inland-water"] === 0 && v.us.mix.sea === 0 && v.us.mix.road === 0,
       "the default US derivation moved: " + JSON.stringify(v.us));
-    return { components: v.comps, deterministic: true, services: 44, usFriction: 7 };
+    return { sourcedComponents: v.comps, roadedComponents: v.roaded, deterministic: true, baseServices: 61, sourcedServices: 44, usFriction: 7 };
   });
 
   await step("CF-2 MEMO: the cache equals a cold recompute, invalidates on a substrate swap, and is never state", () => {
@@ -287,7 +340,10 @@ try {
     const v = JSON.parse(run([
       "var view={id:'mayhem',version:1};",
       "_lgTraceMemo=null;",
-      "var cold=_lgTraceGraph(view);",
+      // D546: the memo now holds the sourced projection MERGED with the authored road graph, so
+      // the cold comparison is the same merged construction. Roads are static and control- and
+      // condition-independent, which is exactly the class the memo is contracted to hold.
+      "var cold=_lgTraceRoadAdj(_lgTraceGraph(view));",
       "var first=_lgTraceBase(view);",
       "var second=_lgTraceBase(view);",
       "var hitSameRecord=(first===second);",
@@ -430,12 +486,16 @@ try {
     return { capacity: [v.cap0, v.cap32, v.capMax], b5: [v.capHi, v.capMax, v.capLo], cleared: v.cleared, railCount: v.railCount, exhausted: v.repExhausted, resetWorks: v.spentReset === 0 };
   });
 
-  await step("BLOCKADE SEA EDGE (D544): an open runner port TRACES the CS coastal import, a sealed blockade SEVERS it, US is unaffected, and the read is pure", () => {
+  // D546: the step NAME is re-pinned with the tooth. It said a sealed blockade SEVERS the import,
+  // which was the pre-road truth; with the authored Carolina coastal road the seal now forces the
+  // dearer interior line instead. A green step whose name asserts the opposite of what it checks
+  // misleads every future reader of the log, so the name moves in the same commit as the assertion.
+  await step("BLOCKADE SEA EDGE (D544/D546): an open runner port TRACES the CS coastal import, a sealed blockade forces the dearer interior road and flags it, US is unaffected, and the read is pure", () => {
     const run = diskSeam();
     const v = JSON.parse(run([
       "function cs(ports){var C=mkConquest('CS','mayhem');if(ports!==undefined)C.blockade={portsOpen:ports};return C;}",
-      "function tr(C,t){var x=conquestSupplyTrace(C,t);return {s:x.supplyState,ap:x.applied,f:x.tracedFriction,by:x.severedBy,seg:x.segments.map(function(y){return y.id+':'+y.mode;}),depot:x.depot,reason:x.reason};}",
-      // Charleston is reachable ONLY through the sea edge CTS-S-01; the front CT-20 is import-sourced rail
+      "function tr(C,t){var x=conquestSupplyTrace(C,t);return {s:x.supplyState,ap:x.applied,f:x.tracedFriction,by:x.severedBy,imp:x.importClosed,seg:x.segments.map(function(y){return y.id+':'+y.mode;}),depot:x.depot,reason:x.reason};}",
+      // D546: Charleston is no longer sea-ONLY — the authored Carolina coastal road gives the interior a dearer alternative
       "var charOpen=tr(cs(4),'CT-11'),charSealed=tr(cs(0),'CT-11'),charDefault=tr(cs(),'CT-11');",
       "var westOpen=tr(cs(4),'CT-20'),westSealed=tr(cs(0),'CT-20');",
       // both directions: a reopened blockade restores the line
@@ -454,32 +514,64 @@ try {
       "var caps=_lgCfg().bridgeCaps,bo=logisticsBridgeBonus(active(cs(4))),bs=logisticsBridgeBonus(active(cs(0)));",
       "var capsOk=[bo,bs].every(function(b){return b.supply>=0&&b.supply<=caps.supply&&b.fatigueRelief>=0&&b.fatigueRelief<=caps.fatigueRelief&&b.overall>=0&&b.overall<=caps.overall;});",
       "return {charOpen:charOpen,charSealed:charSealed,charDefault:charDefault,westOpen:westOpen,westSealed:westSealed,reopened:reopened,",
-      " usSealed:usSealed.supplyState,usOpen:usOpen.supplyState,portLost:portLost,bad:bad,pure:pure,capsOk:capsOk};"
+      " usSealed:usSealed.supplyState,usOpen:usOpen.supplyState,usSealedF:usSealed.tracedFriction,usOpenF:usOpen.tracedFriction,",
+      " usModes:usSealed.segments.map(function(y){return y.mode;}),usImp:usSealed.importClosed,",
+      " portLost:portLost,bad:bad,pure:pure,capsOk:capsOk};"
     ].join("")));
     // Charleston, the sea-only target
     need(v.charOpen.s === "TRACED" && v.charOpen.ap === true && v.charOpen.f === 8
       && JSON.stringify(v.charOpen.seg) === JSON.stringify(["CTS-S-01:sea"]) && v.charOpen.depot === "CT-12",
       "an open blockade must TRACE the Charleston sea import via CTS-S-01: " + JSON.stringify(v.charOpen));
-    need(v.charSealed.s === "SEVERED" && v.charSealed.ap === true && v.charSealed.f === 40
-      && JSON.stringify(v.charSealed.by) === JSON.stringify(["CTS-S-01"]) && /blockade/i.test(v.charSealed.reason),
-      "a sealed blockade must SEVER the Charleston import at the ceiling and name the sea service: " + JSON.stringify(v.charSealed));
+    // D546 CONTRACTED RE-PIN. Before the road layer a sealed blockade left Charleston with no line
+    // at all, so it severed at the ceiling. The authored Carolina coastal road now gives the
+    // interior a real, dearer alternative, so sealing the ports moves the line from one sea segment
+    // at 8 to a four-segment interior haul at 19 and flags the closed import instead of severing.
+    // The lever still bites, and it now teaches the §5 point: the road is there, and it costs you.
+    need(v.charSealed.s === "TRACED" && v.charSealed.ap === true && v.charSealed.f === 19
+      && v.charSealed.depot === "CT-05" && v.charSealed.imp === true && /blockade/i.test(v.charSealed.reason),
+      "a sealed blockade must push the Charleston import onto the dearer interior road line and flag the closed import: " + JSON.stringify(v.charSealed));
+    need(v.charSealed.f > v.charOpen.f,
+      "sealing the blockade must still raise Charleston's friction: open " + v.charOpen.f + " vs sealed " + v.charSealed.f);
+    need(v.charSealed.seg.some(x => x.indexOf(":road") >= 0) && !v.charSealed.seg.some(x => x.indexOf(":sea") >= 0),
+      "the sealed-blockade fallback must run overland and use no sea segment: " + JSON.stringify(v.charSealed.seg));
     need(v.charDefault.s === "TRACED", "a CS carrier with no blockade state must default OPEN (the 1861 opening): " + JSON.stringify(v.charDefault));
     // the Western front, import-sourced rail from Savannah
-    need(v.westOpen.s === "TRACED" && v.westOpen.ap === true && v.westSealed.s === "SEVERED" && v.westSealed.f === 40,
-      "the Western front must TRACE from the coast when open and SEVER when the blockade seals: " + JSON.stringify([v.westOpen, v.westSealed]));
-    need(v.westSealed.f > v.westOpen.f, "sealing the blockade must raise the Western front's friction: " + v.westOpen.f + " -> " + v.westSealed.f);
+    // D546 CONTRACTED RE-PIN: the Great Valley road lets the interior depot reach Nashville
+    // overland, so the Western front is no longer import-sourced and the blockade cannot close it.
+    // That is the honest post-road result — the blockade shuts a COASTAL door, not an inland one.
+    need(v.westOpen.s === "TRACED" && v.westOpen.ap === true && v.westSealed.s === "TRACED"
+      && v.westSealed.f === v.westOpen.f,
+      "the Western front must trace overland in BOTH blockade states once the Great Valley road lands: " + JSON.stringify([v.westOpen, v.westSealed]));
+    need(v.westSealed.seg.some(x => x.indexOf(":road") >= 0),
+      "the Western front's overland line must actually use the authored road: " + JSON.stringify(v.westSealed.seg));
     // both directions
     need(v.reopened.s === "TRACED" && v.reopened.f === v.charOpen.f, "a reopened blockade must restore the traced import line: " + JSON.stringify(v.reopened));
     // US is never moved by the blockade
-    need(v.usSealed === "SUBSTRATE_GAP" && v.usOpen === "SUBSTRATE_GAP",
-      "the US side must never gain or lose a Confederate sea import: sealed " + v.usSealed + " open " + v.usOpen);
-    // losing the port removes the source
-    need(v.portLost.s === "SUBSTRATE_GAP" && v.portLost.depot === "CT-05",
-      "capturing the import port must remove it as a source, falling back to the interior depot: " + JSON.stringify(v.portLost));
+    // D546 CONTRACTED RE-PIN. The old fixture read SUBSTRATE_GAP because before the roads the Union
+    // could not reach Charleston at all. The LAW it was standing in for is what matters and is
+    // unchanged: the Confederate import edge is Confederate, so the blockade must move the US side
+    // by exactly nothing, and no US line may ever run over a sea segment or flag a closed import.
+    need(v.usSealed === v.usOpen && v.usSealedF === v.usOpenF,
+      "the blockade moved the US side: sealed " + v.usSealed + "/" + v.usSealedF + " open " + v.usOpen + "/" + v.usOpenF);
+    need(!v.usModes.some(m => m === "sea") && v.usImp === false,
+      "the US side gained a Confederate sea import: " + JSON.stringify(v.usModes) + " importClosed=" + v.usImp);
+    // Losing the port removes the source. D546 CONTRACTED RE-PIN: the fallback used to be a
+    // substrate gap because the interior could not reach the coast at all; the authored Carolina
+    // coastal road now carries it, dearer, so the fallback is a real interior line instead.
+    need(v.portLost.depot === "CT-05" && v.portLost.s === "TRACED"
+      && !v.portLost.seg.some(x => x.indexOf(":sea") >= 0) && v.portLost.f > v.charOpen.f,
+      "capturing the import port must remove it as a source, falling back to the dearer interior depot line: " + JSON.stringify(v.portLost));
     need(v.bad.s === "TRACED", "a malformed blockade payload must default OPEN, never crash or seal: " + JSON.stringify(v.bad));
     need(v.pure === true, "the sea-edge read mutated C.blockade or wrote into C.conquest — the path must be pure");
     need(v.capsOk === true, "a blockade state pushed the capped bridge outside the shipped caps");
-    return { charleston: [v.charOpen.f, v.charSealed.f], west: [v.westOpen.f, v.westSealed.f], usUnmoved: true, portLost: "SUBSTRATE_GAP", pureRead: true, capsHeld: true };
+    // D546: the reported value is MEASURED, not a literal. It was hardcoded "SUBSTRATE_GAP" from
+    // the Slice-4 build, so after this slice's re-pin the artifact recorded the exact opposite of
+    // what the assertion above it proved. A green artifact that contradicts its own tooth is worse
+    // than a red one, so the reported values now come from the measurement.
+    return { charleston: [v.charOpen.f, v.charSealed.f], charSealedImportClosed: v.charSealed.imp,
+      west: [v.westOpen.f, v.westSealed.f], usUnmoved: true,
+      portLost: { state: v.portLost.s, depot: v.portLost.depot, friction: v.portLost.f },
+      pureRead: true, capsHeld: true };
   });
 
   await step("SUBSTRATE IMMUTABILITY: tracing never writes the evidence pack, the board, or module 115", () => {
@@ -512,8 +604,15 @@ try {
     ].join("")));
     need(v.cti === false, "an interchange face leaked into the seam — CTI-01..CTI-04 stay unadjudicated");
     need(v.nl === false, "an explicit non-link leaked into the seam as a usable segment");
-    for (const forbidden of ["dateText", "historicalEligibility", "eligibility", "window", "roadService", "RD-", "legalNow", "availability"])
+    for (const forbidden of ["dateText", "historicalEligibility", "eligibility", "window", "roadService", "RD-E1", "legalNow", "availability"])
       need(v.text.indexOf(forbidden) < 0, "the seam manufactured a forbidden authority field: " + forbidden);
+    // D546 CONTRACTED RESHAPE, strictly tighter than the blanket "RD-" ban it replaces: Slice 5
+    // legitimately surfaces the two CURED road rows, so the rule is now that every road id the
+    // seam can emit is one of those two or the authored RDA- namespace, and never one of the four
+    // rows the road research left UNRESOLVED (still banned outright, above).
+    const emitted = [...new Set((v.text.match(/\b(?:RD-[A-Z]+\d\d|RDA-\d\d)\b/g) || []))];
+    for (const id of emitted)
+      need(/^RD-SI(06|13)$/.test(id) || /^RDA-\d\d$/.test(id), "the seam emitted an unauthorised road id: " + id);
     need(v.modes.every(m => m === "rail" || m === "inland-water" || m === "sea"), "a non-service mode entered the trace: " + JSON.stringify(v.modes));
     const src = read(SRC61);
     for (const forbidden of ["dateText", "historicalEligibility", "roadStatus", "interchanges", "nonLinks"])
@@ -659,13 +758,21 @@ try {
     const sealed = conquestSupplyTrace(cs(0), "CT-11");
     if (!open || open.supplyState !== "TRACED" || open.segments.length !== 1 || open.segments[0].id !== "CTS-S-01" || open.tracedFriction !== 8)
       throw new Error("in-page open blockade did not TRACE the Charleston sea import: " + JSON.stringify(open && { s: open.supplyState, f: open.tracedFriction }));
-    if (!sealed || sealed.supplyState !== "SEVERED" || sealed.tracedFriction !== 40 || sealed.severedBy[0] !== "CTS-S-01")
-      throw new Error("in-page sealed blockade did not SEVER the Charleston import: " + JSON.stringify(sealed && { s: sealed.supplyState, f: sealed.tracedFriction }));
+    // D546 contracted re-pin: the authored road gives the interior a dearer alternative, so sealing
+    // the ports pushes Charleston overland at higher friction and flags the closed import.
+    if (!sealed || sealed.supplyState !== "TRACED" || sealed.tracedFriction !== 19 || sealed.importClosed !== true
+      || sealed.depot !== "CT-05" || !sealed.segments.some(x => x.mode === "road") || sealed.segments.some(x => x.mode === "sea"))
+      throw new Error("in-page sealed blockade did not push the Charleston import onto the interior road: " + JSON.stringify(sealed && { s: sealed.supplyState, f: sealed.tracedFriction, imp: sealed.importClosed }));
+    if (!(sealed.tracedFriction > open.tracedFriction))
+      throw new Error("in-page sealing the blockade did not raise Charleston friction");
     const westOpen = conquestSupplyTrace(cs(4), "CT-20"), westSealed = conquestSupplyTrace(cs(0), "CT-20");
-    if (westOpen.supplyState !== "TRACED" || westSealed.supplyState !== "SEVERED" || !(westSealed.tracedFriction > westOpen.tracedFriction))
-      throw new Error("in-page Western front did not move with the blockade");
+    if (westOpen.supplyState !== "TRACED" || westSealed.supplyState !== "TRACED" || westSealed.tracedFriction !== westOpen.tracedFriction)
+      throw new Error("in-page Western front must trace overland in both blockade states once the road lands");
     const usSealed = conquestSupplyTrace({ side: "US", campaignKind: { id: "conquest", version: 1 }, ruleset: { id: "mayhem", version: 1 }, conquest: {}, blockade: { portsOpen: 0 } }, "CT-11");
-    if (usSealed.supplyState !== "SUBSTRATE_GAP") throw new Error("in-page US side gained a Confederate sea import");
+    const usOpenPage = conquestSupplyTrace({ side: "US", campaignKind: { id: "conquest", version: 1 }, ruleset: { id: "mayhem", version: 1 }, conquest: {}, blockade: { portsOpen: 4 } }, "CT-11");
+    if (usSealed.supplyState !== usOpenPage.supplyState || usSealed.tracedFriction !== usOpenPage.tracedFriction
+      || usSealed.segments.some(x => x.mode === "sea") || usSealed.importClosed !== false)
+      throw new Error("in-page US side moved with the Confederate blockade: " + JSON.stringify({ s: usSealed.supplyState, f: usSealed.tracedFriction, imp: usSealed.importClosed }));
     return { open: open.tracedFriction, sealed: sealed.tracedFriction, west: [westOpen.tracedFriction, westSealed.tracedFriction], usUnmoved: true };
   }));
 

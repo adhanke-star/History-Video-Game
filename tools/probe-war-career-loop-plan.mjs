@@ -947,7 +947,8 @@ step("SLICE C RUNTIME STILL LOCKED", () => {
 // for existing src/61-logistics-rail.js only; War Career runtime/journey/command/focused/data/manifest/suite hold.
 // D542 re-pin: LANE-022 Slice 3 (repair + finite engineering capacity) moves srcTree 5f6d3332 -> c4fc64eb for existing src/61-logistics-rail.js only; War Career runtime/journey/command/focused/data/manifest/suite hold.
 // D544 re-pin: LANE-022 Slice 4 (blockade / sea edge) moves srcTree c4fc64eb -> 7bcb0579 for existing src/61-logistics-rail.js only; War Career runtime/journey/command/focused/data/manifest/suite hold.
-srcTree:"7bcb0579d4e432950897500e7f0e5846",
+// D546 re-pin: LANE-022 Slice 5 (the authored Mayhem road layer) moves srcTree 7bcb0579 -> ad0b2811 for existing src/61-logistics-rail.js only; War Career runtime/journey/command/focused/data/manifest/suite hold.
+srcTree:"ad0b2811db8e8323fdb70438c84893a4",
     runtime:"dfee8d9c3a6b8c8caa414366302214a7",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;
@@ -1342,7 +1343,8 @@ step("BASELINES + LANE", () => {
 // War Career runtime/journey/focused remain exact.
 // D542 re-pin: LANE-022 Slice 3 (repair + finite engineering capacity) moves game 4764b1fc -> 98f3feaf for existing src/61-logistics-rail.js only; War Career runtime/journey/focused remain exact.
 // D544 re-pin: LANE-022 Slice 4 (blockade / sea edge) moves game 98f3feaf -> 0a5286c3 for existing src/61-logistics-rail.js only; War Career runtime/journey/focused remain exact.
-    game:"0a5286c3b79c8011a6903ceb23772d80",
+// D546 re-pin: LANE-022 Slice 5 (the authored Mayhem road layer) moves game 0a5286c3 -> 77d96c43 for existing src/61-logistics-rail.js only; War Career runtime/journey/focused remain exact.
+    game:"77d96c4384cc5c818efe5f296a3c4e21",
     base:"c9db83fa99230ffb95bdfdfe059f3fb9",
     // D478 re-pin: dataTree 4bbdebe5 -> b3b323fa (LANE-017 slice 1: rarity glyphs + reserved tier
     // hexes + rungTiers in data/loot-survival.json — presentation data only, no war-career data).
@@ -1826,7 +1828,8 @@ step("REACHABILITY BASELINES", () => {
 // War Career runtime/journey/focused remain exact.
 // D542 re-pin: LANE-022 Slice 3 (repair + finite engineering capacity) moves game 4764b1fc -> 98f3feaf for existing src/61-logistics-rail.js only; War Career runtime/journey/focused remain exact.
 // D544 re-pin: LANE-022 Slice 4 (blockade / sea edge) moves game 98f3feaf -> 0a5286c3 for existing src/61-logistics-rail.js only; War Career runtime/journey/focused remain exact.
-    game:"0a5286c3b79c8011a6903ceb23772d80",
+// D546 re-pin: LANE-022 Slice 5 (the authored Mayhem road layer) moves game 0a5286c3 -> 77d96c43 for existing src/61-logistics-rail.js only; War Career runtime/journey/focused remain exact.
+    game:"77d96c4384cc5c818efe5f296a3c4e21",
     dataTree:"2e9e4df430eaaaeca4ce6f58f51a3b2e",
         // D484 re-pin (LANE-017 slice 6, soldier-tier badges SS4d.3): game e7ff100e -> e99e6ac5 · dataTree 00f8c1fe -> c3c28fd6 (data/ratings.json gains soldierBadgeDefs 14 + soldierBadges 48 rows on 39 Verified carriers + _soldierBadgeNote) · srcTree 15570ebc -> d79696ce (T14 soldier-badge accessors + the fldSoldierBadgeFactor capped gateway; src/37 cwCareerBadges/cwSoldierBadgeRows/_ssSoldierBadgesHTML register/journey chips; the src/22 comment-token reword — the D482 class, fifth instance) · journey 1689c4a2 -> 9655bfff (src/37) · focused 65e9c873 -> e2acf99a (probe-war-career gains the D484 career-badge step; the stale 138 suite.expected DISPLAY fields aligned to the 140 teeth). Presentation + data + the capped gateway only — no combat line consumes the keys, sim inputs did not move; both binds md5-proven; base/manifest/suite/runtime/command hold.
     // D486 re-pin (LANE-017 slice 8): srcTree b7648a67 -> 8174d79d (src/37 sets/salvage/
@@ -1853,7 +1856,8 @@ step("REACHABILITY BASELINES", () => {
 // for existing src/61-logistics-rail.js only; War Career runtime/journey/command/focused/data/manifest/suite hold.
 // D542 re-pin: LANE-022 Slice 3 (repair + finite engineering capacity) moves srcTree 5f6d3332 -> c4fc64eb for existing src/61-logistics-rail.js only; War Career runtime/journey/command/focused/data/manifest/suite hold.
 // D544 re-pin: LANE-022 Slice 4 (blockade / sea edge) moves srcTree c4fc64eb -> 7bcb0579 for existing src/61-logistics-rail.js only; War Career runtime/journey/command/focused/data/manifest/suite hold.
-srcTree:"7bcb0579d4e432950897500e7f0e5846",
+// D546 re-pin: LANE-022 Slice 5 (the authored Mayhem road layer) moves srcTree 7bcb0579 -> ad0b2811 for existing src/61-logistics-rail.js only; War Career runtime/journey/command/focused/data/manifest/suite hold.
+srcTree:"ad0b2811db8e8323fdb70438c84893a4",
     runtime:"dfee8d9c3a6b8c8caa414366302214a7",
     // D478 re-pin: journey 25c1226e -> a527600d (LANE-017 slice 1 adds the cwTierInfo/cwRungTierInfo
     // one-rarity-language helpers + the glyph-redundant card chip to src/37 — presentation-only;

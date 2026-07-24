@@ -122,7 +122,24 @@ step("LANE-022 carries the complete D538 Slice-1 acceptance contract", () => {
     "sea-import-port source model",
     "_lgSeaImportOpen",
     "C.blockade.portsOpen",
-    "CTS-S-01"
+    "CTS-S-01",
+    // D546 Slice-5 contract clauses
+    "D546 exact Slice-5 objective:",
+    "D546 exact Slice-5 seam",
+    "D546 Slice-5 authored Mayhem content",
+    "D546 Slice-5 sourced seeds",
+    "D546 Slice-5 authored network",
+    "D546 exact Slice-5 source-selection amendment",
+    "D546 exact Slice-5 cut/repair law",
+    "D546 Slice-5 save law",
+    "D546 exact Slice-5 containment seam (the declared bind target):",
+    "D546 Slice-5 mode-economics law",
+    "D546 Slice-5 probe design",
+    "D546 Slice-5 gate contract:",
+    "_LG_ROADS",
+    "RD-SI06",
+    "RD-SI13",
+    "NO board endpoints and therefore NO edge"
   ]) need(LANE.includes(token.split("\n")[0]), "LANE-022 contract clause missing: " + token.replace(/\n\s*/g, " "));
   need(/which artery do you restore/.test(LANE.replace(/\s+/g, " ")),
     "the Slice-3 finite-capacity standing decision is not contracted in the lane");
@@ -153,9 +170,9 @@ step("the authored Mayhem content lives ONLY in the seam and never in sourced da
   // D540 re-anchor: Slice 2 adds the severed ceiling and the authored opening control map, and the
   // derived friction is now CONSUMED, so the "unconsumed" marker is retired rather than carried stale.
   const authored = ["_LG_TRACE_RULESETS", "_LG_TRACE_DEPOT", "_LG_TRACE_FRONT", "_LG_TRACE_COST",
-    "_LG_SUPPLY_SEVERED", "_LG_SUPPLY_OPENING", "_LG_SUPPLY_SCHEMA", "_LG_REPAIR"];   // D542: + _LG_REPAIR
+    "_LG_SUPPLY_SEVERED", "_LG_SUPPLY_OPENING", "_LG_SUPPLY_SCHEMA", "_LG_REPAIR", "_LG_ROADS"];   // D542: + _LG_REPAIR; D546: + _LG_ROADS
   for (const sym of authored) need(count(SRC61, "var " + sym + " =") === 1, "authored constant not declared exactly once: " + sym);
-  need(count(SRC61, "authored, not sourced") === 6 && count(SRC61, "authored, unconsumed") === 0,   // D542: 5 -> 6 (the repair config constant)
+  need(count(SRC61, "authored, not sourced") === 7 && count(SRC61, "authored, unconsumed") === 0,   // D542: 5 -> 6 (the repair config constant); D546: 6 -> 7 (the authored road layer)
     "the authored-vs-sourced provenance markers moved in the seam");
   const opening = (SRC61.match(/"CT-\d\d": "(US|CS)"/g) || []);
   need(opening.length === 28 && opening.filter(r => r.endsWith('"US"')).length === 4,
@@ -189,8 +206,24 @@ step("the immutable read-only substrate is byte-unchanged and its Historical neg
 
 step("Slice 1 creates no Historical authority and parses no qualitative date", () => {
   for (const forbidden of ["dateText", "historicalEligibility", "roadStatus", "roadServices", "interchanges",
-    "nonLinks", "PHYSICAL_WINDOW", "INTERCHANGE_WINDOW", "RD-SI", "RD-E1"])
+    "nonLinks", "PHYSICAL_WINDOW", "INTERCHANGE_WINDOW", "RD-E1"])
     need(!SRC61.includes(forbidden), "the seam reads or manufactures a Historical authority: " + forbidden);
+  // D546 CONTRACTED RESHAPE, strictly tighter than the blanket "RD-SI" ban it replaces. Slice 5
+  // legitimately authors the TWO cured road rows as sourced Mayhem exemplars, so a bare-token ban
+  // can no longer express the rule. What must hold is that the seam names ONLY those two cured ids
+  // and the authored RDA- namespace, never one of the four rows the road research left UNRESOLVED,
+  // and that every road id it names is declared inside the authored road constant.
+  const roadIds = [...new Set((SRC61.match(/\b(?:RD-SI\d\d|RDA-\d\d)\b/g) || []))].sort();
+  const cured = roadIds.filter(id => id.startsWith("RD-SI"));
+  need(JSON.stringify(cured) === JSON.stringify(["RD-SI06", "RD-SI13"]),
+    "the seam names a sourced road row that is not one of the two D532-cured rows: " + JSON.stringify(cured));
+  for (const id of roadIds)
+    need(new RegExp('id: "' + id + '"').test(SRC61), "road id " + id + " is used but never declared in the authored road constant");
+  const provVerified = count(SRC61, 'provenance: "Verified"'), provAuthored = count(SRC61, 'provenance: "Authored"');
+  need(provVerified === 2 && provAuthored === 15,
+    "the authored-vs-sourced road split moved: " + provVerified + " sourced / " + provAuthored + " authored");
+  need(count(SRC61, 'source: "Official Records Series I, vol. 47, pt. I') === 2,
+    "the two sourced road exemplars must each carry an exact Official Records locator");
   need(DEC.includes("## D526 — NEEDS_PHYSICAL_WINDOW_ADJUDICATION:"), "the D526 parser negative is missing");
   need(/Fort Fisher/.test(DEC.slice(0, DEC.indexOf("## D536 —"))), "the Fort Fisher counterexample is missing from the live D537/D538 record");
   need(/D528[\s\S]{0,400}0 established/.test(LANE.replace(/\s+/g, " ")) || /rail 0\/19\/7\/1/.test(LANE),
@@ -277,7 +310,26 @@ step("every generated-game hash pin equals the built deliverable on disk", () =>
   const src = [];
   for (const hit of read("tools/probe-war-career-loop-plan.mjs").matchAll(/srcTree\s*:\s*"([0-9a-f]{32})"/g)) src.push(hit[1]);
   need(src.length === 2 && src[0] === src[1], "the two srcTree pins disagree or moved");
-  return { game, gamePinSites: 3, srcTreePinSites: 2 };
+  // D546 HARDENING, forced by a real defect this slice's gates caught. The generated-game pin above
+  // is verified against the built deliverable, but the srcTree pin was only ever checked against
+  // ITSELF — so a re-pin computed from a superseded draft of a source file stayed green here and
+  // redded only downstream in probe-war-career-loop-plan. That is exactly backwards: this is the
+  // LANE-022 pin-integrity tooth. It now verifies srcTree against the live src/ tree the same way,
+  // using the identical path+content walk probe-war-career-loop-plan pins with.
+  const srcTree = (() => {
+    const hash = createHash("md5");
+    (function walk(dir, prefix) {
+      for (const entry of readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+        const relative = prefix ? prefix + "/" + entry.name : entry.name;
+        const full = join(dir, entry.name);
+        if (entry.isDirectory()) walk(full, relative);
+        else { hash.update(relative); hash.update("\0"); hash.update(readFileSync(full)); hash.update("\0"); }
+      }
+    })(join(ROOT, "src"), "");
+    return hash.digest("hex");
+  })();
+  need(src[0] === srcTree, "the srcTree pin is " + src[0] + " but the live src/ tree hashes to " + srcTree);
+  return { game, gamePinSites: 3, srcTree, srcTreePinSites: 2 };
 });
 
 const failed = steps.filter(s => !s.ok);

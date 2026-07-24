@@ -94,6 +94,23 @@ function _lgBattle(C) {
    line stay byte-identical. It READS the shipped blockade STATE only and rides the
    existing blockade save envelope, so no field is added to C.conquest and the save
    shape does not move.
+
+   Slice 5 authors the road layer, and with it the substrate finally becomes one
+   board. Five research passes established no road service the sourced side may
+   carry, so the evidence projects eleven disconnected islands and most fronts have
+   no line at all. Roads close that, because roads are the one mode that always
+   existed: everywhere in America was reachable by wagon in 1861, which is exactly
+   why armies fought so hard for the railroads instead. So the authored network is
+   deliberately the WORST mode to use, at cost 6 a segment against rail's 3 and the
+   river's 2, and a long haul by road runs up against the severed ceiling on its own.
+   That is the whole teaching: the road is always there, and it is always the answer
+   you did not want. Two rows are different in kind — the two claim-specific gaps the
+   road research CURED ship as sourced, labelled exemplars of roads FAILING, each
+   re-verified against the original Official Records text under a default-refute pass
+   before it was written here. One of them anchors to no board territory at either
+   end, so it carries no endpoints and projects no edge rather than being forced onto
+   geography its source does not support; a row that names one place and projects
+   nothing is the substrate's own shipped behaviour, so that needs no new mechanism.
    ------------------------------------------------------------------------ */
 
 var _LG_TRACE_RULESETS = { mayhem: 1 };                                            // LANE022_CONTAINMENT_ALLOWLIST
@@ -123,7 +140,84 @@ var _LG_SUPPLY_OPENING = {                                                      
    water crossing (pontoon work) dearer than a rail line. Openly authored Mayhem
    content for the open ruleset only, exactly like the D539/D540 constants. */
 var _LG_REPAIR = { base: 4, perConstruction: 6, perPontoon: 5, cap: 40,               // authored, not sourced
-  cost: { rail: 4, "inland-water": 6, sea: 9 }, costDefault: 5, realismLo: 0.6, realismHi: 1.4 };
+  cost: { rail: 4, "inland-water": 6, sea: 9, road: 3 }, costDefault: 5, realismLo: 0.6, realismHi: 1.4 };
+
+/* Slice 5 (D546) THE AUTHORED MAYHEM ROAD LAYER. Five research passes established no road
+   service the sourced side may carry, so the substrate projects eleven disconnected islands and
+   most fronts have no line at all. Roads close that, because roads are the one mode that always
+   existed: every place in America was reachable by wagon in 1861, which is precisely why armies
+   fought so hard for the railroads instead. So the network below is authored Mayhem content, and
+   it is deliberately the WORST mode to use — cost 6 a segment against rail's 3 and river's 2, so
+   a long haul by road approaches the severed ceiling on its own and the standing question stays
+   the real one: restore the artery, or accept the long way round?
+
+   TWO rows are different. RD-SI06 and RD-SI13 are the two claim-specific road gaps D532 CURED,
+   and they ship here as sourced, labelled exemplars of roads FAILING — the only citation-grade
+   road evidence five passes produced. Each was re-verified against the original Official Records
+   text under a default-refute pass before it was written here, which corrected four wordings the
+   design law had drifted on and REFUTED a fifth reading outright: RD-SI13's documented route runs
+   from the South Carolina Pee Dee interior toward the Cape Fear, and neither end anchors to a
+   board territory, so it carries NO endpoints and projects NO edge rather than being forced onto
+   geography it does not support. A row with no endpoints projecting no edge is the substrate's
+   own shipped behaviour, so it needs no new mechanism.
+
+   The ids matter: for one destination the shipped comparator orders by id, and every sourced
+   CTS-* sorts ahead of every RD-* and RDA-*, so a road can never displace an equal-hop sourced
+   segment and every route the earlier slices shipped is untouched. */
+var _LG_ROADS = [                                                                  // authored, not sourced
+  { id: "RD-SI06", from: "CT-12", to: "CT-11", provenance: "Verified",
+    label: "Robertsville to the Salkehatchie, Corse's Fourth Division, 5-11 February 1865",
+    source: "Official Records Series I, vol. 47, pt. I, No. 32 (Bvt. Maj. Gen. John M. Corse,"
+      + " Fourth Division, XV Corps), pp. 337-338; corroborated at a second echelon by ibid.,"
+      + " No. 11 (Maj. Gen. John A. Logan, XV Corps), pp. 224-225.",
+    teaching: "Corse's division crossed the Savannah and marched on roads that, in his own words,"
+      + " would under other circumstances have been looked upon as almost impassable. The whole"
+      + " division was organised into a temporary pioneer corps; men marched for miles with fence"
+      + " rails on their shoulders to corduroy the swamps and quicksand roads before a wagon could"
+      + " pass over them, working in water to their waists, worst of all at Whippy Swamp. On"
+      + " 11 February the column waited on the pontoons to cross the South Edisto at Binnaker's"
+      + " Bridge. This is what a road cost when it was the only thing left." },
+  { id: "RD-SI13", from: null, to: null, provenance: "Verified",
+    label: "Laurel Hill to Johnson's plantation, the same division, 9 March 1865",
+    source: "Official Records Series I, vol. 47, pt. I, No. 32 (Corse), p. 340; corroborated by"
+      + " the Cornelius C. Platter diary, 9 March 1865 (Hargrett MS 2570, Digital Library of"
+      + " Georgia dlg_zlpd_ccp001).",
+    teaching: "The same division made Laurel Hill by the telegraph road at ten in the morning and"
+      + " was still marching at midnight. A violent rain-storm ran nearly the whole day, the roads"
+      + " flooded and turned almost impassable, and men and animals were completely exhausted when"
+      + " Corse finally halted them at Johnson's plantation. A road good at breakfast could be"
+      + " gone by dark; that is the difference between a road and a railway." },
+  { id: "RDA-01", from: "CT-03", to: "CT-05", provenance: "Authored",
+    label: "the Fredericksburg and Telegraph road" },
+  { id: "RDA-02", from: "CT-04", to: "CT-07", provenance: "Authored",
+    label: "the Valley Pike to Staunton and the Lynchburg road" },
+  { id: "RDA-03", from: "CT-05", to: "CT-08", provenance: "Authored",
+    label: "the Peninsula roads" },
+  { id: "RDA-04", from: "CT-07", to: "CT-21", provenance: "Authored",
+    label: "the Great Valley road through southwest Virginia" },
+  { id: "RDA-05", from: "CT-10", to: "CT-11", provenance: "Authored",
+    label: "the Carolina coastal road" },
+  { id: "RDA-06", from: "CT-25", to: "CT-34", provenance: "Authored",
+    label: "the Monroe road, the Trans-Mississippi lifeline" },
+  { id: "RDA-07", from: "CT-34", to: "CT-33", provenance: "Authored",
+    label: "the Red River valley road" },
+  { id: "RDA-08", from: "CT-34", to: "CT-35", provenance: "Authored",
+    label: "the Shreveport and Marshall road" },
+  { id: "RDA-09", from: "CT-34", to: "CT-32", provenance: "Authored",
+    label: "the Camden road to Little Rock" },
+  { id: "RDA-10", from: "CT-32", to: "CT-31", provenance: "Authored",
+    label: "the Arkansas River road" },
+  { id: "RDA-11", from: "CT-32", to: "CT-30", provenance: "Authored",
+    label: "the Wire Road" },
+  { id: "RDA-12", from: "CT-30", to: "CT-29", provenance: "Authored",
+    label: "the Rolla road" },
+  { id: "RDA-13", from: "CT-29", to: "CT-19", provenance: "Authored",
+    label: "the Cape Girardeau road" },
+  { id: "RDA-14", from: "CT-02", to: "CT-18", provenance: "Authored",
+    label: "the National Road over the Alleghenies" },
+  { id: "RDA-15", from: "CT-18", to: "CT-19", provenance: "Authored",
+    label: "the Ohio valley road" }
+];
 
 function _lgConquestKind(C) {
   var k = C && C.campaignKind;
@@ -182,6 +276,43 @@ function _lgTraceProject(pack) {
   return adj;
 }
 
+/* Slice 5 (D546). Merges the authored road graph into a SOURCED projection and returns a
+   NEW adjacency; the sourced projection is never mutated, so _lgTraceProject and
+   _lgTraceGraph remain the untouched proof that the evidence substrate is eleven
+   components and 44 services. A row with no endpoints projects no edge. Roads run both
+   ways. Every touched neighbour list is re-sorted with the shipped comparator, whose id
+   ordering puts every sourced service ahead of every road for one destination, so a road
+   can never displace an equal-hop sourced segment and every earlier slice's route stands. */
+function _lgTraceRoadAdj(adj) {
+  var out = {}, own = Object.prototype.hasOwnProperty, touched = {}, k, i, r;
+  for (k in adj) if (own.call(adj, k)) out[k] = adj[k].slice();
+  for (i = 0; i < _LG_ROADS.length; i++) {
+    r = _LG_ROADS[i];
+    if (typeof r.from !== "string" || typeof r.to !== "string") continue;
+    if (!out[r.from]) out[r.from] = [];
+    if (!out[r.to]) out[r.to] = [];
+    out[r.from].push({ to: r.to, id: r.id, mode: "road" });
+    out[r.to].push({ to: r.from, id: r.id, mode: "road" });
+    touched[r.from] = 1; touched[r.to] = 1;
+  }
+  for (k in touched) if (own.call(touched, k)) out[k].sort(_lgTraceEdgeOrder);
+  return out;
+}
+
+function _lgRoadById(id) {
+  for (var i = 0; i < _LG_ROADS.length; i++) if (_LG_ROADS[i].id === id) return _LG_ROADS[i];
+  return null;
+}
+
+function _lgTraceCost(segments) {
+  var c = 0, i, m;
+  for (i = 0; i < segments.length; i++) {
+    m = segments[i].mode;
+    c += (typeof _LG_TRACE_COST[m] === "number") ? _LG_TRACE_COST[m] : _LG_TRACE_COST.road;
+  }
+  return c;
+}
+
 function _lgTracePack(view) {
   if (typeof conquestTransportPhysicalServices !== "function") return null;
   var pack = conquestTransportPhysicalServices(view);
@@ -226,9 +357,15 @@ function _lgTraceBase(view) {
   if (!board || !Array.isArray(board.territories) || board.territories.length !== 36) return null;
   for (i = 0; i < board.territories.length; i++) names[board.territories[i].id] = board.territories[i].name;
   for (i = 0; i < pack.services.length; i++) if (pack.services[i] && pack.services[i].id) services[pack.services[i].id] = pack.services[i].mode;
+  /* Slice 5 (D546). The authored road graph is static and depends on neither control nor
+     service condition, so it belongs in the control-INDEPENDENT base projection the memo
+     is contracted to hold — a conscious decision, and the memo-equals-cold tooth proves it
+     against this same merged construction. Every road row is registered as a service so a
+     road can be cut and repaired through the shipped Slice-2/Slice-3 mechanism. */
+  for (i = 0; i < _LG_ROADS.length; i++) services[_LG_ROADS[i].id] = "road";
   memo = {
     rulesetId: view.id, evidence: evidence, territories: territories,
-    adj: _lgTraceFreeze(_lgTraceProject(pack)), names: _lgTraceFreeze(names), services: _lgTraceFreeze(services)
+    adj: _lgTraceFreeze(_lgTraceRoadAdj(_lgTraceProject(pack))), names: _lgTraceFreeze(names), services: _lgTraceFreeze(services)
   };
   _lgTraceMemo = memo;
   return memo;
@@ -309,7 +446,11 @@ function _lgSupplyView(C) {
     }
     if (ok && rk) {
       keys = Object.keys(rk);
-      for (i = 0; i < keys.length; i++) if (!/^CTS-[RWS]-\d\d$/.test(keys[i]) || rk[keys[i]] !== 1) { ok = false; break; }
+      // Slice 5 (D546): the accepted id set widens to the authored road namespace so a road
+      // can be cut and cleared through the SAME shipped map. Nothing else about the
+      // sanitizer moves: it still fails CLOSED, and the mutator still refuses any id that
+      // is not a service in the base projection.
+      for (i = 0; i < keys.length; i++) if (!/^(?:CTS-[RWS]-\d\d|RD-SI\d\d|RDA-\d\d)$/.test(keys[i]) || rk[keys[i]] !== 1) { ok = false; break; }
     }
     if (ok) {
       adopted = true;
@@ -460,16 +601,39 @@ function conquestSupplyTrace(C, targetId) {
     oks = Object.keys(origin).sort();
     for (i = 0; i < oks.length; i++) if (own.call(names, oks[i]) && state.control[oks[i]] !== foe) sources.push({ id: oks[i], sea: true });
   }
-  var chosen = sources[0], openWalk = null, srcK, srcWalk;
+  /* Slice 5 (D546) amends the Slice-4 source rule. Depot-preferred first-wins was
+     byte-identity scaffolding while the depot reached almost nothing; once the roads
+     join the board it reaches nearly everything, and first-wins would then pick a
+     STRICTLY WORSE line — measured, it drops the Charleston import from one sea
+     segment to a four-segment interior road and quietly kills the blockade lever.
+     So: among the sources that can ACTUALLY source (the interior depot always, a
+     coastal port only while the blockade is open) take the cheapest open walk, the
+     depot winning ties because it is first. A source the blockade has closed is held
+     aside, so a genuinely sea-only front still SEVERS on the blockade instead of
+     degrading to a substrate gap, and when a closed import would have been cheaper
+     than the interior line actually used we say so rather than letting the player
+     wonder why the haul got long. */
+  var portsOpen = _lgSeaImportOpen(C);
+  var chosen = null, openWalk = null, bestCost = null;
+  var shutSrc = null, shutWalk = null, shutCost = null, srcK, srcWalk, srcCost;
   for (srcK = 0; srcK < sources.length; srcK++) {
     srcWalk = _lgTraceWalk(base.adj, sources[srcK].id, target, null);
-    if (srcWalk.reachable) { chosen = sources[srcK]; openWalk = srcWalk; break; }
+    if (!srcWalk.reachable) continue;
+    srcCost = _lgTraceCost(srcWalk.segments);
+    if (sources[srcK].sea && !portsOpen) {
+      if (shutCost === null || srcCost < shutCost) { shutCost = srcCost; shutSrc = sources[srcK]; shutWalk = srcWalk; }
+      continue;
+    }
+    if (bestCost === null || srcCost < bestCost) { bestCost = srcCost; chosen = sources[srcK]; openWalk = srcWalk; }
   }
-  if (!openWalk) openWalk = _lgTraceWalk(base.adj, chosen.id, target, null);
+  var importClosed = false;
+  if (!chosen && shutSrc) { chosen = shutSrc; openWalk = shutWalk; }
+  else if (chosen && shutSrc && shutCost < bestCost) importClosed = true;
+  if (!chosen) { chosen = sources[0]; openWalk = _lgTraceWalk(base.adj, chosen.id, target, null); }
   var depot = chosen.id;
   /* The shipped blockade lever gates a sea-import source only: an open runner port
      lands supply, a sealed blockade lands nothing. The interior depot is never gated. */
-  var seaOpen = chosen.sea ? _lgSeaImportOpen(C) : true;
+  var seaOpen = chosen.sea ? portsOpen : true;
   var depotHeld = state.control[depot] !== foe;
   var liveWalk = (depotHeld && seaOpen) ? _lgTraceWalk(base.adj, depot, target, blocked)
     : { reachable: false, segments: [], territories: [depot], reached: 1 };
@@ -477,14 +641,18 @@ function conquestSupplyTrace(C, targetId) {
   var walk, applied, supplyState, severedBy = [], reason, friction;
   if (!openWalk.reachable) {
     walk = openWalk; applied = false; supplyState = "SUBSTRATE_GAP";
-    reason = "No sourced rail, river or coastal service links " + names[depot] + " to " + names[target]
-      + ". Wagon trains carried routes like this one throughout the war, and the authored Mayhem road"
-      + " network is not built yet, so supply keeps its shipped value here instead of being penalised"
-      + " for a gap in our own evidence. Building that road layer is what closes this.";
+    reason = "Neither a sourced rail, river or coastal service nor an authored road links "
+      + names[depot] + " to " + names[target]
+      + ". Wagon trains carried routes like this one throughout the war, so supply keeps its shipped"
+      + " value here instead of being penalised for a hole nobody in this campaign dug.";
   } else if (liveWalk.reachable) {
     walk = liveWalk; applied = true; supplyState = "TRACED";
     reason = "Supply runs " + walk.segments.length + (walk.segments.length === 1 ? " segment" : " segments")
       + " from " + names[depot] + " to " + names[target] + ".";
+    if (importClosed) {
+      reason += " The blockade has sealed the coastal ports, so the shorter run by sea is shut and"
+        + " the army is on the long interior line instead.";
+    }
   } else if (chosen.sea && !seaOpen) {
     /* Slice 4 (D544): the coastal import that fed this front is sealed by the
        blockade. Name the closed sea service(s) at the port so the player sees the
@@ -505,10 +673,7 @@ function conquestSupplyTrace(C, targetId) {
          + ". Until it is restored the army falls back on wagon roads, which is slower and carries far less.")
       : (names[depot] + " is in enemy hands, so nothing moves forward from the depot at all.");
   }
-  for (i = 0; i < walk.segments.length; i++) {
-    m = walk.segments[i].mode;
-    cost += (typeof _LG_TRACE_COST[m] === "number") ? _LG_TRACE_COST[m] : _LG_TRACE_COST.road;
-  }
+  cost = _lgTraceCost(walk.segments);
   var mix = { rail: 0, "inland-water": 0, sea: 0, road: 0 };
   for (i = 0; i < walk.segments.length; i++) {
     m = walk.segments[i].mode;
@@ -536,6 +701,7 @@ function conquestSupplyTrace(C, targetId) {
     segmentCount: walk.segments.length,
     reachedCount: walk.reached,
     severedBy: severedBy,
+    importClosed: importClosed,
     cutCount: state.cutCount,
     tracedFriction: _lgClamp(friction, 0, 100),
     label: names[depot] + " to " + names[target]
@@ -634,6 +800,26 @@ function _lgSupplyBlockHTML(C) {
   for (i = 0; i < t.segments.length; i++) {
     chain += (i ? " &rarr; " : "") + htmlEsc(t.segments[i].id) + ' <span style="opacity:.6">(' + htmlEsc(t.segments[i].mode) + ')</span>';
   }
+  /* Slice 5 (D546): when the line actually uses a road, say so, and when that road is
+     one of the two sourced exemplars, teach what the record says it cost. Presentation
+     only — every value here is read from the frozen trace. */
+  var roadHTML = "", roadUsed = 0, rd, j;
+  for (i = 0; i < t.segments.length; i++) {
+    if (t.segments[i].mode !== "road") continue;
+    roadUsed++;
+    rd = _lgRoadById(t.segments[i].id);
+    if (!rd) continue;
+    roadHTML += '<div style="font-size:11px;opacity:.78;margin-top:3px">&bull; <b>' + htmlEsc(rd.id) + '</b> &mdash; '
+      + htmlEsc(rd.label || "") + ' <span style="opacity:.65">(' + htmlEsc(rd.provenance === "Verified" ? "sourced exemplar" : "authored game content") + ')</span>'
+      + (rd.teaching ? '<div style="margin-top:2px;opacity:.9">' + htmlEsc(rd.teaching) + '</div>' : '')
+      + (rd.source ? '<div style="margin-top:2px;opacity:.6">' + htmlEsc(rd.source) + '</div>' : '') + '</div>';
+  }
+  if (roadUsed) {
+    roadHTML = '<div style="margin-top:6px;padding-top:6px;border-top:1px dashed var(--rule)">'
+      + '<div style="font-size:11px;font-weight:bold">Wagon road &middot; ' + _lgRound(roadUsed)
+      + (roadUsed === 1 ? ' segment' : ' segments') + ' of this line runs by road, the slowest and dearest way to move an army</div>'
+      + roadHTML + '</div>';
+  }
   /* Slice 3 (D542): when the map has cuts, teach the standing decision — the pass
      capacity, how many arteries are restorable now, and WHY each cut can or cannot
      be cleared. Presentation only; conquestSupplyRepairReport is a pure read. */
@@ -665,6 +851,7 @@ function _lgSupplyBlockHTML(C) {
     + (chain ? '<div style="font-size:11px;opacity:.8;margin-top:4px">' + chain + '</div>' : '')
     + '<div style="font-size:11px;opacity:.72;margin-top:4px">' + htmlEsc(t.reason) + '</div>'
     + (t.cutCount ? '<div style="font-size:11px;opacity:.72;margin-top:3px">Cut services on this map: ' + _lgRound(t.cutCount) + '</div>' : '')
+    + roadHTML
     + repairHTML
     + '</div>';
 }

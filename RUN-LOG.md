@@ -1,17 +1,41 @@
 # RUN-LOG — 2026-06-14 onward (run k+ — the STRATEGIC ARC S2 through current v1 build)
 
 <!-- LIVE-HEAD-SUMMARY:BEGIN -->
-<!-- LIVE-HEAD decision=D546 next-lane=LANE-022 state=DRIVE owner=Claude -->
-> **Live status (D546, 2026-07-23):** `LANE-022` takes **Claude Code DRIVE for Slice 5** — the **authored Mayhem road layer**. Contract only: the lane carries the complete Slice-5 acceptance contract as committed prose and **no runtime byte has moved**. Slice 5 authors ONE constant `_LG_ROADS` (seventeen rows — two sourced labelled exemplars of road FAILURE, fifteen openly authored segments) merged into the memoized base projection inside `_lgTraceBase`, turning the sourced substrate's **eleven disconnected components into ONE board of 36 territories** at the highest-friction mode (`road` cost 6 against rail 3 and river 2), so every front can be supplied overland at a real and costly price. `_lgTraceProject`/`_lgTraceGraph` stay sourced-only, so D539's eleven-component / 44-service proof keeps working untouched.
+<!-- LIVE-HEAD decision=D547 next-lane=LANE-022 state=CONTRACT owner=none -->
+> **Live status (D547, 2026-07-23):** `LANE-022` **Slice 5 SHIPS** — the **authored Mayhem road layer**. ONE authored constant `_LG_ROADS` (seventeen rows — two sourced labelled exemplars of road FAILURE, fifteen openly authored segments) is merged into the memoized base projection by one pure helper inside `_lgTraceBase`, turning the sourced substrate's **eleven disconnected components into ONE board of 36 territories** at the highest-friction mode (`road` cost 6 against rail 3 and river 2). `_lgTraceProject`/`_lgTraceGraph` stay SOURCED-ONLY and byte-unchanged, so D539's eleven-component / 44-service proof still holds as the substrate-immutability tooth. Roads cut and repair through the SHIPPED Slice-2/3 mechanism (the `_lgSupplyView` sanitizer's id pattern widens; nothing else moves), landing design law §4's "clearing restores a road". Depot-preferred source selection becomes cheapest-available-source. **D547 replaces D545 as the ARC 7 product head, and LANE-022 releases to `CONTRACT` / `none`.**
 >
-> **Boundary:** contract-only. Game `0a5286c3b79c8011a6903ceb23772d80`, srcTree `7bcb0579d4e432950897500e7f0e5846`, suite **142**, manifest 112, data 65, `_SAVE_VER` **1**, `build/base.html` frozen — none move and none are re-pinned. **D545 remains the ARC 7 product head until Slice 5 ships.** LANE-019 stays unrewritten.
+> **Boundary:** game `0a5286c3b79c8011a6903ceb23772d80` → `77d96c4384cc5c818efe5f296a3c4e21`, srcTree `7bcb0579d4e432950897500e7f0e5846` → `ad0b2811db8e8323fdb70438c84893a4`, re-anchored at FIVE disk-counted sites (three generated-game, two srcTree). Suite **142**, manifest 112, data 65, `_SAVE_VER` **1**, `build/base.html` frozen at `c9db83fa99230ffb95bdfdfe059f3fb9` — none move, none re-pinned. LANE-019 stays unrewritten (transport plan 12/12).
 >
-> **Authority:** design-law §4 Slice 5 + D537 ruling 2. A default-refute citation pass against the original Official Records text verified BOTH cured rows as **Verified**, corrected four drifted wordings, and REFUTED the CT-11/CT-13 reading of `RD-SI13` — which therefore ships with **no endpoints and no edge** rather than invented geography. Depot-preferred source selection is amended to cheapest-available-source (measured: it would otherwise drop `CS`→`CT-11` from friction 8 to 19 and destroy the Slice-4 blockade lever); a uniform-cost walk was built, measured identical, and deliberately NOT adopted. Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
+> **Authority:** design-law §4 Slice 5 + D537 ruling 2, implementing the committed D546 contract. Three A/B legs: legs 1-2 BYTE-IDENTICAL (`18f609d0…` 29 scenarios × 8 seeds, `a38185fd…`), leg 3 conquest-ON measured in both columns from the same on-disk seam and adjudicated under D92. Bind D546-B1 redded ONLY `CONTAINMENT-B` (19/20, exit 1) with an md5-proven byte-identical restore. **FIVE tooth reshapes were needed where D546 contracted THREE** — the two extra were forced by the slice and are named in D547, not passed off as contracted. **Three defects in the inherited working tree were caught by these gates and fixed**: a srcTree re-pin computed against a superseded draft, the pin tooth that structurally could not catch it, and two probe artifacts recording the opposite of what their own assertions proved. Historical transport movement, Historical roads, the four `CTI-*` faces and E46 remain blocked.
 <!-- LIVE-HEAD-SUMMARY:END -->
 
 **Context:** Continues the §8 overnight charter (battle layer A1–A6 shipped in run j). S2 is large, so it's built one sub-system per gated + empirically-probed + adversarially-bug-hunted + committed + pushed milestone. Per the owner's directive, **web-search/fetch grounding is folded into the content-research workflows** (real public sources, then adversarially verified). Ultracode on.
 
 **Chronology rule (D510):** older `next` and `exact next` sentences record only the boundary at that entry. They never override the marked summary, HANDOFF, V1-CHECKLIST, or the relevant COORDINATION lane.
+
+## 2026-07-23 — D547 LANE-022 Slice 5 ships: the authored Mayhem road layer joins the eleven sourced components into one board
+
+Slice 5 shipped from the committed D546 contract, in `src/61-logistics-rail.js` only. One authored constant `_LG_ROADS`
+(17 rows — two sourced labelled exemplars of road FAILURE, fifteen openly authored segments) merges into the memoized base
+projection through the pure helper `_lgTraceRoadAdj` inside `_lgTraceBase`; `_lgTraceProject`/`_lgTraceGraph` stay
+SOURCED-ONLY and byte-unchanged, so D539's eleven-component / 44-service proof keeps working as the substrate-immutability
+tooth. The board becomes ONE component of 36 territories at mode `road` cost 6, roads cut and repair through the SHIPPED
+Slice-2/3 mechanism (only the sanitizer's id pattern widens), and source selection becomes cheapest-available so the Slice-4
+blockade lever survives. Legs 1-2 byte-identical (`18f609d0…` at 29 scenarios × 8 seeds, `a38185fd…`); leg 3 measured in BOTH
+columns from the same on-disk seam and adjudicated under D92. Bind D546-B1 redded only `CONTAINMENT-B` (19/20, exit 1) with an
+md5-proven byte-identical restore. Focused 20/20, plan 10/10, fourteen adjacent probes and five plan probes green with every
+artifact read. Game `0a5286c3` → `77d96c43`, srcTree `7bcb0579` → `ad0b2811` at five disk-counted pin sites; suite 142,
+manifest 112, data 65, `_SAVE_VER` 1, frozen base unmoved. LANE-022 releases to `CONTRACT` / `none`; Slice 6 (legal-order AI)
+is next and needs its own committed contract.
+
+**Lessons recorded.** (1) A re-pin is only as good as the moment it was computed: two srcTree pins had been calculated against
+a superseded draft of `src/61` and matched no tree on disk, which redded a downstream plan probe. (2) The tooth meant to guard
+that compared the two pins only to each other, so a stale-but-self-consistent pin passed it — a pin-integrity tooth must verify
+against the live artifact, not against its own sibling; it now hashes the live `src/` tree exactly as the game pin hashes the
+built deliverable, and was bind-tested. (3) A green step whose NAME or return object contradicts its own assertion is worse
+than a red one; two such artifacts were found and now report the measurement. (4) Contract prose can drift from shipped
+behaviour in arithmetic as easily as in wording — "60 base services" conflated rows with edges, and disk's 61 is right because
+the shipped roster has always counted rows, 16 of which project no edge.
 
 ## 2026-07-23 — D546 LANE-022 takes Claude Code DRIVE for Slice 5: the authored Mayhem road layer (contract only, no runtime byte moved)
 
