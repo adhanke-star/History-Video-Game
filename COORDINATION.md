@@ -5971,6 +5971,29 @@ risk and lane routing rather than on the rulings themselves.)*
   `7bcb0579d4e432950897500e7f0e5846` → `ad0b2811db8e8323fdb70438c84893a4`, re-anchored at FIVE disk-counted sites
   (three generated-game, two srcTree); suite md5, focused md5, manifest and frozen base HOLD. **LANE-019 is
   deliberately unrewritten** (transport plan 12/12). The full serialized 142-row battery stays owed at Slice 7.
+- **D547 SLICE-6 DEPENDENCY BLOCKER — recorded from live disk, surfaced not silently worked around (S-03 item 11).**
+  Slice 6 as the design law states it ("the AI's order filter respects supply legality under the **same rules as the
+  player**") presupposes three things that **do not exist on disk**: a conquest ORDER system, a conquest ARMY/turn
+  loop, and a conquest AI opponent. Verified by inspection, not assumption: `src/116-conquest-state.js`'s own header
+  states it "creates no live campaign, save path, UI, map state, transport state, order, or movement" and its factory
+  returns one detached four-field value; `src/114`/`src/115` are read-only board and evidence queries; a grep for any
+  conquest order/army/AI symbol across `src/` returns nothing; and D539 already recorded that `campaignKind` exists on
+  disk ONLY inside `src/116`'s detached factory/view, so no live campaign, save, load or menu path reaches the conquest
+  branch at all. The one existing AI-vs-AI surface, `bridgeAutoResolve` in `src/87-auto-resolve.js`, runs **both sides
+  under AI through the SAME engine at the neutral preset** and takes supply through the same `_lgRoute` →
+  `logisticsBridgeBonus` path for both, so it is already symmetric by construction and contains no asymmetry to fix.
+  **There is therefore no order filter to make supply-legal, and nothing an AI could ignore that the player could not.**
+  Building the prerequisite is NOT Slice 6 — it is the conquest campaign runtime (armies, orders, turns, an opponent),
+  a far larger scope, and LANE-022's standing prohibition that no slice may absorb its successor applies equally in
+  reverse: a slice may not absorb an unbuilt prerequisite. **What would unblock it:** a separately contracted conquest
+  runtime slice that creates armies with positions, an order surface, a turn boundary and an opponent — at which point
+  Slice 6 becomes real and small (one shared legality predicate over `conquestSupplyTrace`/`_lgSupplyView`, no second
+  resolver, no AI-only supply path). Until then Slice 6 is QUARANTINED as dependency-blocked, and the non-negotiable it
+  encodes ("an AI that ignores supply punishes only the player") is carried forward as a binding acceptance criterion
+  on that future runtime slice rather than being satisfied by a filter over nothing. **Slice 7's framing inherits the
+  same caveat** — it names "the first playable-loop release checkpoint", and there is no playable conquest loop; the
+  full serialized 142-row battery it owes is still genuinely owed for the five shipped slices and is run on that
+  basis, not as proof of a loop that does not exist.
 - **Resume pointer (D547):** LANE-022 is `CONTRACT` / `none` with Slices 1-5 shipped. **Slice 6 (legal-order AI —
   the AI's order filter must honour supply legality under the SAME rules as the player, reusing
   `conquestSupplyTrace`/`_lgSupplyView` with no second resolver and no AI-only supply path)** needs its own committed
